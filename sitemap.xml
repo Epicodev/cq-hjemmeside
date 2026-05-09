@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+
+    <!--
+        culturequest sitemap
+        =====================
+        OBS: Sitet bruger pt. hash-routing (#apv, #1to1, etc.) i én SPA.
+        Google indekserer normalt IKKE hash-fragments som separate URLs,
+        så denne sitemap lister kun root-URL'en indtil sitet splittes
+        i ordentlige routes (path-baseret routing).
+
+        Når routes er splittet, tilføj entries for alle landing pages.
+        Submit denne fil til Google Search Console + Bing Webmaster Tools.
+    -->
+
+    <url>
+        <loc>https://culturequest.io/</loc>
+        <lastmod>2026-05-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+</urlset>

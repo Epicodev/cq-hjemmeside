@@ -1,0 +1,37 @@
+# culturequest
+
+> Predictive culture intelligence for danske virksomheder. Vi forudser opsigelser, stress og mistrivsel før de rammer bundlinjen — gennem digital APV, 1:1 & MUS-værktøj og kontinuerlig pulsmåling i én platform.
+
+## Hvad culturequest er
+
+culturequest er en dansk SaaS-platform der kombinerer tre værktøjer i ét: **digital APV** (lovpligtig arbejdspladsvurdering), **1:1 & MUS-værktøj** med AI-coaching for ledere, og **kontinuerlig pulsmåling** der spotter tidlige signaler på stress, mistrivsel og opsigelses-risiko 4-6 uger før de eskalerer.
+
+Forskellen fra klassiske trivselsmålinger: hvor en årlig trivselsmåling er et øjebliksbillede ("hvor I var"), er culturequest kontinuerlig culture intelligence ("hvor I er på vej hen").
+
+## Sider
+
+- [Forside](https://culturequest.io/): Forretnings-overblik, hero og hovedmoduler
+- [APV (digital arbejdspladsvurdering)](https://culturequest.io/#apv): Lovpligtigt værktøj, opfylder Arbejdstilsynets krav
+- [1:1 & MUS-værktøj](https://culturequest.io/#1to1): AI-coach til 1:1'er og MUS-samtaler — forberedelse, optagelse, opfølgning
+- [Trivselsmåling vs. culture intelligence](https://culturequest.io/#trivselsmaaling): Sammenligning og forskel
+- [Priser](https://culturequest.io/#priser): Pris-overblik og pakker
+- [FAQ](https://culturequest.io/#faq): Ofte stillede spørgsmål
+- [Blog](https://culturequest.io/#blog): Indsigter om kultur, ledelse og medarbejdertrivsel
+- [Roadmap](https://culturequest.io/#roadmap): Hvad vi bygger
+- [Om os](https://culturequest.io/#about): Holdet bag culturequest
+- [Kontakt](https://culturequest.io/#kontakt): hej@culturequest.io
+
+## Centrale begreber
+
+- **APV (arbejdspladsvurdering)**: Lovpligtig vurdering af arbejdsmiljø i alle danske virksomheder med ansatte. Skal laves hvert 3. år eller ved væsentlige ændringer. Dækker både fysisk og psykisk arbejdsmiljø.
+- **MUS (medarbejderudviklingssamtale)**: Struktureret samtale mellem leder og medarbejder om trivsel, udvikling og mål. Ikke direkte lovpligtig, men fast praksis i langt de fleste danske organisationer.
+- **Pulsmåling**: Kort, gentagelig medarbejderundersøgelse (typisk 2-3 minutter, månedligt eller ugentligt). Designet til at fange retning og momentum, ikke score.
+- **Culture intelligence**: Kontinuerlig analyse af team-niveau signaler — sprog, stress-momentum, kontrol-glide, 1:1-frekvens, tavshed — der forudsiger trivsels-problemer før de manifesterer sig.
+
+## Forretning
+
+- **Selskab**: culturequest ApS, København, Danmark
+- **Founders**: Benjamin Brandt og Benjamin Laudrup
+- **Sprog**: Dansk
+- **Compliance**: GDPR, dansk forankret hosting (EU)
+- **Kontakt**: hej@culturequest.io
