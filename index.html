@@ -22483,8 +22483,75 @@ document.addEventListener('DOMContentLoaded', function() {
     .pp-marquee-track { animation: none; }
 }
 
-/* Stakes section reuses .apv-law-* but the eyebrow swaps from § to ⚠ */
-#page-pilotprojekt .apv-law-eyebrow-dot { background: #f59e0b; }
+/* ============ Match-section: keep dark frame, but make cards/content inside LIGHT ============ */
+/* Section frame stays dark (.apv-law-section base) — only cards and content are flipped to light */
+
+#page-pilotprojekt .apv-law-demand {
+    background: #ffffff;
+    border-color: rgba(99, 102, 241, 0.22);
+}
+#page-pilotprojekt .apv-law-demand:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    background: #ffffff;
+}
+#page-pilotprojekt .apv-law-demand::before {
+    background: radial-gradient(ellipse at 50% -20%, rgba(99, 102, 241, 0.08), transparent 70%);
+}
+#page-pilotprojekt .apv-law-demand-num {
+    color: #4f53cc;
+}
+#page-pilotprojekt .apv-law-demand-title {
+    color: #0e0e0e;
+}
+#page-pilotprojekt .apv-law-demand-text {
+    color: #2a2c40;
+}
+#page-pilotprojekt .apv-law-demand-text strong {
+    color: #0e0e0e;
+}
+#page-pilotprojekt .apv-law-demand-cite {
+    color: #6f7090;
+    border-top-color: rgba(15, 17, 50, 0.1);
+}
+#page-pilotprojekt .apv-law-demand-cite-tag {
+    background: #ecebfd;
+    color: #4f53cc;
+    border-color: rgba(99, 102, 241, 0.18);
+}
+
+/* Case cards: light on dark frame */
+#page-pilotprojekt .apv-law-case {
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+#page-pilotprojekt .apv-law-case-tag {
+    background: #ecebfd;
+    color: #4f53cc;
+    border-color: rgba(99, 102, 241, 0.18);
+}
+#page-pilotprojekt .apv-law-case-tag.tag-warning {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+#page-pilotprojekt .apv-law-case-meta {
+    color: #6f7090;
+}
+#page-pilotprojekt .apv-law-case-summary {
+    color: #2a2c40;
+}
+#page-pilotprojekt .apv-law-case-summary strong {
+    color: #0e0e0e;
+}
+#page-pilotprojekt .apv-law-case-penalty {
+    color: #0e0e0e;
+}
+#page-pilotprojekt .apv-law-case-penalty.is-warning {
+    color: #b45309;
+}
+#page-pilotprojekt .apv-law-case-penalty-unit {
+    color: #6f7090;
+}
 
 /* Dual-track simplified — uses pp-tt-* classes (rebuilt clean, not scroll-positioned) */
 .pp-tt-section { padding: 88px 24px; background: #f8f8fb; }
@@ -23079,17 +23146,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
 
-                    <!-- TOTAL: Hvad det kostede at IKKE fange det -->
+                    <!-- TOTAL: Klassisk trivselsmåling — efter 12 måneder (PILOT page only) -->
                     <div class="tl30-total-inline tl30-total-inline-cost" style="left: 100%;">
-                        <div class="tl30-total-inline-tag">ÅRETS REGNING</div>
-                        <div class="tl30-total-inline-headline">Ingen så det komme</div>
+                        <div class="tl30-total-inline-tag">KLASSISK · ÅRETS RESULTAT</div>
+                        <div class="tl30-total-inline-headline">Krise opdaget — bagefter</div>
                         <div class="tl30-total-inline-list">
-                            <span><strong>2</strong> stress-sygemeldinger</span>
-                            <span><strong>1</strong> opsigelse</span>
-                            <span><strong>1</strong> stille opsigelse</span>
+                            <span><strong>2</strong> målepunkter på 12 mdr</span>
+                            <span><strong>0</strong> tidlige varsler</span>
+                            <span><strong>4</strong> reaktive sager</span>
                         </div>
                         <div class="tl30-total-inline-amount tl30-total-inline-amount-cost">1,5-2,5 mio kr</div>
-                        <div class="tl30-total-inline-amount-label">Estimeret tab</div>
+                        <div class="tl30-total-inline-amount-label">Tabt produktivitet + opsigelser</div>
                     </div>
 
                 </div>
@@ -23111,11 +23178,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="tl29-axis-month" style="left: 91.6%;">DEC</span>
             </div>
 
-            <!-- ============ CULTURE INTELLIGENCE TRACK (BOTTOM) ============ -->
+            <!-- ============ CULTURE INTELLIGENCE TRACK (BOTTOM) — pilot 365-day flow ============ -->
             <div class="timeline-track timeline-track-new">
                 <div class="timeline-track-label">
-                    <div class="timeline-track-label-tag"><strong>culture intelligence</strong></div>
-                    <div class="timeline-track-label-meta">Månedlige målinger · roterende kategorier</div>
+                    <div class="timeline-track-label-tag"><strong>culture intelligence — pilotprogram</strong></div>
+                    <div class="timeline-track-label-meta">12 måneder · 4 rul · sparring hver 3. måned · auto-rapport efter hvert rul</div>
                 </div>
                 <div class="timeline-track-line">
 
@@ -23124,137 +23191,103 @@ document.addEventListener('DOMContentLoaded', function() {
                         <path d="M 0,20 L 100,20 L 110,15 L 115,25 L 120,5 L 125,30 L 130,20 L 250,20 L 260,15 L 265,25 L 270,5 L 275,30 L 280,20 L 400,20 L 410,15 L 415,25 L 420,5 L 425,30 L 430,20 L 600,20 L 610,15 L 615,25 L 620,5 L 625,30 L 630,20 L 800,20 L 810,15 L 815,25 L 820,5 L 825,30 L 830,20 L 1000,20 L 1010,15 L 1015,25 L 1020,5 L 1025,30 L 1030,20 L 1200,20 L 1210,15 L 1215,25 L 1220,5 L 1225,30 L 1230,20 L 1400,20 L 1410,15 L 1415,25 L 1420,5 L 1425,30 L 1430,20 L 1600,20 L 1610,15 L 1615,25 L 1620,5 L 1625,30 L 1630,20 L 1800,20 L 1810,15 L 1815,25 L 1820,5 L 1825,30 L 1830,20 L 2000,20" stroke="rgba(99, 102, 241, 0.35)" stroke-width="1.5" fill="none" />
                     </svg>
 
-                    <!-- Måling 1 (uge 4) + Fund (uge 5) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Leder efter: kombination af høj belastning + lav kontrol (burnout-risiko)" style="left: 7%;">
+                    <!-- ============ FASE 1: ONBOARDING (Måned 0-1) ============ -->
+
+                    <!-- Onboarding — admin + superbrugere -->
+                    <div class="tl29-pulse" data-tooltip="Måned 0: Nøglepersoner får admin-rettigheder til culturequest-platformen. Superbrugere trænes så de selvstændigt kan håndtere cyklusser, rapporter og indsigter." style="left: 3%;">
                         <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
+                        <div class="tl29-pulse-label">Onboarding</div>
                     </div>
-                    <div class="tl29-finding" data-finding="finding-1" style="left: 9%;">
+
+                    <!-- Lederworkshop -->
+                    <div class="tl29-pulse" data-tooltip="Måned 0-1: Fælles lederworkshop. Vi sikrer at hele ledelsesgruppen har en fælles forståelse af kultur-arbejdet, hvad data fortæller — og hvad værdien er." style="left: 8%;">
+                        <div class="tl29-pulse-dot"></div>
+                        <div class="tl29-pulse-label">Workshop</div>
+                    </div>
+
+                    <!-- Cyklus start — første spørgeramme aktiveres -->
+                    <div class="tl29-pulse" data-tooltip="Måned 1: Første culture intelligence-cyklus startes op. 2-3 spørgerammer designet til jeres branche, størrelse og aktuelle udfordringer aktiveres." style="left: 13%;">
+                        <div class="tl29-pulse-dot"></div>
+                        <div class="tl29-pulse-label">Cyklus start</div>
+                    </div>
+
+                    <!-- ============ FASE 2: RUL 1 + FUND + SPARRING (Måned 1-3) ============ -->
+
+                    <!-- Rul 1 — første måling -->
+                    <div class="tl29-pulse" data-tooltip="Rul 1 (Måned 1-2) · Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Leder efter: kombination af høj belastning + lav kontrol (burnout-risiko-baseline)" style="left: 19%;">
+                        <div class="tl29-pulse-dot"></div>
+                        <div class="tl29-pulse-label">Rul 1</div>
+                    </div>
+                    <div class="tl29-finding" data-finding="pp-finding-1" style="left: 22%;">
                         <div class="tl29-finding-dot tl29-finding-dot-info"></div>
                         <div class="tl29-finding-label">Fund</div>
                     </div>
 
-                    <!-- Måling 2 (uge 8) + Fund (uge 9) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Leder efter: passiv neutralitet og fald i anerkendelses-frekvens (tidlige tegn på mental tilbagetrækning)" style="left: 15%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
+                    <!-- Sparring 3 mdr -->
+                    <div class="tl29-finding" style="left: 26%;">
+                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
+                        <div class="tl29-finding-label tl29-finding-label-good">Sparring</div>
                     </div>
-                    <div class="tl29-finding" data-finding="finding-2" style="left: 17%;">
+
+                    <!-- ============ FASE 3: RUL 2 + FUND + HALVÅRSSPARRING (Måned 4-6) ============ -->
+
+                    <!-- Rul 2 -->
+                    <div class="tl29-pulse" data-tooltip="Rul 2 (Måned 4-5) · Måler: motivation, energi, anerkendelse, psykologisk tryghed · Sammenligner: trend siden Rul 1 (vurderer om passiv neutralitet eller mental tilbagetrækning bider sig fast)" style="left: 36%;">
+                        <div class="tl29-pulse-dot"></div>
+                        <div class="tl29-pulse-label">Rul 2</div>
+                    </div>
+                    <div class="tl29-finding" data-finding="pp-finding-2" style="left: 39%;">
                         <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
                         <div class="tl29-finding-label">Fund</div>
                     </div>
 
-                    <!-- Måling 3 (uge 13) + Fund (uge 14) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: divergens mellem social tilknytning og formålsklarhed (silent disengagement-mønster)" style="left: 25%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-3" style="left: 27%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-info"></div>
-                        <div class="tl29-finding-label">Fund</div>
+                    <!-- Halvårssparring 6 mdr -->
+                    <div class="tl29-finding" style="left: 50%;">
+                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
+                        <div class="tl29-finding-label tl29-finding-label-good">Halvårs-sparring</div>
                     </div>
 
-                    <!-- Måling 4 (uge 17) + Fund (uge 18) - ALERT -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Sammenligner: trend siden uge 4 (acceleration-detektion)" style="left: 33%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-4" style="left: 35%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-alert"></div>
-                        <div class="tl29-finding-label tl29-finding-label-alert">Alert</div>
-                    </div>
+                    <!-- ============ FASE 4: RUL 3 + FUND + SPARRING (Måned 7-9) ============ -->
 
-                    <!-- Måling 5 (uge 22) + Fund (uge 23) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Sammenligner: trend siden uge 8 (vurderer om passiv neutralitet bider sig fast)" style="left: 42%;">
+                    <!-- Rul 3 — handl nu -->
+                    <div class="tl29-pulse" data-tooltip="Rul 3 (Måned 7-8) · Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: silent disengagement-mønstre (lav mening + intakt sammenhold = klassisk 'jeg-leder-andet-job'-profil)" style="left: 60%;">
                         <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
+                        <div class="tl29-pulse-label">Rul 3</div>
                     </div>
-                    <div class="tl29-finding" data-finding="finding-5" style="left: 44%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 6 (uge 26) + Fund (uge 27) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: kombination af lav mening + intakt sammenhold (klassisk 'jeg-leder-andet-job'-profil)" style="left: 50%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-6" style="left: 52%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 7 (uge 30) + Fund (uge 31) - HANDL NU -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Tre cyklusser indsamlet: nu sammenholder algoritmen mønstre på tværs af alle dimensioner" style="left: 58%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding tl29-finding-urgent-marker" data-finding="finding-7" style="left: 60%;">
+                    <div class="tl29-finding tl29-finding-urgent-marker" data-finding="pp-finding-3" style="left: 63%;">
                         <div class="tl29-finding-dot tl29-finding-dot-urgent"></div>
                         <div class="tl29-finding-label tl29-finding-label-urgent">Handl nu</div>
                     </div>
 
-                    <!-- Måling 8 (uge 35) + Fund (uge 36) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Leder efter: spredning af mønstret til andre medarbejdere (kulturel smittespredning)" style="left: 67%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-8" style="left: 69%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
+                    <!-- Sparring 9 mdr -->
+                    <div class="tl29-finding" style="left: 75%;">
+                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
+                        <div class="tl29-finding-label tl29-finding-label-good">Sparring</div>
                     </div>
 
-                    <!-- Måling 9 (uge 39) + Fund (uge 40) - HANDL NU -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: kollektiv tilbagetrækning (når sammenhold begynder at vakle)" style="left: 75%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding tl29-finding-urgent-marker" data-finding="finding-9" style="left: 77%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-urgent"></div>
-                        <div class="tl29-finding-label tl29-finding-label-urgent">Handl nu</div>
-                    </div>
+                    <!-- ============ FASE 5: RUL 4 + SLUTRAPPORT (Måned 10-12) ============ -->
 
-                    <!-- Måling 10 (uge 43) + Fund (uge 44) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Validerer: om interventionen i uge 32 har haft målbar effekt" style="left: 83%;">
+                    <!-- Rul 4 — validering -->
+                    <div class="tl29-pulse" data-tooltip="Rul 4 (Måned 10-11) · Måler: alle dimensioner sammenholdt · Validerer: om interventionerne efter Rul 3 har haft målbar effekt på fravær, fastholdelse og ledelseskvalitet" style="left: 84%;">
                         <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
+                        <div class="tl29-pulse-label">Rul 4</div>
                     </div>
-                    <div class="tl29-finding" data-finding="finding-10" style="left: 85%;">
+                    <div class="tl29-finding" data-finding="pp-finding-4" style="left: 87%;">
                         <div class="tl29-finding-dot tl29-finding-dot-good"></div>
                         <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
                     </div>
 
-                    <!-- Måling 11 (uge 47) + Fund (uge 48) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Validerer: om tilliden til lederen er ved at genopbygges" style="left: 90%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-11" style="left: 92%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
-                        <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
-                    </div>
-
-                    <!-- Måling 12 (uge 52) + Fund (uge 52) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Bekræfter: om afdelingen er stabiliseret eller stadig i risikozonen" style="left: 88%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-12" style="left: 91%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
-                        <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
-                    </div>
-
-                    <!-- TOTAL: Hvad culture intelligence sparede -->
+                    <!-- TOTAL: Pilotprogram — efter 12 måneder (mirrors classic end-box for direct contrast) -->
                     <div class="tl30-total-inline tl30-total-inline-value" style="left: 100%;">
-                        <div class="tl30-total-inline-tag tl30-total-inline-tag-value">ÅRETS VÆRDI</div>
-                        <div class="tl30-total-inline-headline">Krise afværget i uge 32</div>
+                        <div class="tl30-total-inline-tag tl30-total-inline-tag-value">PILOTPROGRAM · ÅRETS RESULTAT</div>
+                        <div class="tl30-total-inline-headline">Krise undgået — proaktivt</div>
                         <div class="tl30-total-inline-list">
-                            <span><strong>2</strong> opsigelser undgået</span>
-                            <span><strong>36</strong> ugers tidlig varsel</span>
-                            <span><strong>12</strong> datapunkter til ledelsen</span>
+                            <span><strong>4</strong> rul + 4 sparringsmøder</span>
+                            <span><strong>4</strong> tidlige varsler</span>
+                            <span><strong>0</strong> reaktive sager</span>
                         </div>
-                        <div class="tl30-total-inline-amount tl30-total-inline-amount-value">600k-1,2 mio kr</div>
-                        <div class="tl30-total-inline-amount-label">Estimeret besparelse</div>
+                        <div class="tl30-total-inline-amount tl30-total-inline-amount-value">Op til 1,2 mio kr</div>
+                        <div class="tl30-total-inline-amount-label">Forhindret tab + bevaret kapacitet</div>
                     </div>
 
                 </div>
@@ -23263,8 +23296,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- Research provenance — small caption under timeline -->
         <div class="pain-timeline-research">
-            <span class="pain-timeline-research-label">Forskningsforankret</span>
-            <span class="pain-timeline-research-text">Signalerne er baseret på culturequest's spørgeramme på tværs af 9 dimensioner, kombineret med Gallup's exit-pattern-analyser, Edmondson's research om psykologisk tryghed, og dansk APV-forskning. Hvert datapunkt repræsenterer en automatisk analyse af team-data.</span>
+            <span class="pain-timeline-research-label">Sådan kører pilotprogrammet</span>
+            <span class="pain-timeline-research-text">Hvert af de 4 rul efterfølges automatisk af en <strong>skræddersyet rapport til ledere</strong> med konkrete anbefalinger til, hvordan I tager medarbejderne med i en resultat-gennemgang. Sparringsmøder hver 3. måned med culturequest-konsulenter sikrer at I får hjælp til at tolke data og handle på dem.</span>
         </div>
         <!-- Conclusion below timeline -->
         <div class="pain-timeline-conclusion">
@@ -23273,136 +23306,224 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="pain-timeline-conclusion-emphasis">De har et timing-problem.</span>
             </div>
         </div>
+        <!-- ============ PILOT FINDING DETAIL PANEL (slides in when Fund-dot is clicked) ============ -->
+        <div class="tl29-panel" id="pp-tl29-panel">
+            <div class="tl29-panel-overlay"></div>
+            <div class="tl29-panel-card">
+                <button class="tl29-panel-close" aria-label="Luk">×</button>
+                <div class="tl29-panel-header">
+                    <div class="tl29-panel-tag" id="pp-tl29-panel-tag">FUND</div>
+                    <div class="tl29-panel-week" id="pp-tl29-panel-week">Måned 2</div>
+                </div>
+                <h3 class="tl29-panel-title" id="pp-tl29-panel-title">Baseline etableret</h3>
+                <div class="tl29-panel-section">
+                    <div class="tl29-panel-section-label">Hvad vi har set i data</div>
+                    <p id="pp-tl29-panel-data">Stress-niveau lidt over branche-snit hos 3 ud af 20 medarbejdere.</p>
+                </div>
+                <div class="tl29-panel-section">
+                    <div class="tl29-panel-section-label">Hvorfor vi tror der er risiko</div>
+                    <p id="pp-tl29-panel-risk">For tidligt at konkludere. Men mønstret matcher det vi typisk ser 6-12 uger før første sygemelding.</p>
+                </div>
+                <div class="tl29-panel-section">
+                    <div class="tl29-panel-section-label">Konsekvens hvis intet sker</div>
+                    <p id="pp-tl29-panel-consequence">Mønstret eskalerer typisk over 8-10 uger.</p>
+                </div>
+                <div class="tl29-panel-section tl29-panel-section-action">
+                    <div class="tl29-panel-section-label">Anbefalet handleplan til lederen</div>
+                    <ul id="pp-tl29-panel-actions">
+                        <li>Hold øje med stress-niveau næste måned</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ PILOT FINDING PANEL JS — handleplaner for de 4 Rul-fund ============ -->
+        <script>
+        (function() {
+            const findings = {
+                'pp-finding-1': {
+                    tag: 'FUND · BASELINE',
+                    tagClass: '',
+                    week: 'Måned 2 · Efter Rul 1',
+                    title: 'Tidligt baseline-mønster identificeret',
+                    data: 'Stress-niveau ligger over branche-snit hos 4 ud af 33 medarbejdere — primært i marketing-teamet. Oplevet kontrol begynder at falde i samme team. Workload er fortsat under tærsklen.',
+                    risk: 'For tidligt at konkludere. Men kombinationen af stigende stress + faldende kontrol matcher det mønster vi typisk ser 6-12 uger før første stress-sygemelding hvis intet ændres.',
+                    consequence: 'Mønstret eskalerer typisk over 8-10 uger til synligt fravær. Hvis det ikke håndteres, vil næste rul vise tydeligere udsving.',
+                    actions: [
+                        'Tag uformel temperaturmåling med marketing-teamlederen',
+                        'Tjek 1:1-rytmen, særligt for de 4 medarbejdere i risiko',
+                        'Lille intervention nu (workload-justering eller anerkendelses-praksis), før mønstret bider sig fast',
+                        'Vent på Rul 2-data til at validere — intet drastisk endnu'
+                    ]
+                },
+                'pp-finding-2': {
+                    tag: 'FUND · ESKALERING',
+                    tagClass: '',
+                    week: 'Måned 5 · Efter Rul 2',
+                    title: 'Trend bekræftet — anerkendelse falder',
+                    data: 'Stress er steget fra 4,3 til 5,8 over 16 uger i marketing-teamet. Anerkendelses-frekvens er faldet 23% i samme periode. To medarbejdere viser begyndende tilbagetrækning i 1:1-data.',
+                    risk: 'Burnout-kombinationen (høj belastning + lav kontrol + faldende anerkendelse) matcher 87% af stress-sygemeldinger 4-6 uger før de sker. Mønstret accelererer.',
+                    consequence: 'Næste rul (Måned 7-8) kan ramme kritisk zone hvis intet ændres. Risiko for 1-2 stress-sygemeldinger inden Måned 9.',
+                    actions: [
+                        'Konsulent-sparring i denne måned (allerede planlagt) — drøft konkrete strukturelle tiltag',
+                        'Strukturér 1:1\'er om arbejdsbelastning + anerkendelse for hele marketing-teamet',
+                        'Lederforløb om coachende tilgang og daglig anerkendelses-praksis',
+                        'Re-evaluer team-prioriteter — fjern 1-2 ikke-kritiske initiativer'
+                    ]
+                },
+                'pp-finding-3': {
+                    tag: 'HANDL NU · KRITISK',
+                    tagClass: 'tl29-panel-tag-urgent',
+                    week: 'Måned 8 · Efter Rul 3',
+                    title: 'Silent disengagement-mønster identificeret',
+                    data: '2 nøglemedarbejdere viser klassisk passiv-neutralitets-mønster: stabil performance + faldende oplevet mening + vigende fastholdelses-intent. Begge har taget mindre initiativ til møder de sidste 8 uger.',
+                    risk: 'Klassisk "jeg-leder-andet-job"-profil. Forskningsmæssigt 60-70% sandsynlighed for opsigelse inden for 4-6 måneder hvis intet ændres. Sker ofte uden synlige advarsler i performance-data.',
+                    consequence: 'Tab af 1-2 nøglemedarbejdere = 1,5-3,6 mio kr i tabt produktivitet, rekruttering og videnstab. Risiko for kulturel smittespredning til kolleger.',
+                    actions: [
+                        'Akut 1:1 med begge medarbejdere — fokus på udvikling, rolleklarhed og fremtid (ikke performance)',
+                        'Drøft team-rolle-rotation eller karriere-spor — er der noget, der har låst sig fast?',
+                        'Indkald til konsulent-sparring inden for 2 uger (uden for sædvanlig kvartalsrytme)',
+                        'Følg op tæt på begge medarbejdere indtil Rul 4 — månedlig 1:1 minimum'
+                    ]
+                },
+                'pp-finding-4': {
+                    tag: 'FUND · INTERVENTION VIRKER',
+                    tagClass: '',
+                    week: 'Måned 11 · Efter Rul 4',
+                    title: 'Stabilisering bekræftet',
+                    data: 'Stress er faldet fra 5,8 til 4,4 i marketing-teamet. Anerkendelse er genopbygget til baseline. Begge nøglemedarbejdere fra Rul 3 viser fornyet engagement i 1:1-data. Ingen opsigelser eller sygemeldinger i perioden.',
+                    risk: 'Lav. Mønstret peger på fortsat positiv udvikling — men værd at validere kvartalsvis så I ikke mister momentum.',
+                    consequence: 'Hvis I fortsætter rytmen (1:1\'er, anerkendelses-praksis, konsulent-sparring), kan I forvente fortsat stabilitet. Bruges som case for andre teams.',
+                    actions: [
+                        'Fortsæt 1:1-rytmen som etableret efter Rul 2',
+                        'Anerkendelses-praksis kan rulles ud til andre teams (R&D, support)',
+                        'Slutrapport leveres i Måned 12 med konkret ROI-overblik — bevaret kapacitet, undgået tab',
+                        'Beslutning: fortsæt i drift med kunde-aftale, eller gå videre med jeres baseline-data i lommen'
+                    ]
+                }
+            };
+
+            const panel = document.getElementById('pp-tl29-panel');
+            if (!panel) return;
+
+            const elTag = document.getElementById('pp-tl29-panel-tag');
+            const elWeek = document.getElementById('pp-tl29-panel-week');
+            const elTitle = document.getElementById('pp-tl29-panel-title');
+            const elData = document.getElementById('pp-tl29-panel-data');
+            const elRisk = document.getElementById('pp-tl29-panel-risk');
+            const elCons = document.getElementById('pp-tl29-panel-consequence');
+            const elActions = document.getElementById('pp-tl29-panel-actions');
+            const closeBtn = panel.querySelector('.tl29-panel-close');
+            const overlay = panel.querySelector('.tl29-panel-overlay');
+
+            function openPanel(id) {
+                const f = findings[id];
+                if (!f) return;
+                elTag.textContent = f.tag;
+                elTag.className = 'tl29-panel-tag ' + (f.tagClass || '');
+                elWeek.textContent = f.week;
+                elTitle.textContent = f.title;
+                elData.textContent = f.data;
+                elRisk.textContent = f.risk;
+                elCons.textContent = f.consequence;
+                elActions.innerHTML = '';
+                f.actions.forEach(a => {
+                    const li = document.createElement('li');
+                    li.textContent = a;
+                    elActions.appendChild(li);
+                });
+                panel.classList.add('is-open');
+            }
+
+            function closePanel() {
+                panel.classList.remove('is-open');
+            }
+
+            // Bind click handlers ONLY to findings inside #page-pilotprojekt with pp-finding-X data
+            const pilotPage = document.getElementById('page-pilotprojekt');
+            if (pilotPage) {
+                pilotPage.querySelectorAll('.tl29-finding[data-finding^="pp-finding"]').forEach(el => {
+                    el.addEventListener('click', e => {
+                        e.stopPropagation();
+                        const id = el.dataset.finding;
+                        if (id) openPanel(id);
+                    });
+                });
+            }
+
+            if (closeBtn) closeBtn.addEventListener('click', closePanel);
+            if (overlay) overlay.addEventListener('click', closePanel);
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
+            });
+        })();
+        </script>
     </div>
 </section>
 </div>
 
 
-    <!-- ============ STAKES SECTION — clone of apv-law-section structure ============ -->
+    <!-- ============ MATCH-SECTION — criteria + deliverables (cloned apv-law-section structure) ============ -->
     <section class="apv-law-section">
         <div class="apv-law-inner">
 
             <header class="apv-law-head">
                 <div class="apv-law-eyebrow">
                     <span class="apv-law-eyebrow-dot"></span>
-                    <span>⚠ Empirisk data · Hvad det koster ikke at vide</span>
+                    <span>👥 Pilotprogram · Match begge veje</span>
                 </div>
                 <h2 class="apv-law-headline">
-                    Tabet er ikke<br>
-                    teoretisk.
+                    Vi søger få.<br>
+                    I får meget.
                 </h2>
                 <p class="apv-law-sub">
-                    Den klassiske trivselsmåling kommer en eller to gange om året. Imellem dem er I blinde — og prisen for det er konkret målbar i danske SMV'er. Pilotprojektet starter med at give jer det syn.
+                    Pilotprogrammet er ikke for alle — vi optager kun virksomheder hvor culture intelligence reelt kan flytte nålen. Til gengæld leverer vi et 12-måneders forløb med konkrete leverancer hver måned, ikke bare et dashboard.
                 </p>
             </header>
 
             <div class="apv-law-demands">
 
                 <article class="apv-law-demand">
-                    <span class="apv-law-demand-num">01 · KOST</span>
-                    <h3 class="apv-law-demand-title">Pris pr. opsigelse</h3>
+                    <span class="apv-law-demand-num">01 · KRITERIE</span>
+                    <h3 class="apv-law-demand-title">Erfaring med medarbejdermåling</h3>
                     <p class="apv-law-demand-text">
-                        Rekruttering, onboarding, tabt produktivitet og videnstab — over 12 måneder for en mid-senior profil koster en opsigelse typisk <strong>1,8 mio. kr</strong>. Tidlige signaler ligger uger før opsigelsen.
+                        I har allerede gennemført <strong>trivsels- eller pulsmålinger</strong> (egen drift eller via leverandør). Vi bygger ovenpå jeres eksisterende baseline — ikke fra nul. Det betyder hurtigere indsigter og bedre sammenligning.
                     </p>
                     <div class="apv-law-demand-cite">
-                        <span class="apv-law-demand-cite-tag">Benchmark</span>
-                        Dansk SMB-data, 2024-2025 — gennemsnit på tværs af brancher.
+                        <span class="apv-law-demand-cite-tag">Hvorfor</span>
+                        Erfaring med måle-kultur sikrer at organisationen kan absorbere data og handle på det.
                     </div>
                 </article>
 
                 <article class="apv-law-demand">
-                    <span class="apv-law-demand-num">02 · TID</span>
-                    <h3 class="apv-law-demand-title">Stress-signal til sygemelding</h3>
+                    <span class="apv-law-demand-num">02 · KRITERIE</span>
+                    <h3 class="apv-law-demand-title">50+ ansatte i 3+ teams</h3>
                     <p class="apv-law-demand-text">
-                        Stress udvikler sig sjældent pludseligt. De målbare signaler ligger <strong>6-8 uger</strong> før den første sygemelding — men kun hvis I måler kontinuerligt. Burnout-kombo (stress + lav kontrol) matcher 87 % af cases.
+                        Statistisk signifikans kræver volumen. Vi har brug for <strong>mindst 50 medarbejdere fordelt på flere teams</strong> for at kunne udtrække team-niveau-mønstre uden at kompromittere anonymitet.
                     </p>
                     <div class="apv-law-demand-cite">
-                        <span class="apv-law-demand-cite-tag">Forskning</span>
-                        Kombination af belastning + lav oplevet kontrol som tidlig prædiktor.
+                        <span class="apv-law-demand-cite-tag">Hvorfor</span>
+                        Mindre setups giver støjede data; vi vil gerne kunne sammenligne på tværs af afdelinger.
                     </div>
                 </article>
 
                 <article class="apv-law-demand">
-                    <span class="apv-law-demand-num">03 · ANDEL</span>
-                    <h3 class="apv-law-demand-title">Medarbejdere i risikozoner</h3>
+                    <span class="apv-law-demand-num">03 · KRITERIE</span>
+                    <h3 class="apv-law-demand-title">Engageret HR/ledelse</h3>
                     <p class="apv-law-demand-text">
-                        Ved første kultur-måling i et typisk dansk SMV ligger <strong>41,9 %</strong> af medarbejderne i score-intervallet "Krævende" eller "Kritisk". Mange organisationer ved det ikke før det er for sent.
+                        En <strong>navngiven kontaktperson</strong> + ledelsens commitment til at handle på data. Vi tager ikke virksomheder ind hvor rapporten ender i en skuffe. Pilotprogrammet er en investering — også af jeres tid.
                     </p>
                     <div class="apv-law-demand-cite">
-                        <span class="apv-law-demand-cite-tag">culturequest baseline</span>
-                        Aggregeret data fra danske kunder, 2025-2026.
+                        <span class="apv-law-demand-cite-tag">Hvorfor</span>
+                        Culture intelligence virker kun når organisationen reelt vil handle på indsigterne.
                     </div>
                 </article>
-
-            </div>
-
-            <div class="apv-law-consequences">
-
-                <div class="apv-law-cons-header">
-                    <div>
-                        <div class="apv-law-cons-label">
-                            <span class="apv-law-cons-label-dot"></span>
-                            <span>Konsekvenser</span>
-                        </div>
-                        <h3 class="apv-law-cons-title">Det her sker når I ikke måler kontinuerligt.</h3>
-                    </div>
-                    <div class="apv-law-cons-meta">
-                        <strong>UDDRAG · CULTUREQUEST KUNDE-INTERVIEWS</strong><br>
-                        2024-2025 · Anonymiserede sager
-                    </div>
-                </div>
-
-                <div class="apv-law-cases">
-
-                    <article class="apv-law-case">
-                        <span class="apv-law-case-tag">Sygemelding</span>
-                        <div class="apv-law-case-text">
-                            <div class="apv-law-case-meta">Q1 2024 · IT-virksomhed · 62 ansatte</div>
-                            <p class="apv-law-case-summary">
-                                Fire fra teamet sygemeldt med stress over 8 uger. Sidste trivselsmåling var 11 måneder gammel. <strong>Ingen så det komme.</strong>
-                            </p>
-                        </div>
-                        <div class="apv-law-case-penalty">
-                            8
-                            <div class="apv-law-case-penalty-unit">uger ude</div>
-                        </div>
-                    </article>
-
-                    <article class="apv-law-case">
-                        <span class="apv-law-case-tag tag-warning">Opsigelse</span>
-                        <div class="apv-law-case-text">
-                            <div class="apv-law-case-meta">Q3 2024 · Konsulenthus · 38 ansatte</div>
-                            <p class="apv-law-case-summary">
-                                Senior key-account-manager sagde op uden varsel. Engagement-data fra 9 måneder før viste klare advarsler — <strong>blev aldrig set</strong>.
-                            </p>
-                        </div>
-                        <div class="apv-law-case-penalty is-warning">
-                            1,8
-                            <div class="apv-law-case-penalty-unit">mio. tabt</div>
-                        </div>
-                    </article>
-
-                    <article class="apv-law-case">
-                        <span class="apv-law-case-tag">Tipping point</span>
-                        <div class="apv-law-case-text">
-                            <div class="apv-law-case-meta">2024 · Produktionsvirksomhed · 95 ansatte</div>
-                            <p class="apv-law-case-summary">
-                                Engagement faldt 22 procentpoint på 6 måneder. Først opdaget ved den årlige måling — <strong>3 måneder for sent</strong> til at handle proaktivt.
-                            </p>
-                        </div>
-                        <div class="apv-law-case-penalty">
-                            22
-                            <div class="apv-law-case-penalty-unit">pp tab</div>
-                        </div>
-                    </article>
-
-                </div>
 
             </div>
 
             <footer class="apv-law-footer">
-                <span>Cases er anonymiserede uddrag fra culturequest kunde-interviews.</span>
-                <a href="#pp-qualifier" class="apv-law-footer-link">Start pilot →</a>
+                <span>Pilotprogrammet er gratis for udvalgte virksomheder. Vi optager et begrænset antal hvert år.</span>
+                <a href="#pp-qualifier" class="apv-law-footer-link">Ansøg om plads →</a>
             </footer>
 
         </div>
