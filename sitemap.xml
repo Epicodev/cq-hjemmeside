@@ -4,20 +4,143 @@
     <!--
         culturequest sitemap
         =====================
-        OBS: Sitet bruger pt. hash-routing (#apv, #1to1, etc.) i én SPA.
-        Google indekserer normalt IKKE hash-fragments som separate URLs,
-        så denne sitemap lister kun root-URL'en indtil sitet splittes
-        i ordentlige routes (path-baseret routing).
-
-        Når routes er splittet, tilføj entries for alle landing pages.
-        Submit denne fil til Google Search Console + Bing Webmaster Tools.
+        Sitet bruger nu path-baseret routing (history.pushState).
+        Submit denne fil til Google Search Console + Bing Webmaster Tools
+        efter sitet går live på culturequest.io.
     -->
 
+    <!-- Forsiden -->
     <url>
         <loc>https://culturequest.io/</loc>
-        <lastmod>2026-05-08</lastmod>
+        <lastmod>2026-05-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+    </url>
+
+    <!-- Landing pages -->
+    <url>
+        <loc>https://culturequest.io/apv</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/1to1</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/trivselsmåling</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/consult</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/pilotprojekt</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Blog hovedoversigt -->
+    <url>
+        <loc>https://culturequest.io/blog</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Blog-artikler (SEO/GEO-targeted guides) -->
+    <url>
+        <loc>https://culturequest.io/blog/digital-apv-guide</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/mus-samtale-guide</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/ledelsesudvikling-guide</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Eksisterende blog-artikler -->
+    <url>
+        <loc>https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/apv-krav-digital-tilgang</loc>
+        <lastmod>2026-01-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/maal-kulturen-uden-diffust</loc>
+        <lastmod>2026-01-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/pulsmaalinger-2026</loc>
+        <lastmod>2026-01-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/blog/din-apv-er-i-stykker</loc>
+        <lastmod>2026-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Klikbar demo -->
+    <url>
+        <loc>https://culturequest.io/demo</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Sekundære sider -->
+    <url>
+        <loc>https://culturequest.io/about</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/kontakt</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://culturequest.io/roadmap</loc>
+        <lastmod>2026-05-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
 
 </urlset>

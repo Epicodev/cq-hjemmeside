@@ -1,6 +1,6 @@
 # culturequest
 
-> Predictive culture intelligence for danske virksomheder. Vi forudser opsigelser, stress og mistrivsel før de rammer bundlinjen — gennem digital APV, 1:1 & MUS-værktøj og kontinuerlig pulsmåling i én platform.
+> Predictive culture intelligence for danske virksomheder. Vi forudser opsigelser, stress og mistrivsel før de rammer bundlinjen gennem digital APV, 1:1 & MUS-værktøj og kontinuerlig pulsmåling i én platform.
 
 ## Hvad culturequest er
 
@@ -11,27 +11,45 @@ Forskellen fra klassiske trivselsmålinger: hvor en årlig trivselsmåling er et
 ## Sider
 
 - [Forside](https://culturequest.io/): Forretnings-overblik, hero og hovedmoduler
-- [APV (digital arbejdspladsvurdering)](https://culturequest.io/#apv): Lovpligtigt værktøj, opfylder Arbejdstilsynets krav
-- [1:1 & MUS-værktøj](https://culturequest.io/#1to1): AI-coach til 1:1'er og MUS-samtaler — forberedelse, optagelse, opfølgning
-- [Trivselsmåling vs. culture intelligence](https://culturequest.io/#trivselsmaaling): Sammenligning og forskel
+- [APV (digital arbejdspladsvurdering)](https://culturequest.io/apv): Lovpligtigt værktøj, opfylder Arbejdstilsynets krav
+- [1:1 & MUS-værktøj](https://culturequest.io/1to1): AI-coach til 1:1'er og MUS-samtaler — forberedelse, optagelse, opfølgning
+- [Trivselsmåling vs. culture intelligence](https://culturequest.io/trivselsmåling): Sammenligning og forskel
+- [Consult (kurateret konsulent-netværk)](https://culturequest.io/consult): Ledelsesudvikling, team-coaching og strategisk kulturarbejde
+- [Pilotprojekt](https://culturequest.io/pilotprojekt): 365-dages program for udvalgte virksomheder
+- [Klikbar demo](https://culturequest.io/demo): Interaktiv produkt-tour, ingen tilmelding
 - [Priser](https://culturequest.io/#priser): Pris-overblik og pakker
 - [FAQ](https://culturequest.io/#faq): Ofte stillede spørgsmål
-- [Blog](https://culturequest.io/#blog): Indsigter om kultur, ledelse og medarbejdertrivsel
-- [Roadmap](https://culturequest.io/#roadmap): Hvad vi bygger
-- [Om os](https://culturequest.io/#about): Holdet bag culturequest
-- [Kontakt](https://culturequest.io/#kontakt): hej@culturequest.io
+- [Blog](https://culturequest.io/blog): Indsigter om kultur, ledelse og medarbejdertrivsel
+- [Roadmap](https://culturequest.io/roadmap): Hvad vi bygger
+- [Om os](https://culturequest.io/about): Holdet bag culturequest
+- [Kontakt](https://culturequest.io/kontakt): hej@culturequest.io
+
+## Cornerstone-guides (long-form content)
+
+- [Den komplette guide til digital APV i 2026](https://culturequest.io/blog/digital-apv-guide): Hvad digital APV er, lovkrav, priser i Danmark, sammenligning af værktøjer
+- [MUS-samtalen: struktur, spørgsmål og opfølgning](https://culturequest.io/blog/mus-samtale-guide): Hvordan en god MUS-samtale forberedes, gennemføres og følges op
+- [Ledelsesudvikling baseret på data: praktisk guide](https://culturequest.io/blog/ledelsesudvikling-guide): Forskel mellem ledelsesudvikling, executive coaching og lederuddannelse, priser i Danmark
+- [Trivselsmåling på arbejdspladsen: alt du skal vide](https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide): Forskel på trivselsmåling og medarbejdertrivsel, hvor ofte, hvilke spørgsmål, hvad det koster
+- [Sådan forudsiger du arbejdsmiljøudfordringer](https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer): Prediktiv kulturanalyse til at fange stress og turnover tidligt
+- [APV krav og moderne digital tilgang](https://culturequest.io/blog/apv-krav-digital-tilgang): Lovgivning, fysiske og psykosociale risici, handlingsplaner
+- [Sådan måler man kulturen uden at gøre det diffust](https://culturequest.io/blog/maal-kulturen-uden-diffust): 10 dimensioner der gør kultur konkret og handlbar
+- [Pulsmålinger i 2026: Den komplette guide](https://culturequest.io/blog/pulsmaalinger-2026): Cadence, spørgelængde, core + rotate, deltagelse og opfølgning
 
 ## Centrale begreber
 
 - **APV (arbejdspladsvurdering)**: Lovpligtig vurdering af arbejdsmiljø i alle danske virksomheder med ansatte. Skal laves hvert 3. år eller ved væsentlige ændringer. Dækker både fysisk og psykisk arbejdsmiljø.
-- **MUS (medarbejderudviklingssamtale)**: Struktureret samtale mellem leder og medarbejder om trivsel, udvikling og mål. Ikke direkte lovpligtig, men fast praksis i langt de fleste danske organisationer.
+- **Digital APV**: Arbejdspladsvurdering gennemført via online værktøj i stedet for papir-skemaer eller Excel-skabeloner. Dækker hele cyklussen fra skema til handlingsplan og opfølgning.
+- **MUS (medarbejderudviklingssamtale)**: Struktureret årlig samtale mellem leder og medarbejder om trivsel, udvikling og mål. Ikke direkte lovpligtig, men fast praksis i langt de fleste danske organisationer. Typisk varighed 60-90 minutter.
 - **Pulsmåling**: Kort, gentagelig medarbejderundersøgelse (typisk 2-3 minutter, månedligt eller ugentligt). Designet til at fange retning og momentum, ikke score.
-- **Culture intelligence**: Kontinuerlig analyse af team-niveau signaler — sprog, stress-momentum, kontrol-glide, 1:1-frekvens, tavshed — der forudsiger trivsels-problemer før de manifesterer sig.
+- **Trivselsmåling på arbejdspladsen**: Struktureret måling af medarbejdertrivsel i virksomheder. Frivillig, fokuseret på engagement, motivation og psykisk arbejdsmiljø. Adskiller sig fra trivselsmåling i folkeskole-kontekst.
+- **Ledelsesudvikling**: Strukturerede aktiviteter der gør ledere bedre. Dækker workshops, executive coaching, lederteam-forløb og sparring. Typisk varighed 1 dag til 12 måneder.
+- **Culture intelligence**: Kontinuerlig analyse af team-niveau signaler (sprog, stress-momentum, kontrol-glide, 1:1-frekvens, tavshed) der forudsiger trivsels-problemer før de manifesterer sig.
 
 ## Forretning
 
 - **Selskab**: culturequest ApS, København, Danmark
-- **Founders**: Benjamin Brandt og Benjamin Laudrup
+- **CVR**: 44750538
+- **Founders**: Benjamin Brandt (Medstifter, MSc Human Ernæring, Kultur & Præstation) og Benjamin Laudrup (CEO & medstifter, Lederskab, psykologi og coaching)
 - **Sprog**: Dansk
 - **Compliance**: GDPR, dansk forankret hosting (EU)
 - **Kontakt**: hej@culturequest.io
