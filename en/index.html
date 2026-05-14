@@ -26474,66 +26474,66 @@ document.addEventListener('DOMContentLoaded', function() {
             if (who === 'sandra') {
                 if (fmt === 'workshop') {
                     return {
-                        name: 'Målrettet workshop. Dyk ned i ét rødt flag',
-                        type: 'Workshop · 1 dag',
+                        name: 'Targeted workshop. Dig into one red flag',
+                        type: 'Workshop · 1 day',
                         typeCls: 'is-workshop',
-                        desc: 'Intensiv én-dags workshop hvor Sandra adresserer ét specifikt fund fra jeres culturequest-data sammen med teamet, adfærdspsykologisk tilgang med konkrete værktøjer.',
-                        price: '25.000-50.000 kr'
+                        desc: 'Intensive one-day workshop where Sandra addresses one specific finding from your culturequest data together with the team, a behavioural psychology approach with concrete tools.',
+                        price: 'DKK 25,000-50,000'
                     };
                 }
                 if (fmt === 'forløb') {
                     return {
-                        name: 'Kalibrering af topsporet · lederteam-forløb',
-                        type: 'Forløb · 3-6 mdr',
+                        name: 'Calibrating the top track · leadership team program',
+                        type: 'Program · 3-6 months',
                         typeCls: 'is-forløb',
-                        desc: '3-6 måneders struktureret forløb for ledergruppen, workshops, individuel sparring og målbar fremdrift på psykologisk tryghed og samspil.',
-                        price: '125.000-350.000 kr'
+                        desc: '3-6 month structured program for the leadership team, workshops, individual sparring and measurable progress on psychological safety and interaction.',
+                        price: 'DKK 125,000-350,000'
                     };
                 }
                 if (fmt === 'sparring') {
                     return {
-                        name: 'Adfærdspsykologisk sparring',
+                        name: 'Behavioural psychology sparring',
                         type: 'Sparring',
                         typeCls: 'is-sparring',
-                        desc: 'Løbende klippekort-baseret sparring for HR-leder eller team-leder der har brug for psykologisk fundament under praksis.',
-                        price: '3.500-6.000 kr/time'
+                        desc: 'Ongoing prepaid-hours sparring for HR leader or team leader who needs a psychological foundation under practice.',
+                        price: 'DKK 3,500-6,000/hour'
                     };
                 }
                 // Default: forløb is Sandra's strongest format
                 return {
-                    name: 'Kalibrering af topsporet · lederteam-forløb',
-                    type: 'Forløb · 3-6 mdr',
+                    name: 'Calibrating the top track · leadership team program',
+                    type: 'Program · 3-6 months',
                     typeCls: 'is-forløb',
-                    desc: '3-6 måneders struktureret forløb for ledergruppen, workshops, individuel sparring og målbar fremdrift på psykologisk tryghed og samspil.',
-                    price: '125.000-350.000 kr'
+                    desc: '3-6 month structured program for the leadership team, workshops, individual sparring and measurable progress on psychological safety and interaction.',
+                    price: 'DKK 125,000-350,000'
                 };
             }
             // Benjamin
             if (fmt === 'workshop') {
                 return {
-                    name: 'Strategi-workshop med ledergruppen',
-                    type: 'Workshop · 1 dag',
+                    name: 'Strategy workshop with the leadership team',
+                    type: 'Workshop · 1 day',
                     typeCls: 'is-workshop',
-                    desc: 'Founder-led strategi-dag hvor Benjamin sætter retning på kulturudviklingen og koblingen til forretningsstrategien.',
-                    price: '30.000-60.000 kr'
+                    desc: 'Founder-led strategy day where Benjamin sets direction on culture development and the connection to business strategy.',
+                    price: 'DKK 30,000-60,000'
                 };
             }
             if (fmt === 'forløb') {
                 return {
-                    name: 'Founder-led kultur-transformation',
-                    type: 'Forløb · 3-6 mdr',
+                    name: 'Founder-led culture transformation',
+                    type: 'Program · 3-6 months',
                     typeCls: 'is-forløb',
-                    desc: 'Langsigtet rådgivnings-forløb til CEO/ledergruppe, strategi, executive-disciplin og kultur-eksekvering forankret hos ledelsen.',
-                    price: '180.000-400.000 kr'
+                    desc: 'Long-term advisory program for CEO/leadership team, strategy, executive discipline and culture execution anchored with leadership.',
+                    price: 'DKK 180,000-400,000'
                 };
             }
             // Default sparring for Benjamin
             return {
-                name: 'Executive Advisory · løbende sparring',
+                name: 'Executive Advisory · ongoing sparring',
                 type: 'Sparring',
                 typeCls: 'is-sparring',
-                desc: 'Løbende strategisk sparring for CEO eller HR-direktør, bordet rundt på kultur, strategi og lederteam-dynamik.',
-                price: '4.500-7.500 kr/time'
+                desc: 'Ongoing strategic sparring for CEO or HR director, covering culture, strategy and leadership team dynamics.',
+                price: 'DKK 4,500-7,500/hour'
             };
         }
 
@@ -26556,19 +26556,19 @@ document.addEventListener('DOMContentLoaded', function() {
         function buildWhy(who, themes, signals, chips, text) {
             var parts = [];
             if (themes.length === 0 && !text.trim()) {
-                return 'Baseret på jeres valgte format og involvering har vi peget på den konsulent der har det stærkeste track record på den type opgaver.';
+                return 'Based on your chosen format and involvement, we have pointed to the consultant with the strongest track record on that type of task.';
             }
 
             if (themes.length > 0) {
                 var labels = themes.slice(0, 2).map(function(t) { return t.label.toLowerCase(); });
-                parts.push('Jeres beskrivelse peger på ' + labels.join(' og '));
+                parts.push('Your description points to ' + labels.join(' and '));
             }
 
             if (who === 'sandra') {
                 if (themes.some(function(t) { return t.id === 'tillid' || t.id === 'sundhed'; })) {
-                    parts.push('Sandra er adfærdspsykolog og specialist i psykologisk tryghed, præcis det område hvor data og adfærd skal kobles');
+                    parts.push('Sandra is a behavioural psychologist and specialist in psychological safety, exactly the area where data and behaviour need to be connected');
                 } else if (chips.involve === 'lederteam' || signals.ledelse) {
-                    parts.push('Sandra arbejder primært med ledergrupper og har systematik for at flytte adfærd i topsporet');
+                    parts.push('Sandra works primarily with leadership teams and has systematic methods for shifting behaviour at the top');
                 } else {
                     parts.push('Sandras tilgang er at omsætte culturequest-data til konkrete adfærdsændringer hos teamet');
                 }
