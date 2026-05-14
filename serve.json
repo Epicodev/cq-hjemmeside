@@ -1,9 +1,37 @@
 {
     "rewrites": [
         { "source": "en", "destination": "/en/index.html" },
-        { "source": "en/", "destination": "/en/index.html" },
-        { "source": "en/**", "destination": "/en/index.html" },
-        { "source": "**", "destination": "/index.html" }
+        { "source": "en/risk-assessment", "destination": "/en/index.html" },
+        { "source": "en/1to1", "destination": "/en/index.html" },
+        { "source": "en/engagement-survey", "destination": "/en/index.html" },
+        { "source": "en/consulting", "destination": "/en/index.html" },
+        { "source": "en/pilot-program", "destination": "/en/index.html" },
+        { "source": "en/blog", "destination": "/en/index.html" },
+        { "source": "en/blog/:slug+", "destination": "/en/index.html" },
+        { "source": "en/about", "destination": "/en/index.html" },
+        { "source": "en/contact", "destination": "/en/index.html" },
+        { "source": "en/roadmap", "destination": "/en/index.html" },
+        { "source": "en/demo", "destination": "/en/index.html" },
+
+        { "source": "apv", "destination": "/index.html" },
+        { "source": "1to1", "destination": "/index.html" },
+        { "source": "1-1", "destination": "/index.html" },
+        { "source": "1til1", "destination": "/index.html" },
+        { "source": "trivselsmåling", "destination": "/index.html" },
+        { "source": "trivselsmaaling", "destination": "/index.html" },
+        { "source": "trivsel", "destination": "/index.html" },
+        { "source": "consult", "destination": "/index.html" },
+        { "source": "konsulenter", "destination": "/index.html" },
+        { "source": "pilotprojekt", "destination": "/index.html" },
+        { "source": "pilot", "destination": "/index.html" },
+        { "source": "blog", "destination": "/index.html" },
+        { "source": "blog/:slug+", "destination": "/index.html" },
+        { "source": "about", "destination": "/index.html" },
+        { "source": "om", "destination": "/index.html" },
+        { "source": "kontakt", "destination": "/index.html" },
+        { "source": "contact", "destination": "/index.html" },
+        { "source": "roadmap", "destination": "/index.html" },
+        { "source": "demo", "destination": "/index.html" }
     ],
     "headers": [
         {
