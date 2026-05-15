@@ -112,60 +112,170 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/roadmap"/>
     </url>
 
-    <!-- Blog articles (Danish — English translations pending) -->
+    <!-- Blog articles with bilingual hreflang annotations -->
     <url>
         <loc>https://culturequest.io/blog/digital-apv-guide</loc>
         <lastmod>2026-05-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/digital-apv-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/digital-risk-assessment-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/digital-apv-guide"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/mus-samtale-guide</loc>
         <lastmod>2026-05-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/mus-samtale-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/performance-review-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/mus-samtale-guide"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/ledelsesudvikling-guide</loc>
         <lastmod>2026-05-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/ledelsesudvikling-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/leadership-development-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/ledelsesudvikling-guide"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide</loc>
         <lastmod>2026-05-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/engagement-survey-workplace-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer</loc>
         <lastmod>2026-02-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/predict-workplace-challenges"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/apv-krav-digital-tilgang</loc>
         <lastmod>2026-01-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/apv-krav-digital-tilgang"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/workplace-risk-assessment-requirements"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/apv-krav-digital-tilgang"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/maal-kulturen-uden-diffust</loc>
         <lastmod>2026-01-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/maal-kulturen-uden-diffust"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/measure-culture-concretely"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/maal-kulturen-uden-diffust"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/pulsmaalinger-2026</loc>
         <lastmod>2026-01-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/pulsmaalinger-2026"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/pulse-surveys-2026"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/pulsmaalinger-2026"/>
     </url>
     <url>
         <loc>https://culturequest.io/blog/din-apv-er-i-stykker</loc>
         <lastmod>2026-01-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/din-apv-er-i-stykker"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/your-risk-assessment-is-broken"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/din-apv-er-i-stykker"/>
+    </url>
+
+    <!-- English blog articles -->
+    <url>
+        <loc>https://culturequest.io/en/blog/digital-risk-assessment-guide</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/digital-apv-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/digital-risk-assessment-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/digital-apv-guide"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/performance-review-guide</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/mus-samtale-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/performance-review-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/mus-samtale-guide"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/leadership-development-guide</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/ledelsesudvikling-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/leadership-development-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/ledelsesudvikling-guide"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/engagement-survey-workplace-guide</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/engagement-survey-workplace-guide"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/trivselsmaaling-arbejdsplads-guide"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/predict-workplace-challenges</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/predict-workplace-challenges"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/workplace-risk-assessment-requirements</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/apv-krav-digital-tilgang"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/workplace-risk-assessment-requirements"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/apv-krav-digital-tilgang"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/measure-culture-concretely</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/maal-kulturen-uden-diffust"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/measure-culture-concretely"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/maal-kulturen-uden-diffust"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/pulse-surveys-2026</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/pulsmaalinger-2026"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/pulse-surveys-2026"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/pulsmaalinger-2026"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/blog/your-risk-assessment-is-broken</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/din-apv-er-i-stykker"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog/your-risk-assessment-is-broken"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/din-apv-er-i-stykker"/>
     </url>
 
     <!-- ============ ENGLISH ============ -->
