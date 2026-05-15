@@ -23443,6 +23443,49 @@ document.addEventListener('DOMContentLoaded', function() {
         0 4px 12px -4px rgba(15, 17, 50, 0.05);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+
+/* Mobile scroll-hint container - sits ABOVE the matrix so users see
+   it before scrolling through. Animation pulses to indicate swipe direction. */
+.tm-cmp-scrollhint {
+    display: none;
+}
+@media (max-width: 980px) {
+    .tm-cmp-scrollhint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 0 14px;
+        padding: 10px 14px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.18);
+        border-radius: 99px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--primary-700, #4338ca);
+        letter-spacing: 0.01em;
+    }
+    .tm-cmp-scrollhint-arrow {
+        display: inline-block;
+        opacity: 0.7;
+        animation: tm-scrollhint-pulse 1.8s ease-in-out infinite;
+    }
+    .tm-cmp-scrollhint-arrow.is-right {
+        animation-delay: 0.9s;
+    }
+    @keyframes tm-scrollhint-pulse {
+        0%, 100% { transform: translateX(0); opacity: 0.5; }
+        50%      { transform: translateX(3px); opacity: 1; }
+    }
+    /* Add a subtle right-edge fade on the matrix wrap so the cut-off
+       content is more visible (an implicit "more content to the right" signal) */
+    .tm-cmp-wrap {
+        -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 24px), rgba(0,0,0,0.35) 100%);
+                mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 24px), rgba(0,0,0,0.35) 100%);
+    }
 }
 
 .tm-cmp-tbl {
@@ -25039,6 +25082,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </p>
             </header>
 
+            <!-- Mobile-only scroll hint, indicates the table can be swiped horizontally -->
+            <div class="tm-cmp-scrollhint" aria-hidden="true">
+                <span class="tm-cmp-scrollhint-arrow">←</span>
+                <span>Swipe to compare all vendors</span>
+                <span class="tm-cmp-scrollhint-arrow is-right">→</span>
+            </div>
             <!-- Single comparison grid, each row is styled like a card-item, all in one container -->
             <div class="tm-cmp-wrap">
                 <table class="tm-cmp-tbl">
