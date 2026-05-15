@@ -1,63 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
     <!--
         culturequest sitemap
         =====================
-        Sitet bruger nu path-baseret routing (history.pushState).
-        Submit denne fil til Google Search Console + Bing Webmaster Tools
-        efter sitet går live på culturequest.io.
+        Bilingual (Danish primary, English secondary) — uses xhtml:link
+        rel="alternate" annotations for international SEO (hreflang).
+        Path-based routing (history.pushState).
+        Submit to Google Search Console + Bing Webmaster Tools after launch.
     -->
 
-    <!-- Forsiden -->
+    <!-- ============ DANISH (primary) ============ -->
     <url>
         <loc>https://culturequest.io/</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/"/>
     </url>
-
-    <!-- Landing pages -->
     <url>
         <loc>https://culturequest.io/apv</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/apv"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/risk-assessment"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/apv"/>
     </url>
     <url>
         <loc>https://culturequest.io/1to1</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/1to1"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/1to1"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/1to1"/>
     </url>
     <url>
         <loc>https://culturequest.io/trivselsmåling</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/trivselsmåling"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/engagement-survey"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/trivselsmåling"/>
     </url>
     <url>
         <loc>https://culturequest.io/consult</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/consult"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/consulting"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/consult"/>
     </url>
     <url>
         <loc>https://culturequest.io/pilotprojekt</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/pilotprojekt"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/pilot-program"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/pilotprojekt"/>
     </url>
-
-    <!-- Blog hovedoversigt -->
     <url>
         <loc>https://culturequest.io/blog</loc>
-        <lastmod>2026-05-12</lastmod>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/demo</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/demo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/demo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/demo"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/about</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/about"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/kontakt</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/kontakt"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/contact"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/kontakt"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/roadmap</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/roadmap"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/roadmap"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/roadmap"/>
     </url>
 
-    <!-- Blog-artikler (SEO/GEO-targeted guides) -->
+    <!-- Blog articles (Danish — English translations pending) -->
     <url>
         <loc>https://culturequest.io/blog/digital-apv-guide</loc>
         <lastmod>2026-05-12</lastmod>
@@ -82,8 +137,6 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
-    <!-- Eksisterende blog-artikler -->
     <url>
         <loc>https://culturequest.io/blog/forudse-arbejdsmiljoeudfordringer</loc>
         <lastmod>2026-02-20</lastmod>
@@ -115,32 +168,105 @@
         <priority>0.6</priority>
     </url>
 
-    <!-- Klikbar demo -->
+    <!-- ============ ENGLISH ============ -->
     <url>
-        <loc>https://culturequest.io/demo</loc>
-        <lastmod>2026-05-12</lastmod>
+        <loc>https://culturequest.io/en/</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/risk-assessment</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/apv"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/risk-assessment"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/apv"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/1to1</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/1to1"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/1to1"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/1to1"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/engagement-survey</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/trivselsmåling"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/engagement-survey"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/trivselsmåling"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/consulting</loc>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/consult"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/consulting"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/consult"/>
     </url>
-
-    <!-- Sekundære sider -->
     <url>
-        <loc>https://culturequest.io/about</loc>
-        <lastmod>2026-05-12</lastmod>
+        <loc>https://culturequest.io/en/pilot-program</loc>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/pilotprojekt"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/pilot-program"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/pilotprojekt"/>
     </url>
     <url>
-        <loc>https://culturequest.io/kontakt</loc>
-        <lastmod>2026-05-12</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://culturequest.io/roadmap</loc>
-        <lastmod>2026-05-12</lastmod>
+        <loc>https://culturequest.io/en/blog</loc>
+        <lastmod>2026-05-14</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/blog"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/demo</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/demo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/demo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/demo"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/about</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/about"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/contact</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/kontakt"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/contact"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/kontakt"/>
+    </url>
+    <url>
+        <loc>https://culturequest.io/en/roadmap</loc>
+        <lastmod>2026-05-14</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.4</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/roadmap"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/roadmap"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/roadmap"/>
     </url>
 
 </urlset>

@@ -1,6 +1,25 @@
 # cq-hjemmeside
 
-Statisk landingsside (single `index.html`) deployet via Railway.
+Statisk landingsside deployet via Railway. Bilingual: dansk (primær) og engelsk.
+
+## Filstruktur
+
+- `index.html` — dansk version (primær, serveres på `/`)
+- `en/index.html` — engelsk version (serveres på `/en/`)
+- `serve.json` — routing-regler (path-baseret rewrite for begge sprog)
+- `sitemap.xml` — bilingual sitemap med hreflang-annoteringer
+- `llms.txt` + `en/llms.txt` — markdown-overblik til LLM crawlers (dansk og engelsk)
+- `robots.txt` — crawl-regler
+- `assets/` — billeder og media (delt mellem begge sprog)
+
+## Sprog-routing
+
+`serve.json` håndterer fallback til den korrekte SPA-fil:
+
+- `/en` og `/en/*` → `/en/index.html` (engelsk SPA, path-baseret routing)
+- alt andet → `/index.html` (dansk SPA, path-baseret routing)
+
+Sprogskift sker via nav-knappen `DA / EN` — hver version peger på den anden sprogversion via hreflang.
 
 ## Lokal kørsel
 
@@ -9,7 +28,7 @@ npm install
 npm start
 ```
 
-Åbn http://localhost:3000
+Åbn http://localhost:3000 (dansk) eller http://localhost:3000/en/ (engelsk).
 
 ## Deploy
 

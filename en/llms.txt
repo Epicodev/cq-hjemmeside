@@ -1,0 +1,44 @@
+# culturequest
+
+> Predictive culture intelligence for ambitious companies. We predict turnover, stress and burnout before they hit the bottom line — through workplace risk assessment, a 1:1 & performance review tool and continuous pulse surveys on one platform.
+
+## What culturequest is
+
+culturequest is a SaaS platform that combines three tools in one: **workplace risk assessment** (the legally required Danish "APV"), a **1:1 & performance review tool** with AI coaching for managers, and **continuous pulse surveys** that spot early signals of stress, burnout and retention risk 4–6 weeks before they escalate.
+
+The difference from classic engagement surveys: where an annual engagement survey is a snapshot ("where you were"), culturequest is continuous culture intelligence ("where you are heading").
+
+## Pages
+
+- [Home](https://culturequest.io/en/): Product overview, hero, core modules
+- [Workplace risk assessment (Danish APV)](https://culturequest.io/en/risk-assessment): Legally required tool that meets Danish Working Environment Authority requirements
+- [1:1 & performance review tool](https://culturequest.io/en/1to1): AI coach for 1:1s and performance reviews — preparation, recording, follow-up
+- [Engagement survey vs. culture intelligence](https://culturequest.io/en/engagement-survey): Comparison and difference
+- [Consulting (curated consultant network)](https://culturequest.io/en/consulting): Leadership development, team coaching and strategic culture work
+- [Pilot program](https://culturequest.io/en/pilot-program): 365-day program for a select group of companies
+- [Interactive demo](https://culturequest.io/en/demo): Interactive product tour, no sign-up
+- [Pricing](https://culturequest.io/en/#pricing): Plan overview and bundles
+- [FAQ](https://culturequest.io/en/#faq): Frequently asked questions
+- [Blog](https://culturequest.io/en/blog): Insights on culture, leadership and employee wellbeing
+- [Roadmap](https://culturequest.io/en/roadmap): What we are building
+- [About](https://culturequest.io/en/about): The team behind culturequest
+- [Contact](https://culturequest.io/en/contact): hej@culturequest.io
+
+## Core concepts
+
+- **Workplace risk assessment (Danish APV / arbejdspladsvurdering)**: A legally required assessment of the working environment in any Danish company with employees. Must be carried out every three years, or whenever significant changes occur. Covers both the physical and the psychosocial working environment.
+- **Digital workplace risk assessment**: Risk assessment completed via an online tool instead of paper forms or Excel templates. Covers the full cycle from survey through action plan and follow-up.
+- **Performance review (Danish MUS / medarbejderudviklingssamtale)**: A structured annual conversation between manager and employee about wellbeing, development and goals. Not strictly legally required, but standard practice in most Danish organisations. Typical duration 60–90 minutes.
+- **Pulse survey**: A short, repeating employee survey (typically 2–3 minutes, monthly or weekly). Designed to capture direction and momentum, not a single score.
+- **Engagement survey**: A structured survey of employee wellbeing in companies. Voluntary, focused on engagement, motivation and the psychosocial working environment.
+- **Leadership development**: Structured activities that make managers better. Covers workshops, executive coaching, leadership team programs and one-to-one sparring. Typical duration 1 day to 12 months.
+- **Culture intelligence**: Continuous analysis of team-level signals (language, stress momentum, drift in control, 1:1 frequency, silence) that predict wellbeing problems before they manifest.
+
+## Company
+
+- **Entity**: culturequest ApS, Copenhagen, Denmark
+- **Danish CVR**: 44750538
+- **Founders**: Benjamin Brandt (co-founder, MSc Human Nutrition, Culture & Performance) and Benjamin Laudrup (CEO & co-founder, Leadership, psychology and coaching)
+- **Languages**: Danish (primary), English
+- **Compliance**: GDPR, EU-hosted (Denmark)
+- **Contact**: hej@culturequest.io
