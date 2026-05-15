@@ -17386,6 +17386,243 @@ button.apv-pt-ci-event.apv-pt-ci-action::before {
    ============================================================ */
 
 /* ================================
+   MOBILE NAV DRAWER (hamburger)
+   Aktiveres ved <=900px. Slide-out panel
+   fra højre side med alle nav-items + sprog
+   ================================ */
+
+/* Hamburger button, hidden by default (desktop) */
+.nav-mobile-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-mobile-toggle-bar {
+    width: 22px;
+    height: 2px;
+    background: var(--neutral-900, #0E0E0E);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    transform-origin: center;
+}
+.nav-mobile-toggle[aria-expanded="true"] .nav-mobile-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.nav-mobile-toggle[aria-expanded="true"] .nav-mobile-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+.nav-mobile-toggle[aria-expanded="true"] .nav-mobile-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Drawer (right side panel) - hidden by default */
+.nav-mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(86vw, 360px);
+    height: 100vh;
+    height: 100dvh;
+    background: var(--paper, #fbf9f4);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(.4, 0, .2, 1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 64px 24px 32px;
+    box-shadow: -16px 0 48px -8px rgba(15, 17, 50, 0.18);
+    visibility: hidden;
+}
+.nav-mobile-drawer.is-open {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.nav-mobile-drawer-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    background: rgba(15, 17, 50, 0.04);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--neutral-900, #0E0E0E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-mobile-drawer-close:hover {
+    background: rgba(15, 17, 50, 0.08);
+}
+
+/* Backdrop behind drawer */
+.nav-mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 17, 50, 0.42);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+}
+.nav-mobile-backdrop.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.22s ease;
+}
+
+/* Menu structure inside drawer */
+.nav-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.nav-mobile-section {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(15, 17, 50, 0.08);
+}
+.nav-mobile-section:first-child {
+    padding-top: 4px;
+}
+.nav-mobile-section:last-child {
+    border-bottom: 0;
+}
+.nav-mobile-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--neutral-500, #6B7280);
+    margin-bottom: 6px;
+}
+.nav-mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 4px;
+    color: var(--neutral-900, #0E0E0E);
+    text-decoration: none;
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.1);
+}
+.nav-mobile-link-primary {
+    font-weight: 600;
+}
+.nav-mobile-link.nav-active {
+    color: var(--primary-600, #4f46e5);
+}
+.nav-mobile-link-arrow {
+    color: var(--neutral-400, #9CA3AF);
+    font-size: 14px;
+    transition: transform 0.15s;
+}
+.nav-mobile-link:hover .nav-mobile-link-arrow,
+.nav-mobile-link:active .nav-mobile-link-arrow {
+    transform: translateX(2px);
+    color: var(--primary-500, #6366f1);
+}
+.nav-mobile-link-status {
+    font-size: 11px;
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--primary-700, #4338ca);
+    padding: 3px 8px;
+    border-radius: 99px;
+    font-weight: 500;
+}
+
+/* Language toggle pill */
+.nav-mobile-lang-toggle {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(15, 17, 50, 0.05);
+    border-radius: 99px;
+    margin-top: 8px;
+}
+.nav-mobile-lang-opt {
+    flex: 1;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 99px;
+    color: var(--neutral-600, #4B5563);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-mobile-lang-opt.is-active {
+    background: var(--paper-card, #fff);
+    color: var(--neutral-900, #0E0E0E);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Bottom CTAs */
+.nav-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+    padding-bottom: 0;
+}
+.nav-mobile-login-btn {
+    text-align: center;
+    padding: 13px 20px;
+    border: 1px solid rgba(15, 17, 50, 0.14);
+    border-radius: 99px;
+    color: var(--neutral-900, #0E0E0E);
+    text-decoration: none;
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-mobile-cta {
+    text-align: center;
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+    width: 100%;
+    justify-content: center;
+    display: block !important;
+}
+
+/* Show hamburger + drawer only on mobile/tablet, hide desktop nav items
+   at SAME breakpoint to avoid both showing simultaneously */
+@media (max-width: 900px) {
+    .nav-mobile-toggle {
+        display: flex;
+    }
+    /* Hide desktop nav items - the mobile drawer replaces them */
+    nav .nav-center,
+    nav .nav-right > .nav-lang,
+    nav .nav-right > .nav-login {
+        display: none !important;
+    }
+}
+/* Lock body scroll when drawer open */
+body.nav-mobile-open {
+    overflow: hidden;
+}
+
+/* ================================
    SAFETY NET, body level
    Forhindrer al horizontal scroll
    ================================ */
@@ -17823,8 +18060,73 @@ button.apv-pt-ci-event.apv-pt-ci-action::before {
         </div>
         <a href="#" class="nav-login">Log ind</a>
         <a href="#" class="btn-accent">Start gratis →</a>
+        <button class="nav-mobile-toggle" id="navMobileToggle" type="button" aria-label="Åbn menu" aria-expanded="false" aria-controls="navMobileDrawer">
+            <span class="nav-mobile-toggle-bar"></span>
+            <span class="nav-mobile-toggle-bar"></span>
+            <span class="nav-mobile-toggle-bar"></span>
+        </button>
     </div>
 </nav>
+
+<!-- Mobile menu drawer (visible only at <=900px) -->
+<div class="nav-mobile-backdrop" id="navMobileBackdrop" hidden></div>
+<aside class="nav-mobile-drawer" id="navMobileDrawer" aria-hidden="true" aria-label="Mobil-navigation" hidden>
+    <button class="nav-mobile-drawer-close" id="navMobileDrawerClose" type="button" aria-label="Luk menu">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <nav class="nav-mobile-menu">
+        <div class="nav-mobile-section">
+            <div class="nav-mobile-section-title">Løsninger</div>
+            <a href="/" data-route="home" class="nav-mobile-link">
+                <span>Culture intelligence</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+            <a href="/apv" data-route="apv" class="nav-mobile-link">
+                <span>APV</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+            <a href="/1to1" data-route="1to1" class="nav-mobile-link">
+                <span>1:1 &amp; MUS</span>
+                <span class="nav-mobile-link-status">I udvikling</span>
+            </a>
+            <a href="/consult" data-route="consult" class="nav-mobile-link">
+                <span>Consult</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+        </div>
+
+        <div class="nav-mobile-section">
+            <a href="#priser" class="nav-mobile-link nav-mobile-link-primary">
+                <span>Priser</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+            <a href="/blog" data-route="blog" class="nav-mobile-link nav-mobile-link-primary">
+                <span>Blog</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+            <a href="/roadmap" data-route="roadmap" class="nav-mobile-link nav-mobile-link-primary">
+                <span>Roadmap</span>
+                <span class="nav-mobile-link-arrow">→</span>
+            </a>
+        </div>
+
+        <div class="nav-mobile-section">
+            <div class="nav-mobile-section-title">Sprog</div>
+            <div class="nav-mobile-lang-toggle">
+                <a href="/" class="nav-mobile-lang-opt is-active" aria-current="true">Dansk</a>
+                <a href="/en/" class="nav-mobile-lang-opt nav-lang-switch" data-lang-target="en" hreflang="en">English</a>
+            </div>
+        </div>
+
+        <div class="nav-mobile-section nav-mobile-actions">
+            <a href="#" class="nav-mobile-login-btn">Log ind</a>
+            <a href="#" class="btn-accent nav-mobile-cta">Start gratis →</a>
+        </div>
+    </nav>
+</aside>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -17884,6 +18186,74 @@ document.addEventListener('DOMContentLoaded', function() {
         _pushState.apply(this, arguments);
         syncLangSwitch();
     };
+})();
+
+/* Mobile nav drawer toggle */
+(function() {
+    const toggle = document.getElementById('navMobileToggle');
+    const drawer = document.getElementById('navMobileDrawer');
+    const backdrop = document.getElementById('navMobileBackdrop');
+    const closeBtn = document.getElementById('navMobileDrawerClose');
+    if (!toggle || !drawer || !backdrop) return;
+
+    let lastFocus = null;
+
+    function openDrawer() {
+        lastFocus = document.activeElement;
+        // Reveal first so transition can animate
+        drawer.hidden = false;
+        backdrop.hidden = false;
+        requestAnimationFrame(() => {
+            drawer.classList.add('is-open');
+            backdrop.classList.add('is-visible');
+            toggle.setAttribute('aria-expanded', 'true');
+            drawer.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('nav-mobile-open');
+        });
+        // Focus the close button for keyboard users
+        setTimeout(() => { if (closeBtn) closeBtn.focus(); }, 60);
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('is-open');
+        backdrop.classList.remove('is-visible');
+        toggle.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('nav-mobile-open');
+        // Hide elements after transition so they don't intercept clicks
+        setTimeout(() => {
+            if (!drawer.classList.contains('is-open')) {
+                drawer.hidden = true;
+                backdrop.hidden = true;
+            }
+        }, 320);
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    toggle.addEventListener('click', () => {
+        if (drawer.classList.contains('is-open')) closeDrawer();
+        else openDrawer();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
+    });
+
+    // Close drawer after clicking any link (SPA navigation completes quickly)
+    drawer.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            // Don't close if it's the language toggle to a different version (whole page reload)
+            setTimeout(closeDrawer, 80);
+        });
+    });
+
+    // Reset state if window resized to desktop while drawer open
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && drawer.classList.contains('is-open')) {
+            closeDrawer();
+        }
+    });
 })();
 </script>
 
