@@ -31905,14 +31905,14 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.disabled = false;
             btn.textContent = '✓ Downloadet';
             input.value = '';
-            fineprint.innerHTML = 'Guiden er downloadet. Vi har også sendt et link til <strong>' + email.replace(/[<>]/g, '') + '</strong> så du nemt kan finde den igen.';
+            fineprint.innerHTML = 'The guide has been downloaded. We have also sent a link to <strong>' + email.replace(/[<>]/g, '') + '</strong> so you can find it again easily.';
             fineprint.style.color = 'rgba(255, 255, 255, 0.85)';
             setTimeout(() => { btn.textContent = 'Hent guide igen'; }, 4000);
         } else {
             btn.disabled = false;
-            btn.textContent = 'Prøv igen';
+            btn.textContent = 'Try again';
             fineprint.style.color = '#ff8a8a';
-            fineprint.textContent = 'Noget gik galt. Prøv venligst igen.';
+            fineprint.textContent = 'Something went wrong. Please try again.';
         }
     });
 })();
@@ -31965,16 +31965,16 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             id: 'company',
             type: 'text',
-            placeholder: 'Fx Acme A/S',
+            placeholder: 'E.g. Acme Inc.',
             messages: [
-                'Hej! Jeg er <strong>culturequest assistenten</strong>. Inden vi bygger din kulturmåling, vil jeg gerne kende lidt til jer, så kan jeg gøre demoen relevant.',
-                'Hvad hedder jeres virksomhed?'
+                'Hi! I am the <strong>culturequest assistant</strong>. Before we build your culture survey, I would like to know a bit about you, so I can make the demo relevant.',
+                'What is your company called?'
             ]
         },
         {
             id: 'size',
             type: 'chips-single',
-            messages: ['Tak {company}! Hvor mange er I i alt?'],
+            messages: ['Thanks {company}! How many are you in total?'],
             options: [
                 { label: '1–10', num: 8 },
                 { label: '11–50', num: 28 },
@@ -31987,31 +31987,31 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 'values',
             type: 'chips-multi',
             messages: [
-                'Forstået. Hvilke <strong>2-3 værdier</strong> beskriver bedst jeres kultur i dag? Vælg dem der er mest sande, også selvom andre føles ambitiøst rigtige.'
+                'Got it. Which <strong>2-3 values</strong> best describe your culture today? Pick the ones that are most true — even if others feel aspirationally right.'
             ],
             options: [
-                'Tillid og åbenhed',
-                'Højt tempo',
-                'Resultater og performance',
-                'Trivsel og balance',
+                'Trust and openness',
+                'High pace',
+                'Results and performance',
+                'Wellbeing and balance',
                 'Innovation',
-                'Stærkt fællesskab',
-                'Fagligt høj standard',
-                'Klare strukturer'
+                'Strong belonging',
+                'High professional standard',
+                'Clear structures'
             ]
         },
         {
             id: 'purpose',
             type: 'chips-single',
             messages: [
-                'Sidste spørgsmål, hvad vil I primært bruge culture intelligence til?'
+                'Last question — what will you primarily use culture intelligence for?'
             ],
             options: [
-                'Forstå hvor vi taber medarbejdere',
-                'Forebygge stress og burnout',
-                'Forbedre lederskab og 1:1\'er',
-                'Dokumentere APV og trivsel',
-                'Generel kulturindsigt'
+                'Understand where we lose employees',
+                'Prevent stress and burnout',
+                'Improve leadership and 1:1s',
+                'Document risk assessment and wellbeing',
+                'General culture insight'
             ]
         }
     ];
@@ -32066,7 +32066,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        obProgress.textContent = `Trin ${idx + 1} af ${obQuestions.length}`;
+        obProgress.textContent = `Step ${idx + 1} of ${obQuestions.length}`;
 
         // Show messages with typing
         for (let i = 0; i < q.messages.length; i++) {
@@ -32172,7 +32172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmRow.className = 'sandbox-onboard-chips-confirm';
             confirmRow.innerHTML = `
                 <button type="button" class="sandbox-onboard-confirm" disabled>
-                    Fortsæt
+                    Continue
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                         <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -32193,11 +32193,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function obFinish() {
-        obProgress.textContent = 'Færdig';
+        obProgress.textContent = 'Done';
         obShowTyping();
         await obDelay(900);
         obHideTyping();
-        obAppendBot(`Tak ${obState.company}! Jeg har tilpasset demoen til jer. <strong>Lad os bygge din kulturmåling →</strong>`);
+        obAppendBot(`Thanks ${obState.company}! I have tailored the demo to you. <strong>Let's build your culture survey →</strong>`);
 
         // Add a "Let's go" button
         await obDelay(500);
@@ -32207,7 +32207,7 @@ document.addEventListener('DOMContentLoaded', function() {
         startWrap.style.justifyContent = 'flex-start';
         startWrap.innerHTML = `
             <button type="button" class="sandbox-onboard-confirm">
-                Byg jeres kulturmåling
+                Build your culture survey
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -32260,7 +32260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Personalize breadcrumb in stage 1
         const stage1Crumb = document.querySelector('[data-stage="1"] .sandbox-breadcrumb');
         if (stage1Crumb && obState.company) {
-            stage1Crumb.innerHTML = `${obState.company} <span class="sandbox-breadcrumb-sep">/</span> <strong>Ny kulturmåling</strong>`;
+            stage1Crumb.innerHTML = `${obState.company} <span class="sandbox-breadcrumb-sep">/</span> <strong>New culture survey</strong>`;
         }
 
         // Personalize stage 3 (result) toolbar + stats
@@ -32269,7 +32269,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const backBtn = stage3Crumb.querySelector('.sandbox-back');
             stage3Crumb.innerHTML = '';
             if (backBtn) stage3Crumb.appendChild(backBtn);
-            const text = document.createTextNode(' ' + obState.company + ' · Analyse ');
+            const text = document.createTextNode(' ' + obState.company + ' · Analysis ');
             stage3Crumb.appendChild(text);
             const sep = document.createElement('span');
             sep.className = 'sandbox-breadcrumb-sep';
@@ -32277,7 +32277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             stage3Crumb.appendChild(sep);
             stage3Crumb.appendChild(document.createTextNode(' '));
             const strong = document.createElement('strong');
-            strong.textContent = 'Q3-måling';
+            strong.textContent = 'Q3 survey';
             stage3Crumb.appendChild(strong);
         }
 
@@ -32289,13 +32289,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const forecastTitle = document.querySelector('.sandbox-forecast-title');
             if (forecastTitle) {
-                forecastTitle.textContent = `${atRisk} medarbejdere viser tidlige tegn på frafald`;
+                forecastTitle.textContent = `${atRisk} employees show early signs of attrition`;
             }
 
             // Sub-tekst: tilføj antal i risiko som kontekst
             const forecastSub = document.querySelector('.sandbox-forecast-sub');
             if (forecastSub) {
-                forecastSub.textContent = `Forhøjet stress + lav kontrol + faldende anerkendelse hos ${atRisk} af ${n} ansatte. Når disse tre signaler optræder samtidigt, fører det historisk til opsigelse eller sygemelding inden for 6-8 uger. Tid til at handle nu.`;
+                forecastSub.textContent = `Elevated stress + low control + declining recognition for ${atRisk} of ${n} employees. When these three signals appear together, the pattern historically leads to resignation or sick leave within 6-8 weeks. Time to act now.`;
             }
 
             // Omkostning: ca. 5% af risikogruppen forventes at sige op uden indgriben
