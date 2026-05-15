@@ -17842,6 +17842,43 @@ document.addEventListener('DOMContentLoaded', function() {
         handleScroll();
     }
 });
+
+/* Smart language switcher (EN -> DA equivalent route) */
+(function() {
+    const EN_TO_DA = {
+        '/en': '/',
+        '/en/': '/',
+        '/en/risk-assessment': '/apv',
+        '/en/1to1': '/1to1',
+        '/en/engagement-survey': '/trivselsmåling',
+        '/en/consulting': '/consult',
+        '/en/pilot-program': '/pilotprojekt',
+        '/en/blog': '/blog',
+        '/en/about': '/about',
+        '/en/contact': '/kontakt',
+        '/en/roadmap': '/roadmap',
+        '/en/demo': '/demo'
+    };
+    function syncLangSwitch() {
+        const path = (window.location.pathname || '/').toLowerCase();
+        const normalized = (path === '/' ? '/' : path.replace(/\/$/, ''));
+        let daPath = EN_TO_DA[normalized];
+        if (!daPath && normalized.startsWith('/en/blog/')) {
+            daPath = '/blog';
+        }
+        if (!daPath) daPath = '/';
+        document.querySelectorAll('.nav-lang-switch[data-lang-target="da"]').forEach(function(a) {
+            a.setAttribute('href', daPath);
+        });
+    }
+    syncLangSwitch();
+    window.addEventListener('popstate', syncLangSwitch);
+    const _pushState = history.pushState;
+    history.pushState = function() {
+        _pushState.apply(this, arguments);
+        syncLangSwitch();
+    };
+})();
 </script>
 
 <!-- ============ PAGE: HOME ============ -->
