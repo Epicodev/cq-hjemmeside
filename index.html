@@ -18134,6 +18134,176 @@ body.nav-mobile-open {
     .pain-timeline-wrap .tl29-cost-card {
         margin-top: 16px !important;
     }
+
+    /* ============================================================
+       MOBILE STORY for the Culture Intelligence track
+       The 12-pulse + 12-finding pattern collapses to a curated
+       5-card story on mobile so the contrast with the classic
+       track (which only catches 2 snapshots) stays vivid.
+       ============================================================ */
+
+    /* Show only 5 key findings on mobile, hide the rest of pulse/finding markers */
+    .pain-timeline-wrap .timeline-track-new .tl29-pulse {
+        display: none !important;
+    }
+    .pain-timeline-wrap .timeline-track-new .tl29-finding[data-finding="finding-2"],
+    .pain-timeline-wrap .timeline-track-new .tl29-finding[data-finding="finding-4"],
+    .pain-timeline-wrap .timeline-track-new .tl29-finding[data-finding="finding-7"],
+    .pain-timeline-wrap .timeline-track-new .tl29-finding[data-finding="finding-10"],
+    .pain-timeline-wrap .timeline-track-new .tl29-finding[data-finding="finding-12"] {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 14px !important;
+        left: auto !important;
+        top: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    /* Hide the underlying dot+label inside the visible findings (the mobile card replaces them) */
+    .pain-timeline-wrap .timeline-track-new .tl29-finding > .tl29-finding-dot,
+    .pain-timeline-wrap .timeline-track-new .tl29-finding > .tl29-finding-label {
+        display: none !important;
+    }
+    /* Show the mobile card content */
+    .pain-timeline-wrap .tl29-finding-mobile {
+        display: block !important;
+        position: static !important;
+        background: var(--paper-card, #fff);
+        border: 1px solid rgba(15, 17, 50, 0.08);
+        border-left: 4px solid var(--neutral-300, #d1d5db);
+        border-radius: 14px;
+        padding: 14px 16px;
+        box-shadow: 0 4px 14px -6px rgba(15, 17, 50, 0.08);
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(99, 102, 241, 0.05);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile:active {
+        transform: scale(0.99);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-alert {
+        border-left-color: #f59e0b;
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, var(--paper-card, #fff) 100%);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-urgent {
+        border-left-color: #ef4444;
+        background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, var(--paper-card, #fff) 100%);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-good {
+        border-left-color: #10b981;
+        background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, var(--paper-card, #fff) 100%);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile-tag {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--neutral-500, #6B7280);
+        margin-bottom: 6px;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-alert .tl29-finding-mobile-tag {
+        color: #d97706;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-urgent .tl29-finding-mobile-tag {
+        color: #dc2626;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-good .tl29-finding-mobile-tag {
+        color: #059669;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile-title {
+        font-family: 'Inter Tight', 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--ink, #0E0E0E);
+        letter-spacing: -0.01em;
+        margin-bottom: 6px;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile-data {
+        font-family: 'Inter', sans-serif;
+        font-size: 13.5px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--neutral-700, #374151);
+        margin-bottom: 8px;
+    }
+    .pain-timeline-wrap .tl29-finding-mobile-vs {
+        display: block;
+        font-family: 'Inter', sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        line-height: 1.4;
+        padding: 8px 10px;
+        margin: 8px 0 8px;
+        border-radius: 8px;
+        background: rgba(15, 17, 50, 0.04);
+        color: var(--ink, #0E0E0E);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-alert .tl29-finding-mobile-vs {
+        background: rgba(245, 158, 11, 0.1);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-urgent .tl29-finding-mobile-vs {
+        background: rgba(239, 68, 68, 0.1);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile.is-good .tl29-finding-mobile-vs {
+        background: rgba(16, 185, 129, 0.08);
+    }
+    .pain-timeline-wrap .tl29-finding-mobile-cta {
+        display: inline-flex;
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--primary-600, #4f46e5);
+        margin-top: 2px;
+    }
+
+    /* Mobile-only divider that frames "same year, different story" */
+    .pain-timeline-mobile-divider {
+        display: flex !important;
+        align-items: center;
+        gap: 14px;
+        margin: 36px 0 24px;
+        padding: 0 4px;
+    }
+    .pain-timeline-mobile-divider-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(15, 17, 50, 0.18), transparent);
+    }
+    .pain-timeline-mobile-divider-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        line-height: 1.25;
+        flex-shrink: 0;
+    }
+    .pain-timeline-mobile-divider-eyebrow {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--neutral-500, #6B7280);
+    }
+    .pain-timeline-mobile-divider-text strong {
+        font-family: 'Inter Tight', 'Inter', sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--primary-600, #4f46e5);
+        letter-spacing: -0.01em;
+    }
+}
+/* Hide on desktop */
+.pain-timeline-mobile-divider {
+    display: none;
+}
+.tl29-finding-mobile {
+    display: none;
 }
 
 /* ================================
@@ -19108,6 +19278,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="tl29-axis-month" style="left: 91.6%;">DEC</span>
             </div>
 
+            <!-- Mobile-only divider that frames the contrast between the two tracks -->
+            <div class="pain-timeline-mobile-divider" aria-hidden="true">
+                <div class="pain-timeline-mobile-divider-line"></div>
+                <div class="pain-timeline-mobile-divider-text">
+                    <span class="pain-timeline-mobile-divider-eyebrow">Samme år. Samme team.</span>
+                    <strong>Anden historie.</strong>
+                </div>
+                <div class="pain-timeline-mobile-divider-line"></div>
+            </div>
+
             <!-- ============ CULTURE INTELLIGENCE TRACK (BOTTOM) ============ -->
             <div class="timeline-track timeline-track-new">
                 <div class="timeline-track-label">
@@ -19139,6 +19319,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="tl29-finding" data-finding="finding-2" style="left: 17%;">
                         <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
                         <div class="tl29-finding-label">Fund</div>
+                        <div class="tl29-finding-mobile">
+                            <div class="tl29-finding-mobile-tag">Tidligt signal · Uge 9</div>
+                            <div class="tl29-finding-mobile-title">Anerkendelses-frekvens falder</div>
+                            <div class="tl29-finding-mobile-data">Passiv neutralitet er fordoblet på 5 uger. Gallup's mest robuste exit-prædiktor er aktiveret.</div>
+                            <div class="tl29-finding-mobile-cta">Tryk for konkrete tiltag →</div>
+                        </div>
                     </div>
 
                     <!-- Måling 3 (uge 13) + Fund (uge 14) -->
@@ -19159,6 +19345,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="tl29-finding" data-finding="finding-4" style="left: 35%;">
                         <div class="tl29-finding-dot tl29-finding-dot-alert"></div>
                         <div class="tl29-finding-label tl29-finding-label-alert">Alert</div>
+                        <div class="tl29-finding-mobile is-alert">
+                            <div class="tl29-finding-mobile-tag">Burnout-kombo aktiveret · Uge 18</div>
+                            <div class="tl29-finding-mobile-title">Karasek-tærskel passeret. Stress + lav kontrol.</div>
+                            <div class="tl29-finding-mobile-data">Mønstret matcher 87 % af stress-sygemeldinger 4-6 uger før de sker.</div>
+                            <div class="tl29-finding-mobile-vs">⚡ 6 uger før Mette går ned i uge 24</div>
+                            <div class="tl29-finding-mobile-cta">Tryk for handleplan →</div>
+                        </div>
                     </div>
 
                     <!-- Måling 5 (uge 22) + Fund (uge 23) -->
@@ -19189,6 +19382,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="tl29-finding tl29-finding-urgent-marker" data-finding="finding-7" style="left: 60%;">
                         <div class="tl29-finding-dot tl29-finding-dot-urgent"></div>
                         <div class="tl29-finding-label tl29-finding-label-urgent">Handl nu</div>
+                        <div class="tl29-finding-mobile is-urgent">
+                            <div class="tl29-finding-mobile-tag">Handl nu · Uge 31</div>
+                            <div class="tl29-finding-mobile-title">Multi-flag aktiveret: burnout-kombo + tillids-gap + acceleration</div>
+                            <div class="tl29-finding-mobile-data">3 algoritme-flags samtidig. Estimeret eksponering: 1-2,5 mio kr.</div>
+                            <div class="tl29-finding-mobile-vs">⚡ Klassisk måling 2 fanger først problemet i uge 30 — for sent</div>
+                            <div class="tl29-finding-mobile-cta">Tryk for handleplan →</div>
+                        </div>
                     </div>
 
                     <!-- Måling 8 (uge 35) + Fund (uge 36) -->
@@ -19219,6 +19419,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="tl29-finding" data-finding="finding-10" style="left: 85%;">
                         <div class="tl29-finding-dot tl29-finding-dot-good"></div>
                         <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
+                        <div class="tl29-finding-mobile is-good">
+                            <div class="tl29-finding-mobile-tag">Intervention virker · Uge 44</div>
+                            <div class="tl29-finding-mobile-title">Acceleration vendt. Første målbare effekt.</div>
+                            <div class="tl29-finding-mobile-data">Stress 76 → 58. Kontrol 32 → 51. Positiv trend i 8 cyklusser.</div>
+                            <div class="tl29-finding-mobile-cta">Tryk for hvad der virkede →</div>
+                        </div>
                     </div>
 
                     <!-- Måling 11 (uge 47) + Fund (uge 48) - good -->
@@ -19239,6 +19445,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="tl29-finding" data-finding="finding-12" style="left: 91%;">
                         <div class="tl29-finding-dot tl29-finding-dot-good"></div>
                         <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
+                        <div class="tl29-finding-mobile is-good">
+                            <div class="tl29-finding-mobile-tag">Året opsummeret · Uge 52</div>
+                            <div class="tl29-finding-mobile-title">36 uger fra første signal til afværget krise</div>
+                            <div class="tl29-finding-mobile-data">Højeste samlede team-score i 12 måneder. Mindst 2 opsigelser undgået.</div>
+                            <div class="tl29-finding-mobile-vs">⚡ Klassisk trivselsmåling havde aldrig set noget af dette</div>
+                            <div class="tl29-finding-mobile-cta">Tryk for de fulde tal →</div>
+                        </div>
                     </div>
 
                     <!-- TOTAL: Hvad culture intelligence sparede -->
