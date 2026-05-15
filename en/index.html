@@ -26878,26 +26878,26 @@ document.addEventListener('DOMContentLoaded', function() {
         // === Theme detection, parse free text for culture dimensions + situational signals ===
         var THEME_PATTERNS = [
             { id: 'sundhed', label: 'Wellbeing & stress',
-              keywords: ['stress', 'burnout', 'burned out', 'burnt out', 'sick leave', 'workload', 'work-life', 'work life', 'work pressure', 'overloaded', 'mental health', 'overwork', 'wellbeing', 'illness'] },
+              keywords: ['stress', 'burnout', 'burned out', 'burnt out', 'sick leave', 'workload', 'work-life', 'work life', 'work pressure', 'overloaded', 'mental health', 'overwork', 'wellbeing', 'illness', 'absence'] },
             { id: 'tillid', label: 'Trust & safety',
-              keywords: ['tillid', 'tryghed', 'psykologisk', 'turde sige', 'åbenhed', 'kritik', 'mistillid', 'tør ikke', 'feedback', 'siloer', 'silo', 'mikroledelse', 'mikroled'] },
+              keywords: ['trust', 'safety', 'psychological', 'speak up', 'openness', 'criticism', 'distrust', 'dare not', 'feedback', 'silos', 'silo', 'micromanagement', 'micromanaging', 'fear'] },
             { id: 'tilhør', label: 'Belonging & inclusion',
-              keywords: ['tilhør', 'inklusion', 'fællesskab', 'tilhørsforhold', 'team-dynamik', 'sammenhold', 'os og dem', 'opsigelse', 'opsigelser', 'kunst', 'turnover', 'fastholdelse'] },
+              keywords: ['belonging', 'inclusion', 'community', 'team dynamics', 'team-dynamic', 'cohesion', 'us vs them', 'us and them', 'resignation', 'resignations', 'turnover', 'retention', 'attrition'] },
             { id: 'formaal', label: 'Purpose & development',
-              keywords: ['formål', 'mening', 'retning', 'udvikling', 'karriere', 'strategi', 'strategisk', 'vækst', 'mission', 'vision', 'purpose', 'kursus', 'kompetencer', 'næste skridt'] },
+              keywords: ['purpose', 'meaning', 'direction', 'development', 'career', 'strategy', 'strategic', 'growth', 'mission', 'vision', 'training', 'skills', 'next step', 'next steps'] },
             { id: 'arbejde', label: 'Work environment & collaboration',
-              keywords: ['arbejdsmiljø', 'samarbejde', 'workflow', 'møder', 'remote', 'hybrid', 'rammer', 'processer', 'effektivitet', 'tværgående', 'kontor', 'fleksibilitet'] }
+              keywords: ['working environment', 'collaboration', 'workflow', 'meetings', 'remote', 'hybrid', 'frameworks', 'processes', 'efficiency', 'cross-functional', 'office', 'flexibility'] }
         ];
 
         var SIGNALS = {
-            data:        { kw: ['rapport', 'culturequest', 'score', 'måling', 'data', 'tal', 'undersøgelse', 'pulse', 'engagement-score', 'engagement score', 'apv', 'survey'] },
-            ledelse:     { kw: ['ledergruppe', 'lederteam', 'ledelsesgruppen', 'ledelsesgruppe', 'ledelseslag', 'ledelses-', 'topledelse', 'direktion', 'mt', 'managementteam'] },
-            individuel:  { kw: ['ceo', 'cfo', 'cpo', 'cto', 'cmo', 'min leder', 'én leder', 'en enkelt leder', 'individuel', 'hr-chef', 'min chef', 'min ceo'] },
-            team:        { kw: ['et team', 'ét team', 'marketingteam', 'salgsteam', 'udviklingsteam', 'engineering', 'afdeling', 'specifikt team'] },
-            workshop:    { kw: ['workshop', 'kickoff', 'kick-off', 'temadag', 'intensiv', 'én dag', 'en dag', 'én session'] },
-            forløb:      { kw: ['forløb', 'transformation', 'måneder', 'over tid', 'langsigtet', 'systematisk', 'langvarig'] },
-            sparring:    { kw: ['sparring', 'rådgivning', 'løbende', 'klippekort', 'jævnlig', 'mentor'] },
-            strategisk:  { kw: ['strategi', 'strategisk', 'vækst', 'opskalering', 'fusion', 'omstrukturering', 'transformation'] }
+            data:        { kw: ['report', 'culturequest', 'score', 'measurement', 'data', 'numbers', 'survey', 'pulse', 'engagement score', 'engagement-score', 'risk assessment', 'assessment', 'apv'] },
+            ledelse:     { kw: ['leadership team', 'leadership group', 'management team', 'mgmt', 'mt', 'exec team', 'executive team', 'leader team', 'leader-team'] },
+            individuel:  { kw: ['ceo', 'cfo', 'cpo', 'cto', 'cmo', 'my manager', 'my leader', 'one leader', 'a single leader', 'individual', 'hr manager', 'my boss', 'my ceo'] },
+            team:        { kw: ['a team', 'one team', 'marketing team', 'sales team', 'engineering team', 'engineering', 'department', 'specific team'] },
+            workshop:    { kw: ['workshop', 'kickoff', 'kick-off', 'offsite', 'intensive', 'one day', 'a day', 'one session', 'a session'] },
+            forløb:      { kw: ['program', 'transformation', 'months', 'over time', 'long-term', 'systematic', 'long-running'] },
+            sparring:    { kw: ['sparring', 'advisory', 'ongoing', 'retainer', 'regular', 'mentor', 'coaching'] },
+            strategisk:  { kw: ['strategy', 'strategic', 'growth', 'scale', 'scaling', 'merger', 'restructuring', 'transformation'] }
         };
 
         function detectThemes(text) {
