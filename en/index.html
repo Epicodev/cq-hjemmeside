@@ -12232,6 +12232,7 @@ footer {
     .apv-hero-text {
         padding: 0;
         margin-bottom: 30px;
+        transform: none;
     }
     .apv-floats {
         position: relative;
@@ -16424,6 +16425,39 @@ button.apv-pt-ci-event.apv-pt-ci-action::before {
     .apv-pt-ci-card::after {
         display: none;
     }
+
+    /* MOBILE: show pulse-tooltip content inline as card (instead of hover floating) */
+    .apv-pt-ci-pulse[data-tooltip] {
+        grid-template-areas:
+            "dot label"
+            ".   tooltip" !important;
+    }
+    .apv-pt-ci-pulse[data-tooltip]::after {
+        grid-area: tooltip;
+        content: attr(data-tooltip);
+        /* override desktop hover-positioning */
+        position: static !important;
+        bottom: auto !important;
+        left: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        background: var(--paper-card, #fff) !important;
+        color: var(--neutral-700, #374151) !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        padding: 10px 12px !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(15, 17, 50, 0.08) !important;
+        width: auto !important;
+        max-width: 100% !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        white-space: normal !important;
+        margin-top: 4px;
+    }
+    .apv-pt-ci-pulse[data-tooltip]::before {
+        display: none !important;
+    }
 }
 
 /* Reduce motion */
@@ -17928,6 +17962,13 @@ body.nav-mobile-open {
     .pain-timeline-wrap .tl29-finding,
     .pain-timeline-wrap .tl29-pulse-label,
     .pain-timeline-wrap .tl29-finding-label {
+        display: none !important;
+    }
+
+    /* Skjul hover-baserede legend-bokse - mobil bruger ikke hover-mekanikken
+       og "Hover på X" giver ikke mening på touch */
+    .pain-timeline-wrap .tl30-legend,
+    .apv-pt-wrap .apv-pt-legend {
         display: none !important;
     }
 
@@ -27413,8 +27454,9 @@ document.addEventListener('DOMContentLoaded', function() {
    Re-uses APV's sticky-scroll mechanic (220vh stage, 100vh sticky inner).
    Only override the text Y-position so it sits a bit lower than APV's -18vh. */
 #page-pilotprojekt .apv-hero-text { transform: translateY(-10vh); }
-@media (max-width: 720px) {
-    #page-pilotprojekt .apv-hero-text { transform: translateY(-6vh); }
+@media (max-width: 980px) {
+    /* Mobile: no transform, the section padding handles spacing */
+    #page-pilotprojekt .apv-hero-text { transform: none; }
 }
 
 .pp-rails {
@@ -33963,7 +34005,10 @@ document.addEventListener('DOMContentLoaded', function() {
      * '/en/risk-assessment' → 'apv', '/en/' → 'home', '/en/blog/foo' → 'blog' (slug handled separately).
      */
     function getPageFromPath() {
-        let path = (window.location.pathname || '/').toLowerCase().replace(/\/$/, '') || '/';
+        let raw = (window.location.pathname || '/');
+        // Decode URL-encoded paths (e.g. /trivselsm%C3%A5ling -> /trivselsmåling)
+        try { raw = decodeURIComponent(raw); } catch (e) { /* keep raw */ }
+        let path = raw.toLowerCase().replace(/\/$/, '') || '/';
         // Strip /en prefix
         if (path === '/en' || path === '/en/') return 'home';
         if (path.startsWith('/en/')) path = path.slice(3); // '/en/foo' -> '/foo'
