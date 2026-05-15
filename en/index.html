@@ -20938,48 +20938,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // === Question data ===
         const cycleOptions = [
-            { id: 'never',    label: 'Vi har aldrig lavet APV',          status: 'Ny',                  statusColor: 'var(--primary-500)', urgency: 'Lovkrav fra dag 1', urgent: false },
-            { id: 'overdue',  label: 'Vores APV er over 3 år gammel',    status: 'Pligt overskredet',   statusColor: 'var(--danger-600)', urgency: 'Akut, teknisk i overtrædelse', urgent: true },
-            { id: 'planning', label: 'Vi planlægger APV inden for 6 mdr', status: 'Planlægger',         statusColor: 'var(--warning-600)', urgency: '6 mdr horisont', urgent: false },
-            { id: 'switch',   label: 'Vi har Excel/system, men det virker ikke', status: 'Klar til skifte', statusColor: 'var(--success-600)', urgency: 'Når kontrakt udløber', urgent: false }
+            { id: 'never',    label: 'We have never done a risk assessment',  status: 'New',                statusColor: 'var(--primary-500)', urgency: 'Legally required from day 1', urgent: false },
+            { id: 'overdue',  label: 'Our assessment is more than 3 years old', status: 'Compliance overdue', statusColor: 'var(--danger-600)', urgency: 'Urgent, technically in breach', urgent: true },
+            { id: 'planning', label: 'We are planning a new assessment within 6 months', status: 'Planning', statusColor: 'var(--warning-600)', urgency: '6-month horizon', urgent: false },
+            { id: 'switch',   label: 'We have Excel/a system but it does not work', status: 'Ready to switch', statusColor: 'var(--success-600)', urgency: 'When the current contract expires', urgent: false }
         ];
 
         const sizeOptions = [
-            { id: 's',  label: '10–50 medarbejdere',   display: '10–50 medarbejdere',   apvOnce: 9500,  saasMonthly: 2000 },
-            { id: 'm',  label: '51–250 medarbejdere',  display: '51–250 medarbejdere',  apvOnce: 24000, saasMonthly: 4500 },
-            { id: 'l',  label: '251–500 medarbejdere', display: '251–500 medarbejdere', apvOnce: 45000, saasMonthly: 6500 },
-            { id: 'xl', label: '500+ medarbejdere',    display: '500+ medarbejdere',    apvOnce: 75000, saasMonthly: 9500, isFrom: true }
+            { id: 's',  label: '10–50 employees',   display: '10–50 employees',   apvOnce: 9500,  saasMonthly: 2000 },
+            { id: 'm',  label: '51–250 employees',  display: '51–250 employees',  apvOnce: 24000, saasMonthly: 4500 },
+            { id: 'l',  label: '251–500 employees', display: '251–500 employees', apvOnce: 45000, saasMonthly: 6500 },
+            { id: 'xl', label: '500+ employees',    display: '500+ employees',    apvOnce: 75000, saasMonthly: 9500, isFrom: true }
         ];
 
         const industryOptions = [
-            { id: 'produktion', label: 'Produktion & industri' },
-            { id: 'sundhed',    label: 'Sundhed & pleje' },
-            { id: 'bygge',      label: 'Bygge & anlæg' },
+            { id: 'produktion', label: 'Manufacturing & industry' },
+            { id: 'sundhed',    label: 'Healthcare & care' },
+            { id: 'bygge',      label: 'Construction' },
             { id: 'it',         label: 'IT & tech' },
-            { id: 'detail',     label: 'Detail & service' },
-            { id: 'uddannelse', label: 'Uddannelse' },
-            { id: 'finans',     label: 'Finans & service' },
-            { id: 'andet',      label: 'Anden branche' }
+            { id: 'detail',     label: 'Retail & service' },
+            { id: 'uddannelse', label: 'Education' },
+            { id: 'finans',     label: 'Finance & service' },
+            { id: 'andet',      label: 'Other industry' }
         ];
 
         const intentOptions = [
-            { id: 'apv-only',    label: 'Engangs-opgave',                short: 'Engangs' },
-            { id: 'apv-maybe',   label: 'Engangs nu, måske mere senere', short: 'Engangs + åben' },
-            { id: 'continuous',  label: 'Løbende arbejde',               short: 'Løbende' }
+            { id: 'apv-only',    label: 'One-off task',                short: 'One-off' },
+            { id: 'apv-maybe',   label: 'One-off now, maybe more later', short: 'One-off + open' },
+            { id: 'continuous',  label: 'Continuous work',             short: 'Continuous' }
         ];
 
         const setupOptions = [
-            { id: 'none',     label: 'Vi har intet endnu',                  short: 'Intet' },
-            { id: 'excel',    label: 'Excel-skabelon eller PDF',            short: 'Excel/PDF' },
-            { id: 'system',   label: 'Et eksisterende APV-system',          short: 'Andet system' },
-            { id: 'consult',  label: 'En konsulent har lavet det for os',   short: 'Konsulent' }
+            { id: 'none',     label: 'We have nothing yet',                short: 'Nothing' },
+            { id: 'excel',    label: 'Excel template or PDF',              short: 'Excel/PDF' },
+            { id: 'system',   label: 'An existing assessment system',      short: 'Another system' },
+            { id: 'consult',  label: 'A consultant did it for us',         short: 'Consultant' }
         ];
 
         const driverOptions = [
-            { id: 'hr',         label: 'HR / People & Culture',     short: 'HR' },
-            { id: 'amr',        label: 'AMR / arbejdsmiljø',        short: 'AMR' },
-            { id: 'leadership', label: 'Ledelse / mellemledere',    short: 'Ledelse' },
-            { id: 'exec',       label: 'Direktion / C-suite',       short: 'Direktion' }
+            { id: 'hr',         label: 'HR / People & Culture',         short: 'HR' },
+            { id: 'amr',        label: 'Safety rep / working environment', short: 'Safety rep' },
+            { id: 'leadership', label: 'Leadership / middle managers',  short: 'Leadership' },
+            { id: 'exec',       label: 'Executive / C-suite',           short: 'Executive' }
         ];
 
         // === State ===
@@ -21087,21 +21087,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // === Flow ===
         async function startFlow() {
-            await botSay("Hej! Lad os finde ud af hvor I står med APV. Først, hvor langt er I?", 600);
+            await botSay("Hi! Let's figure out where you stand with the risk assessment. First — how far along are you?", 600);
             buildChips(cycleOptions, async (pick) => {
                 answers.cycle = pick;
                 appendUser(pick.label);
-                addSummaryLine('Cyklus', pick.status);
+                addSummaryLine('Cycle', pick.status);
 
                 let response = "";
                 if (pick.id === 'never') {
-                    response = "Forstået. <strong>Ny opstart</strong> er faktisk en fordel, I kan bygge det rigtigt fra start uden Excel-bagage. Hvor mange medarbejdere er I?";
+                    response = "Got it. <strong>Starting fresh</strong> is actually an advantage — you can build it right from the start, no Excel baggage. How many employees are you?";
                 } else if (pick.id === 'overdue') {
-                    response = "OK, det er akut. Loven kræver APV minimum hvert 3. år, og Arbejdstilsynet kan give påbud eller bøder ved tilsyn. Vi får jer i gang hurtigt. Hvor mange medarbejdere er I?";
+                    response = "OK, this is urgent. Danish law requires a risk assessment at least every 3 years, and the Working Environment Authority can issue notices or fines on inspection. We'll get you started fast. How many employees are you?";
                 } else if (pick.id === 'planning') {
-                    response = "Godt I er på forkant. Med 6 mdr horisont har vi tid til at gøre det rigtigt. Hvor mange medarbejdere er I?";
+                    response = "Good that you're ahead of it. With a 6-month horizon, we have time to do it right. How many employees are you?";
                 } else if (pick.id === 'switch') {
-                    response = "Vi hører det ofte, Excel og generiske systemer giver compliance, men ingen reel indsigt. Hvor mange medarbejdere er I?";
+                    response = "We hear this often — Excel and generic systems give compliance but no real insight. How many employees are you?";
                 }
                 await botSay(response, 900);
                 askSize();
@@ -21112,8 +21112,8 @@ document.addEventListener('DOMContentLoaded', function() {
             buildChips(sizeOptions, async (pick) => {
                 answers.size = pick;
                 appendUser(pick.label);
-                addSummaryLine('Størrelse', pick.display);
-                await botSay("Tak. Næste spørgsmål, hvilken branche er I i? Det afgør hvilken spørgeramme der passer bedst.", 800);
+                addSummaryLine('Size', pick.display);
+                await botSay("Thanks. Next — what industry are you in? That decides which survey template fits best.", 800);
                 askIndustry();
             });
         }
@@ -21122,9 +21122,9 @@ document.addEventListener('DOMContentLoaded', function() {
             buildChips(industryOptions, async (pick) => {
                 answers.industry = pick;
                 appendUser(pick.label);
-                addSummaryLine('Branche', pick.label);
+                addSummaryLine('Industry', pick.label);
                 await delay(200);
-                await botSay("Tak. Hvor kommer I fra i dag, bruger I noget specifikt nu?", 800);
+                await botSay("Thanks. Where are you coming from today — are you using anything specific right now?", 800);
                 askSetup();
             });
         }
@@ -21133,14 +21133,14 @@ document.addEventListener('DOMContentLoaded', function() {
             buildChips(setupOptions, async (pick) => {
                 answers.setup = pick;
                 appendUser(pick.label);
-                addSummaryLine('Setup i dag', pick.short);
+                addSummaryLine('Current setup', pick.short);
                 await delay(200);
 
                 let response = "";
-                if (pick.id === 'none') response = "OK. Hvem driver det her arbejde hos jer?";
-                else if (pick.id === 'excel') response = "Det hører vi tit. Excel er nemt at starte med, men besværligt at gentage. Hvem driver det her arbejde hos jer?";
-                else if (pick.id === 'system') response = "Forstået, så er det måske mere et spørgsmål om at finde noget bedre. Hvem driver det her arbejde hos jer?";
-                else if (pick.id === 'consult') response = "Tak for det. Hvem driver det her arbejde hos jer?";
+                if (pick.id === 'none') response = "OK. Who drives this work for you?";
+                else if (pick.id === 'excel') response = "We hear it often. Excel is easy to start with, but tedious to repeat. Who drives this work for you?";
+                else if (pick.id === 'system') response = "Got it — so it might be more a matter of finding something better. Who drives this work for you?";
+                else if (pick.id === 'consult') response = "Thanks for sharing. Who drives this work for you?";
 
                 await botSay(response, 900);
                 askDriver();
@@ -21153,7 +21153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 appendUser(pick.label);
                 addSummaryLine('Driver', pick.short);
                 await delay(200);
-                await botSay("Sidste spørgsmål: <strong>hvor vigtigt er det for jer at arbejde med kultur og trivsel ud over selve APV'en?</strong>", 800);
+                await botSay("Last question: <strong>how important is it for you to work with culture and wellbeing beyond the risk assessment itself?</strong>", 800);
                 askIntent();
             });
         }
@@ -21168,7 +21168,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        function fmt(n) { return n.toLocaleString('da-DK'); }
+        function fmt(n) { return n.toLocaleString('en-GB'); }
 
         // === Smart verdict, vejer signaler ===
         function buildVerdict() {
@@ -21182,36 +21182,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const apvPrice = sz.apvOnce;
             const saasMonthly = sz.saasMonthly;
             const saasYearly = saasMonthly * 12;
-            const apvFromText = (sz.id === 'xl') ? 'fra ' : '';
+            const apvFromText = (sz.id === 'xl') ? 'from ' : '';
 
-            // Timeline baseret på cyklus
+            // Timeline based on cycle
             let timeline = "";
             let urgency_short = "";
-            if (c.id === 'never') { timeline = "Setup på 1-2 uger, første måling indenfor 4-6 uger fra start"; urgency_short = "Standard tempo"; }
-            else if (c.id === 'overdue') { timeline = "Akut: setup på 1 uge, første måling indenfor 3 uger, fuld dokumentation klar senest 6 uger fra start"; urgency_short = "Akut, start straks"; }
-            else if (c.id === 'planning') { timeline = "Start onboarding ~8 uger før jeres deadline"; urgency_short = "I god tid"; }
-            else if (c.id === 'switch') { timeline = "Parallel-kørsel i én cyklus så I kan sammenligne kvaliteten, typisk 8-10 uger"; urgency_short = "Når kontrakten udløber"; }
+            if (c.id === 'never') { timeline = "Setup in 1-2 weeks, first survey within 4-6 weeks from start"; urgency_short = "Standard pace"; }
+            else if (c.id === 'overdue') { timeline = "Urgent: setup in 1 week, first survey within 3 weeks, full documentation ready within 6 weeks from start"; urgency_short = "Urgent, start now"; }
+            else if (c.id === 'planning') { timeline = "Begin onboarding ~8 weeks before your deadline"; urgency_short = "Ahead of time"; }
+            else if (c.id === 'switch') { timeline = "Parallel run for one cycle so you can compare quality, typically 8-10 weeks"; urgency_short = "When the contract expires"; }
 
-            // Tilgang baseret på cyklus + setup
+            // Approach based on cycle + setup
             let approach = "";
             if (c.id === 'overdue') {
-                approach = "I er teknisk i overtrædelse. Vi prioriterer hastighed, bruger vores " + ind.label + "-skabelon der er klar fra dag 1.";
+                approach = "You're technically in breach. We prioritise speed and use our " + ind.label + " template which is ready from day 1.";
             } else if (c.id === 'switch' || setup.id === 'system' || setup.id === 'excel') {
-                approach = "Vi tager overgangen for jer. Importerer historiske data hvor muligt, sætter " + ind.label + "-skabelonen op, og kører parallelt så I kan sammenligne direkte.";
+                approach = "We handle the migration for you. Import historical data where possible, set up the " + ind.label + " template, and run in parallel so you can compare directly.";
             } else if (c.id === 'never' || setup.id === 'none') {
-                approach = "Som ny opstart har I fordelen ved at bygge det rigtigt fra start. Vi sætter " + ind.label + "-skabelonen op, og kører første måling indenfor 4-6 uger.";
+                approach = "Starting fresh has its advantages — you can build it right from the start. We set up the " + ind.label + " template and run the first survey within 4-6 weeks.";
             } else {
-                approach = "Vi tilpasser " + ind.label + "-skabelonen og kører første måling i jeres tempo.";
+                approach = "We tailor the " + ind.label + " template and run the first survey at your pace.";
             }
 
-            // Driver-tilpasning af tone
+            // Driver-specific tone
             let driverNote = "";
             if (driver.id === 'exec' || driver.id === 'leadership') {
-                driverNote = "Med ledelses-engagement bag bliver implementeringen markant lettere, vi har set 2-3x højere svarprocent i den situation.";
+                driverNote = "With leadership engagement behind it, implementation gets significantly easier — we've seen 2-3x higher response rates in that situation.";
             } else if (driver.id === 'amr') {
-                driverNote = "AMR-drevet APV er det klassiske setup. Vi sørger for at I har tal og dokumentation klar, så I kan tage diskussionen videre med ledelsen.";
+                driverNote = "A safety-rep-driven assessment is the classic setup. We make sure you have the numbers and documentation ready so you can take the discussion further with leadership.";
             } else if (driver.id === 'hr') {
-                driverNote = "HR-drevne APV'er kører ofte stærkest når data kan kobles til andre HR-metrics. Det er præcis hvad vores platform gør.";
+                driverNote = "HR-driven assessments work strongest when data can connect to other HR metrics. That's exactly what our platform does.";
             }
 
             // Anbefaling baseret på intent + signal-vejning
@@ -21231,42 +21231,42 @@ document.addEventListener('DOMContentLoaded', function() {
             // overdue + engangs = APV-engangs (akut leverance)
 
             if (intent.id === 'continuous') {
-                // SaaS er primær
-                recommendation.primary = "Platform-abonnement";
-                recommendation.primaryPrice = fmt(saasMonthly) + " kr/md ex. moms";
-                recommendation.primaryDesc = "APV inkluderet + kontinuerlig culture intelligence, 1:1 værktøjer, e-learning, handlingsplaner";
-                recommendation.alternative = "APV som engangskøb";
-                recommendation.altPrice = apvFromText + fmt(apvPrice) + " kr ex. moms";
-                recommendation.altDesc = "Hvis I vil starte småt og opgradere senere";
-                recommendation.rationale = "Med ambition om løbende arbejde er platform mest værdi: " + fmt(saasYearly) + " kr/år dækker APV (som ellers ville koste " + fmt(apvPrice) + " kr alene) + 12 måneders kontinuerlig indsigt.";
+                // SaaS is primary
+                recommendation.primary = "Platform subscription";
+                recommendation.primaryPrice = fmt(saasMonthly) + " DKK/month excl. VAT";
+                recommendation.primaryDesc = "Risk assessment included + continuous culture intelligence, 1:1 tools, e-learning, action plans";
+                recommendation.alternative = "Risk assessment as a one-off";
+                recommendation.altPrice = apvFromText + fmt(apvPrice) + " DKK excl. VAT";
+                recommendation.altDesc = "If you want to start small and upgrade later";
+                recommendation.rationale = "With an ambition for continuous work, the platform gives the most value: " + fmt(saasYearly) + " DKK/year covers the assessment (which alone would cost " + fmt(apvPrice) + " DKK) + 12 months of continuous insight.";
             } else if (intent.id === 'apv-maybe' && (driver.id === 'exec' || driver.id === 'leadership')) {
-                // Måske + ledelse = lean towards SaaS
-                recommendation.primary = "Platform-abonnement (anbefalet)";
-                recommendation.primaryPrice = fmt(saasMonthly) + " kr/md ex. moms";
-                recommendation.primaryDesc = "APV inkluderet + kontinuerlig kultur-måling. Med ledelse bag jer får I mest værdi her.";
-                recommendation.alternative = "APV som engangskøb";
-                recommendation.altPrice = apvFromText + fmt(apvPrice) + " kr ex. moms";
-                recommendation.altDesc = "Hvis I vil teste vandet først, kan opgraderes senere";
-                recommendation.rationale = "Med ledelses-engagement og åbenhed for mere senere er ROI'en stærkest på platform fra start.";
+                // Maybe + leadership = lean towards SaaS
+                recommendation.primary = "Platform subscription (recommended)";
+                recommendation.primaryPrice = fmt(saasMonthly) + " DKK/month excl. VAT";
+                recommendation.primaryDesc = "Risk assessment included + continuous culture measurement. With leadership behind you, this delivers the most value.";
+                recommendation.alternative = "Risk assessment as a one-off";
+                recommendation.altPrice = apvFromText + fmt(apvPrice) + " DKK excl. VAT";
+                recommendation.altDesc = "If you want to test the waters first; can be upgraded later";
+                recommendation.rationale = "With leadership engagement and openness to more later, ROI is strongest on the platform from the start.";
             } else if (intent.id === 'apv-maybe') {
-                // Måske = sammenlign neutralt
-                recommendation.primary = "APV som engangskøb";
-                recommendation.primaryPrice = apvFromText + fmt(apvPrice) + " kr ex. moms";
-                recommendation.primaryDesc = "Spørgeramme, anonyme svar, kategorianalyse, handlingsplan, compliance-dokumentation";
-                recommendation.alternative = "Platform-abonnement";
-                recommendation.altPrice = fmt(saasMonthly) + " kr/md ex. moms";
-                recommendation.altDesc = "APV inkluderet + kontinuerlig indsigt mellem cyklusserne";
+                // Maybe = compare neutrally
+                recommendation.primary = "Risk assessment as a one-off";
+                recommendation.primaryPrice = apvFromText + fmt(apvPrice) + " DKK excl. VAT";
+                recommendation.primaryDesc = "Survey template, anonymous responses, category analysis, action plan, compliance documentation";
+                recommendation.alternative = "Platform subscription";
+                recommendation.altPrice = fmt(saasMonthly) + " DKK/month excl. VAT";
+                recommendation.altDesc = "Assessment included + continuous insight between cycles";
                 let savings = saasYearly - apvPrice;
-                recommendation.rationale = "Mange starter med engangskøb og opgraderer efter første cyklus. På årsbasis er forskellen " + fmt(savings) + " kr, det er værd at overveje.";
+                recommendation.rationale = "Many start with the one-off and upgrade after the first cycle. On an annual basis the difference is " + fmt(savings) + " DKK — worth considering.";
             } else { // apv-only
-                // APV = primær, SaaS = svag note
-                recommendation.primary = "APV som engangskøb";
-                recommendation.primaryPrice = apvFromText + fmt(apvPrice) + " kr ex. moms";
-                recommendation.primaryDesc = "Spørgeramme, anonyme svar, kategorianalyse, handlingsplan, compliance-dokumentation";
-                recommendation.alternative = "Platform-abonnement";
-                recommendation.altPrice = fmt(saasMonthly) + " kr/md ex. moms";
-                recommendation.altDesc = "Hvis I på sigt vil arbejde løbende. Indeholder APV.";
-                recommendation.rationale = "I vil have lovkravet på plads, det kan vi levere som engangsleverance. Resten er informativt.";
+                // APV = primary, SaaS = soft note
+                recommendation.primary = "Risk assessment as a one-off";
+                recommendation.primaryPrice = apvFromText + fmt(apvPrice) + " DKK excl. VAT";
+                recommendation.primaryDesc = "Survey template, anonymous responses, category analysis, action plan, compliance documentation";
+                recommendation.alternative = "Platform subscription";
+                recommendation.altPrice = fmt(saasMonthly) + " DKK/month excl. VAT";
+                recommendation.altDesc = "For when you eventually want to work continuously. Includes the risk assessment.";
+                recommendation.rationale = "You want the legal requirement covered — we can deliver that as a one-off. The rest is informational.";
             }
 
             return {
@@ -21285,39 +21285,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 saasMonthly: saasMonthly,
                 saasYearly: saasYearly,
                 apvFromText: apvFromText,
-                generatedAt: new Date().toLocaleDateString('da-DK', { day: '2-digit', month: 'long', year: 'numeric' })
+                generatedAt: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })
             };
         }
 
         async function showVerdict() {
             const v = buildVerdict();
-            window._apvVerdict = v; // Gem til PDF-generation
+            window._apvVerdict = v; // Save for PDF generation
             setVerdict(v.cycle);
 
-            await botSay("Tak. Her er <strong>min vurdering</strong>:", 700);
+            await botSay("Thanks. Here is <strong>my assessment</strong>:", 700);
             await delay(300);
             await botSay(v.approach, 1100);
             await delay(400);
 
-            // Driver-specifik note
+            // Driver-specific note
             if (v.driverNote) {
                 await botSay(v.driverNote, 1000);
                 await delay(400);
             }
 
-            // Pris-anbefaling
-            await botSay("<strong>Min anbefaling:</strong> " + v.recommendation.primary + ", " + v.recommendation.primaryPrice + ".<br><br>" + v.recommendation.rationale, 1300);
+            // Price recommendation
+            await botSay("<strong>My recommendation:</strong> " + v.recommendation.primary + ", " + v.recommendation.primaryPrice + ".<br><br>" + v.recommendation.rationale, 1300);
             await delay(400);
 
             // Update summary
-            addSummaryLine('Anbefaling', v.recommendation.primary);
-            addSummaryLine('Pris', v.recommendation.primaryPrice);
+            addSummaryLine('Recommendation', v.recommendation.primary);
+            addSummaryLine('Price', v.recommendation.primaryPrice);
 
-            // Vis tilbud-boks
+            // Show offer box
             renderOfferBox(v);
 
             await delay(300);
-            await botSay("I har nu et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email, så har I det klar til mødet.", 900);
+            await botSay("You now have a full picture on the right. <strong>Download the offer as PDF</strong> or send it to your email so you have it ready for the meeting.", 900);
         }
 
         // === Render structured offer box (replaces simple summary) ===
@@ -21330,55 +21330,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
             offerBox.innerHTML =
                 '<div class="apvCyc-offer-header">' +
-                    '<div class="apvCyc-offer-eyebrow">Jeres tilbud</div>' +
+                    '<div class="apvCyc-offer-eyebrow">Your offer</div>' +
                     '<div class="apvCyc-offer-date">' + v.generatedAt + '</div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-section">' +
                     '<div class="apvCyc-offer-label">Situation</div>' +
                     '<div class="apvCyc-offer-grid">' +
-                        '<div><span>Cyklus</span><strong>' + v.cycle.status + '</strong></div>' +
-                        '<div><span>Størrelse</span><strong>' + v.size.display + '</strong></div>' +
-                        '<div><span>Branche</span><strong>' + v.industry.label + '</strong></div>' +
-                        '<div><span>Setup i dag</span><strong>' + v.setup.short + '</strong></div>' +
+                        '<div><span>Cycle</span><strong>' + v.cycle.status + '</strong></div>' +
+                        '<div><span>Size</span><strong>' + v.size.display + '</strong></div>' +
+                        '<div><span>Industry</span><strong>' + v.industry.label + '</strong></div>' +
+                        '<div><span>Current setup</span><strong>' + v.setup.short + '</strong></div>' +
                         '<div><span>Driver</span><strong>' + v.driver.short + '</strong></div>' +
                         '<div><span>Ambition</span><strong>' + v.intent.short + '</strong></div>' +
                     '</div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-section apvCyc-offer-primary">' +
-                    '<div class="apvCyc-offer-label">Anbefaling</div>' +
+                    '<div class="apvCyc-offer-label">Recommendation</div>' +
                     '<div class="apvCyc-offer-rec-title">' + v.recommendation.primary + '</div>' +
                     '<div class="apvCyc-offer-rec-price">' + v.recommendation.primaryPrice + '</div>' +
                     '<div class="apvCyc-offer-rec-desc">' + v.recommendation.primaryDesc + '</div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-section">' +
-                    '<div class="apvCyc-offer-label">Alternativ</div>' +
+                    '<div class="apvCyc-offer-label">Alternative</div>' +
                     '<div class="apvCyc-offer-alt-title">' + v.recommendation.alternative + '</div>' +
                     '<div class="apvCyc-offer-alt-price">' + v.recommendation.altPrice + '</div>' +
                     '<div class="apvCyc-offer-alt-desc">' + v.recommendation.altDesc + '</div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-section">' +
-                    '<div class="apvCyc-offer-label">Tidslinje</div>' +
+                    '<div class="apvCyc-offer-label">Timeline</div>' +
                     '<div class="apvCyc-offer-timeline">' + v.timeline + '</div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-actions">' +
-                    '<button class="apvCyc-btn-primary" id="apvCycDownloadBtn"><span>↓</span> Download som PDF</button>' +
-                    '<button class="apvCyc-btn-secondary" id="apvCycEmailBtn"><span>✉</span> Send til email</button>' +
+                    '<button class="apvCyc-btn-primary" id="apvCycDownloadBtn"><span>↓</span> Download as PDF</button>' +
+                    '<button class="apvCyc-btn-secondary" id="apvCycEmailBtn"><span>✉</span> Send to email</button>' +
                 '</div>' +
 
                 '<div class="apvCyc-email-form" id="apvCycEmailForm" style="display: none;">' +
-                    '<input type="email" id="apvCycEmailInput" placeholder="din@email.dk" class="apvCyc-email-input" />' +
-                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Send tilbud</button>' +
-                    '<button class="apvCyc-email-cancel" id="apvCycEmailCancel">Annuller</button>' +
+                    '<input type="email" id="apvCycEmailInput" placeholder="you@example.com" class="apvCyc-email-input" />' +
+                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Send offer</button>' +
+                    '<button class="apvCyc-email-cancel" id="apvCycEmailCancel">Cancel</button>' +
                     '<div class="apvCyc-email-msg" id="apvCycEmailMsg"></div>' +
                 '</div>' +
 
                 '<div class="apvCyc-offer-foot">' +
-                    'Tilbuddet er vejledende. Endelig pris bekræftes efter onboarding-samtale. Alle priser ex. moms.' +
+                    'The offer is indicative. Final pricing is confirmed after an onboarding call. All prices excl. VAT.' +
                 '</div>';
 
             // Wire up actions
@@ -21402,7 +21402,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const script = document.createElement('script');
                 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
                 script.onload = () => resolve(window.jspdf);
-                script.onerror = () => reject(new Error('Kunne ikke indlæse PDF-biblioteket'));
+                script.onerror = () => reject(new Error('Could not load the PDF library'));
                 document.head.appendChild(script);
             });
         }
@@ -21413,20 +21413,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const btn = document.getElementById('apvCycDownloadBtn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>⏳</span> Genererer...';
+            btn.innerHTML = '<span>⏳</span> Generating...';
             btn.disabled = true;
 
             try {
                 await window.renderCulturequestPDF({
                     kind: 'apv',
-                    title: 'Jeres APV-tilbud',
-                    subtitle: 'Skræddersyet anbefaling baseret på jeres APV-cyklus, størrelse og branche. Bygget på culture intelligence, ikke en almindelig trivselsmåling.',
+                    title: 'Your risk-assessment offer',
+                    subtitle: 'Tailored recommendation based on your assessment cycle, size and industry. Built on culture intelligence, not an ordinary engagement survey.',
                     generatedAt: v.generatedAt,
                     situationItems: [
-                        ['Cyklus', v.cycle.status],
-                        ['Størrelse', v.size.display],
-                        ['Branche', v.industry.label],
-                        ['Setup i dag', v.setup.label],
+                        ['Cycle', v.cycle.status],
+                        ['Size', v.size.display],
+                        ['Industry', v.industry.label],
+                        ['Current setup', v.setup.label],
                         ['Driver', v.driver.label],
                         ['Ambition', v.intent.label]
                     ],
@@ -21434,14 +21434,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     driverNote: v.driverNote,
                     recommendation: v.recommendation,
                     timeline: v.timeline,
-                    filename: 'culturequest-APV-tilbud-' + new Date().toISOString().slice(0, 10) + '.pdf'
+                    filename: 'culturequest-risk-assessment-offer-' + new Date().toISOString().slice(0, 10) + '.pdf'
                 });
 
-                btn.innerHTML = '<span>✓</span> Downloadet';
+                btn.innerHTML = '<span>✓</span> Downloaded';
                 setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2500);
             } catch (err) {
                 console.error('PDF error:', err);
-                btn.innerHTML = '<span>⚠</span> Prøv igen';
+                btn.innerHTML = '<span>⚠</span> Try again';
                 setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2500);
             }
         }
@@ -21456,12 +21456,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Validation
             if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 msg.style.color = 'var(--danger-600)';
-                msg.textContent = 'Indtast en gyldig email-adresse.';
+                msg.textContent = 'Please enter a valid email address.';
                 return;
             }
 
             btn.disabled = true;
-            btn.textContent = 'Sender...';
+            btn.textContent = 'Sending...';
 
             const v = window._apvVerdict;
             const apvMetadata = {
@@ -21487,16 +21487,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = false;
-            btn.textContent = 'Send tilbud';
+            btn.textContent = 'Send offer';
 
             if (captureResult.ok) {
                 msg.style.color = 'var(--success-600)';
-                msg.textContent = '✓ Tilbuddet er sendt til ' + email + '. Tjek din indbakke.';
-                // Også download PDF lokalt
+                msg.textContent = '✓ The offer has been sent to ' + email + '. Check your inbox.';
+                // Also download PDF locally
                 setTimeout(() => generatePDF(), 400);
             } else {
                 msg.style.color = 'var(--danger-600)';
-                msg.textContent = 'Noget gik galt. Prøv igen om et øjeblik.';
+                msg.textContent = 'Something went wrong. Please try again in a moment.';
             }
         }
 
@@ -21506,7 +21506,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const emptyDiv = document.createElement('div');
             emptyDiv.className = 'cv-summary-empty';
             emptyDiv.id = 'apvCycSummaryEmpty';
-            emptyDiv.innerHTML = '<p class="cv-summary-empty-text">Når I har svaret på spørgsmålene, ser I her hvor I står, og kan downloade tilbuddet som PDF.</p><span class="cv-summary-empty-hint">Start med spørgsmålet</span>';
+            emptyDiv.innerHTML = '<p class="cv-summary-empty-text">Once you have answered the questions, you will see where you stand here, and you can download the offer as PDF.</p><span class="cv-summary-empty-hint">Start with the question</span>';
             summaryLines.appendChild(emptyDiv);
             verdictBox.style.display = 'none';
             timeRow.style.display = 'none';
