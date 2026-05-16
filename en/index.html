@@ -27924,10 +27924,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ============ Pilot hero layout overrides ============
    Re-uses APV's sticky-scroll mechanic (220vh stage, 100vh sticky inner).
-   The EN headline is longer than the DA original, so pull the text block
-   further above center than APV's -12vh to keep the "Start your pilot" CTA
-   clear of the 4 cards that land below. */
-#page-pilotprojekt .apv-hero-text { transform: translateY(-18vh); }
+   Default APV -12vh works now that the headlines are short (1-2 visual
+   lines on both DA and EN). */
+#page-pilotprojekt .apv-hero-text { transform: translateY(-12vh); }
 @media (max-width: 980px) {
     /* Mobile: no transform, the section padding handles spacing */
     #page-pilotprojekt .apv-hero-text { transform: none; }
@@ -28653,8 +28652,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="apv-hero-text">
                         <h1 class="apv-hero-headline">
-                            365 days of culture intelligence.<br>
-                            Consultant sparring included.
+                            365 days of culture intelligence — consultant sparring included.
                         </h1>
 
                         <p class="apv-hero-sub">
