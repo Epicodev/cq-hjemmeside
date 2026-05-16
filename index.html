@@ -10956,6 +10956,48 @@ footer {
     color: var(--ink-muted);
 }
 
+/* Partners section: reuses .about-founder card styles in a 3-up grid. */
+.about-partners {
+    background: var(--paper-soft);
+    padding: 90px 24px;
+    border-bottom: 1px solid var(--rule);
+}
+
+.about-partners-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.about-partners-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 14px 0 14px;
+}
+
+.about-partners-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    max-width: 640px;
+    margin: 0 0 40px;
+}
+
+.about-partners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .about-partners-grid { grid-template-columns: 1fr; gap: 18px; }
+    .about-partners { padding: 64px 20px; }
+}
+
 /* Founder note */
 .about-note {
     background: var(--paper-soft);
@@ -30200,6 +30242,44 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="about-founder-name">Benjamin Brandt</div>
                     <div class="about-founder-role">Medstifter</div>
                     <div class="about-founder-bio">MSc Human Ernæring. Arbejder i krydsfeltet mellem kultur, præstation og data, og har bygget GTM, indhold og pris-modeller for culturequest fra dag 1.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investors & partners -->
+    <section class="about-partners">
+        <div class="about-partners-inner">
+            <div class="section-tag">Investorer & samarbejdspartnere</div>
+            <h2 class="about-partners-headline">Dem der står bag os.</h2>
+            <p class="about-partners-sub">Vi er bakket op af investorer og samarbejdspartnere der har bygget virksomheder selv, og som hjælper os med at gøre culturequest til standarden for kultur-arbejde i danske organisationer.</p>
+
+            <div class="about-partners-grid">
+                <div class="about-founder">
+                    <div class="about-founder-avatar">
+                        <img src="/assets/pierre-rindsig.jpg" alt="Portræt af Pierre Rindsig." loading="lazy" />
+                    </div>
+                    <div class="about-founder-name">Pierre Rindsig</div>
+                    <div class="about-founder-role">Investor</div>
+                    <div class="about-founder-bio">Medstifter af Pensopay (solgt til Visma). Investerer i culturequest med erfaring fra at bygge og skalere danske SaaS-virksomheder.</div>
+                </div>
+
+                <div class="about-founder">
+                    <div class="about-founder-avatar">
+                        <img src="/assets/danny-christensen.jpg" alt="Portræt af Danny Christensen." loading="lazy" />
+                    </div>
+                    <div class="about-founder-name">Danny Christensen</div>
+                    <div class="about-founder-role">Investor</div>
+                    <div class="about-founder-bio">Medstifter af Pensopay (solgt til Visma). Investerer i culturequest med erfaring fra at bygge og skalere danske SaaS-virksomheder.</div>
+                </div>
+
+                <div class="about-founder">
+                    <div class="about-founder-avatar">
+                        <img src="/assets/ruddi-vadt.jpg" alt="Portræt af Ruddi Vadt." loading="lazy" />
+                    </div>
+                    <div class="about-founder-name">Ruddi Vadt</div>
+                    <div class="about-founder-role">Konsulent</div>
+                    <div class="about-founder-bio">Lederskab, HR og kultur med begge ben solidt plantet i virkeligheden. Mange års erfaring med at udvikle mennesker, organisationer og processer — fra strategi og People & Culture til drift, salg og forandring.</div>
                 </div>
             </div>
         </div>
