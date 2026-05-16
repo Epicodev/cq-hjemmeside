@@ -27882,8 +27882,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ============ Pilot hero layout overrides ============
    Re-uses APV's sticky-scroll mechanic (220vh stage, 100vh sticky inner).
-   Only override the text Y-position so it sits a bit lower than APV's -18vh. */
-#page-pilotprojekt .apv-hero-text { transform: translateY(-10vh); }
+   The EN headline is longer than the DA original, so pull the text block
+   further above center than APV's -12vh to keep the "Start your pilot" CTA
+   clear of the 4 cards that land below. */
+#page-pilotprojekt .apv-hero-text { transform: translateY(-18vh); }
 @media (max-width: 980px) {
     /* Mobile: no transform, the section padding handles spacing */
     #page-pilotprojekt .apv-hero-text { transform: none; }
