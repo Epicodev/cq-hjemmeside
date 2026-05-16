@@ -20237,7 +20237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         <div class="sandbox-result-cta">
                             <p>This is a simulation. In the real platform it's your own employees, and the signals come from real data. week by week.</p>
-                            <a href="#" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start free trial →</a>
+                            <a href="https://live.culturequest.io" target="_blank" rel="noopener noreferrer" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start free trial →</a>
                         </div>
                     </div>
                 </div>
@@ -20914,7 +20914,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Footer -->
             <footer class="apv-law-footer">
                 <span>Cases are anonymised excerpts from the Danish Working Environment Authority's ruling register.</span>
-                <a href="#" class="apv-law-footer-link">Read the full § 15A →</a>
+                <a href="https://www.retsinformation.dk/eli/lta/2010/1072#P15a" target="_blank" rel="noopener noreferrer" class="apv-law-footer-link">Read the full § 15A →</a>
             </footer>
 
         </div>
@@ -21277,7 +21277,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="apv-ind-more-item">Education</span>
                 <span class="apv-ind-more-item">Finance & service</span>
             </div>
-            <a href="#" class="apv-ind-more-link" data-route="kontakt">Industry not listed?</a>
+            <a href="/en/contact" class="apv-ind-more-link" data-route="kontakt">Industry not listed?</a>
         </div>
     </section>
 
@@ -22195,8 +22195,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
 
         <h1 class="t1-hero-headline">
-            Performance reviews and 1:1s<br>
-            are about leadership. Not about status.
+            Performance reviews and 1:1s are about leadership.<br>
+            Not about status.
         </h1>
 
         <p class="t1-hero-sub">
@@ -22208,7 +22208,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>Be among the first</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
-            <a href="#" class="btn-outline">
+            <a href="/en/contact" class="btn-outline">
                 <span>Book an early-access demo</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
@@ -24681,7 +24681,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ============ TRIVSELSMÅLING HERO, text position override (balance: not too close to menu, but CTAs above floats) ============ */
 #tm-hero-stage .apv-hero-text {
-    transform: translateY(-14vh);
+    transform: translateY(-10vh);
 }
 @media (max-width: 1099px) {
     #tm-hero-stage .apv-hero-text { transform: translateY(0); }
@@ -26255,12 +26255,12 @@ document.addEventListener('DOMContentLoaded', function() {
     background-position: center;
 }
 .c-profile-photo.is-sandra {
-    background-image: url('./assets/sandra-vemgaard.png');
+    background-image: url('/assets/sandra-vemgaard.png');
     background-color: #a5d9b0;
     color: transparent;
 }
 .c-profile-photo.is-benjamin {
-    background-image: url('./assets/benjamin-laudrup.jpeg');
+    background-image: url('/assets/benjamin-laudrup.jpeg');
     background-color: #e9e1d5;
     color: transparent;
 }
@@ -26723,12 +26723,12 @@ document.addEventListener('DOMContentLoaded', function() {
     background-position: center;
 }
 .c-matcher-result-photo.is-sandra {
-    background-image: url('./assets/sandra-vemgaard.png');
+    background-image: url('/assets/sandra-vemgaard.png');
     background-color: #a5d9b0;
     color: transparent;
 }
 .c-matcher-result-photo.is-benjamin {
-    background-image: url('./assets/benjamin-laudrup.jpeg');
+    background-image: url('/assets/benjamin-laudrup.jpeg');
     background-color: #e9e1d5;
     color: transparent;
 }
@@ -30060,11 +30060,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (restartBtn) restartBtn.addEventListener('click', start);
 
-        // Start on first DOM ready (also re-runs if already loaded)
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', start);
-        } else {
+        // Only kick off the chat when the qualifier scrolls into view.
+        // Starting on DOMContentLoaded triggers an early scrollIntoView() that
+        // yanks the user past the hero before they've seen it.
+        var qualifierSection = document.getElementById('pp-qualifier');
+        var hasStarted = false;
+        function maybeStart() {
+            if (hasStarted) return;
+            hasStarted = true;
             start();
+        }
+        if (qualifierSection && 'IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        maybeStart();
+                        io.disconnect();
+                    }
+                });
+            }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+            io.observe(qualifierSection);
+        } else {
+            // Fallback for very old browsers — defer to first interaction
+            window.addEventListener('scroll', maybeStart, { once: true, passive: true });
         }
     })();
     </script>
@@ -30955,16 +30973,16 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="demo-page-head">
                 <div class="demo-page-eyebrow">
                     <span class="demo-page-eyebrow-pulse"></span>
-                    <span>Interaktiv produkt-tour</span>
+                    <span>Interactive product tour</span>
                 </div>
                 <h1 class="demo-page-headline">Click through culturequest. In two minutes.</h1>
                 <p class="demo-page-sub">See the full culture intelligence flow. From pulse surveys and culture score to AI recommendations and action plan. No sign-up, no credit card.</p>
                 <div class="demo-page-meta">
-                    <span class="demo-page-meta-item">⌨ Tastatur-navigation</span>
+                    <span class="demo-page-meta-item">⌨ Keyboard navigation</span>
                     <span class="demo-page-meta-divider"></span>
-                    <span class="demo-page-meta-item">🖱 Klik gennem flow'et</span>
+                    <span class="demo-page-meta-item">🖱 Click through the flow</span>
                     <span class="demo-page-meta-divider"></span>
-                    <span class="demo-page-meta-item">⏱ ~2 minutter</span>
+                    <span class="demo-page-meta-item">⏱ ~2 minutes</span>
                 </div>
             </div>
 

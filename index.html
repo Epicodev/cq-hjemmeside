@@ -20249,7 +20249,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         <div class="sandbox-result-cta">
                             <p>Det er en simulation. I den rigtige platform er det dine egne medarbejdere, og signalerne kommer fra reelle data. uge for uge.</p>
-                            <a href="#" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start gratis prøveperiode →</a>
+                            <a href="https://live.culturequest.io" target="_blank" rel="noopener noreferrer" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start gratis prøveperiode →</a>
                         </div>
                     </div>
                 </div>
@@ -20926,7 +20926,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Footer -->
             <footer class="apv-law-footer">
                 <span>Cases er anonymiserede uddrag fra Arbejdstilsynets afgørelsesregister.</span>
-                <a href="#" class="apv-law-footer-link">Læs hele § 15A →</a>
+                <a href="https://www.retsinformation.dk/eli/lta/2010/1072#P15a" target="_blank" rel="noopener noreferrer" class="apv-law-footer-link">Læs hele § 15A →</a>
             </footer>
 
         </div>
@@ -21289,7 +21289,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="apv-ind-more-item">Uddannelse</span>
                 <span class="apv-ind-more-item">Finans & service</span>
             </div>
-            <a href="#" class="apv-ind-more-link" data-route="kontakt">Mangler jeres branche?</a>
+            <a href="/kontakt" class="apv-ind-more-link" data-route="kontakt">Mangler jeres branche?</a>
         </div>
     </section>
 
@@ -22220,7 +22220,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>Vær blandt de første</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
-            <a href="#" class="btn-outline">
+            <a href="/kontakt" class="btn-outline">
                 <span>Book en early-access demo</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
@@ -24693,7 +24693,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ============ TRIVSELSMÅLING HERO, text position override (balance: not too close to menu, but CTAs above floats) ============ */
 #tm-hero-stage .apv-hero-text {
-    transform: translateY(-14vh);
+    transform: translateY(-10vh);
 }
 @media (max-width: 1099px) {
     #tm-hero-stage .apv-hero-text { transform: translateY(0); }
@@ -26267,12 +26267,12 @@ document.addEventListener('DOMContentLoaded', function() {
     background-position: center;
 }
 .c-profile-photo.is-sandra {
-    background-image: url('./assets/sandra-vemgaard.png');
+    background-image: url('/assets/sandra-vemgaard.png');
     background-color: #a5d9b0;
     color: transparent;
 }
 .c-profile-photo.is-benjamin {
-    background-image: url('./assets/benjamin-laudrup.jpeg');
+    background-image: url('/assets/benjamin-laudrup.jpeg');
     background-color: #e9e1d5;
     color: transparent;
 }
@@ -26735,12 +26735,12 @@ document.addEventListener('DOMContentLoaded', function() {
     background-position: center;
 }
 .c-matcher-result-photo.is-sandra {
-    background-image: url('./assets/sandra-vemgaard.png');
+    background-image: url('/assets/sandra-vemgaard.png');
     background-color: #a5d9b0;
     color: transparent;
 }
 .c-matcher-result-photo.is-benjamin {
-    background-image: url('./assets/benjamin-laudrup.jpeg');
+    background-image: url('/assets/benjamin-laudrup.jpeg');
     background-color: #e9e1d5;
     color: transparent;
 }
@@ -30071,11 +30071,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (restartBtn) restartBtn.addEventListener('click', start);
 
-        // Start on first DOM ready (also re-runs if already loaded)
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', start);
-        } else {
+        // Only kick off the chat when the qualifier scrolls into view.
+        // Starting on DOMContentLoaded triggers an early scrollIntoView() that
+        // yanks the user past the hero before they've seen it.
+        var qualifierSection = document.getElementById('pp-qualifier');
+        var hasStarted = false;
+        function maybeStart() {
+            if (hasStarted) return;
+            hasStarted = true;
             start();
+        }
+        if (qualifierSection && 'IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        maybeStart();
+                        io.disconnect();
+                    }
+                });
+            }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+            io.observe(qualifierSection);
+        } else {
+            // Fallback for very old browsers — defer to first interaction
+            window.addEventListener('scroll', maybeStart, { once: true, passive: true });
         }
     })();
     </script>
