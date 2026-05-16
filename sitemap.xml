@@ -85,13 +85,13 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/demo"/>
     </url>
     <url>
-        <loc>https://culturequest.io/about</loc>
-        <lastmod>2026-05-14</lastmod>
+        <loc>https://culturequest.io/om</loc>
+        <lastmod>2026-05-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
-        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/om"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/about"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/om"/>
     </url>
     <url>
         <loc>https://culturequest.io/kontakt</loc>
@@ -353,12 +353,12 @@
     </url>
     <url>
         <loc>https://culturequest.io/en/about</loc>
-        <lastmod>2026-05-14</lastmod>
+        <lastmod>2026-05-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
-        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/om"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://culturequest.io/en/about"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/about"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/om"/>
     </url>
     <url>
         <loc>https://culturequest.io/en/contact</loc>
