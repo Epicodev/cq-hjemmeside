@@ -34061,7 +34061,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3 class="blog-post-card-title">${post.title}</h3>
                     <p class="blog-post-card-excerpt">${post.excerpt}</p>
                     <div class="blog-post-card-arrow">
-                        Læs artiklen
+                        Read article
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                             <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -34159,8 +34159,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderBlogPost(slug) {
         const post = BLOG_POSTS.find(p => p.slug === slug);
         if (!post) {
-            // Fallback til oversigt
-            history.replaceState(null, '', '/blog');
+            // Fallback to overview
+            history.replaceState(null, '', '/en/blog');
             showBlogList();
             return;
         }
@@ -34179,7 +34179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Render related posts (op til 2 andre)
         const related = BLOG_POSTS.filter(p => p.slug !== slug).slice(0, 2);
         document.getElementById('blogRelatedGrid').innerHTML = related.map(post => `
-            <a href="/blog/${post.slug}" class="blog-post-card" data-blog-link="${post.slug}">
+            <a href="/en/blog/${post.slug}" class="blog-post-card" data-blog-link="${post.slug}">
                 <div class="blog-post-card-img" style="background-image: url('${post.image}'), linear-gradient(135deg, #6366F1 0%, #383DA0 100%);"></div>
                 <div class="blog-post-card-body">
                     <div class="blog-post-card-meta">
@@ -34220,8 +34220,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const path = (window.location.pathname || '/').toLowerCase();
         const hash = (window.location.hash || '').toLowerCase();
 
-        /* Path-based: /blog/slug */
-        const pathMatch = path.match(/^\/blog\/(.+)$/);
+        /* Path-based: /blog/slug or /en/blog/slug */
+        const pathMatch = path.match(/^\/(?:en\/)?blog\/(.+)$/);
         if (pathMatch) {
             showBlogPost(pathMatch[1]);
             return;
