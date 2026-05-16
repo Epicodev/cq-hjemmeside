@@ -28653,17 +28653,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="apv-hero-text">
                         <h1 class="apv-hero-headline">
-                            365-day pilot program.<br>
-                            The alternative to your annual engagement survey.
+                            Founding Partner program.<br>
+                            365 days with us as your close sparring partner.
                         </h1>
 
                         <p class="apv-hero-sub">
-                            The annual engagement survey is a snapshot. We give you 365 days of culture intelligence instead: survey design in cycles, continuous data collection and analysis, AI recommendations, report exports and a closing review with our consultants. For a select group of companies only.
+                            A dedicated 12-month program for organisations that want more than a self-service tool. You get full access to culturequest, 2 hours of consultant sparring per month, kickoff workshop, half-year review and a closing report — at a discounted partner rate. In exchange, you help us make the platform better. A limited number of slots per year.
                         </p>
 
                         <div class="apv-hero-ctas">
                             <a href="#pp-qualifier" class="btn-lime">
-                                Start your pilot
+                                Apply for a slot
                                 <span class="btn-lime-arrow">›</span>
                             </a>
                         </div>
@@ -29412,10 +29412,111 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <footer class="apv-law-footer">
-                <span>The pilot program is free for selected companies. We accept a limited number each year.</span>
+                <span>Founding Partner rate for selected companies in exchange for a co-development agreement. A limited number of slots per year.</span>
                 <a href="#pp-qualifier" class="apv-law-footer-link">Apply for a slot →</a>
             </footer>
 
+        </div>
+    </section>
+
+
+    <!-- ============ FOUNDING PARTNER, value exchange (what you get / what we expect) ============ -->
+    <style>
+    .pp-exchange-section { padding: 88px 24px; background: var(--paper); border-bottom: 1px solid var(--rule); }
+    .pp-exchange-inner { max-width: 1100px; margin: 0 auto; }
+    .pp-exchange-eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(99, 102, 241, 0.08); color: var(--brand-deep);
+        padding: 6px 14px; border-radius: 999px;
+        font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+        margin-bottom: 18px;
+    }
+    .pp-exchange-headline {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: clamp(28px, 3.4vw, 38px);
+        font-weight: 700; line-height: 1.1; letter-spacing: -0.022em;
+        color: var(--ink); margin: 0 0 14px; max-width: 720px;
+    }
+    .pp-exchange-sub {
+        font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.55;
+        color: var(--ink-muted); max-width: 720px; margin: 0 0 44px;
+    }
+    .pp-exchange-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    }
+    .pp-exchange-card {
+        background: var(--paper-card); border: 1px solid var(--rule);
+        border-radius: 20px; padding: 32px 28px;
+        display: flex; flex-direction: column;
+    }
+    .pp-exchange-card-give { border-top: 3px solid var(--brand); }
+    .pp-exchange-card-take { border-top: 3px solid #c4f547; }
+    .pp-exchange-card-tag {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: 'Inter Tight', sans-serif; font-size: 11px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.08em;
+        color: var(--ink-muted); margin-bottom: 6px;
+    }
+    .pp-exchange-card-title {
+        font-family: 'Inter Tight', sans-serif; font-size: 22px;
+        font-weight: 700; color: var(--ink); letter-spacing: -0.015em;
+        margin: 0 0 20px;
+    }
+    .pp-exchange-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+    .pp-exchange-list li {
+        display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: flex-start;
+        font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5;
+        color: var(--ink-soft);
+    }
+    .pp-exchange-list li::before {
+        content: '✓'; display: inline-flex; align-items: center; justify-content: center;
+        width: 20px; height: 20px; border-radius: 50%;
+        background: rgba(99, 102, 241, 0.12); color: var(--brand-deep);
+        font-size: 12px; font-weight: 700; margin-top: 2px;
+    }
+    .pp-exchange-card-take .pp-exchange-list li::before {
+        background: rgba(196, 245, 71, 0.35); color: #4a5c00;
+    }
+    .pp-exchange-list li strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 760px) {
+        .pp-exchange-section { padding: 56px 20px; }
+        .pp-exchange-grid { grid-template-columns: 1fr; gap: 18px; }
+        .pp-exchange-card { padding: 26px 22px; }
+    }
+    </style>
+    <section class="pp-exchange-section">
+        <div class="pp-exchange-inner">
+            <span class="pp-exchange-eyebrow">Founding Partner · the trade</span>
+            <h2 class="pp-exchange-headline">It's an agreement, not an offer.</h2>
+            <p class="pp-exchange-sub">The Founding Partner program isn't an extended free trial. It's a partnership: you get close access to us, and we get help building the platform your industry actually needs.</p>
+
+            <div class="pp-exchange-grid">
+                <div class="pp-exchange-card pp-exchange-card-give">
+                    <div class="pp-exchange-card-tag">What you get</div>
+                    <h3 class="pp-exchange-card-title">365 days of close work</h3>
+                    <ul class="pp-exchange-list">
+                        <li><span><strong>Founding Partner rate</strong> — discounted off our list price for the full 12-month period</span></li>
+                        <li><span><strong>2 hours of consultant sparring</strong> per month (~24 hours over the year)</span></li>
+                        <li>Full access to the culturequest platform: risk assessment, 1:1 & performance review, pulse surveys, AI recommendations</li>
+                        <li>Kickoff workshop with leadership — we frame the program together</li>
+                        <li>Half-year review and closing report with concrete action recommendations</li>
+                        <li>Direct access to the founders for questions, sparring and roadmap input</li>
+                    </ul>
+                </div>
+
+                <div class="pp-exchange-card pp-exchange-card-take">
+                    <div class="pp-exchange-card-tag">What we expect</div>
+                    <h3 class="pp-exchange-card-title">A real partnership</h3>
+                    <ul class="pp-exchange-list">
+                        <li><span><strong>Named contact person</strong> and leadership commitment to act on the data</span></li>
+                        <li><span><strong>1 case study</strong> once you've run 2-3 cycles and can speak concretely about the impact</span></li>
+                        <li>2 product feedback sessions per year — what's working, what's missing</li>
+                        <li>Willingness to be a reference customer for others in your industry (if we ask)</li>
+                        <li>Active participation — minimum 70% response rate on pulse surveys</li>
+                        <li>Openness about how you use the system so we can adjust along the way</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -29477,12 +29578,38 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="pp-faq-list">
                 <details class="pp-faq-item">
                     <summary>
-                        <span>What does it cost after the pilot?</span>
+                        <span>What does the Founding Partner program cost?</span>
                         <span class="pp-faq-icon" aria-hidden="true">+</span>
                     </summary>
                     <div class="pp-faq-answer">
-                        <p>The price depends on your size and which modules you want. We give you a concrete quote at the mid-pilot review, not before. That gives you time to assess the value on real data, not a pitch deck.</p>
-                        <p>Generally it's in the range of DKK 15-50 per employee per month, depending on setup. <a href="#pricing">See pricing structure here</a>.</p>
+                        <p>The Founding Partner rate is a significant discount off our list price for the full 12-month program. The concrete price depends on your size and which modules you'll use — we give you a tailored quote in the qualification call, not a pre-set package.</p>
+                        <p>In exchange for the discount you commit to the co-development agreement (case study, feedback, reference). It's a trade, not a price tag. After the pilot period you can roll over to standard list price or renew at the same rate.</p>
+                    </div>
+                </details>
+
+                <details class="pp-faq-item">
+                    <summary>
+                        <span>What's the difference between Founding Partner and your 45-day free trial?</span>
+                        <span class="pp-faq-icon" aria-hidden="true">+</span>
+                    </summary>
+                    <div class="pp-faq-answer">
+                        <p>Free trial is self-service. You sign up at <a href="https://live.culturequest.io" target="_blank" rel="noopener noreferrer">live.culturequest.io</a>, create surveys, run one cycle and see how the platform works. No contract, no consultant time, no commitment.</p>
+                        <p>Founding Partner is the opposite: a 12-month program where we're close to you — kickoff workshop, 2 hours of monthly sparring, half-year review, direct access to the founders — at a partner rate in exchange for a co-development agreement. It's for organisations that want to move the culture for real, not just try the tool.</p>
+                    </div>
+                </details>
+
+                <details class="pp-faq-item">
+                    <summary>
+                        <span>What do you concretely expect from us as a Founding Partner?</span>
+                        <span class="pp-faq-icon" aria-hidden="true">+</span>
+                    </summary>
+                    <div class="pp-faq-answer">
+                        <p>Three things, on top of the usual (response rate, named contact person):</p>
+                        <ul>
+                            <li><strong>1 case study</strong> once you've run 2-3 cycles and can speak concretely about the impact. We do the interview and write it up — you approve before publication.</li>
+                            <li><strong>2 product feedback sessions per year</strong> (~45 min each) where you tell us what's working, what's missing and what you'd like to see changed.</li>
+                            <li><strong>Willingness to be a reference customer</strong> for other companies in your industry, if we ask. Typically one 20-min call 2-3 times a year.</li>
+                        </ul>
                     </div>
                 </details>
 
@@ -29949,12 +30076,12 @@ document.addEventListener('DOMContentLoaded', function() {
 {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "365-day pilot program, alternative to the annual engagement survey",
-    "serviceType": "Annual culture intelligence pilot program",
+    "name": "Founding Partner program, 365-day culture intelligence engagement",
+    "serviceType": "Annual culture intelligence partner program",
     "url": "https://culturequest.io/en/pilot-program",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://culturequest.io/en/pilot-program" },
     "inLanguage": "en",
-    "description": "Replace the annual engagement survey with 365 days of culture intelligence. Full access to the culturequest platform: digital workplace risk assessment, 1:1 and performance-review tool, continuous pulse surveys across 2-3 cycles, AI recommendations, report export and closing sparring with consultants. A limited number of companies are admitted each year.",
+    "description": "Founding Partner program: a dedicated 12-month engagement for selected companies with 50-500 employees. Includes full access to the culturequest platform (digital workplace risk assessment, 1:1 and performance-review tool, continuous pulse surveys across 2-3 cycles, AI recommendations, report export), 2 hours of consultant sparring per month, kickoff workshop, half-year review and a closing report. Offered at a discounted Founding Partner rate in exchange for a co-development agreement (case study, product feedback, reference). A limited number of slots per year.",
     "provider": {
         "@type": "Organization",
         "name": "culturequest",
@@ -29963,16 +30090,15 @@ document.addEventListener('DOMContentLoaded', function() {
     "areaServed": "DK",
     "audience": {
         "@type": "BusinessAudience",
-        "audienceType": "Companies with 20-250 employees"
+        "audienceType": "Companies with 50-500 employees"
     },
     "offers": {
         "@type": "Offer",
-        "price": "0",
         "priceCurrency": "DKK",
-        "category": "Free trial",
-        "availability": "https://schema.org/InStock",
+        "category": "Partner program",
+        "availability": "https://schema.org/LimitedAvailability",
         "url": "https://culturequest.io/en/pilot-program",
-        "description": "365 days of full platform access for selected companies: 2-3 question frameworks across cycles, continuous data analysis, AI recommendations, report export and closing sparring. No credit card, no lock-in."
+        "description": "Founding Partner rate (discounted list price) for 12 months in exchange for a co-development agreement: 1 case study, 2 product feedback sessions per year, reference customer. Concrete price depends on company size and modules."
     }
 }
 </script>
@@ -29986,10 +30112,26 @@ document.addEventListener('DOMContentLoaded', function() {
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What does culturequest cost after the pilot?",
+            "name": "What does the Founding Partner program cost?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The price depends on company size and chosen modules. culturequest shares a concrete price in the mid-pilot review after 30 days, so the customer can assess value against real data. Pricing typically ranges between DKK 15-50 per employee per month depending on setup."
+                "text": "The Founding Partner rate is a significant discount off culturequest's list price for the full 12-month program. The concrete price depends on company size and which modules are used — culturequest gives a tailored quote in the qualification call, not a pre-set package. In exchange for the discount the customer commits to the co-development agreement (case study, product feedback, reference customer). After the pilot period the customer can roll over to standard list price or renew at the same rate."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the difference between Founding Partner and the culturequest 45-day free trial?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Free trial is self-service on live.culturequest.io — sign up, create surveys, run one cycle. No contract, no consultant time, no commitment. Founding Partner is the opposite: a 12-month engagement with kickoff workshop, 2 hours of monthly consultant sparring, half-year review, direct access to the founders — at a partner rate in exchange for a co-development agreement. It's for organisations that want to move the culture for real, not just try the tool."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What does culturequest expect from a Founding Partner?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Three things on top of the usual (response rate and named contact person): 1 case study once the customer has run 2-3 cycles and can speak concretely about the impact. 2 product feedback sessions per year (~45 min each). Willingness to be a reference customer for other companies in the same industry, if culturequest asks (typically a 20-min call 2-3 times a year)."
             }
         },
         {
@@ -30093,7 +30235,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="blog-post-cta-text">
                     <div class="blog-post-cta-eyebrow">Next step</div>
                     <h3>Want to see the signals in your own organisation?</h3>
-                    <p>365-day pilot program for selected companies. No commitment. No credit card. We take on a limited number of Danish companies each year.</p>
+                    <p>Founding Partner program for selected companies — a 365-day engagement at a discounted partner rate. A limited number of slots per year.</p>
                 </div>
                 <div class="blog-post-cta-actions">
                     <a href="/en/pilot-program" class="btn-lime">
@@ -30304,7 +30446,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="about-cta-text">
                 <div class="about-cta-eyebrow">Next step</div>
                 <h3>Want to see what culturequest can do in your organisation?</h3>
-                <p>365-day pilot program for selected companies. No lock-in. No credit card. We admit a limited number of companies each year.</p>
+                <p>Founding Partner program for selected companies — a 365-day engagement at a discounted partner rate. A limited number of slots per year.</p>
             </div>
             <div class="about-cta-actions">
                 <a href="/en/pilot-program" class="btn-lime">
