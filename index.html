@@ -62,10 +62,19 @@
     "logo": "https://culturequest.io/logo.png",
     "description": "Predictive culture intelligence for danske virksomheder. Forudse opsigelser, stress og mistrivsel før de rammer bundlinjen via digital APV, 1:1 & MUS-værktøj og kontinuerlig pulsmåling.",
     "email": "hej@culturequest.io",
+    "foundingDate": "2024",
+    "vatID": "DK44750538",
+    "taxID": "44750538",
+    "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "CVR",
+        "value": "44750538"
+    },
     "address": {
         "@type": "PostalAddress",
         "addressCountry": "DK",
-        "addressLocality": "København"
+        "addressLocality": "København",
+        "addressRegion": "Hovedstaden"
     },
     "founders": [
         { "@type": "Person", "name": "Benjamin Brandt" },
@@ -74,12 +83,15 @@
     "knowsAbout": [
         "Predictive culture intelligence",
         "Digital APV (arbejdspladsvurdering)",
+        "Arbejdsmiljøloven",
         "MUS-samtaler",
         "1:1-værktøj for ledere",
         "Pulsmåling",
         "Trivselsmåling",
         "Medarbejderfastholdelse",
-        "HR analytics"
+        "Ledelsessparring",
+        "HR analytics",
+        "ISO 45003"
     ]
 }
 </script>
@@ -25072,7 +25084,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             Culture intelligence har taget over.
                         </h1>
                         <p class="apv-hero-sub">
-                            Den klassiske trivselsmåling på arbejdspladsen er en årlig fotostat. På et arbejdsmarked hvor stress udvikler sig på uger og opsigelser modnes på måneder, er det for sent. Culture intelligence er det der har taget over: kontinuerlig måling af medarbejdertrivsel der fanger mønstrene før de bliver dyre.
+                            Den klassiske trivselsmåling på arbejdspladsen er en årlig fotostat. På et arbejdsmarked hvor stress udvikler sig på uger og opsigelser modnes på måneder, er det for sent. Culture intelligence er <strong>alternativet til den årlige trivselsmåling</strong> — kontinuerlig kulturmåling der fanger mønstrene før de bliver dyre.
                         </p>
                         <div class="apv-hero-ctas">
                             <a href="#tm-qualifier" class="btn-lime">
@@ -34181,7 +34193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     "title": "Sådan forudsiger du arbejdsmiljøudfordringer før de påvirker performance",
     "category": "Nyheder",
     "date": "20. feb. 2026",
-    "excerpt": "Opdag hvordan prediktiv kulturanalyse hjælper virksomheder med at identificere stressrisici, sandsynlighed for medarbejderomsætning og teamkonflikter 2-3 måneder før de påvirker performance.",
+    "excerpt": "Sådan hjælper prediktiv kulturanalyse jer med at se stressrisici, opsigelser og teamkonflikter 2-3 måneder før de rammer performance.",
     "lead": "De fleste virksomheder reagerer på arbejdsmiljøproblemer efter de allerede har gjort skade, høj medarbejderomsætning, stress, uengagerede teams. Prediktiv kulturanalyse ændrer det. Ved løbende at analysere kulturdata kan HR og ledere identificere risici 2-3 måneder før de bliver kritiske problemer.",
     "author_name": "Benjamin Brandt",
     "author_role": "Medstifter · MSc Human Ernæring · Kultur & Præstation",
@@ -34348,7 +34360,16 @@ document.addEventListener('DOMContentLoaded', function() {
             setMeta('name', 'twitter:title', post.title);
             setMeta('name', 'twitter:description', post.excerpt);
             setMeta('name', 'twitter:image', post.image);
-            setCanonical(url);
+
+            /* Canonical link: setCanonical lives in a different IIFE so we
+               inline the update here to avoid a silent ReferenceError. */
+            let canonicalLink = document.querySelector('link[rel="canonical"]');
+            if (!canonicalLink) {
+                canonicalLink = document.createElement('link');
+                canonicalLink.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonicalLink);
+            }
+            canonicalLink.setAttribute('href', url);
 
             /* Article JSON-LD schema, fjern tidligere injection før ny */
             const oldSchema = document.getElementById('dynamic-blog-article-schema');
@@ -34577,7 +34598,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url: SITE_URL + '/consult'
         },
         'pilotprojekt': {
-            title: 'Skift trivselsmålingen ud · 365 dages pilotprogram | culturequest',
+            title: 'Pilotprogram · alternativ til trivselsmåling | culturequest',
             description: 'Alternativet til den årlige trivselsmåling: 365 dages culture intelligence med ledelsessparring inkluderet. For udvalgte virksomheder.',
             url: SITE_URL + '/pilotprojekt'
         },
@@ -37197,7 +37218,7 @@ window.renderCulturequestPDF = async function(config) {
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "Sådan forudsiger du arbejdsmiljøudfordringer før de påvirker performance",
-    "description": "Opdag hvordan prediktiv kulturanalyse hjælper virksomheder med at identificere stressrisici, sandsynlighed for medarbejderomsætning og teamkonflikter 2-3 måneder før de påvirker performance.",
+    "description": "Sådan hjælper prediktiv kulturanalyse jer med at se stressrisici, opsigelser og teamkonflikter 2-3 måneder før de rammer performance.",
     "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80",
     "datePublished": "2026-02-20",
     "author": { "@type": "Person", "name": "Benjamin Brandt", "jobTitle": "Medstifter · MSc Human Ernæring · Kultur & Præstation" },
