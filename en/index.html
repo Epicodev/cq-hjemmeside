@@ -34319,8 +34319,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateBlogMeta(post) {
         try {
             const ORIGIN = window.location.origin;
-            const url = ORIGIN + '/#blog/' + post.slug;
-            const fullTitle = post.title + ' | culturequest';
+            /* Canonical/og:url/schema URL = the actual path the user lands on,
+               not the legacy hash form. Critical for SEO so Google doesn't
+               dedupe every post into /en/blog. */
+            const url = ORIGIN + window.location.pathname;
+            const fullTitle = post.title;
 
             document.title = fullTitle;
             setMeta('name', 'description', post.excerpt);
@@ -34334,6 +34337,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setMeta('name', 'twitter:title', post.title);
             setMeta('name', 'twitter:description', post.excerpt);
             setMeta('name', 'twitter:image', post.image);
+            setCanonical(url);
 
             /* Article JSON-LD schema, fjern tidligere injection før ny */
             const oldSchema = document.getElementById('dynamic-blog-article-schema');
@@ -34357,7 +34361,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'url': 'https://culturequest.io/'
                 },
                 'mainEntityOfPage': { '@type': 'WebPage', '@id': url },
-                'inLanguage': 'da-DK'
+                'inLanguage': 'en'
             };
             const schemaScript = document.createElement('script');
             schemaScript.type = 'application/ld+json';
@@ -34438,6 +34442,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero) hero.style.display = '';
         document.getElementById('blog-list-section').style.display = '';
         document.getElementById('blog-post-section').style.display = 'none';
+        promoteHubHeadlineToH1();
         resetBlogMeta();
     }
 
@@ -34446,9 +34451,31 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero) hero.style.display = 'none';
         document.getElementById('blog-list-section').style.display = 'none';
         document.getElementById('blog-post-section').style.display = '';
+        demoteHubHeadlineToDiv();
         renderBlogPost(slug);
         // Scroll til top af artiklen
         window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    /* SEO: only one h1 per URL. The hub page (/en/blog) has the "Insights on
+       culture..." h1 inside #blog-hero; the post page (/en/blog/<slug>) has
+       blogPostTitle as its h1. Without this swap, Googlebot sees both. */
+    function demoteHubHeadlineToDiv() {
+        const h1 = document.querySelector('#blog-hero h1.blog-hero-headline');
+        if (!h1) return;
+        const div = document.createElement('div');
+        div.className = h1.className;
+        div.setAttribute('data-was-h1', 'true');
+        div.innerHTML = h1.innerHTML;
+        h1.parentNode.replaceChild(div, h1);
+    }
+    function promoteHubHeadlineToH1() {
+        const div = document.querySelector('#blog-hero [data-was-h1]');
+        if (!div) return;
+        const h1 = document.createElement('h1');
+        h1.className = div.className;
+        h1.innerHTML = div.innerHTML;
+        div.parentNode.replaceChild(h1, div);
     }
 
     // Route handler, kaldes både ved load, popstate og når blog-route aktiveres
@@ -34515,13 +34542,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const PAGE_META = {
         'home': {
-            title: 'culturequest. Predict turnover, stress and burnout before they hit the bottom line',
-            description: 'Predictive culture intelligence. Predict turnover, stress and burnout before they hit the bottom line. Workplace risk assessment, 1:1 & performance review tool and continuous pulse surveys in one platform.',
+            title: 'Predict turnover before it hits the bottom line | culturequest',
+            description: 'Predictive culture intelligence. Workplace risk assessment, 1:1 and performance review tool plus continuous pulse surveys in one platform.',
             url: SITE_URL + '/en/'
         },
         'apv': {
-            title: 'Workplace risk assessment software (Danish APV) | culturequest',
-            description: 'A digital workplace risk assessment tool that meets Danish Working Environment Authority requirements and gives real-time insight into stress, engagement and flight risk. Industry-specific survey templates.',
+            title: 'Psychosocial risk assessment software (Danish APV) | culturequest',
+            description: 'Digital workplace risk assessment that meets Danish Working Environment Authority requirements. Real-time insight into stress, engagement and flight risk.',
             url: SITE_URL + '/en/risk-assessment'
         },
         '1to1': {
@@ -34531,32 +34558,32 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         'trivselsmaaling': {
             title: 'Engagement survey vs. culture intelligence | culturequest',
-            description: 'The classic annual engagement survey is a snapshot. Culture intelligence catches the patterns before they get expensive. See the comparison and price ranges.',
+            description: 'The annual engagement survey is a snapshot. Culture intelligence catches the patterns before they get expensive — continuous listening, not yearly polls.',
             url: SITE_URL + '/en/engagement-survey'
         },
         'consult': {
-            title: 'Leadership development backed by data | Consultant network | culturequest',
+            title: 'Data-driven leadership development | culturequest',
             description: 'Leadership development that starts with your data. Curated network of culture consultants for team coaching, workshops and strategic culture work.',
             url: SITE_URL + '/en/consulting'
         },
         'pilotprojekt': {
-            title: 'Retire your engagement survey. 365-day pilot program | culturequest',
-            description: 'Swap your annual engagement survey for 365 days of culture intelligence. Continuous culture measurement, AI recommendations and end-of-program review. For a select group of companies only.',
+            title: 'Retire your engagement survey · 365-day pilot | culturequest',
+            description: 'Swap your annual engagement survey for 365 days of culture intelligence with consultant sparring included. For a select group of companies only.',
             url: SITE_URL + '/en/pilot-program'
         },
         'blog': {
-            title: 'Blog | Insights on culture, leadership and employee wellbeing | culturequest',
-            description: 'Expert articles on predictive culture intelligence, workplace risk assessment, performance reviews, engagement surveys, leadership development and data-driven management.',
+            title: 'Blog · culture, leadership and employee wellbeing | culturequest',
+            description: 'Expert articles on culture intelligence, workplace risk assessment, performance reviews, engagement surveys and data-driven leadership.',
             url: SITE_URL + '/en/blog'
         },
         'about': {
-            title: 'About culturequest | The founders behind predictive culture intelligence',
-            description: 'culturequest is founded by Benjamin Brandt and Benjamin Laudrup. We build culture analytics for ambitious companies. Bootstrapped, Denmark-based, GDPR-purist.',
+            title: 'About culturequest | Predictive culture intelligence',
+            description: 'culturequest is founded by Benjamin Brandt and Benjamin Laudrup. Culture analytics for ambitious companies. Denmark-based, GDPR-purist.',
             url: SITE_URL + '/en/about'
         },
         'kontakt': {
             title: 'Contact culturequest | Benjamin Brandt and Benjamin Laudrup',
-            description: 'Write to hej@culturequest.io. We are two founders, and we read every message ourselves. You can also reach us on LinkedIn.',
+            description: 'Write to hej@culturequest.io. Two founders, every message read by one of us. Reach us on LinkedIn too — typical reply within 4 hours on weekdays.',
             url: SITE_URL + '/en/contact'
         },
         'roadmap': {
@@ -34565,8 +34592,8 @@ document.addEventListener('DOMContentLoaded', function() {
             url: SITE_URL + '/en/roadmap'
         },
         'demo': {
-            title: 'Interactive demo of culturequest | Walk the flow in 2 minutes',
-            description: 'Click through the full culture intelligence flow: pulse surveys, culture score, AI recommendations and action plan. Interactive product tour. No sign-up.',
+            title: 'Interactive demo of culturequest | 2-min product tour',
+            description: 'Click through the full culture intelligence flow: pulse surveys, culture score, AI recommendations and action plan. No sign-up required.',
             url: SITE_URL + '/en/demo'
         }
     };

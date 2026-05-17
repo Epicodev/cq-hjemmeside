@@ -34330,8 +34330,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateBlogMeta(post) {
         try {
             const ORIGIN = window.location.origin;
-            const url = ORIGIN + '/#blog/' + post.slug;
-            const fullTitle = post.title + ' | culturequest';
+            /* Canonical/og:url/schema URL = the actual path the user lands on,
+               not the legacy hash form. Critical for SEO so Google doesn't
+               dedupe every post into /blog. */
+            const url = ORIGIN + window.location.pathname;
+            const fullTitle = post.title;
 
             document.title = fullTitle;
             setMeta('name', 'description', post.excerpt);
@@ -34345,6 +34348,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setMeta('name', 'twitter:title', post.title);
             setMeta('name', 'twitter:description', post.excerpt);
             setMeta('name', 'twitter:image', post.image);
+            setCanonical(url);
 
             /* Article JSON-LD schema, fjern tidligere injection før ny */
             const oldSchema = document.getElementById('dynamic-blog-article-schema');
@@ -34449,6 +34453,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero) hero.style.display = '';
         document.getElementById('blog-list-section').style.display = '';
         document.getElementById('blog-post-section').style.display = 'none';
+        promoteHubHeadlineToH1();
         resetBlogMeta();
     }
 
@@ -34457,9 +34462,31 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero) hero.style.display = 'none';
         document.getElementById('blog-list-section').style.display = 'none';
         document.getElementById('blog-post-section').style.display = '';
+        demoteHubHeadlineToDiv();
         renderBlogPost(slug);
         // Scroll til top af artiklen
         window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    /* SEO: only one h1 per URL. The hub page (/blog) has the "Indsigter om
+       kultur..." h1 inside #blog-hero; the post page (/blog/<slug>) has
+       blogPostTitle as its h1. Without this swap, Googlebot sees both. */
+    function demoteHubHeadlineToDiv() {
+        const h1 = document.querySelector('#blog-hero h1.blog-hero-headline');
+        if (!h1) return;
+        const div = document.createElement('div');
+        div.className = h1.className;
+        div.setAttribute('data-was-h1', 'true');
+        div.innerHTML = h1.innerHTML;
+        h1.parentNode.replaceChild(div, h1);
+    }
+    function promoteHubHeadlineToH1() {
+        const div = document.querySelector('#blog-hero [data-was-h1]');
+        if (!div) return;
+        const h1 = document.createElement('h1');
+        h1.className = div.className;
+        h1.innerHTML = div.innerHTML;
+        div.parentNode.replaceChild(h1, div);
     }
 
     // Route handler, kaldes både ved load, popstate og når blog-route aktiveres
@@ -34525,48 +34552,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const PAGE_META = {
         'home': {
-            title: 'culturequest. Forudse opsigelser, stress og mistrivsel før de rammer bundlinjen',
-            description: 'Predictive culture intelligence til danske virksomheder. Forudse opsigelser, stress og mistrivsel før de rammer bundlinjen. Digital APV, 1:1 & MUS-værktøj og kontinuerlig pulsmåling i ét.',
+            title: 'Forudse opsigelser før de rammer bundlinjen | culturequest',
+            description: 'Predictive culture intelligence til danske virksomheder. Digital APV, 1:1 og MUS-værktøj plus kontinuerlig pulsmåling i én platform.',
             url: SITE_URL + '/'
         },
         'apv': {
-            title: 'Digital APV-værktøj der opfylder Arbejdstilsynets krav | culturequest',
-            description: 'Et digitalt APV-værktøj der opfylder Arbejdstilsynets krav til arbejdspladsvurdering og giver real-time indsigt i stress, engagement og flight risk. APV-skemaer per branche.',
+            title: 'Digital APV-værktøj · Arbejdspladsvurdering | culturequest',
+            description: 'Digitalt APV-værktøj der opfylder Arbejdstilsynets krav til arbejdspladsvurdering. Real-time indsigt i stress, engagement og flight risk.',
             url: SITE_URL + '/apv'
         },
         '1to1': {
-            title: 'MUS-samtale og 1:1-værktøj for ledere | culturequest',
+            title: 'MUS-værktøj og 1:1-værktøj for ledere | culturequest',
             description: 'Et MUS- og 1:1-værktøj bygget til ledere, ikke til HR-arkivet. AI-coach til forberedelse, optagelse og opfølgning. Beta Q3 2026.',
             url: SITE_URL + '/1to1'
         },
         'trivselsmaaling': {
-            title: 'Trivselsmåling på arbejdspladsen vs. culture intelligence | culturequest',
-            description: 'Den klassiske trivselsmåling på arbejdspladsen er en årlig fotostat. Culture intelligence fanger mønstrene før de bliver dyre. Se sammenligningen og prisspænd.',
+            title: 'Trivselsmåling vs. culture intelligence | culturequest',
+            description: 'Den årlige trivselsmåling er en fotostat. Culture intelligence fanger mønstrene før de bliver dyre — kontinuerlig kulturmåling.',
             url: SITE_URL + '/trivselsmåling'
         },
         'consult': {
-            title: 'Ledelsesudvikling baseret på data | Konsulent-netværk | culturequest',
+            title: 'Ledelsesudvikling baseret på data | culturequest',
             description: 'Ledelsesudvikling der starter med jeres data. Kurateret netværk af danske kultur-konsulenter til team-coaching, workshops og strategisk kulturarbejde.',
             url: SITE_URL + '/consult'
         },
         'pilotprojekt': {
-            title: 'Skift trivselsmålingen ud. 365 dages pilotprojekt | culturequest',
-            description: 'Skift din årlige trivselsmåling ud med 365 dages culture intelligence. Kontinuerlig kulturmåling, AI-anbefalinger og afsluttende sparring. Kun for udvalgte danske virksomheder.',
+            title: 'Skift trivselsmålingen ud · 365 dages pilotprogram | culturequest',
+            description: 'Alternativet til den årlige trivselsmåling: 365 dages culture intelligence med ledelsessparring inkluderet. For udvalgte virksomheder.',
             url: SITE_URL + '/pilotprojekt'
         },
         'blog': {
-            title: 'Blog | Indsigter om kultur, ledelse og medarbejdertrivsel | culturequest',
-            description: 'Ekspertartikler om predictive culture intelligence, APV, MUS-samtaler, trivselsmåling, ledelsesudvikling og datadrevet ledelse i danske virksomheder.',
+            title: 'Blog · kultur, ledelse og medarbejdertrivsel | culturequest',
+            description: 'Ekspertartikler om culture intelligence, APV, MUS-samtaler, trivselsmåling, ledelsesudvikling og datadrevet ledelse.',
             url: SITE_URL + '/blog'
         },
         'about': {
-            title: 'Om culturequest | Stifterne bag predictive culture intelligence',
-            description: 'culturequest er grundlagt af Benjamin Brandt og Benjamin Laudrup. Vi bygger kultur-analytik til danske virksomheder. Selvfinansieret, dansk, GDPR-purist.',
+            title: 'Om culturequest | Predictive culture intelligence',
+            description: 'culturequest er grundlagt af Benjamin Brandt og Benjamin Laudrup. Vi bygger kultur-analytik til danske virksomheder. Dansk og GDPR-purist.',
             url: SITE_URL + '/om'
         },
         'kontakt': {
             title: 'Kontakt culturequest | Benjamin Brandt og Benjamin Laudrup',
-            description: 'Skriv til hej@culturequest.io. Vi er to stiftere, og vi læser alle henvendelser selv. Du kan også fange os på LinkedIn.',
+            description: 'Skriv til hej@culturequest.io. Vi er to stiftere, og vi læser alle henvendelser selv. Skriv på dansk eller engelsk — svar inden for 4 timer.',
             url: SITE_URL + '/kontakt'
         },
         'roadmap': {
@@ -34575,8 +34602,8 @@ document.addEventListener('DOMContentLoaded', function() {
             url: SITE_URL + '/roadmap'
         },
         'demo': {
-            title: 'Klikbar demo af culturequest | Prøv flow på 2 minutter',
-            description: 'Klik dig igennem hele culture intelligence-flowet: pulsmåling, kulturscore, AI-anbefalinger og handlingsplan. Interaktiv produkt-tour. Ingen tilmelding.',
+            title: 'Klikbar demo af culturequest | 2-min produkt-tour',
+            description: 'Klik gennem hele culture intelligence-flowet: pulsmåling, kulturscore, AI-anbefalinger og handlingsplan. Ingen tilmelding.',
             url: SITE_URL + '/demo'
         }
     };
