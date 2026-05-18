@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<title>Trivselsmåling i praksis · culturequest</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap');
+
+@page {
+    size: A4;
+    margin: 22mm 20mm 22mm 20mm;
+    @bottom-left {
+        content: "culturequest · Trivselsmåling i praksis";
+        font-family: 'Inter', sans-serif;
+        font-size: 9pt;
+        color: #888;
+    }
+    @bottom-right {
+        content: counter(page) " / " counter(pages);
+        font-family: 'Inter', sans-serif;
+        font-size: 9pt;
+        color: #888;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+html, body {
+    font-family: 'Inter', sans-serif;
+    color: #0e0e0e;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.55;
+    font-size: 10.5pt;
+}
+
+/* === Cover page === */
+.cover {
+    page-break-after: always;
+    height: 100vh;
+    min-height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6mm 0;
+}
+.cover-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4f53cc;
+    font-family: 'Inter', sans-serif;
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+.cover-top-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4f53cc;
+}
+.cover-title-wrap {
+    margin-top: 24mm;
+}
+.cover-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 14px;
+}
+.cover-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 38pt;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: #0e0e0e;
+    margin: 0 0 16px;
+}
+.cover-sub {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18pt;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #4a4c63;
+    margin: 0 0 28px;
+    max-width: 130mm;
+}
+.cover-by {
+    font-size: 11pt;
+    color: #4a4c63;
+    margin-top: 8px;
+}
+.cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 30mm;
+    padding-top: 12px;
+    border-top: 1px solid #ddd;
+    font-size: 9pt;
+    color: #666;
+}
+.cover-bottom strong {
+    color: #0e0e0e;
+}
+
+/* === TOC === */
+.toc {
+    page-break-after: always;
+    padding-top: 6mm;
+}
+.toc-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin: 0 0 18mm;
+}
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.toc-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #ddd;
+    padding: 14px 0;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13pt;
+    font-weight: 600;
+}
+.toc-item-num {
+    color: #6366f1;
+    width: 18mm;
+    flex-shrink: 0;
+    font-weight: 700;
+}
+.toc-item-name {
+    flex: 1;
+    color: #0e0e0e;
+}
+
+/* === Sections === */
+.section {
+    page-break-before: always;
+    padding-top: 4mm;
+}
+.section-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 8px;
+}
+.section-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 26pt;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #0e0e0e;
+    margin: 0 0 20px;
+    max-width: 150mm;
+}
+.lede {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14pt;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #4a4c63;
+    margin: 0 0 24px;
+    max-width: 160mm;
+}
+
+h2 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16pt;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: #0e0e0e;
+    margin: 28px 0 12px;
+    page-break-after: avoid;
+}
+h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12.5pt;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #0e0e0e;
+    margin: 20px 0 8px;
+    page-break-after: avoid;
+}
+
+p {
+    margin: 0 0 12px;
+    max-width: 170mm;
+}
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 18px;
+}
+li {
+    margin-bottom: 6px;
+    max-width: 165mm;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+}
+th {
+    background: #f4f1ea;
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 700;
+    font-family: 'Inter Tight', sans-serif;
+}
+td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+
+.callout {
+    background: #f7f5f1;
+    border-left: 3px solid #6366f1;
+    padding: 14px 16px;
+    margin: 16px 0 20px;
+    border-radius: 6px;
+    page-break-inside: avoid;
+}
+.callout-eyebrow {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4f53cc;
+    margin-bottom: 6px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.quote {
+    border-left: 3px solid #ddd;
+    padding-left: 14px;
+    margin: 10px 0 16px;
+    color: #4a4c63;
+    font-style: italic;
+    font-size: 10.5pt;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 18px;
+}
+.checklist li {
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 8px;
+}
+.checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    color: #6366f1;
+    font-size: 12pt;
+    line-height: 1.3;
+}
+
+.template {
+    background: #fafaf6;
+    border: 1px dashed #ccc;
+    padding: 16px 18px;
+    margin: 14px 0 20px;
+    border-radius: 8px;
+    font-size: 10pt;
+    page-break-inside: avoid;
+}
+.template strong {
+    color: #4f53cc;
+}
+
+.cta-block {
+    background: #0e0e0e;
+    color: #f4f1ea;
+    padding: 22px 24px;
+    border-radius: 10px;
+    margin: 24px 0 0;
+    page-break-inside: avoid;
+}
+.cta-block h2 {
+    color: #fff;
+    margin-top: 0;
+    font-size: 16pt;
+}
+.cta-block p { color: #d4d3d6; }
+.cta-block a { color: #a5a8ff; text-decoration: none; }
+.cta-block .cta-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.cta-block .cta-list li {
+    color: #fff;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.colophon {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid #ddd;
+    font-size: 9pt;
+    color: #888;
+    text-align: center;
+}
+
+.intro-stat {
+    display: inline-block;
+    background: #f7f5f1;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 10px 0 18px;
+    border-left: 3px solid #6366f1;
+}
+.intro-stat-num {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 30pt;
+    font-weight: 800;
+    color: #4f53cc;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.intro-stat-label {
+    font-size: 9.5pt;
+    color: #4a4c63;
+    margin-top: 6px;
+    max-width: 70mm;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== COVER ========== -->
+<div class="cover">
+    <div class="cover-top">
+        <span class="cover-top-dot"></span>
+        <span>culturequest</span>
+    </div>
+    <div class="cover-title-wrap">
+        <div class="cover-eyebrow">Playbook · 28 sider</div>
+        <h1 class="cover-title">Trivselsmåling i praksis</h1>
+        <p class="cover-sub">Sådan kører I trivselsmålinger der faktisk flytter noget. Før, under, efter.</p>
+        <p class="cover-by">For HR-ansvarlige og ledere i danske SMV'er.</p>
+    </div>
+    <div class="cover-bottom">
+        <div>
+            <strong>culturequest</strong><br>
+            Predictive culture intelligence
+        </div>
+        <div style="text-align: right;">
+            culturequest.io<br>
+            Maj 2026
+        </div>
+    </div>
+</div>
+
+<!-- ========== TOC ========== -->
+<div class="toc">
+    <div class="toc-title">Indhold</div>
+    <ul class="toc-list">
+        <li class="toc-item">
+            <span class="toc-item-num">01</span>
+            <span class="toc-item-name">Hvorfor de fleste trivselsmålinger ikke flytter noget</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">02</span>
+            <span class="toc-item-name">Det årlige hjul: kadence, ikke kalenderpunkt</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">03</span>
+            <span class="toc-item-name">Før målingen</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">04</span>
+            <span class="toc-item-name">Under målingen</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">05</span>
+            <span class="toc-item-name">Efter målingen: de første 30 dage</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">06</span>
+            <span class="toc-item-name">Intermellem: 90 dage til næste måling</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">07</span>
+            <span class="toc-item-name">Den lange rytme: år 1, 2, 3</span>
+        </li>
+        <li class="toc-item">
+            <span class="toc-item-num">08</span>
+            <span class="toc-item-name">Skabeloner og tjeklister</span>
+        </li>
+    </ul>
+</div>
+
+<!-- ========== SECTION 1 ========== -->
+<div class="section">
+    <div class="section-num">01 · Diagnose</div>
+    <h1 class="section-title">Hvorfor de fleste trivselsmålinger ikke flytter noget</h1>
+    <p class="lede">Det er ikke målingen der er problemet. Det er hvad der sker før og efter.</p>
+
+    <p>Gartner finder i deres 2024-rapport at <strong>70 % af alle handlingsplaner født ud af en medarbejdersurvey aldrig bliver eksekveret til ende</strong>. Lederweb dokumenterer det samme i dansk kontekst: når en organisation gennemfører en trivselsmåling uden klar plan for opfølgning, falder tilliden hos de medarbejdere der svarede ærligt, og næste måling får dårligere svarprocent.</p>
+
+    <div class="intro-stat">
+        <div class="intro-stat-num">70 %</div>
+        <div class="intro-stat-label">af handlingsplaner fra trivselsmålinger bliver aldrig eksekveret til ende (Gartner 2024)</div>
+    </div>
+
+    <p>Det er forventningsgabet der gør skaden. Medarbejderne svarer. Ledelsen får data. Der sker ingenting i seks måneder. Næste år bliver der sendt en ny måling ud, og folk klikker den væk.</p>
+
+    <h2>Tre mønstre vi ser i danske SMV'er</h2>
+
+    <h3>1. Måling som ritual, ikke som rytme</h3>
+    <p>Én årlig trivselsmåling i Q4 fordi "det plejer vi". Ingen forbindelse til ledelsesarbejdet resten af året. Resultaterne præsenteres på et personalemøde og lægges i en mappe.</p>
+
+    <h3>2. Handlingsplan uden ejer</h3>
+    <p>"Vi skal arbejde med kommunikationen" er ikke en handlingsplan. Det er et abstrakt ønske. Uden navn, deadline og succeskriterium dør det.</p>
+
+    <h3>3. Tavshed efter målingen</h3>
+    <p>Medarbejderen besvarede 35 spørgsmål om sin trivsel og fik et "tak for dit svar". Tre uger senere ved ingen hvad der blev af det. Det er den dyreste form for tavshed, fordi den underminerer alle fremtidige målinger.</p>
+
+    <div class="callout">
+        <div class="callout-eyebrow">Pointen</div>
+        <p>Det her ER til at fikse. Men det kræver at I tænker trivselsmåling som en arbejdsrytme, ikke som et projekt der starter og slutter.</p>
+    </div>
+</div>
+
+<!-- ========== SECTION 2 ========== -->
+<div class="section">
+    <div class="section-num">02 · Rytme</div>
+    <h1 class="section-title">Det årlige hjul: kadence, ikke kalenderpunkt</h1>
+    <p class="lede">Det første spørgsmål er ikke "hvilket værktøj?". Det er "hvor ofte og med hvilken dybde?".</p>
+
+    <p>Tre kadencer der virker hver for sig, og bedre i kombination.</p>
+
+    <h2>Den dybe måling (1 gang om året)</h2>
+    <p>40-80 spørgsmål. Bred dækning af psykisk arbejdsmiljø, engagement, ledelse, fællesskab, mening og udvikling. Validerede skalaer (Karasek, SDT, NFA). Det er jeres baseline-anker.</p>
+    <p>Hvis I har en lovpligtig APV at gennemføre, kan dyb-målingen typisk udvides så den dækker både APV-kravet og en bredere trivselsmåling i samme felttid. Det sparer både medarbejdernes tid og jeres analyse-arbejde.</p>
+    <p>Lægger I den i samme måned hvert år (fx april), bliver det muligt at sammenligne på tværs af år og se reelle udviklinger.</p>
+
+    <h2>Pulsmålingen (månedligt eller kvartalsvist)</h2>
+    <p>2-3 spørgsmål ad gangen. 2-3 minutter pr. medarbejder. Mellem to dybe-målinger.</p>
+    <p>Formålet er ikke at få et nyt fuldt billede hver måned. Det er at fange retning. Stiger stress i Marketing? Falder anerkendelsen i R&amp;D? Pulsen viser jer det, mens vinduet for at handle stadig er åbent.</p>
+    <p>Vores anbefaling: månedlig hvis I har ledelseskapaciteten til at handle på data hver måned. Kvartalsvis hvis I er færre end 50 mennesker eller hvis ledergruppen først skal lære at læse data.</p>
+
+    <h2>Ad-hoc-målingen (når noget har ændret sig)</h2>
+    <p>Omorganisering. Ny CEO. Større ledelsesskift. Hjemsendelser. Ny it-platform der ændrer hverdagen. Når noget stort sker, har I 4-6 ugers vindue hvor I kan måle effekten i kulturen, før den indgår i baseline.</p>
+    <p>En kort, fokuseret måling med 8-12 spørgsmål rettet specifikt mod forandringen. Ikke jeres faste skema.</p>
+
+    <h2>Eksempel-årshjul</h2>
+    <table>
+        <thead>
+            <tr><th>Måned</th><th>Aktivitet</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Januar</strong></td><td>Pulsmåling. 2-3 spørgsmål om motivation og workload efter ferien</td></tr>
+            <tr><td><strong>Februar</strong></td><td>(intet)</td></tr>
+            <tr><td><strong>Marts</strong></td><td>Forberedelse til dyb måling. Kommunikationsplan ud til hele organisationen</td></tr>
+            <tr><td><strong>April</strong></td><td>Dyb måling (uger 14-16). Inkluderer APV</td></tr>
+            <tr><td><strong>Maj</strong></td><td>Cascade af resultater. Team-walkthroughs. 30-60-90 handlingsplaner</td></tr>
+            <tr><td><strong>Juni</strong></td><td>Pulsmåling. Tidligt signal på om handlingsplanen virker</td></tr>
+            <tr><td><strong>Juli / aug.</strong></td><td>(intet ud over løbende ledelsesarbejde)</td></tr>
+            <tr><td><strong>September</strong></td><td>Pulsmåling</td></tr>
+            <tr><td><strong>Oktober</strong></td><td>Status til hele organisationen: hvad har vi gjort, hvad virker, hvad næste?</td></tr>
+            <tr><td><strong>November</strong></td><td>Pulsmåling</td></tr>
+            <tr><td><strong>December</strong></td><td>(intet)</td></tr>
+        </tbody>
+    </table>
+
+    <p>Det er ét eksempel. Tilpas til jeres organisation. Pointen er at der ER en rytme, og at alle ved hvad der kommer.</p>
+</div>
+
+<!-- ========== SECTION 3 ========== -->
+<div class="section">
+    <div class="section-num">03 · Før målingen</div>
+    <h1 class="section-title">Det vigtigste arbejde foregår før medarbejderne ser ét eneste spørgsmål</h1>
+
+    <h2>Topledelsens tre spørgsmål</h2>
+    <p>Inden I sender målingen ud, skal direktion eller topledelse svare på følgende tre spørgsmål. Skriv svarene ned og del dem internt i ledergruppen.</p>
+
+    <h3>1. Hvad er vi villige til at ændre?</h3>
+    <p>Hvis målingen viser at vi har et alvorligt ledelsesproblem, hvad gør vi så? Hvis den viser at vores arbejdsbelastning er urealistisk, er vi så villige til at udskyde projekter? Hvis vi ikke kan svare ærligt på den slags, er målingen prematur.</p>
+
+    <h3>2. Hvilke områder er svære eller umulige at ændre?</h3>
+    <p>Ærlighed her redder jer for at love noget I ikke kan holde. Hvis I lige har vundet en stor kontrakt og må køre med fuld kapacitet i seks måneder, sig det. Medarbejderne ved det allerede.</p>
+
+    <h3>3. Hvem ejer eksekveringen?</h3>
+    <p>Det er ikke HR. Det er ledergruppen og mellemlederne. HR faciliterer. Hvis ledergruppen ikke har tid eller appetit, skal målingen vente.</p>
+
+    <h2>Leder-onboarding (1 time, en uge før målingen)</h2>
+    <p>Hver mellemleder skal igennem en kort onboarding før hver måling. Indhold:</p>
+    <ul>
+        <li>Hvad spørger vi om, og hvorfor disse spørgsmål?</li>
+        <li>Hvad sker der med deres team-data?</li>
+        <li>Hvad er deres rolle før, under og efter?</li>
+        <li>Hvilken tærskel kræver vi for at vise team-niveau (typisk 5 svar)?</li>
+        <li>Hvad gør de hvis nogen kommer til dem med spørgsmål om anonymitet?</li>
+    </ul>
+    <p>Sessionen kan være live eller asynkron, men den skal være obligatorisk. Den koster en time pr. leder pr. måling, og den er forskellen på at en leder forsvarer målingen og at en leder undergraver den.</p>
+
+    <h2>Kommunikation til medarbejderne</h2>
+    <p>Tre kommunikations-punkter før målingen:</p>
+
+    <h3>To uger før: forhåndsmeldingen</h3>
+    <p>Meddel at målingen kommer, hvorfor den er vigtig, hvor lang tid det tager, og hvad der sker bagefter. Send fra direktøren eller HR-direktøren, ikke fra HR-koordinatoren.</p>
+    <div class="quote">
+        "I næste måned spørger vi alle om hvordan det går. Vi tager 7-10 minutter af din tid, og du får et svar tilbage senest 3 uger efter målingen er lukket. Vi siger højt hvad vi har set, hvad vi gør noget ved, og hvad vi ikke kan ændre lige nu. Hvis du har spørgsmål inden, skriv til [navn]."
+    </div>
+
+    <h3>To dage før: reminder</h3>
+    <p>Kort, ren info: i morgen åbner målingen, den lukker [dato], her er link, det tager [tid]. Ingen sælger-tone.</p>
+
+    <h3>Dagen før: lederen melder ind</h3>
+    <p>Den nærmeste leder siger til sit team: "I morgen får I en mail. Tag jer tid til at svare ærligt. Jeg ser ikke jeres individuelle svar. Jeg får et team-billede når der er nok svar."</p>
+    <p>Det er den sætning der mest påvirker svarprocenten og ærligheden. Når lederen ejer kommunikationen, er målingen ikke "HR's projekt".</p>
+
+    <h2>Psykologisk sikkerhed-tjekken</h2>
+    <p>Inden I trykker send, gå denne tjekliste igennem:</p>
+    <ul class="checklist">
+        <li>Er anonymitets-tærsklen klar og kommunikeret? (Vi anbefaler minimum 5 svar pr. segment før noget vises)</li>
+        <li>Kan medarbejderen se hvilke spørgsmål er obligatoriske og hvilke er valgfrie?</li>
+        <li>Er der mulighed for fritekst-svar uden at det kompromitterer anonymiteten?</li>
+        <li>Hvis nogen rapporterer noget alvorligt (krænkelser, mistrivsel), er der en klar vej videre der ikke kræver de identificerer sig?</li>
+        <li>Har I aftalt med ledergruppen at ingen lederfeedback med &lt;5 svar bliver vist eller analyseret?</li>
+        <li>Er datanedbrydningen aftalt med medarbejderrepræsentanter eller TR/AMR?</li>
+    </ul>
+    <p>Hvis ét af punkterne er nej, så ret det. En måling uden psykologisk sikkerhed er værre end ingen måling.</p>
+</div>
+
+<!-- ========== SECTION 4 ========== -->
+<div class="section">
+    <div class="section-num">04 · Under målingen</div>
+    <h1 class="section-title">Momentum uden pres</h1>
+    <p class="lede">Når målingen først kører, er jeres opgave at holde momentum uden at presse.</p>
+
+    <h2>Hold øje med svarprocenten, ikke svar-indholdet</h2>
+    <p>Tre datapunkter at følge dagligt:</p>
+    <ul>
+        <li>Samlet svarprocent</li>
+        <li>Svarprocent pr. team</li>
+        <li>Hvis der er teams under 50 % svar halvvejs gennem felttiden, kontakt lederen</li>
+    </ul>
+    <p>Mål for svarprocent på en god måling: <strong>70 %+ for SMV'er. 80 %+ hvis I er &lt;50 mennesker</strong>. Under 50 % er en advarsel, ikke om målingen, men om kulturen omkring den.</p>
+
+    <h2>Hvad gør I når en leder ikke får svar?</h2>
+    <p>To-uger-i-felt er sidste momentum-punkt. Hvis et team ligger under 40 % halvvejs, kontakt lederen. Ikke for at presse, men for at forstå.</p>
+    <p>Spørg lederen:</p>
+    <ul>
+        <li>Har du meldt målingen ind på dit teammøde?</li>
+        <li>Er der noget specifikt i jeres team-situation der kan gøre at folk er tilbageholdende?</li>
+        <li>Hvad har du brug for fra mig?</li>
+    </ul>
+    <p>Hvis lederen ikke ved at målingen kører, har I et internt kommunikations-problem, ikke et trivselsmålings-problem.</p>
+
+    <h2>Drop reminders der presser</h2>
+    <p>"Vi har stadig brug for dit svar!" virker passiv-aggressivt og sænker den ærlighed I har brug for.</p>
+    <p>I stedet, send én neutral reminder fire dage før felttiden lukker. Det er det. Hvis folk ikke svarer, har de besluttet sig.</p>
+
+    <div class="callout">
+        <div class="callout-eyebrow">Tommelfingerregel</div>
+        <p>Hver gang I sender en reminder, så stil jer selv spørgsmålet: ville en kollega der respekterer mig sende denne her? Hvis svaret er nej, så send den ikke.</p>
+    </div>
+</div>
+
+<!-- ========== SECTION 5 ========== -->
+<div class="section">
+    <div class="section-num">05 · Efter målingen</div>
+    <h1 class="section-title">De første 30 dage</h1>
+    <p class="lede">Det er her de fleste trivselsmålinger dør. Det er også her culture intelligence kan flytte mest.</p>
+
+    <h2>48 timer: headlines til ledelsen</h2>
+    <p>Inden 48 timer efter felttiden lukker, skal direktion og topledelse have:</p>
+    <ul>
+        <li>Samlet svarprocent</li>
+        <li>Top 3 styrker (positive afvigelser fra sidste måling eller benchmark)</li>
+        <li>Top 3 risici (negative afvigelser eller lave scores)</li>
+        <li>Eventuelle akutte signaler (krænkelser, alvorlig mistrivsel)</li>
+    </ul>
+    <p>Det er ikke en rapport. Det er en headline. Maks én side. Formålet er at ledelsen kan begynde at tænke før team-walkthroughs starter.</p>
+
+    <h2>7 dage: team-walkthroughs</h2>
+    <p>Hver mellemleder mødes med sin nærmeste leder (eller HR-partner) og går team-data igennem. 45 minutter.</p>
+    <p>Lederen skal selv præsentere data på sit næste team-møde. Det er et designvalg. Når lederen ejer fremlæggelsen, ejer han eller hun også opfølgningen.</p>
+    <p>I walkthrough-mødet:</p>
+    <ul>
+        <li>Hvad ser du i jeres team-data?</li>
+        <li>Hvad er du ikke overrasket over?</li>
+        <li>Hvad overraskede dig?</li>
+        <li>Hvilke 2-3 områder vil du tage med tilbage?</li>
+    </ul>
+    <p>Lederen forlader mødet med en pre-aftalt plan for hvordan team-mødet vil foregå, ikke en færdig handlingsplan.</p>
+
+    <h2>14 dage: team-niveau handlingsplan</h2>
+    <p>Hver leder kommer tilbage med en 30-60-90 dages handlingsplan for sit team. Det er ikke en lang plan. Det er én side.</p>
+
+    <div class="template">
+        <p><strong>Team:</strong> [navn]<br>
+        <strong>Mest værd at handle på:</strong> [1-2 områder, baseret på team-data]</p>
+        <p><strong>Næste 30 dage:</strong></p>
+        <ul>
+            <li>[Specifik handling 1, ejer, deadline]</li>
+            <li>[Specifik handling 2, ejer, deadline]</li>
+        </ul>
+        <p><strong>Næste 60 dage:</strong></p>
+        <ul>
+            <li>[Handling med længere implementeringstid]</li>
+        </ul>
+        <p><strong>Næste 90 dage:</strong></p>
+        <ul>
+            <li>[Mere strukturel ændring der kræver afstemning med ledelse]</li>
+        </ul>
+        <p><strong>Hvad har jeg brug for fra ledelsen?</strong><br>[Konkret]</p>
+    </div>
+
+    <p>Lederen præsenterer planen for sit team og spørger om team-medlemmerne kan se sig selv i prioriteringerne. Sidste justeringer sker her.</p>
+
+    <h2>30 dage: status til hele organisationen</h2>
+    <p>Det er IKKE en præsentation af alle resultater. Det er en konkret melding fra direktionen:</p>
+
+    <div class="quote">
+        "Vi har set [headline 1]. Vi gør [konkret]. Vi har set [headline 2]. Det her kan vi ikke ændre lige nu, og her er hvorfor. Hver leder har en handlingsplan med sit team. Næste status er om 90 dage."
+    </div>
+
+    <p>Det er den meddelelse der genopretter tillid. Den siger: <em>Vi har lyttet, vi handler hvor vi kan, og vi er ærlige hvor vi ikke kan.</em></p>
+
+    <p>Hvis I ikke kan give den meddelelse 30 dage efter felttiden lukker, så er der noget galt med jeres beslutningsproces, ikke med målingen.</p>
+</div>
+
+<!-- ========== SECTION 6 ========== -->
+<div class="section">
+    <div class="section-num">06 · Intermellem</div>
+    <h1 class="section-title">90 dage til næste måling</h1>
+    <p class="lede">Tre måneder er længe. Det er nok tid til at en god handlingsplan begynder at virke, og nok tid til at en dårlig plan dør stille.</p>
+
+    <h2>Månedlig leder-check-in (15 minutter)</h2>
+    <p>Hver mellemleder rapporterer kort til sin egen leder en gang om måneden:</p>
+    <ul>
+        <li>Hvad har du gjort siden sidst?</li>
+        <li>Hvad virker?</li>
+        <li>Hvad virker ikke?</li>
+        <li>Hvad har du brug for?</li>
+    </ul>
+    <p>Det er ikke et formelt møde. Det er en 1:1 hvor en del af tiden bruges på dette. Hvis det ikke sker, dør handlingsplanen i lederens kalender.</p>
+
+    <h2>Hvad gør I når en handling ikke virker?</h2>
+    <p>To måneder inde i en handlingsplan kan I se om noget flytter. Hvis ikke, er det normalt. Ikke alle handlinger virker. I tre tilfælde skal lederen aktivt stoppe og tænke om:</p>
+
+    <h3>1. Handlingen er løbet ind i en mur</h3>
+    <p>Anden afdeling siger nej. Budget er væk. Teknisk afhængighed der ikke kan løses. Sig det højt, dokumenter det, og lad det fremgå af status til medarbejderne. Det værste er at lade som om planen kører når den ikke gør.</p>
+
+    <h3>2. Handlingen var den forkerte</h3>
+    <p>I troede problemet var anerkendelse. Det viste sig at være rolleklarhed. Det er en pulsmåling værd. Justér.</p>
+
+    <h3>3. Handlingen tager længere tid end forventet</h3>
+    <p>Strukturelle ændringer (lønjusteringer, ny organisationsmodel, nye samarbejdsformer) tager 6-12 måneder. Det er fint. Bare sig det.</p>
+
+    <h2>Signaler der kræver action mellem målinger</h2>
+    <p>Selv uden en formel måling kan ledere fange signaler. Dem at være opmærksom på:</p>
+    <ul>
+        <li>Pludselig drop i deltagelse på teammøder</li>
+        <li>Færre ord-i-fritekstfelter eller chat-input</li>
+        <li>"Ved-ikke"-svar stiger på 1:1'er</li>
+        <li>Lederen springer 1:1'er over</li>
+        <li>Sygefravær begynder at klumpe sig i specifikke teams</li>
+    </ul>
+    <p>Hvis I bruger en kontinuerlig kultur-platform, fanger den dem. Hvis ikke, skal mellemlederne selv være opmærksomme.</p>
+</div>
+
+<!-- ========== SECTION 7 ========== -->
+<div class="section">
+    <div class="section-num">07 · Den lange rytme</div>
+    <h1 class="section-title">År 1, 2, 3</h1>
+    <p class="lede">Trivselsmåling er ikke et et-årigt projekt. Det er en organisatorisk muskel der opbygges over år.</p>
+
+    <h2>År 1: fundamentet</h2>
+    <p>Det første år er det sværeste. I lærer hvad I måler, hvordan I kommunikerer, hvordan I handler. Forvent at:</p>
+    <ul>
+        <li>Svarprocenten er lavere end året efter (mange er skeptiske)</li>
+        <li>Handlingsplaner er overambitiøse (I prøver at fixe alt på én gang)</li>
+        <li>30-60-90-rytmen bliver presset (timing er svært første gang)</li>
+        <li>Nogle ledere er bange for data, andre er for begejstrede</li>
+    </ul>
+    <p>Det er fint. Fokusér på at gennemføre cyklussen ærligt, ikke på at perfektionere den. Den vigtigste vinder år 1 er <strong>tillid</strong>: medarbejderne ser at I rent faktisk gjorde noget med deres svar.</p>
+
+    <h2>År 2: justering</h2>
+    <p>I år 2 kender alle rytmen. Nu kan I begynde at se reelle tendenser. Spørgsmål I bør stille:</p>
+    <ul>
+        <li>Hvilke handlinger fra år 1 virkede? Hvilke flyttede ingenting?</li>
+        <li>Er der team-mønstre der gentager sig? (Det samme team falder på det samme i to målinger i træk)</li>
+        <li>Skal I justere spørgsmål eller kadence baseret på hvad I har lært?</li>
+        <li>Er der ledere der har brug for ekstra støtte eller udvikling?</li>
+    </ul>
+    <p>Andet års måling skal sammenlignes med første år. Det er her benchmarking begynder at give mening.</p>
+
+    <h2>År 3: modenhed</h2>
+    <p>I år 3 er trivselsmåling ikke længere et særskilt initiativ. Det er en del af hvordan I driver organisation:</p>
+    <ul>
+        <li>Strategiske beslutninger inkluderer kultur-data</li>
+        <li>Mellemledere bruger team-data uden HR's hjælp</li>
+        <li>Medarbejderne forventer status-opdatering 30 dage efter en måling</li>
+        <li>Handlingsplaner refererer til hinanden på tværs af afdelinger</li>
+    </ul>
+    <p>Det er her trivselsmåling går fra at være "noget HR gør" til at være "sådan vi leder her".</p>
+
+    <h2>Skift fra fix-mode til vedligeholdelses-mode</h2>
+    <p>Når I har kørt nogle år, ændrer fokus sig. De første år handler det om at fikse de tydelige problemer. På et tidspunkt skifter det. Nu handler det om at fastholde det der virker og fange små signaler tidligt.</p>
+    <p>Tegn på at I er i vedligeholdelses-mode:</p>
+    <ul>
+        <li>Færre store handlingsplaner, flere små justeringer</li>
+        <li>Pulsmålinger fanger ting før den dybe måling viser det</li>
+        <li>Lederne taler om kultur-data uden at det føles som ekstra arbejde</li>
+        <li>Nye medarbejdere kan mærke at I tager det her seriøst</li>
+    </ul>
+    <p>Det er kulturen I bygger. Den tager tid. Den er værd at bygge.</p>
+</div>
+
+<!-- ========== SECTION 8 ========== -->
+<div class="section">
+    <div class="section-num">08 · Skabeloner</div>
+    <h1 class="section-title">Skabeloner og tjeklister</h1>
+    <p class="lede">Til print eller kopi.</p>
+
+    <h2>Tjekliste: før målingen</h2>
+    <ul class="checklist">
+        <li>Topledelsen har skrevet svar ned på de tre spørgsmål (hvad ændrer vi, hvad ændrer vi ikke, hvem ejer eksekveringen)</li>
+        <li>Alle mellemledere er onboardet (1 time, en uge før)</li>
+        <li>Forhåndsmeldingen er sendt to uger før</li>
+        <li>Reminder er planlagt to dage før</li>
+        <li>Lederne ved at de skal sige det dagen før målingen åbner</li>
+        <li>Anonymitets-tærskel er aftalt og kommunikeret</li>
+        <li>Medarbejderrepræsentanter (TR/AMR) er konsulteret om datanedbrydning</li>
+        <li>Eskaleringsvej for alvorlige rapporter er klar</li>
+    </ul>
+
+    <h2>Tjekliste: under målingen</h2>
+    <ul class="checklist">
+        <li>Daglig svarprocent-tracking (samlet og pr. team)</li>
+        <li>Kontakt-protokol for teams under 40 % halvvejs</li>
+        <li>Én neutral reminder fire dage før lukning</li>
+        <li>Ingen pres-sprog ("vi har brug for dit svar!")</li>
+    </ul>
+
+    <h2>Tjekliste: efter målingen (30 dage)</h2>
+    <ul class="checklist">
+        <li>48 timer: headlines til direktion (én side)</li>
+        <li>7 dage: team-walkthroughs gennemført med alle ledere</li>
+        <li>14 dage: 30-60-90 handlingsplaner indleveret af alle ledere</li>
+        <li>30 dage: status fra direktionen til hele organisationen</li>
+        <li>Anonymitets-tærskel overholdt i alle rapporter</li>
+        <li>Akutte signaler (krænkelser, mistrivsel) håndteret separat med navn</li>
+    </ul>
+
+    <h2>Skabelon: kommunikationsplan</h2>
+    <div class="template">
+        <p><strong>2 uger før måling</strong> · Afsender: Direktør eller HR-direktør · Format: Mail eller intra-post<br>
+        Indhold: Hvorfor, hvornår, hvor lang tid, hvad sker bagefter, hvem kan kontaktes</p>
+        <p><strong>2 dage før måling</strong> · Afsender: HR · Format: Mail<br>
+        Indhold: Reminder, link, tid</p>
+        <p><strong>Dagen før måling</strong> · Afsender: Nærmeste leder · Format: Personlig (teammøde eller chat)<br>
+        Indhold: "I morgen får I en mail. Tag jer tid. Jeg ser ikke individuelle svar."</p>
+        <p><strong>Under målingen, ved halv-tid</strong> · Afsender: HR · Format: Mail (kun til teams under 40 %)<br>
+        Indhold: Reminder, ingen pres</p>
+        <p><strong>48 timer efter lukning</strong> · Afsender: HR · Format: Slide til direktion<br>
+        Indhold: Svarprocent, top 3 styrker, top 3 risici</p>
+        <p><strong>30 dage efter lukning</strong> · Afsender: Direktør · Format: Mail eller all-hands<br>
+        Indhold: Hvad vi har set, hvad vi gør, hvad vi ikke kan ændre nu, næste status</p>
+    </div>
+
+    <h2>Skabelon: 30-60-90 handlingsplan pr. team</h2>
+    <div class="template">
+        <p><strong>Team:</strong> _________________<br>
+        <strong>Leder:</strong> _________________<br>
+        <strong>Måling:</strong> _________________</p>
+        <p><strong>Mest værd at handle på (1-2 områder):</strong></p>
+        <p>1. _________________________________________________<br>
+        2. _________________________________________________</p>
+        <p><strong>Næste 30 dage:</strong></p>
+        <p>☐ ____________________________ (ejer: ____, deadline: ____)<br>
+        ☐ ____________________________ (ejer: ____, deadline: ____)</p>
+        <p><strong>Næste 60 dage:</strong></p>
+        <p>☐ ____________________________ (ejer: ____, deadline: ____)</p>
+        <p><strong>Næste 90 dage:</strong></p>
+        <p>☐ ____________________________ (ejer: ____, deadline: ____)</p>
+        <p><strong>Hvad har jeg brug for fra ledelsen?</strong><br>
+        _________________________________________________</p>
+        <p><strong>Hvordan måler jeg om handlingerne virker?</strong><br>
+        _________________________________________________</p>
+    </div>
+
+    <h2>Tre spørgsmål topledelsen skal svare før målingen</h2>
+    <div class="template">
+        <p><strong>1. Hvad er vi villige til at ændre hvis målingen viser et problem?</strong><br>
+        Hvad er på bordet: arbejdsbelastning, ledelsesstruktur, organisering, budget, prioriteringer?</p>
+        <p><strong>2. Hvad er der ikke plads til at ændre lige nu?</strong><br>
+        Hvilke ting kan vi ikke gøre noget ved i de næste 6 måneder, og hvorfor?</p>
+        <p><strong>3. Hvem ejer eksekveringen efter målingen?</strong><br>
+        HR faciliterer, men det er ledergruppen og mellemlederne der ejer eksekveringen. Hvem holder hvem ansvarlig?</p>
+    </div>
+
+    <div class="cta-block">
+        <h2>Når I er klar til at automatisere rytmen</h2>
+        <p>Det her kan gøres i hånden. Det er sværere, men det kan gøres.</p>
+        <p>Det kan også gøres i en kontinuerlig culture intelligence-platform der automatiserer kadencen, indsamler data ad hoc når noget signalerer, og leverer team-niveau handlingsforslag.</p>
+        <p>culturequest bygger den platform til danske SMV'er. Hvis I vil se hvordan rytmen ser ud med data, signaler og handlingsforslag på plads, så er der to veje:</p>
+        <ul class="cta-list">
+            <li><strong>Start gratis</strong> · live.culturequest.io · 45 dages prøveperiode med fuld kulturmåling</li>
+            <li><strong>365-dages pilotprogram</strong> · tæt forløb med ledelses-sparring · rabatteret rate, begrænset antal pladser pr. år</li>
+        </ul>
+        <p style="margin-top: 14px;">Skriv til <a href="mailto:hej@culturequest.io">hej@culturequest.io</a> eller læs mere på culturequest.io.</p>
+    </div>
+
+    <div class="colophon">
+        culturequest ApS · CVR 44750538 · København · Maj 2026
+    </div>
+</div>
+
+</body>
+</html>

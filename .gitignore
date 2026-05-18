@@ -4,3 +4,7 @@ node_modules/
 .env.*
 npm-debug.log*
 .claude/
+---
+# Guide PDF build artifacts (PDF is embedded in index.html as base64)
+culturequest-guide-*.pdf
+culturequest-guide-*.pdf.b64
