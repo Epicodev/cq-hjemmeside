@@ -20264,7 +20264,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <div class="founders-head">
         <div class="section-tag">Our quest</div>
-        <h2>We build everything that makes managers better. <span class="soft">Culture intelligence, workplace risk assessment (Danish APV), performance review (Danish MUS) tool and leadership development.</span></h2>
+        <h2>We build everything that makes managers better. <span class="soft">Culture intelligence, APV, MUS and leadership development.</span></h2>
         <p>The rule is simple: if it helps a manager, HR team or executive team make a better decision, it belongs with us. Choose a module below to see what it contains.</p>
 
         <div class="fc-tabs" role="tablist" aria-label="Modules">
@@ -34830,12 +34830,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const hash = (path.match(/#[^?]*/) || [''])[0];
         const targetRoute = (function() {
             const cleanPath = pathOnly.replace(/\/$/, '') || '/';
-            if (cleanPath === '/' || cleanPath === '') return 'home';
+            /* Only intercept /en/* paths in the EN SPA. A bare '/' is a
+               cross-language navigation to the DA site — let the browser
+               handle it so the user actually leaves /en/. */
+            if (cleanPath === '/en') return 'home';
             for (const route in ROUTE_TO_PATH) {
                 if (ROUTE_TO_PATH[route] === cleanPath) return route;
             }
-            /* Blog-slug routes (both /blog/foo and /en/blog/foo) */
-            if (cleanPath.startsWith('/blog/') || cleanPath.startsWith('/en/blog/')) return 'blog';
+            if (cleanPath.startsWith('/en/blog/')) return 'blog';
             return null;
         })();
 
