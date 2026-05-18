@@ -33283,7 +33283,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const input = row.querySelector('input');
             const sendBtn = row.querySelector('button');
 
-            input.focus();
+            // preventScroll: avoid yanking the page back to the sandbox
+            // when the user has scrolled past it while the demo plays out
+            input.focus({ preventScroll: true });
 
             const submit = () => {
                 const v = input.value.trim();
