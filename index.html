@@ -34746,9 +34746,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Scroll-handling: hvis hash peger på en sektion der eksisterer på den viste route, scroll dertil
         const cleanHash = (hash || '').replace(/^#\/?/, '');
         const target = cleanHash ? document.getElementById(cleanHash) : null;
-        if (target && target.closest('.page-route') &&
-            (target.closest('.page-route').id === 'page-' + name ||
-             (name === 'home' && target.closest('#home-only-sections')))) {
+        const closestRoute = target ? target.closest('.page-route') : null;
+        const inHomeOnly = target ? !!target.closest('#home-only-sections') : false;
+        const matchesRoute = closestRoute && closestRoute.id === 'page-' + name;
+        const matchesHomeOnly = name === 'home' && inHomeOnly;
+        if (target && (matchesRoute || matchesHomeOnly)) {
             requestAnimationFrame(() => {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
