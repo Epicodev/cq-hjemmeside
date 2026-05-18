@@ -24726,7 +24726,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ============ TRIVSELSMÅLING HERO, text position override (balance: not too close to menu, but CTAs above floats) ============ */
 #tm-hero-stage .apv-hero-text {
-    transform: translateY(-10vh);
+    transform: translateY(-14vh);
+    max-width: 880px;
+}
+/* Headline is 2 short sentences; cap the font so each sentence stays on one
+   line and the CTAs don't crowd the floats below. Base apv-hero-headline
+   maxes out at 60px which wrapped to 4 lines on this page. */
+#tm-hero-stage .apv-hero-headline {
+    font-size: clamp(30px, 3.6vw, 48px);
 }
 @media (max-width: 1099px) {
     #tm-hero-stage .apv-hero-text { transform: translateY(0); }
