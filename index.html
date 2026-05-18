@@ -33209,29 +33209,29 @@ document.addEventListener('DOMContentLoaded', function() {
 // === Sandbox: 3-step guided flow ===
 (function() {
     // Categories matching the real product (with farvede borders).
-    // OBS: questions her er bevidst generiske eksempler — den faktiske
-    // spørgsmålsbank er IP og vises kun i kundeløsningen.
+    // OBS: vi viser kun 2 spørgsmål pr. kategori som smagsprøve — fuld
+    // spørgsmålsbank ligger i kundeløsningen.
     const categories = [
         { id: 'stress', name: 'Stress og arbejdsbelastning', q: 11, color: 'var(--gray-400)', bg: 'rgba(148, 163, 184, 0.06)',
-          questions: ['Spørgsmål om aktuelt stress-niveau','Spørgsmål om arbejdsmængde og restitution'] },
+          questions: ['Hvor ofte føler du dig stresset?','Hvor ofte har du kontrol over din arbejdsbelastning?'] },
         { id: 'fysisk', name: 'Fysisk sundhed', q: 10, color: 'var(--info-500)', bg: 'rgba(59, 130, 246, 0.06)',
-          questions: ['Spørgsmål om energiniveau i hverdagen','Spørgsmål om søvn og pauser'] },
+          questions: ['Hvor ofte vågner du veludhvilet?','Tager du tilstrækkelige pauser i løbet af dagen?'] },
         { id: 'tryghed', name: 'Psykologisk tryghed', q: 8, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Spørgsmål om åbenhed i teamet','Spørgsmål om håndtering af konflikter'] },
+          questions: ['Hvor tryg føler du dig ved at sige din mening i møder?','Tør du udtrykke uenighed?'] },
         { id: 'team', name: 'Teamdynamikker og tillid', q: 16, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.06)',
-          questions: ['Spørgsmål om samarbejde og tillid','Spørgsmål om hvordan I trækker i samme retning'] },
+          questions: ['Stoler du på dine kolleger?','Bliver du hørt i teamet?'] },
         { id: 'diversitet', name: 'Diversitet, lighed og inklusion', q: 8, color: '#f97316', bg: 'rgba(249, 115, 22, 0.06)',
-          questions: ['Spørgsmål om inklusion og fællesskab','Spørgsmål om lige muligheder'] },
+          questions: ['Føler du dig respekteret uanset baggrund?','Har alle lige muligheder?'] },
         { id: 'social', name: 'Socialt fællesskab', q: 9, color: 'var(--warning-500)', bg: 'rgba(245, 158, 11, 0.06)',
-          questions: ['Spørgsmål om socialt tilhørsforhold','Spørgsmål om kollegial sparring'] },
+          questions: ['Har du kolleger du kan tale fortroligt med?','Føler du dig velkommen?'] },
         { id: 'ledelse', name: 'Ledelse', q: 10, color: '#ec4899', bg: 'rgba(236, 72, 153, 0.06)',
-          questions: ['Spørgsmål om tillid til nærmeste leder','Spørgsmål om feedback og kommunikation'] },
+          questions: ['I hvor høj grad føler du, at du kan stole på din leder?','Får du regelmæssig feedback?'] },
         { id: 'motivation', name: 'Motivation og personlig udvikling', q: 14, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.06)',
-          questions: ['Spørgsmål om motivation og mening','Spørgsmål om anerkendelse og udvikling'] },
+          questions: ['Føler du, at dit arbejde er meningsfuldt?','Får du brugt dine styrker?'] },
         { id: 'formal', name: 'Organisatorisk formål og klarhed', q: 12, color: 'var(--primary-500)', bg: 'rgba(99, 102, 241, 0.06)',
-          questions: ['Spørgsmål om virksomhedens retning','Spørgsmål om prioriteringer og forventninger'] },
+          questions: ['Forstår du virksomhedens retning?','Er prioriteringer klare?'] },
         { id: 'arbejdsmiljo', name: 'Fysisk arbejdsmiljø', q: 16, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Spørgsmål om de fysiske rammer','Spørgsmål om værktøjer og udstyr'] }
+          questions: ['Er dit arbejdsmiljø behageligt?','Har du de værktøjer du behøver?'] }
     ];
 
     let selected = new Set(['stress']);
@@ -33829,13 +33829,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // === LIKERT FLOW: progress through 3 demo questions ===
-    // OBS: bevidst generiske demo-formuleringer — den faktiske
-    // spørgsmålsbank er IP og indgår kun i kundeløsningen.
+    // Smagsprøve på spørgsmål fra produktet — fuld bank ligger i kundeløsningen.
     let currentQuestionIdx = 0;
     const demoQuestions = [
-        'Demo-spørgsmål: Hvordan oplever du anerkendelse i dit arbejde?',
-        'Demo-spørgsmål: Hvor komfortabel er du med at dele uenighed på jobbet?',
-        'Demo-spørgsmål: Hvor stærk er din tillid til din nærmeste leder?'
+        'Hvor ofte oplever du anerkendelse for dit arbejde?',
+        'Hvor tryg føler du dig ved at sige din mening i møder?',
+        'I hvor høj grad føler du, at du kan stole på din leder?'
     ];
 
     function resetLikertFlow() {

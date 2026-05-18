@@ -33123,29 +33123,29 @@ document.addEventListener('DOMContentLoaded', function() {
 // === Sandbox: 3-step guided flow ===
 (function() {
     // Categories matching the real product (with farvede borders)
-    // Note: these are generic example items — the actual question bank is
-    // proprietary and only appears in the customer-facing product.
+    // Note: we only show 2 questions per category as a taster — the full
+    // question bank lives in the customer-facing product.
     const categories = [
         { id: 'stress', name: 'Stress and workload', q: 11, color: 'var(--gray-400)', bg: 'rgba(148, 163, 184, 0.06)',
-          questions: ['Questions about current stress levels','Questions about workload and recovery'] },
+          questions: ['How often do you feel stressed?','How often are you in control of your workload?'] },
         { id: 'fysisk', name: 'Physical health', q: 10, color: 'var(--info-500)', bg: 'rgba(59, 130, 246, 0.06)',
-          questions: ['Questions about everyday energy levels','Questions about sleep and breaks'] },
+          questions: ['How often do you wake up well-rested?','Do you take enough breaks during the day?'] },
         { id: 'tryghed', name: 'Psychological safety', q: 8, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Questions about openness in the team','Questions about how conflicts are handled'] },
+          questions: ['How safe do you feel speaking your mind in meetings?','Do you dare to voice disagreement?'] },
         { id: 'team', name: 'Team dynamics and trust', q: 16, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.06)',
-          questions: ['Questions about collaboration and trust','Questions about pulling in the same direction'] },
+          questions: ['Do you trust your colleagues?','Do you feel heard in the team?'] },
         { id: 'diversitet', name: 'Diversity, equity and inclusion', q: 8, color: '#f97316', bg: 'rgba(249, 115, 22, 0.06)',
-          questions: ['Questions about inclusion and belonging','Questions about equal opportunity'] },
+          questions: ['Do you feel respected regardless of background?','Does everyone have equal opportunity?'] },
         { id: 'social', name: 'Social belonging', q: 9, color: 'var(--warning-500)', bg: 'rgba(245, 158, 11, 0.06)',
-          questions: ['Questions about social belonging','Questions about everyday peer sparring'] },
+          questions: ['Do you have colleagues you can talk to in confidence?','Do you feel welcome?'] },
         { id: 'ledelse', name: 'Leadership', q: 10, color: '#ec4899', bg: 'rgba(236, 72, 153, 0.06)',
-          questions: ['Questions about trust in your line manager','Questions about feedback and communication'] },
+          questions: ['To what extent do you feel you can trust your manager?','Do you get regular feedback?'] },
         { id: 'motivation', name: 'Motivation and personal development', q: 14, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.06)',
-          questions: ['Questions about motivation and meaning','Questions about recognition and growth'] },
+          questions: ['Do you find your work meaningful?','Do you get to use your strengths?'] },
         { id: 'formal', name: 'Organisational purpose and clarity', q: 12, color: 'var(--primary-500)', bg: 'rgba(99, 102, 241, 0.06)',
-          questions: ['Questions about the company direction','Questions about priorities and expectations'] },
+          questions: ['Do you understand the direction of the company?','Are priorities clear?'] },
         { id: 'arbejdsmiljo', name: 'Physical working environment', q: 16, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Questions about the physical setting','Questions about tools and equipment'] }
+          questions: ['Is your working environment comfortable?','Do you have the tools you need?'] }
     ];
 
     let selected = new Set(['stress']);
@@ -33743,13 +33743,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // === LIKERT FLOW: progress through 3 demo questions ===
-    // Note: deliberately generic demo wording — the actual question bank
-    // is proprietary and only ships with the customer product.
+    // Taster of real questions from the product — full bank lives in the customer product.
     let currentQuestionIdx = 0;
     const demoQuestions = [
-        'Demo question: How do you experience recognition at work?',
-        'Demo question: How comfortable are you sharing disagreement at work?',
-        'Demo question: How strong is your trust in your line manager?'
+        'How often do you feel recognised for your work?',
+        'How safe do you feel speaking your mind in meetings?',
+        'To what extent do you feel you can trust your manager?'
     ];
 
     function resetLikertFlow() {
