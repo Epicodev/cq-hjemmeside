@@ -25690,12 +25690,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
-            <div class="tm-matrix-foot">
-                <div class="tm-matrix-foot-tag">Ærlig konklusion</div>
-                <p>
-                    <strong>Vi er ikke det bedste valg hvis</strong> I har enterprise-skalerings-behov med 5 000+ medarbejdere (vælg <a href="https://www.workday.com/en-us/products/employee-voice/overview.html" target="_blank" rel="noopener">Peakon</a>, <a href="https://www.cultureamp.com" target="_blank" rel="noopener">Culture Amp</a> eller <a href="https://www.qualtrics.com/employee-experience/" target="_blank" rel="noopener">Qualtrics</a>), primært skal opfylde APV-krav uden ambitioner om prediction (vælg <a href="https://woba.io" target="_blank" rel="noopener">Woba</a> eller <a href="https://www.gais.dk" target="_blank" rel="noopener">GAIS</a>), vil sammenligne mod 50 års dansk benchmark-data (vælg <a href="https://ennova.com" target="_blank" rel="noopener">Ennova</a>) eller bare vil starte med let pulse uden større setup (vælg <a href="https://howdy.dk" target="_blank" rel="noopener">Howdy</a> eller <a href="https://zoios.io" target="_blank" rel="noopener">Zoios</a>). Vi er bygget til SMV'er der vil have <strong>begge dele</strong>, prediction + dansk forankring i én platform.
-                </p>
-            </div>
         </div>
     </section>
 
@@ -26441,25 +26435,12 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .c-matcher-card {
     background: var(--paper-card, #fff);
-    border: 1px solid rgba(15, 17, 50, 0.08);
-    border-radius: 22px;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
     padding: 32px;
-    box-shadow:
-        0 1px 0 rgba(15,17,50,0.02),
-        0 18px 40px -28px rgba(15,17,50,0.18);
     position: relative;
-    overflow: hidden;
 }
-.c-matcher-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(135deg, rgba(99,102,241,0.05) 0%, transparent 35%),
-        linear-gradient(225deg, rgba(99,102,241,0.04) 0%, transparent 40%);
-    pointer-events: none;
-    border-radius: inherit;
-}
+.c-matcher-card::before { content: none; }
 .c-matcher-form {
     position: relative;
     z-index: 1;
@@ -26484,7 +26465,7 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: var(--brand, #6366f1);
+    background: var(--ink);
     color: #fff;
     font-family: 'Inter Tight', sans-serif;
     font-size: 11.5px;
@@ -26574,22 +26555,22 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 15px 22px;
-    background: linear-gradient(135deg, #383da0, #6366f1);
+    padding: 14px 24px;
+    background: var(--ink);
     color: #fff;
     border: 0;
-    border-radius: 12px;
+    border-radius: 10px;
     font-family: 'Inter Tight', sans-serif;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.005em;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.15s ease;
-    box-shadow: 0 10px 28px -10px rgba(99, 102, 241, 0.55);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .c-matcher-submit:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 16px 36px -10px rgba(99, 102, 241, 0.65);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 .c-matcher-submit:disabled {
     opacity: 0.7;
@@ -26902,10 +26883,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- ============ HERO + AI-MATCHER (merged) ============ -->
     <section class="c-hero">
         <div class="c-hero-inner">
-            <div class="c-hero-eyebrow">Culturequest Consult</div>
             <h1 class="c-hero-headline">
-                Ledelsesudvikling der starter med jeres data.<br>
-                Ikke en skabelon fra en lærebog.
+                Ledelsesudvikling der starter med jeres data.
             </h1>
             <p class="c-hero-sub">
                 Et kurateret netværk af danske konsulenter til ledelsesudvikling, team-coaching og strategisk kulturarbejde. Beskriv hvad I står med. Vores AI peger på den rette match og foreslår en konkret ydelse. Booking gennem culturequest.
@@ -30314,11 +30293,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="about-mission-grid">
                 <div class="about-mission-text">
                     <div class="section-tag">Vores mission</div>
-                    <h2 class="about-mission-headline">Bygget fra bunden. Ingen investorer. Ingen genveje.</h2>
+                    <h2 class="about-mission-headline">Bygget fra bunden. Stærke partnere, ikke VC.</h2>
 
                     <p>culturequest startede med en simpel frustration: alle taler om kultur, men næsten ingen ved hvad de skal gøre ved det. Så vi byggede det vi selv manglede.</p>
 
-                    <p>Vi er et selvfinansieret hold der tror på, at virksomhedskultur ikke er et sideprojekt, det er en strategi. Og ligesom enhver strategi bør den være målbar, handlingsorienteret og en del af daglig ledelse, ikke en årlig PowerPoint-øvelse.</p>
+                    <p>Vi er et founder-led hold med stærke partnere ved siden af. Vi tror på, at virksomhedskultur ikke er et sideprojekt, det er en strategi. Og ligesom enhver strategi bør den være målbar, handlingsorienteret og en del af daglig ledelse, ikke en årlig PowerPoint-øvelse.</p>
 
                     <p>culturequest hjælper organisationer med at omsætte medarbejderindsigt til klare prioriteter og praktiske ledelsesvaner der faktisk ændrer hvordan arbejdet føles, og hvordan teams præsterer. Vi kombinerer kontinuerlige pulsmålinger, kulturelle og adfærdsmæssige indsigter og AI-drevet analyse for at fremhæve tidlige signaler, reducere gætterier og hjælpe ledere med at handle før problemerne bliver bekostelige.</p>
 
@@ -31491,7 +31470,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="pricing" id="priser">
     <div class="pricing-head">
         <div class="section-tag">AI pris-rådgiver · 3 minutter</div>
-        <h2 class="pricing-headline">Hvad koster det? <span class="pricing-headline-soft">Det kommer an på hvad I har brug for.</span></h2>
+        <h2 class="pricing-headline">Få en pris <span class="pricing-headline-soft">på det I har brug for.</span></h2>
         <p class="pricing-sub body-text">
             Fortæl vores AI hvad der bringer jer hertil, og bygger vi den rigtige løsning og pris sammen. Det kan være lovpligtig APV, MUS-værktøj, culture intelligence eller hele platformen. Få tilbuddet som PDF med det samme, ingen kontaktformularer, ingen "kontakt salg".
         </p>
