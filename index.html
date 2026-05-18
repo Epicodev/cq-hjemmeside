@@ -9543,7 +9543,24 @@ nav.scrolled::before {
     font-weight: 600;
     flex-shrink: 0;
     font-size: 10px;
-}/* ============ MISSION SECTION ============ */
+}
+.cv-trust-pilot {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(15, 17, 50, 0.1);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+}
+.cv-trust-pilot a {
+    color: var(--brand-deep, #4f53cc);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.cv-trust-pilot a:hover { color: var(--ink); }
+/* ============ MISSION SECTION ============ */
 .mission {
     overflow: hidden;
     position: relative;
@@ -19992,7 +20009,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
 
                     <div class="sandbox-pane sandbox-pane-preview">
-                        <div class="sandbox-pane-label">Live forhåndsvisning</div>
+                        <div class="sandbox-pane-label">Live forhåndsvisning <span class="sandbox-pane-hint">(eksempler — fuld spørgsmålsbank er kundespecifik)</span></div>
                         <div class="sandbox-preview" id="previewBox">
                             <div class="sandbox-preview-empty">
                                 <div class="sandbox-preview-empty-icon">
@@ -20093,7 +20110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
 
                     <div class="sandbox-result-body">
-                        <!-- Top: Forecast alert (the most important thing) -->
+                        <!-- Block 1: Mønster — hvad har vi set -->
                         <div class="sandbox-forecast-alert">
                             <div class="sandbox-forecast-icon">
                                 <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
@@ -20101,63 +20118,34 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </svg>
                             </div>
                             <div class="sandbox-forecast-content">
-                                <div class="sandbox-forecast-tag">Tidlig advarsel · Forecast</div>
-                                <h3 class="sandbox-forecast-title">3 medarbejdere viser tidlige tegn på frafald</h3>
-                                <p class="sandbox-forecast-sub">Forhøjet stress + lav kontrol + faldende anerkendelse. Når disse tre signaler optræder samtidigt, fører det historisk til opsigelse eller sygemelding inden for 6-8 uger. Tid til at handle nu.</p>
-                                <div class="sandbox-forecast-stats">
-                                    <div class="sandbox-forecast-stat">
-                                        <div class="sandbox-forecast-stat-num">87%</div>
-                                        <div class="sandbox-forecast-stat-label">af stress-sygemeldinger viser dette mønster 4-6 uger før</div>
-                                    </div>
-                                    <div class="sandbox-forecast-stat">
-                                        <div class="sandbox-forecast-stat-num">600k–1,2M</div>
-                                        <div class="sandbox-forecast-stat-label">estimeret omkostning per opsigelse i risikogruppen</div>
-                                    </div>
-                                    <div class="sandbox-forecast-stat">
-                                        <div class="sandbox-forecast-stat-num">12 uger</div>
-                                        <div class="sandbox-forecast-stat-label">interventionsvindue lukker gradvist</div>
-                                    </div>
+                                <div class="sandbox-forecast-tag">Mønster identificeret</div>
+                                <h3 class="sandbox-forecast-title">3 medarbejdere viser et tidligt frafalds-mønster</h3>
+                                <p class="sandbox-forecast-sub">Stress stiger samtidig med at anerkendelse falder og psykologisk tryghed bliver passiv. Dette signal-mønster dukker typisk op 4-6 uger før en opsigelse eller sygemelding.</p>
+                            </div>
+                        </div>
+
+                        <!-- Block 2: Risiko — hvad kan det koste -->
+                        <div class="sandbox-mini-section">
+                            <div class="sandbox-mini-label">Hvad det kan koste</div>
+                            <div class="sandbox-forecast-stats">
+                                <div class="sandbox-forecast-stat">
+                                    <div class="sandbox-forecast-stat-num">87%</div>
+                                    <div class="sandbox-forecast-stat-label">af stress-sygemeldinger viser dette mønster 4-6 uger før</div>
+                                </div>
+                                <div class="sandbox-forecast-stat">
+                                    <div class="sandbox-forecast-stat-num">1,8–3,6M</div>
+                                    <div class="sandbox-forecast-stat-label">samlet risiko hvis alle 3 opsiger (rekruttering, oplæring, produktivitetstab)</div>
+                                </div>
+                                <div class="sandbox-forecast-stat">
+                                    <div class="sandbox-forecast-stat-num">12 uger</div>
+                                    <div class="sandbox-forecast-stat-label">interventionsvindue. lukker gradvist</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Mini timeline showing signals -->
+                        <!-- Block 3: Handling — hvad gør du -->
                         <div class="sandbox-mini-section">
-                            <div class="sandbox-mini-label">Signaler de seneste 12 uger</div>
-                            <div class="sandbox-mini-timeline">
-                                <div class="sandbox-mini-track">
-                                    <div class="sandbox-mini-line"></div>
-                                    <div class="sandbox-mini-signal" style="left: 12%;" data-tip="Uge 24 · Anerkendelse falder">
-                                        <div class="sandbox-mini-dot"></div>
-                                    </div>
-                                    <div class="sandbox-mini-signal" style="left: 32%;" data-tip="Uge 27 · Passiv neutralitet stiger">
-                                        <div class="sandbox-mini-dot"></div>
-                                    </div>
-                                    <div class="sandbox-mini-signal" style="left: 52%;" data-tip="Uge 30 · Tryghed begynder at falde">
-                                        <div class="sandbox-mini-dot"></div>
-                                    </div>
-                                    <div class="sandbox-mini-signal sandbox-mini-signal-warn" style="left: 72%;" data-tip="Uge 33 · Stress-niveau stiger">
-                                        <div class="sandbox-mini-dot"></div>
-                                    </div>
-                                    <div class="sandbox-mini-signal sandbox-mini-signal-alert" style="left: 88%;" data-tip="Uge 36 · Forecast trigger">
-                                        <div class="sandbox-mini-dot"></div>
-                                    </div>
-                                </div>
-                                <div class="sandbox-mini-axis">
-                                    <span>Uge 24</span>
-                                    <span>Uge 28</span>
-                                    <span>Uge 32</span>
-                                    <span>Uge 36 · Nu</span>
-                                </div>
-                            </div>
-                            <p class="sandbox-mini-explainer">
-                                Fem signaler er bygget op over 12 uger. Klassisk trivselsmåling havde ikke set noget endnu. næste måling er om 4 måneder.
-                            </p>
-                        </div>
-
-                        <!-- Recommendations to leader (matching the action-panel from timeline) -->
-                        <div class="sandbox-mini-section">
-                            <div class="sandbox-mini-label">Anbefalinger til lederen. prioriteret rækkefølge</div>
+                            <div class="sandbox-mini-label">Hvad du gør denne uge</div>
 
                             <div class="sandbox-recommendation sandbox-recommendation-urgent">
                                 <div class="sandbox-rec-icon sandbox-rec-icon-urgent">
@@ -20171,7 +20159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <span class="sandbox-rec-title">Reducér teamets samlede arbejdsbyrde med 30%</span>
                                     </div>
                                     <p class="sandbox-rec-text">
-                                        Workload-belastningen er nået kritisk niveau. Identificér 2-3 igangværende projekter der kan udsættes 4-6 uger eller deprioriteres helt. Kommuniker det til hele teamet. ikke individuelt, så ingen føler sig udpeget.
+                                        Identificér 2-3 igangværende projekter der kan udsættes 4-6 uger eller deprioriteres. Meld det ud til hele teamet, ikke individuelt, så ingen føler sig udpeget.
                                     </p>
                                     <div class="sandbox-rec-footer">
                                         <span class="sandbox-rec-meta">⏱ 2 timers arbejde</span>
@@ -20189,77 +20177,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="sandbox-rec-body">
                                     <div class="sandbox-rec-header">
                                         <span class="sandbox-rec-tag">Inden for 14 dage</span>
-                                        <span class="sandbox-rec-title">Genoptag fast 1:1-rytme. alle 18, ikke kun risikogruppen</span>
+                                        <span class="sandbox-rec-title">Genoptag fast 1:1-rytme med alle, ikke kun risikogruppen</span>
                                     </div>
                                     <p class="sandbox-rec-text">
-                                        Anonyme svar viser at "min leder lytter ikke" har fået flere "ved-ikke"-svar siden uge 24. Bestil 25-min møder uden agenda. Spørg: "Hvad har du brug for fra mig de næste 4 uger?". det er platformens mest dokumenteret virkningsfulde leder-spørgsmål.
+                                        Bestil 25-min møder uden agenda. Spørg: "Hvad har du brug for fra mig de næste 4 uger?" Det er platformens mest dokumenteret virkningsfulde leder-spørgsmål.
                                     </p>
                                     <div class="sandbox-rec-footer">
-                                        <span class="sandbox-rec-meta">⏱ 7,5 timer fordelt over 2 uger</span>
+                                        <span class="sandbox-rec-meta">⏱ 7,5 timer over 2 uger</span>
                                         <span class="sandbox-rec-meta">📊 Tillids-score stiger gennemsnitligt 18% inden næste måling</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="sandbox-recommendation">
-                                <div class="sandbox-rec-icon">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                        <path d="M7 1.5L8.5 5L12.5 5.5L9.5 8.2L10.3 12L7 10.2L3.7 12L4.5 8.2L1.5 5.5L5.5 5L7 1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                                <div class="sandbox-rec-body">
-                                    <div class="sandbox-rec-header">
-                                        <span class="sandbox-rec-tag">Indfør som vane</span>
-                                        <span class="sandbox-rec-title">Tre konkrete anerkendelser om ugen. ikke generel ros</span>
-                                    </div>
-                                    <p class="sandbox-rec-text">
-                                        Anerkendelses-score er faldet 12% siden Q2. Send tre individuelle beskeder ugentligt: "Tak fordi du tog ansvar for X i går. Det betød reelt noget." Personlig anerkendelse vejer 4× mere end gruppe-tak (Gallup, 2023).
-                                    </p>
-                                    <div class="sandbox-rec-footer">
-                                        <span class="sandbox-rec-meta">⏱ 10 min om ugen</span>
-                                        <span class="sandbox-rec-meta">📊 Stærkeste enkeltfaktor for fastholdelse</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- NEW: Skræddersyet lederudvikling baseret på fund -->
-                        <div class="sandbox-mini-section">
-                            <div class="sandbox-mini-label">Lederudvikling. skræddersyet til dette mønster</div>
-                            <div class="sandbox-leader-dev">
-                                <div class="sandbox-leader-dev-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 2L13.09 8.26L19 7L17.74 13.09L24 14L17.74 14.91L19 21L13.09 19.74L12 26L10.91 19.74L5 21L6.26 14.91L0 14L6.26 13.09L5 7L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.2"/>
-                                    </svg>
-                                </div>
-                                <div class="sandbox-leader-dev-body">
-                                    <div class="sandbox-leader-dev-title">Mikro-modul anbefalet: "Workload-samtaler uden skyld"</div>
-                                    <p class="sandbox-leader-dev-text">
-                                        Baseret på det specifikke mønster algoritmen har identificeret. 12-minutters video + tjekliste til de samtaler du skal have de næste 14 dage. Ikke generisk lederkursus. skræddersyet til netop dette risikobillede.
-                                    </p>
-                                    <div class="sandbox-leader-dev-meta">
-                                        <span>🎯 Aktiveres automatisk når frafalds-mønstret detekteres</span>
-                                        <span>📚 12 min · video + tjekliste</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- What we also saw (small summary) -->
-                        <div class="sandbox-mini-section">
-                            <div class="sandbox-mini-label">Hvad vi også så</div>
-                            <div class="sandbox-also-grid">
-                                <div class="sandbox-also-item">
-                                    <div class="sandbox-also-num sandbox-also-num-good">87%</div>
-                                    <div class="sandbox-also-text">føler sig som en del af teamet. det sociale fællesskab fungerer</div>
-                                </div>
-                                <div class="sandbox-also-item">
-                                    <div class="sandbox-also-num sandbox-also-num-warn">−0,5</div>
-                                    <div class="sandbox-also-text">point fald i anerkendelse siden sidste måling</div>
-                                </div>
-                                <div class="sandbox-also-item">
-                                    <div class="sandbox-also-num sandbox-also-num-bad">2</div>
-                                    <div class="sandbox-also-text">medarbejdere viser tegn på lav psykologisk tryghed</div>
                                 </div>
                             </div>
                         </div>
@@ -24205,7 +24131,101 @@ document.addEventListener('DOMContentLoaded', function() {
     .tm-matrix-foot { margin-top: 20px; padding: 22px 22px; }
 }
 
-/* ============ FOTOSTAT VS. FILM SHOWPIECE, polaroid corkboard vs live streaming dashboard ============ */
+/* ============ TIER COMPARISON, reuses .roadmap-column visual; 2-box trivselsmaaling vs CI ============ */
+.tm-tier-section {
+    padding: 96px 24px 104px;
+    background: linear-gradient(180deg, #fafaf7 0%, #f4f1ea 100%);
+}
+.tm-tier-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+.tm-tier-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 56px;
+}
+.tm-tier-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-deep, #4f53cc);
+    margin-bottom: 18px;
+}
+.tm-tier-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+.tm-tier-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(28px, 3.6vw, 42px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 18px;
+}
+.tm-tier-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0;
+}
+.tm-tier-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+.tm-tier-card {
+    position: relative;
+}
+.tm-tier-card--basic .roadmap-column-dot {
+    background: var(--ink-faint, #a0a0a0);
+    box-shadow: 0 0 0 4px rgba(160, 160, 160, 0.15);
+}
+.tm-tier-card--upgrade {
+    border: 1px solid rgba(99, 102, 241, 0.28);
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 55%),
+        var(--paper-card);
+    box-shadow: 0 18px 40px -22px rgba(79, 83, 204, 0.28);
+}
+.tm-tier-card--upgrade .roadmap-column-dot {
+    background: var(--brand-deep, #4f53cc);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+}
+.tm-tier-card--upgrade .roadmap-item {
+    border-left: 3px solid var(--brand, #6366f1);
+    background: var(--paper-card, #fff);
+}
+.tm-tier-upgrade-badge {
+    margin-left: auto;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    color: var(--brand-deep, #4f53cc);
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+@media (max-width: 880px) {
+    .tm-tier-section { padding: 64px 18px 80px; }
+    .tm-tier-compare { grid-template-columns: 1fr; }
+    .tm-tier-header { margin-bottom: 40px; }
+}
+
+/* ============ FOTOSTAT VS. FILM SHOWPIECE (legacy, hidden) polaroid corkboard vs live streaming dashboard ============ */
 .tm-fvf-section {
     padding: 96px 24px 104px;
     background: linear-gradient(180deg, #fafaf7 0%, #f4f1ea 100%);
@@ -25283,7 +25303,86 @@ document.addEventListener('DOMContentLoaded', function() {
     </section>
 
     <!-- ============ FOTOSTAT VS. FILM, visual showpiece (polaroid corkboard vs live streaming) ============ -->
-    <section class="tm-fvf-section" id="tm-fvf">
+    <!-- TIER COMPARISON: 2-box design (replaces fotostat-vs-film 2026-05) -->
+    <section class="tm-tier-section" id="tm-fvf">
+        <div class="tm-tier-inner">
+            <header class="tm-tier-header">
+                <div class="tm-tier-eyebrow">
+                    <span class="tm-tier-eyebrow-dot"></span>
+                    Trivselsmåling vs. culture intelligence
+                </div>
+                <h2 class="tm-tier-headline">
+                    Begge måler kulturen.<br>
+                    Den ene rapporterer. Den anden forudsiger.
+                </h2>
+                <p class="tm-tier-sub">
+                    Samme bagvedliggende mål, vidt forskellige metoder. Forskellen ligger i hvor ofte I måler, hvad I kan se i dataen, og om I kan handle før mønstret eskalerer.
+                </p>
+            </header>
+
+            <div class="tm-tier-compare">
+                <!-- BOX 1: Trivselsmåling -->
+                <article class="roadmap-column tm-tier-card tm-tier-card--basic">
+                    <div class="roadmap-column-head">
+                        <span class="roadmap-column-dot" aria-hidden="true"></span>
+                        <h3 class="roadmap-column-title">1. Trivselsmåling</h3>
+                    </div>
+                    <p class="roadmap-column-sub">Bagudrettet data, få målepunkter om året.</p>
+
+                    <div class="roadmap-items">
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">1-2 målepunkter om året</h4>
+                            <p class="roadmap-item-desc">Typisk én stor årlig måling, evt. en halvårs-pulse. Det er årsbaseret kadence i et hverdagsdomæne der skifter på uger.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Bagudrettet snapshot</h4>
+                            <p class="roadmap-item-desc">Viser hvor I stod sidste gang I målte. Imellem to målinger er kameraet slukket.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Aggregerede virksomheds-snit</h4>
+                            <p class="roadmap-item-desc">Score på virksomheds- og afdelings-niveau. De team-mønstre der forudsiger opsigelser forsvinder i gennemsnittet.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Rapport efter målingen</h4>
+                            <p class="roadmap-item-desc">Data lander 8-12 uger efter feltperioden. Handling sker bagudrettet, hvis I når at handle.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 2: Culture intelligence (merværdi) -->
+                <article class="roadmap-column tm-tier-card tm-tier-card--upgrade">
+                    <div class="roadmap-column-head">
+                        <span class="roadmap-column-dot" aria-hidden="true"></span>
+                        <h3 class="roadmap-column-title">2. Culture intelligence</h3>
+                        <span class="tm-tier-upgrade-badge">Merværdi</span>
+                    </div>
+                    <p class="roadmap-column-sub">Proaktiv / forecast-data, kontinuerlig flow.</p>
+
+                    <div class="roadmap-items">
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">6-12 målepunkter om året</h4>
+                            <p class="roadmap-item-desc">Korte pulse-målinger månedligt eller kvartalsvis. 2-3 spørgsmål ad gangen, ca. 2-3 minutter pr. medarbejder.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Forecast 4-6 uger frem</h4>
+                            <p class="roadmap-item-desc">Tidlige signaler på stress, opsigelser og ledelsesproblemer før de rammer bundlinjen.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Team-mønstre og individuelle signaler</h4>
+                            <p class="roadmap-item-desc">Mønstrene findes på team-niveau. Vi viser hvor det sker, ikke kun et virksomhedstal.</p>
+                        </div>
+                        <div class="roadmap-item">
+                            <h4 class="roadmap-item-title">Konkret handling denne uge</h4>
+                            <p class="roadmap-item-desc">Prioriterede anbefalinger til lederen før mønstret eskalerer. Ikke en rapport, en handlingsliste.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGACY fotostat-vs-film section (hidden; kept for design memory and possible restore) -->
+    <section class="tm-fvf-section" id="tm-fvf-legacy" style="display:none;" aria-hidden="true">
         <div class="tm-fvf-inner">
             <header class="tm-fvf-header">
                 <div class="tm-fvf-eyebrow">
@@ -31596,11 +31695,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="cv-trust">
-                    <div class="cv-trust-item">Pilotprogram tilgængeligt</div>
+                    <div class="cv-trust-item">45-dages gratis prøve</div>
                     <div class="cv-trust-item">Intet kreditkort</div>
                     <div class="cv-trust-item">Opsig når som helst</div>
                     <div class="cv-trust-item">Ekskl. moms</div>
                 </div>
+                <p class="cv-trust-pilot">Vil I have mere end self-service? <a href="/pilotprojekt">365-dages pilot</a> med tæt ledelsessparring fås til rabatteret rate (begrænset antal pladser).</p>
             </div>
 
             <!-- Tilbud-boks (vises efter sidste svar) -->
@@ -32926,8 +33026,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li><a href="/1to1">MUS-samtale &amp; 1:1-værktøj <span class="footer-link-badge">Beta</span></a></li>
                     <li><a href="#">E-learning <span class="footer-link-badge is-new">Snart</span></a></li>
                     <li><a href="/demo">Live demo</a></li>
-                    <li><a href="/pilotprojekt">Pilotprojekt <span class="footer-link-badge is-new">Gratis</span></a></li>
-                    <li><a href="#priser">Priser</a></li>
+                    <li><a href="/pilotprojekt">Pilotprojekt</a></li>
+                    <li><a href="/#priser">Priser</a></li>
                 </ul>
             </div>
 
@@ -32946,7 +33046,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li><a href="/blog">Blog &amp; indsigt</a></li>
                     <li><a href="/trivselsmåling">Trivselsmåling vs. CI</a></li>
                     <li><a href="#">Hjælpecenter <span class="footer-link-badge is-new">Snart</span></a></li>
-                    <li><a href="/roadmap">Roadmap <span class="footer-link-badge is-new">Nyt</span></a></li>
                 </ul>
             </div>
 
@@ -33109,28 +33208,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 // === Sandbox: 3-step guided flow ===
 (function() {
-    // Categories matching the real product (with farvede borders)
+    // Categories matching the real product (with farvede borders).
+    // OBS: questions her er bevidst generiske eksempler — den faktiske
+    // spørgsmålsbank er IP og vises kun i kundeløsningen.
     const categories = [
         { id: 'stress', name: 'Stress og arbejdsbelastning', q: 11, color: 'var(--gray-400)', bg: 'rgba(148, 163, 184, 0.06)',
-          questions: ['Hvor ofte føler du dig rolig og afslappet?','Hvor ofte føler du dig stresset?','Hvor ofte har du kontrol over din arbejdsbelastning?','Hvor ofte oplever du tidspres?','Hvor ofte føler du dig udmattet?'] },
+          questions: ['Spørgsmål om aktuelt stress-niveau','Spørgsmål om arbejdsmængde og restitution'] },
         { id: 'fysisk', name: 'Fysisk sundhed', q: 10, color: 'var(--info-500)', bg: 'rgba(59, 130, 246, 0.06)',
-          questions: ['Hvor ofte vågner du veludhvilet?','Tager du tilstrækkelige pauser i løbet af dagen?','Får du bevæget dig nok?'] },
+          questions: ['Spørgsmål om energiniveau i hverdagen','Spørgsmål om søvn og pauser'] },
         { id: 'tryghed', name: 'Psykologisk tryghed', q: 8, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Hvor tryg føler du dig ved at sige din mening i møder?','Hvor ofte føler du, at konflikter bliver håndteret?','Tør du udtrykke uenighed?'] },
+          questions: ['Spørgsmål om åbenhed i teamet','Spørgsmål om håndtering af konflikter'] },
         { id: 'team', name: 'Teamdynamikker og tillid', q: 16, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.06)',
-          questions: ['Stoler du på dine kolleger?','Bidrager alle ligeværdigt?','Bliver du hørt i teamet?'] },
+          questions: ['Spørgsmål om samarbejde og tillid','Spørgsmål om hvordan I trækker i samme retning'] },
         { id: 'diversitet', name: 'Diversitet, lighed og inklusion', q: 8, color: '#f97316', bg: 'rgba(249, 115, 22, 0.06)',
-          questions: ['Føler du dig respekteret uanset baggrund?','Inkluderes alle stemmer?','Har alle lige muligheder?'] },
+          questions: ['Spørgsmål om inklusion og fællesskab','Spørgsmål om lige muligheder'] },
         { id: 'social', name: 'Socialt fællesskab', q: 9, color: 'var(--warning-500)', bg: 'rgba(245, 158, 11, 0.06)',
-          questions: ['Hvor ofte føler du dig som en del af det sociale fællesskab?','Har du kolleger du kan tale fortroligt med?','Føler du dig velkommen?'] },
+          questions: ['Spørgsmål om socialt tilhørsforhold','Spørgsmål om kollegial sparring'] },
         { id: 'ledelse', name: 'Ledelse', q: 10, color: '#ec4899', bg: 'rgba(236, 72, 153, 0.06)',
-          questions: ['I hvor høj grad føler du, at du kan stole på din leder?','Hvor tilfreds er du med din leders kommunikationsstil?','Får du regelmæssig feedback?','Lytter din leder til dine forslag?'] },
+          questions: ['Spørgsmål om tillid til nærmeste leder','Spørgsmål om feedback og kommunikation'] },
         { id: 'motivation', name: 'Motivation og personlig udvikling', q: 14, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.06)',
-          questions: ['Hvor ofte oplever du anerkendelse for dit arbejde?','Føler du, at dit arbejde er meningsfuldt?','Får du brugt dine styrker?'] },
+          questions: ['Spørgsmål om motivation og mening','Spørgsmål om anerkendelse og udvikling'] },
         { id: 'formal', name: 'Organisatorisk formål og klarhed', q: 12, color: 'var(--primary-500)', bg: 'rgba(99, 102, 241, 0.06)',
-          questions: ['Forstår du virksomhedens retning?','Ved du hvordan dit arbejde bidrager?','Er prioriteringer klare?'] },
+          questions: ['Spørgsmål om virksomhedens retning','Spørgsmål om prioriteringer og forventninger'] },
         { id: 'arbejdsmiljo', name: 'Fysisk arbejdsmiljø', q: 16, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
-          questions: ['Er dit arbejdsmiljø behageligt?','Har du de værktøjer du behøver?'] }
+          questions: ['Spørgsmål om de fysiske rammer','Spørgsmål om værktøjer og udstyr'] }
     ];
 
     let selected = new Set(['stress']);
@@ -33476,21 +33577,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const forecastTitle = document.querySelector('.sandbox-forecast-title');
             if (forecastTitle) {
-                forecastTitle.textContent = `${atRisk} medarbejdere viser tidlige tegn på frafald`;
+                forecastTitle.textContent = `${atRisk} medarbejdere viser et tidligt frafalds-mønster`;
             }
 
             // Sub-tekst: tilføj antal i risiko som kontekst
             const forecastSub = document.querySelector('.sandbox-forecast-sub');
             if (forecastSub) {
-                forecastSub.textContent = `Forhøjet stress + lav kontrol + faldende anerkendelse hos ${atRisk} af ${n} ansatte. Når disse tre signaler optræder samtidigt, fører det historisk til opsigelse eller sygemelding inden for 6-8 uger. Tid til at handle nu.`;
+                forecastSub.textContent = `Stress stiger samtidig med at anerkendelse falder og psykologisk tryghed bliver passiv hos ${atRisk} af ${n} ansatte. Dette signal-mønster dukker typisk op 4-6 uger før en opsigelse eller sygemelding.`;
             }
 
-            // Omkostning: ca. 5% af risikogruppen forventes at sige op uden indgriben
+            // Omkostning: worst-case hvis hele risikogruppen siger op
             // Per opsigelse: 600k–1,2M (rekruttering, oplæring, produktivitetstab)
-            // Vis en realistisk worst-case ud fra størrelse
-            const expectedDepartures = Math.max(2, Math.round(atRisk * 0.3));
-            const lowCostM = (expectedDepartures * 0.6).toFixed(1).replace('.', ',');
-            const highCostM = (expectedDepartures * 1.2).toFixed(1).replace('.', ',');
+            const lowCostM = (atRisk * 0.6).toFixed(1).replace('.', ',');
+            const highCostM = (atRisk * 1.2).toFixed(1).replace('.', ',');
 
             const forecastStats = document.querySelectorAll('.sandbox-forecast-stat-num');
             const forecastLabels = document.querySelectorAll('.sandbox-forecast-stat-label');
@@ -33498,7 +33597,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 forecastStats[1].textContent = `${lowCostM}–${highCostM}M`;
             }
             if (forecastLabels[1]) {
-                forecastLabels[1].textContent = `estimeret omkostning hvis ${expectedDepartures} af de ${atRisk} siger op`;
+                forecastLabels[1].textContent = `samlet risiko hvis alle ${atRisk} opsiger (rekruttering, oplæring, produktivitetstab)`;
             }
 
             // Update loading text
@@ -33730,11 +33829,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // === LIKERT FLOW: progress through 3 demo questions ===
+    // OBS: bevidst generiske demo-formuleringer — den faktiske
+    // spørgsmålsbank er IP og indgår kun i kundeløsningen.
     let currentQuestionIdx = 0;
     const demoQuestions = [
-        'Hvor ofte oplever du anerkendelse for dit arbejde?',
-        'Hvor tryg føler du dig ved at sige din mening i møder?',
-        'I hvor høj grad føler du, at du kan stole på din leder?'
+        'Demo-spørgsmål: Hvordan oplever du anerkendelse i dit arbejde?',
+        'Demo-spørgsmål: Hvor komfortabel er du med at dele uenighed på jobbet?',
+        'Demo-spørgsmål: Hvor stærk er din tillid til din nærmeste leder?'
     ];
 
     function resetLikertFlow() {
