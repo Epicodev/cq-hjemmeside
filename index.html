@@ -33568,8 +33568,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Personalize the forecast stats based on size
         if (obState.sizeNum) {
             const n = obState.sizeNum;
-            // Risk ~17% of staff (mindst 2 så det giver mening selv ved små teams)
-            const atRisk = Math.max(2, Math.round(n * 0.17));
+            // Risk ~6% af ansatte på et givent tidspunkt (mindst 2, max 15
+            // for at undgå at store virksomheder får urealistisk store tal).
+            // 17% var den rate folk citerer for ÅRLIG turnover — for høj
+            // til "viser et mønster lige nu".
+            const atRisk = Math.max(2, Math.min(15, Math.round(n * 0.06)));
 
             const forecastTitle = document.querySelector('.sandbox-forecast-title');
             if (forecastTitle) {
