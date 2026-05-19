@@ -314,6 +314,12 @@
     var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
     var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // PostHog public key + host. Used for direct lead_captured events
+    // that bypass the consent-gated PostHog client, since lead capture
+    // is an explicit user action with their consent to be contacted.
+    var POSTHOG_KEY = 'phc_nVqUSWi2SGrBjEuz9ARLVZTiWfhNTZ6iHSGaBnooZsnK';
+    var POSTHOG_INGEST = 'https://eu.i.posthog.com';
+
     var client = null;
     function getClient() {
         if (client) return client;
@@ -380,36 +386,63 @@
                     return { ok: false, error: result.error.message || 'insert_failed' };
                 }
                 // Mirror successful lead capture to PostHog: identify + group + event.
+                // Two paths: client SDK (consent-gated) AND direct HTTP (always fires
+                // because lead capture is an explicit user action with consent).
+                var meta = metadata || {};
+                var company = meta.company ? String(meta.company).trim() : null;
+                var companySize = meta.size || meta.sizeNum || meta.companySize || null;
+                var personProps = {
+                    $email: email,
+                    email: email,
+                    company: company,
+                    company_size: companySize,
+                    role: meta.role || null,
+                    first_source: source,
+                    last_lead_source: source,
+                    last_lead_page: window.location.pathname,
+                    last_lead_at: new Date().toISOString()
+                };
+                var eventProps = {
+                    source: source,
+                    page: window.location.pathname,
+                    company: company,
+                    company_size: companySize,
+                    referrer: document.referrer || null
+                };
+
+                // Path 1: client-side via cqTrack (consent-gated, no-op if PostHog not loaded)
                 try {
                     if (window.cqTrack) {
-                        var meta = metadata || {};
-                        var company = meta.company ? String(meta.company).trim() : null;
-                        var companySize = meta.size || meta.sizeNum || meta.companySize || null;
-                        window.cqTrack.identify(email, {
-                            $email: email,
-                            email: email,
-                            company: company,
-                            company_size: companySize,
-                            role: meta.role || null,
-                            first_source: source,
-                            last_lead_source: source,
-                            last_lead_page: window.location.pathname,
-                            last_lead_at: new Date().toISOString()
-                        });
+                        window.cqTrack.identify(email, personProps);
                         if (company) {
                             window.cqTrack.group('company', company.toLowerCase(), {
                                 name: company,
                                 company_size: companySize
                             });
                         }
-                        window.cqTrack.event('lead_captured', {
-                            source: source,
-                            page: window.location.pathname,
-                            company: company,
-                            company_size: companySize,
-                            referrer: document.referrer || null
-                        });
+                        window.cqTrack.event('lead_captured', eventProps);
                     }
+                } catch (_) { /* never block lead insert on analytics */ }
+
+                // Path 2: direct HTTP to PostHog ingestion (bypasses consent gate for this
+                // explicit conversion event). Fire-and-forget, doesn't block return.
+                try {
+                    var capturePayload = {
+                        api_key: POSTHOG_KEY,
+                        event: 'lead_captured',
+                        distinct_id: email,
+                        properties: Object.assign({
+                            $set: personProps,
+                            $set_once: { first_seen_lead_at: new Date().toISOString() },
+                            $groups: company ? { company: company.toLowerCase() } : undefined
+                        }, eventProps)
+                    };
+                    fetch(POSTHOG_INGEST + '/i/v0/e/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(capturePayload),
+                        keepalive: true
+                    }).catch(function() { /* fire-and-forget */ });
                 } catch (_) { /* never block lead insert on analytics */ }
                 return { ok: true };
             } catch (err) {
