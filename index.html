@@ -38424,5 +38424,90 @@ window.renderCulturequestPDF = async function(config) {
 }
 </script>
 
+<!-- ============================================================
+     SCHEMA SCOPING: this is a SPA where all route HTML lives in one
+     file, so every route serves ALL JSON-LD blocks. Google's rich-
+     results validator flags this as "multiple FAQPage on one page".
+     Solution: on load + route change, disable page-specific schemas
+     (FAQPage / Service / BreadcrumbList) whose URL doesn't match the
+     current path. Schemas without a URL (Organization, SoftwareApp,
+     Product, the global Review/AggregateRating) stay active.
+============================================================ -->
+<script>
+(function() {
+    var PAGE_SPECIFIC_TYPES = { 'FAQPage': 1, 'Service': 1, 'BreadcrumbList': 1 };
+
+    function pathOf(url) {
+        if (!url || typeof url !== 'string') return null;
+        try {
+            return new URL(url).pathname.replace(/\/$/, '') || '/';
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function currentPath() {
+        return window.location.pathname.replace(/\/$/, '') || '/';
+    }
+
+    function scopeSchemas() {
+        var here = currentPath();
+        var scripts = document.querySelectorAll('script[type="application/ld+json"], script[type="application/x-scoped-ld+json"]');
+        scripts.forEach(function(script) {
+            var raw = script.textContent;
+            if (!raw) return;
+            var data;
+            try { data = JSON.parse(raw); } catch (e) { return; }
+
+            // Determine if this is a page-specific schema and what its URL is
+            var topType = data['@type'];
+            var isPageSpecific = topType && PAGE_SPECIFIC_TYPES[topType];
+            if (!isPageSpecific) {
+                // Global schema (Organization, SoftwareApplication, Product, WebSite, etc.) — always active.
+                script.type = 'application/ld+json';
+                return;
+            }
+
+            var schemaUrl = (data.mainEntityOfPage && data.mainEntityOfPage['@id']) || data.url || null;
+            // BreadcrumbList stores its target path on the last itemListElement
+            if (!schemaUrl && Array.isArray(data.itemListElement) && data.itemListElement.length) {
+                var last = data.itemListElement[data.itemListElement.length - 1];
+                if (last && last.item) schemaUrl = last.item;
+            }
+
+            var schemaPath = pathOf(schemaUrl);
+            if (!schemaPath) {
+                // Page-specific but URL unparsable — leave active to be safe.
+                script.type = 'application/ld+json';
+                return;
+            }
+
+            if (schemaPath === here) {
+                script.type = 'application/ld+json';
+            } else {
+                // Deactivate so Google's parser ignores it. Custom MIME type is unknown to JSON-LD parsers.
+                script.type = 'application/x-scoped-ld+json';
+            }
+        });
+    }
+
+    // Run now and on every SPA navigation
+    scopeSchemas();
+    window.addEventListener('popstate', scopeSchemas);
+    var _push = history.pushState;
+    history.pushState = function() {
+        var ret = _push.apply(this, arguments);
+        scopeSchemas();
+        return ret;
+    };
+    var _replace = history.replaceState;
+    history.replaceState = function() {
+        var ret = _replace.apply(this, arguments);
+        scopeSchemas();
+        return ret;
+    };
+})();
+</script>
+
 </body>
 </html>
