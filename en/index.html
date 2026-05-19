@@ -30877,6 +30877,100 @@ document.addEventListener('DOMContentLoaded', function() {
 .demo-page-frame {
     /* Ingen ramme — selve demo-iframen har sin egen border-radius + box-shadow */
 }
+
+/* ============ DEMO GATE, email+company before unlocking Storylane ============ */
+.demo-page-gate-wrap {
+    position: relative;
+}
+.demo-page-gate {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 17, 50, 0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+.demo-page-gate-wrap.is-unlocked .demo-page-gate {
+    opacity: 0;
+    pointer-events: none;
+}
+.demo-page-gate-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 26px 22px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 18px 48px rgba(15, 17, 50, 0.28);
+}
+.demo-page-gate-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink, #1a1c2c);
+    margin: 0 0 6px;
+}
+.demo-page-gate-sub {
+    font-size: 13.5px;
+    color: var(--ink-muted, #4a4c63);
+    margin: 0 0 18px;
+    line-height: 1.45;
+}
+.demo-page-gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.demo-page-gate-input {
+    font: inherit;
+    font-size: 14px;
+    padding: 11px 13px;
+    border: 1px solid rgba(15, 17, 50, 0.16);
+    border-radius: 10px;
+    background: #fbfbfd;
+    color: var(--ink, #1a1c2c);
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+}
+.demo-page-gate-input:focus {
+    border-color: var(--primary-500, #6366f1);
+    background: #fff;
+}
+.demo-page-gate-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.demo-page-gate-submit {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 16px;
+    border-radius: 10px;
+    border: 0;
+    background: var(--primary-900, #383da0);
+    color: #fff;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.15s;
+}
+.demo-page-gate-submit:hover { background: #2d3185; }
+.demo-page-gate-submit:disabled { opacity: 0.6; cursor: wait; }
+.demo-page-gate-msg {
+    font-size: 12px;
+    color: var(--ink-muted, #4a4c63);
+    margin: 8px 0 0;
+    line-height: 1.4;
+    min-height: 1.2em;
+}
+
 .demo-page-cta-row {
     display: flex;
     gap: 14px;
@@ -31097,7 +31191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>Interactive product tour</span>
                 </div>
                 <h1 class="demo-page-headline">Click through culturequest. In two minutes.</h1>
-                <p class="demo-page-sub">See the full culture intelligence flow. From pulse surveys and culture score to AI recommendations and action plan. No sign-up, no credit card.</p>
+                <p class="demo-page-sub">See the full culture intelligence flow. From pulse surveys and culture score to AI recommendations and action plan. Quick unlock with email and company — we only use it to follow up.</p>
                 <div class="demo-page-meta">
                     <span class="demo-page-meta-item">⌨ Keyboard navigation</span>
                     <span class="demo-page-meta-divider"></span>
@@ -31108,10 +31202,23 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="demo-page-frame">
-                <div>
+                <div class="demo-page-gate-wrap" id="demoGateWrap">
+                    <div class="demo-page-gate" id="demoGate" role="dialog" aria-labelledby="demoGateTitle">
+                        <div class="demo-page-gate-card">
+                            <h3 class="demo-page-gate-title" id="demoGateTitle">Unlock the product tour</h3>
+                            <p class="demo-page-gate-sub">Email and company — then you get full access. We only use it to follow up, no newsletter.</p>
+                            <form class="demo-page-gate-form" id="demoGateForm" novalidate>
+                                <input type="email" class="demo-page-gate-input" id="demoGateEmail" placeholder="name@company.com" autocomplete="email" maxlength="255" required>
+                                <input type="text" class="demo-page-gate-input" id="demoGateCompany" placeholder="Company name" autocomplete="organization" maxlength="100" required>
+                                <input type="text" tabindex="-1" autocomplete="off" class="demo-page-gate-hp" id="demoGateHp" aria-hidden="true">
+                                <button type="submit" class="demo-page-gate-submit" id="demoGateSubmit" data-cq-track-cta="demo-page-unlock">Open demo ›</button>
+                                <p class="demo-page-gate-msg" id="demoGateMsg"></p>
+                            </form>
+                        </div>
+                    </div>
                     <script async src="https://js.storylane.io/js/v2/storylane.js" data-verify-origin=""></script>
                     <div class="sl-embed" style="position:relative;padding-bottom:calc(46.72% + 25px);width:100%;height:0;transform:scale(1)">
-                        <iframe loading="lazy" class="sl-demo" src="https://app.storylane.io/demo/jcr8unvwvlhe?embed=inline" name="sl-embed" allow="fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%!important;height:100%!important;border:1px solid rgba(63,95,172,0.35);box-shadow: 0px 0px 18px rgba(26, 19, 72, 0.15);border-radius:10px;box-sizing:border-box;"></iframe>
+                        <iframe loading="lazy" class="sl-demo" id="demoStorylaneFrame" data-src="https://app.storylane.io/demo/jcr8unvwvlhe?embed=inline" name="sl-embed" allow="fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%!important;height:100%!important;border:1px solid rgba(63,95,172,0.35);box-shadow: 0px 0px 18px rgba(26, 19, 72, 0.15);border-radius:10px;box-sizing:border-box;"></iframe>
                     </div>
                 </div>
             </div>
@@ -31304,6 +31411,96 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         ]
     }
+    </script>
+
+    <!-- ============ DEMO GATE LOGIC, unlocks Storylane iframe after email+company ============ -->
+    <script>
+    (function() {
+        const STORAGE_KEY = 'cq_demo_unlocked_v1';
+        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const wrap = document.getElementById('demoGateWrap');
+        const form = document.getElementById('demoGateForm');
+        const iframe = document.getElementById('demoStorylaneFrame');
+        const emailEl = document.getElementById('demoGateEmail');
+        const companyEl = document.getElementById('demoGateCompany');
+        const hpEl = document.getElementById('demoGateHp');
+        const btn = document.getElementById('demoGateSubmit');
+        const msg = document.getElementById('demoGateMsg');
+
+        if (!wrap || !form || !iframe) return;
+
+        function loadIframe() {
+            const src = iframe.getAttribute('data-src');
+            if (src && !iframe.getAttribute('src')) {
+                iframe.setAttribute('src', src);
+            }
+        }
+
+        function unlock() {
+            wrap.classList.add('is-unlocked');
+            loadIframe();
+        }
+
+        try {
+            if (localStorage.getItem(STORAGE_KEY) === '1') {
+                unlock();
+                return;
+            }
+        } catch (e) { /* localStorage might be unavailable, fall through to gate */ }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (hpEl && hpEl.value) {
+                // Honeypot triggered, silently "succeed" to fool bots
+                unlock();
+                return;
+            }
+
+            const email = (emailEl.value || '').trim().toLowerCase();
+            const company = (companyEl.value || '').trim();
+
+            if (!EMAIL_RE.test(email) || email.length > 255) {
+                msg.style.color = '#b91c1c';
+                msg.textContent = 'Please enter a valid email address.';
+                emailEl.focus();
+                return;
+            }
+            if (!company) {
+                msg.style.color = '#b91c1c';
+                msg.textContent = 'Please enter your company name.';
+                companyEl.focus();
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Opening...';
+            msg.style.color = '';
+            msg.textContent = '';
+
+            let result = { ok: false, error: 'no_sdk' };
+            if (window.cqLead) {
+                result = await window.cqLead.capture({
+                    email: email,
+                    source: 'demo-page-unlock',
+                    metadata: { company: company.slice(0, 200) }
+                });
+            }
+
+            if (result.ok) {
+                try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+                if (window.cqTrack) {
+                    window.cqTrack.event('demo_unlocked', { company: company.slice(0, 200) });
+                }
+                unlock();
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Open demo ›';
+                msg.style.color = '#b91c1c';
+                msg.textContent = 'Something went wrong. Please try again in a moment.';
+            }
+        });
+    })();
     </script>
 </div><!-- /#page-demo -->
 

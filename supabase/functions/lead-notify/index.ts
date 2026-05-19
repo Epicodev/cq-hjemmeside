@@ -72,6 +72,12 @@ const SOURCE_INFO: Record<string, SourceInfo> = {
         greeting: "Tak for din tilmelding",
         body: "Som lovet sender vi guiden til dig. 24 sider med konkrete signaler, datapunkter og leder-tjekliste der viser hvad culture intelligence ser, men trivselsmåling ikke fanger.",
     },
+    "demo-page-unlock": {
+        label: "Demo gate unlock (live demo-side)",
+        subject: "Tak for at åbne demoen",
+        greeting: "Tak for at åbne demoen",
+        body: "Du har nu fuld adgang til den interaktive produkt-tour. Vi vender tilbage med en kort follow-up inden for et par dage.",
+    },
 };
 
 function escapeHtml(s: unknown): string {
