@@ -33276,6 +33276,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // === Onboarding state, gemmes og bruges på tværs af hele sandbox-flowet ===
     const obState = {
         company: null,        // string
+        email: null,          // string
         size: null,           // string label
         sizeNum: null,        // numeric for math
         values: [],           // array of value labels
@@ -33292,6 +33293,16 @@ document.addEventListener('DOMContentLoaded', function() {
             messages: [
                 'Hej! Jeg er <strong>culturequest assistenten</strong>. Inden vi bygger din kulturmåling, vil jeg gerne kende lidt til jer, så kan jeg gøre demoen relevant.',
                 'Hvad hedder jeres virksomhed?'
+            ]
+        },
+        {
+            id: 'email',
+            type: 'text',
+            inputType: 'email',
+            validate: 'email',
+            placeholder: 'navn@firma.dk',
+            messages: [
+                'Tak {company}. Din arbejdsmail, så vi kan sende rapporten? Vi sender ikke spam, og du kan altid afmelde dig.'
             ]
         },
         {
@@ -33410,8 +33421,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (q.type === 'text') {
             const row = document.createElement('div');
             row.className = 'sandbox-onboard-text-row';
+            const inputType = q.inputType || 'text';
             row.innerHTML = `
-                <input type="text" class="sandbox-onboard-text" placeholder="${q.placeholder || ''}" />
+                <input type="${inputType}" class="sandbox-onboard-text" placeholder="${q.placeholder || ''}" autocomplete="${inputType === 'email' ? 'email' : 'off'}" />
                 <button class="sandbox-onboard-send" type="button" disabled aria-label="Send">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -33427,10 +33439,29 @@ document.addEventListener('DOMContentLoaded', function() {
             // when the user has scrolled past it while the demo plays out
             input.focus({ preventScroll: true });
 
+            const isValid = (val) => {
+                const trimmed = val.trim();
+                if (!trimmed) return false;
+                if (q.validate === 'email') {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+                }
+                return true;
+            };
+
             const submit = () => {
                 const v = input.value.trim();
-                if (!v) return;
+                if (!isValid(v)) return;
                 obState[q.id] = v;
+                // Fire-and-forget lead capture when email is collected. Background, doesn't block the flow.
+                if (q.id === 'email' && window.cqLead && typeof window.cqLead.capture === 'function') {
+                    try {
+                        window.cqLead.capture({
+                            email: v,
+                            source: 'home-demo-onboarding',
+                            metadata: { company: obState.company || '' }
+                        });
+                    } catch (_) { /* never block the demo on lead capture */ }
+                }
                 obAppendUser(v);
                 obInputArea.innerHTML = '';
                 obCurrentIdx++;
@@ -33438,7 +33469,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             input.addEventListener('input', () => {
-                sendBtn.disabled = input.value.trim().length === 0;
+                sendBtn.disabled = !isValid(input.value);
             });
             input.addEventListener('keydown', e => {
                 if (e.key === 'Enter') submit();
