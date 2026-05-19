@@ -312,6 +312,39 @@
                     console.warn('[cqLead] insert failed:', result.error);
                     return { ok: false, error: result.error.message || 'insert_failed' };
                 }
+                // Mirror successful lead capture to PostHog: identify + group + event.
+                // Safe to call even if PostHog isn't loaded — cqTrack handles that.
+                try {
+                    if (window.cqTrack) {
+                        var meta = metadata || {};
+                        var company = meta.company ? String(meta.company).trim() : null;
+                        var companySize = meta.size || meta.sizeNum || meta.companySize || null;
+                        window.cqTrack.identify(email, {
+                            $email: email,
+                            email: email,
+                            company: company,
+                            company_size: companySize,
+                            role: meta.role || null,
+                            first_source: source,
+                            last_lead_source: source,
+                            last_lead_page: window.location.pathname,
+                            last_lead_at: new Date().toISOString()
+                        });
+                        if (company) {
+                            window.cqTrack.group('company', company.toLowerCase(), {
+                                name: company,
+                                company_size: companySize
+                            });
+                        }
+                        window.cqTrack.event('lead_captured', {
+                            source: source,
+                            page: window.location.pathname,
+                            company: company,
+                            company_size: companySize,
+                            referrer: document.referrer || null
+                        });
+                    }
+                } catch (_) { /* never block lead insert on analytics */ }
                 return { ok: true };
             } catch (err) {
                 console.warn('[cqLead] exception:', err);
@@ -319,6 +352,145 @@
             }
         }
     };
+})();
+</script>
+
+<!-- ============================================================
+     CQTRACK, thin PostHog wrapper + auto-tracking
+     Listens for consent before doing anything. cqLead.capture above
+     already mirrors successful inserts to PostHog via cqTrack.
+============================================================ -->
+<script>
+(function() {
+    function safe(fn) {
+        return function() {
+            try { return fn.apply(null, arguments); } catch (e) { /* never throw from analytics */ }
+        };
+    }
+
+    window.cqTrack = {
+        event: safe(function(name, props) {
+            if (!window.posthog || typeof window.posthog.capture !== 'function') return;
+            window.posthog.capture(name, props || {});
+        }),
+        identify: safe(function(distinctId, props) {
+            if (!window.posthog || typeof window.posthog.identify !== 'function') return;
+            window.posthog.identify(distinctId, props || {});
+        }),
+        setPerson: safe(function(props) {
+            if (!window.posthog || typeof window.posthog.setPersonProperties !== 'function') return;
+            window.posthog.setPersonProperties(props || {});
+        }),
+        group: safe(function(type, key, props) {
+            if (!window.posthog || typeof window.posthog.group !== 'function') return;
+            window.posthog.group(type, key, props || {});
+        })
+    };
+
+    // === Auto-tracking: scroll depth, page engagement, CTA clicks ===
+    function initAutoTracking() {
+        var T = window.cqTrack;
+
+        // Scroll depth: fire when user crosses 25/50/75/100 % of doc height
+        var depthBuckets = [25, 50, 75, 100];
+        var firedDepth = {};
+        var lastPath = window.location.pathname;
+        function checkScroll() {
+            if (lastPath !== window.location.pathname) {
+                firedDepth = {};
+                lastPath = window.location.pathname;
+            }
+            var doc = document.documentElement;
+            var max = (doc.scrollHeight - window.innerHeight) || 1;
+            var pct = (window.scrollY / max) * 100;
+            depthBuckets.forEach(function(b) {
+                if (!firedDepth[b] && pct >= b) {
+                    firedDepth[b] = true;
+                    T.event('scroll_depth_reached', { depth_pct: b, page: window.location.pathname });
+                }
+            });
+        }
+        var scrollT;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollT);
+            scrollT = setTimeout(checkScroll, 200);
+        }, { passive: true });
+
+        // Page engagement: fire page_engaged once after 30s of active time on the path
+        var engagedOnPath = {};
+        var activeMs = 0;
+        var lastActiveAt = Date.now();
+        var ENGAGEMENT_MS = 30000;
+        function nudge() {
+            var now = Date.now();
+            var delta = now - lastActiveAt;
+            if (delta < 5000) activeMs += delta;
+            lastActiveAt = now;
+            var path = window.location.pathname;
+            if (!engagedOnPath[path] && activeMs >= ENGAGEMENT_MS) {
+                engagedOnPath[path] = true;
+                T.event('page_engaged', { page: path, active_seconds: Math.round(activeMs / 1000) });
+            }
+        }
+        ['mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(function(ev) {
+            window.addEventListener(ev, nudge, { passive: true });
+        });
+        window.addEventListener('popstate', function() {
+            activeMs = 0;
+            lastActiveAt = Date.now();
+        });
+
+        // CTA click delegation: track meaningful primary/secondary CTAs sitewide
+        var CTA_CLASSES = ['btn-lime', 'btn-accent', 'hero-fb-link-primary', 'cta-primary', 'apv-hero-cta-primary', 'footer-cta-primary', 'about-cta-primary', 'sandbox-btn-primary', 'btn-outline'];
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a, button');
+            if (!link) return;
+            var classes = link.className || '';
+            var isCta = CTA_CLASSES.some(function(c) { return classes.indexOf(c) !== -1; });
+            if (!isCta) return;
+            var text = (link.textContent || '').trim().slice(0, 100);
+            var href = link.getAttribute('href') || '';
+            T.event('cta_clicked', {
+                cta_text: text,
+                cta_href: href.slice(0, 200),
+                cta_classes: classes.slice(0, 120),
+                page: window.location.pathname
+            });
+        });
+
+        // Section-visibility tracking via IntersectionObserver
+        if ('IntersectionObserver' in window) {
+            var sectionMap = {
+                'priser': 'pricing_section_viewed',
+                'pricing': 'pricing_section_viewed',
+                'tm-matrix': 'competitor_matrix_viewed',
+                'tm-fvf': 'tier_compare_viewed',
+                'cases': 'case_studies_viewed',
+                'faq': 'faq_viewed'
+            };
+            var firedSection = {};
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    var id = entry.target.id;
+                    var eventName = sectionMap[id];
+                    if (!eventName || firedSection[id]) return;
+                    firedSection[id] = true;
+                    T.event(eventName, { page: window.location.pathname, section_id: id });
+                });
+            }, { threshold: 0.25 });
+            Object.keys(sectionMap).forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) io.observe(el);
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAutoTracking);
+    } else {
+        initAutoTracking();
+    }
 })();
 </script>
 
@@ -30127,6 +30299,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (defaultBox) defaultBox.style.display = 'none';
             if (!offerBox) return;
             offerBox.style.display = 'block';
+            if (window.cqTrack) window.cqTrack.event('pilot_qualifier_finished', {
+                challenge: answers.challenge || null,
+                size: answers.size || null,
+                timing: answers.timing || null
+            });
             offerBox.innerHTML = '' +
                 '<div class="cv-form">' +
                     '<div class="cv-form-eyebrow">Klar til at starte</div>' +
@@ -30238,12 +30415,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (defaultBox) defaultBox.style.display = '';
             if (restartBtn) restartBtn.style.display = 'none';
 
+            if (window.cqTrack) window.cqTrack.event('pilot_qualifier_started', { page: '/pilotprojekt' });
+
             botMsg('Hej! Lad os finde ud af om pilot passer til jer. <strong>Hvad er jeres største udfordring lige nu?</strong>');
             chips('challenge', CHALLENGES, function(opt) {
                 answers.challenge = opt.id;
                 answers.challenge_label = opt.label;
                 userMsg(opt.label);
                 pushSummary('Udfordring', opt.label);
+                if (window.cqTrack) window.cqTrack.event('pilot_qualifier_step', { step: 'challenge', answer: opt.id });
                 setTimeout(function() {
                     botMsg(opt.reply);
                     setTimeout(function() {
@@ -31368,9 +31548,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     if (sessionStorage.getItem(STORAGE_KEY) === '1') {
                         unlock();
+                        if (window.cqTrack) window.cqTrack.event('demo_page_viewed', { already_unlocked: true });
                         return;
                     }
                 } catch (_) {}
+
+                // Analytics: gate impression (first time on /demo this session)
+                if (window.cqTrack) {
+                    window.cqTrack.event('demo_gate_viewed', { page: '/demo' });
+                }
 
                 const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
@@ -31400,6 +31586,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             });
                         }
                     } catch (_) { /* never block on lead capture */ }
+                    if (window.cqTrack) {
+                        window.cqTrack.event('demo_gate_submitted', { page: '/demo' });
+                    }
                     try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
                     unlock();
                 });
@@ -32209,6 +32398,11 @@ document.addEventListener('DOMContentLoaded', function() {
         totalMonthlyEl.textContent = (tier.isFrom ? 'fra ' : '') + fmt(tier.price);
         totalMonthlySuffix.textContent = 'kr/md';
         if (ctaBtn) ctaBtn.classList.remove('is-disabled');
+        if (window.cqTrack) window.cqTrack.event('pricing_wizard_finished', {
+            tier_id: tier.id,
+            tier_price: tier.price,
+            tier_kind: 'platform'
+        });
     }
 
     function updateApvPriceDisplay(tier) {
@@ -32220,6 +32414,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (onetimeRow) onetimeRow.style.display = '';
         if (ctaBtn) ctaBtn.classList.remove('is-disabled');
+        if (window.cqTrack) window.cqTrack.event('pricing_wizard_finished', {
+            tier_id: tier.id,
+            tier_price: tier.apvOnce,
+            tier_kind: 'apv-once'
+        });
     }
 
     function updateStartupAddition() {
@@ -32229,6 +32428,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // === Flow ===
     async function startFlow() {
+        if (window.cqTrack) window.cqTrack.event('pricing_wizard_started', { page: window.location.pathname });
         await botSay("Hej! Lad os finde den rigtige løsning til jer. <strong>Hvad bringer jer hertil?</strong>", 600);
         askEntry();
     }
@@ -32238,6 +32438,7 @@ document.addEventListener('DOMContentLoaded', function() {
             answers.entry = pick;
             appendUser(pick.label);
             addSummaryLine('Behov', pick.short);
+            if (window.cqTrack) window.cqTrack.event('pricing_wizard_step', { step: 'entry', answer: pick.id });
             await delay(200);
 
             if (pick.id === 'apv') {
@@ -33415,10 +33616,17 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 await window.cqLead.capture({
                     email: email,
-                    source: 'footer-guide-opsigelse',
-                    metadata: { guide: 'opsigelse-6-8-uger' }
+                    source: 'footer-guide-trivselsmaaling-rytme',
+                    metadata: { guide: 'trivselsmaaling-rytme' }
                 });
             } catch (e) { /* swallow, never block UX on tracking */ }
+        }
+
+        if (window.cqTrack) {
+            window.cqTrack.event('guide_download_requested', {
+                guide: 'trivselsmaaling-rytme',
+                page: window.location.pathname
+            });
         }
 
         const success = triggerDownload();
@@ -33601,6 +33809,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Analytics: fire start event on first question, step events on each
+        if (window.cqTrack) {
+            if (idx === 0) {
+                window.cqTrack.event('sandbox_demo_started', { page: window.location.pathname });
+            }
+            window.cqTrack.event('sandbox_step_shown', {
+                step_index: idx,
+                step_id: q.id,
+                total_steps: obQuestions.length
+            });
+        }
+
         obProgress.textContent = `Trin ${idx + 1} af ${obQuestions.length}`;
 
         // Show messages with typing
@@ -33751,6 +33971,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function obFinish() {
         obProgress.textContent = 'Færdig';
+
+        // Analytics: onboarding chat fully completed
+        if (window.cqTrack) {
+            window.cqTrack.event('sandbox_demo_finished', {
+                company_provided: !!obState.company,
+                email_provided: !!obState.email,
+                size: obState.size || null,
+                purpose: obState.purpose || null,
+                values_count: (obState.values || []).length
+            });
+        }
+
         obShowTyping();
         await obDelay(900);
         obHideTyping();
