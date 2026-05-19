@@ -30877,6 +30877,85 @@ document.addEventListener('DOMContentLoaded', function() {
 .demo-page-frame {
     /* Ingen ramme — selve demo-iframen har sin egen border-radius + box-shadow */
 }
+.demo-page-gate {
+    max-width: 540px;
+    margin: 0 auto 24px;
+}
+.demo-page-gate-card {
+    background: var(--paper-card, #fff);
+    border: 1px solid rgba(15, 17, 50, 0.08);
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 18px 40px -22px rgba(15, 17, 50, 0.15);
+}
+.demo-page-gate-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-deep, #4f53cc);
+    margin-bottom: 10px;
+}
+.demo-page-gate-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink, #0e0e0e);
+    margin: 0 0 10px;
+}
+.demo-page-gate-sub {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0 0 20px;
+}
+.demo-page-gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.demo-page-gate-form input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(15, 17, 50, 0.12);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14.5px;
+    background: var(--paper, #fbf9f4);
+    color: var(--ink, #0e0e0e);
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.demo-page-gate-form input:focus {
+    outline: none;
+    border-color: var(--brand, #6366f1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+    background: #fff;
+}
+.demo-page-gate-form button {
+    margin-top: 6px;
+    cursor: pointer;
+    justify-content: center;
+}
+.demo-page-gate-form button:disabled {
+    opacity: 0.7;
+    cursor: progress;
+}
+.demo-page-gate-fineprint {
+    margin: 8px 0 0;
+    font-size: 11.5px;
+    color: rgba(15, 17, 50, 0.5);
+    line-height: 1.45;
+}
+.demo-page-gate-fineprint a {
+    color: var(--brand-deep, #4f53cc);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.demo-page-gate-fineprint.is-error { color: #b91c1c; }
 .demo-page-cta-row {
     display: flex;
     gap: 14px;
@@ -31107,7 +31186,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
-            <div class="demo-page-frame">
+            <!-- Email/company gate shown before Storylane embed -->
+            <div class="demo-page-gate" id="demoPageGate">
+                <div class="demo-page-gate-card">
+                    <div class="demo-page-gate-eyebrow">Get access to the demo</div>
+                    <h2 class="demo-page-gate-title">Enter your company name and work email to start</h2>
+                    <p class="demo-page-gate-sub">The demo is free with no credit card. We send you a link so you can return to it, and keep you posted when we ship something new. No spam.</p>
+
+                    <form class="demo-page-gate-form" id="demoPageGateForm" onsubmit="return false;">
+                        <input type="text" id="demoGateCompany" placeholder="Company name" autocomplete="organization" required>
+                        <input type="email" id="demoGateEmail" placeholder="name@company.com" autocomplete="email" required>
+                        <button type="submit" id="demoGateSubmit" class="btn-lime">
+                            Get access
+                            <span class="btn-lime-arrow">›</span>
+                        </button>
+                        <p class="demo-page-gate-fineprint" id="demoGateFineprint">
+                            You can unsubscribe at any time. Read our <a href="https://culturequest.notion.site/Privacy-policy-1dcbae19b98f80c08724e89282399927" target="_blank" rel="noopener noreferrer">privacy policy</a>.
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <div class="demo-page-frame" id="demoPageFrame" style="display: none;">
                 <div>
                     <script async src="https://js.storylane.io/js/v2/storylane.js" data-verify-origin=""></script>
                     <div class="sl-embed" style="position:relative;padding-bottom:calc(46.72% + 25px);width:100%;height:0;transform:scale(1)">
@@ -31115,6 +31215,61 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             </div>
+
+            <script>
+            (function() {
+                const gate = document.getElementById('demoPageGate');
+                const frame = document.getElementById('demoPageFrame');
+                const form = document.getElementById('demoPageGateForm');
+                const emailInput = document.getElementById('demoGateEmail');
+                const companyInput = document.getElementById('demoGateCompany');
+                const submitBtn = document.getElementById('demoGateSubmit');
+                const fineprint = document.getElementById('demoGateFineprint');
+                if (!gate || !frame || !form) return;
+
+                const STORAGE_KEY = 'cq_demo_unlocked';
+                try {
+                    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+                        gate.style.display = 'none';
+                        frame.style.display = '';
+                        return;
+                    }
+                } catch (_) {}
+
+                const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = emailInput.value.trim();
+                    const company = companyInput.value.trim();
+                    if (!company) {
+                        fineprint.className = 'demo-page-gate-fineprint is-error';
+                        fineprint.textContent = 'Enter your company name.';
+                        companyInput.focus();
+                        return;
+                    }
+                    if (!isValidEmail(email)) {
+                        fineprint.className = 'demo-page-gate-fineprint is-error';
+                        fineprint.textContent = 'Enter a valid email address.';
+                        emailInput.focus();
+                        return;
+                    }
+                    submitBtn.disabled = true;
+                    try {
+                        if (window.cqLead && typeof window.cqLead.capture === 'function') {
+                            await window.cqLead.capture({
+                                email: email,
+                                source: 'demo-page-gate',
+                                metadata: { company: company }
+                            });
+                        }
+                    } catch (_) { /* never block on lead capture */ }
+                    try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
+                    gate.style.display = 'none';
+                    frame.style.display = '';
+                });
+            })();
+            </script>
 
             <div class="demo-page-cta-row">
                 <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="btn-lime">
