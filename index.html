@@ -239,6 +239,66 @@
     var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
     var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // Blokerer gratis/personlige email-providers og kendte engangs-services.
+    // Formålet er at sortere fake-data fra og kun gemme reelle business-leads.
+    // Trade-off: meget små virksomheder der bruger Gmail som arbejdsmail rammes også.
+    var FREE_EMAIL_DOMAINS = new Set([
+        'gmail.com', 'googlemail.com',
+        'yahoo.com', 'yahoo.co.uk', 'yahoo.dk', 'yahoo.de', 'yahoo.fr', 'yahoo.es', 'yahoo.it', 'yahoo.se', 'yahoo.no',
+        'ymail.com', 'rocketmail.com',
+        'hotmail.com', 'hotmail.co.uk', 'hotmail.dk', 'hotmail.de', 'hotmail.fr', 'hotmail.es', 'hotmail.it', 'hotmail.no', 'hotmail.se',
+        'outlook.com', 'outlook.dk', 'outlook.de', 'outlook.fr', 'outlook.es', 'outlook.it', 'outlook.co.uk', 'outlook.no', 'outlook.se',
+        'live.com', 'live.dk', 'live.no', 'live.se', 'live.de', 'live.fr', 'live.co.uk',
+        'msn.com',
+        'icloud.com', 'me.com', 'mac.com',
+        'aol.com', 'aim.com',
+        'protonmail.com', 'proton.me', 'pm.me',
+        'mail.com', 'gmx.com', 'gmx.de', 'gmx.net', 'gmx.at', 'gmx.ch',
+        'yandex.com', 'yandex.ru',
+        'mail.ru', 'rambler.ru', 'list.ru', 'bk.ru', 'inbox.ru',
+        'zoho.com',
+        'fastmail.com', 'fastmail.fm',
+        'tutanota.com', 'tutanota.de', 'tuta.io',
+        'web.de', 't-online.de',
+        'mail.dk', 'stofanet.dk', 'tdcadsl.dk', 'tdcspace.dk',
+        'privat.dk', 'webspeed.dk', 'forum.dk',
+        'sol.dk', 'youmail.dk', 'youseepost.dk'
+    ]);
+
+    var DISPOSABLE_EMAIL_DOMAINS = new Set([
+        'mailinator.com', 'mailinator.net',
+        '10minutemail.com', '10minutemail.net', '10minutemail.org',
+        'guerrillamail.com', 'guerrillamail.net', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.info',
+        'sharklasers.com',
+        'temp-mail.org', 'temp-mail.io', 'tempmail.com', 'tempmail.net',
+        'throwawaymail.com',
+        'yopmail.com', 'yopmail.net', 'yopmail.fr',
+        'maildrop.cc',
+        'trashmail.com', 'trashmail.de', 'trashmail.net',
+        'emailondeck.com', 'discard.email',
+        'fakemailgenerator.com',
+        'dispostable.com',
+        'getairmail.com',
+        'mailnesia.com',
+        'spamgourmet.com',
+        'mintemail.com',
+        'mytrashmail.com',
+        'mohmal.com',
+        'tempinbox.com',
+        'getnada.com', 'nada.email',
+        'fakeinbox.com',
+        'inboxbear.com', 'mailcatch.com',
+        'spam4.me', 'spambox.us',
+        'instantemailaddress.com'
+    ]);
+
+    function getEmailDomain(email) {
+        if (!email) return '';
+        var at = String(email).trim().toLowerCase().lastIndexOf('@');
+        if (at < 0) return '';
+        return email.slice(at + 1).trim().toLowerCase();
+    }
+
     var client = null;
     function getClient() {
         if (client) return client;
@@ -268,6 +328,14 @@
             return EMAIL_RE.test(trimmed) && trimmed.length <= 255;
         },
 
+        isBusinessEmail: function(email) {
+            var domain = getEmailDomain(email);
+            if (!domain) return false;
+            if (FREE_EMAIL_DOMAINS.has(domain)) return false;
+            if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) return false;
+            return true;
+        },
+
         capture: async function(opts) {
             opts = opts || {};
             var email = String(opts.email || '').trim().toLowerCase();
@@ -281,6 +349,10 @@
 
             if (!this.validateEmail(email)) {
                 return { ok: false, error: 'invalid_email' };
+            }
+
+            if (!this.isBusinessEmail(email)) {
+                return { ok: false, error: 'free_email_blocked' };
             }
 
             var supa = getClient();
@@ -21868,6 +21940,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 msg.textContent = '✓ Tilbuddet er sendt til ' + email + '. Tjek din indbakke.';
                 // Også download PDF lokalt
                 setTimeout(() => generatePDF(), 400);
+            } else if (captureResult.error === 'free_email_blocked') {
+                msg.style.color = 'var(--danger-600)';
+                msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
             } else {
                 msg.style.color = 'var(--danger-600)';
                 msg.textContent = 'Noget gik galt. Prøv igen om et øjeblik.';
@@ -23130,6 +23205,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 msg.textContent = '✓ Du er på listen. Vi sender en mail når early access åbner.';
                 input.value = '';
                 if (companyInput) companyInput.value = '';
+            } else if (result.error === 'free_email_blocked') {
+                msg.style.color = '#ffcccc';
+                msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
             } else {
                 msg.style.color = '#ffcccc';
                 msg.textContent = 'Noget gik galt. Prøv igen om et øjeblik.';
@@ -27832,6 +27910,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     btn.textContent = '✓ Sendt';
                     msg.style.color = '#059669';
                     msg.innerHTML = '<strong>Tak!</strong> Vi sender en intro til ' + escapeHtml(payload.consultant.name.split(' ')[0]) + ' på <strong>' + escapeHtml(email) + '</strong> inden for 48 timer.';
+                } else if (result.error === 'free_email_blocked') {
+                    btn.textContent = 'Send mig en intro ›';
+                    msg.style.color = '#b91c1c';
+                    msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
                 } else {
                     btn.textContent = 'Send mig en intro ›';
                     msg.style.color = '#b91c1c';
@@ -30209,6 +30291,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     pushSummary('Firma', company);
                     pushSummary('Telefon', phone);
                     setMsg('Tak! Vi vender tilbage på <strong>' + email.replace(/[<>]/g, '') + '</strong> inden for 24 timer.', 'success');
+                } else if (result.error === 'free_email_blocked') {
+                    btn.textContent = origText;
+                    setMsg('Brug venligst din arbejds-email. Personlige adresser accepteres ikke.', 'error');
                 } else {
                     btn.textContent = origText;
                     setMsg('Noget gik galt. Prøv igen, eller skriv til <a href="mailto:hej@culturequest.io">hej@culturequest.io</a>.', 'error');
@@ -31555,6 +31640,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 emailEl.focus();
                 return;
             }
+            if (window.cqLead && window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+                msg.style.color = '#b91c1c';
+                msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser (gmail, hotmail, outlook m.fl.) accepteres ikke.';
+                emailEl.focus();
+                return;
+            }
             if (!company) {
                 msg.style.color = '#b91c1c';
                 msg.textContent = 'Udfyld firmanavn.';
@@ -31586,7 +31677,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.disabled = false;
                 btn.textContent = 'Åbn demo ›';
                 msg.style.color = '#b91c1c';
-                msg.textContent = 'Noget gik galt. Prøv igen om et øjeblik.';
+                if (result.error === 'free_email_blocked') {
+                    msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
+                } else {
+                    msg.textContent = 'Noget gik galt. Prøv igen om et øjeblik.';
+                }
             }
         });
     })();
@@ -32366,6 +32461,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 addSummaryLine('Early access', '90 dage gratis');
                 await delay(500);
                 await showMusConfirmation();
+            } else if (result.error === 'free_email_blocked') {
+                btn.disabled = false;
+                btn.textContent = 'Prøv igen';
+                msgEl.style.color = 'var(--danger-600)';
+                msgEl.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
             } else {
                 btn.disabled = false;
                 btn.textContent = 'Prøv igen';
@@ -33106,6 +33206,9 @@ document.addEventListener('DOMContentLoaded', function() {
             msg.style.color = 'var(--success-600)';
             msg.textContent = '✓ Tilbuddet er sendt til ' + email + '. Tjek din indbakke.';
             setTimeout(() => generatePDF(), 400);
+        } else if (result && result.error === 'free_email_blocked') {
+            msg.style.color = 'var(--danger-600)';
+            msg.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
         } else {
             msg.style.color = 'var(--danger-600)';
             msg.textContent = 'Noget gik galt. Prøv igen eller skriv til hej@culturequest.io.';
@@ -33400,6 +33503,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             fineprint.style.color = '#ff8a8a';
             fineprint.textContent = 'Indtast en gyldig email-adresse.';
+            return;
+        }
+        if (window.cqLead && window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+            fineprint.style.color = '#ff8a8a';
+            fineprint.textContent = 'Brug venligst din arbejds-email. Personlige adresser accepteres ikke.';
             return;
         }
 
@@ -36836,6 +36944,9 @@ window.renderCulturequestPDF = async function(config) {
                 input.value = '';
                 setFineprint(opts.successMessage.replace('{email}', email.replace(/[<>]/g, '')), '');
                 setTimeout(function() { btn.textContent = origBtnText; }, 4000);
+            } else if (result.error === 'free_email_blocked') {
+                btn.textContent = origBtnText;
+                setFineprint('Brug venligst din arbejds-email. Personlige adresser accepteres ikke.', '#c4253b');
             } else {
                 btn.textContent = origBtnText;
                 setFineprint('Noget gik galt. Prøv igen om et øjeblik.', '#c4253b');
@@ -37092,6 +37203,9 @@ window.renderCulturequestPDF = async function(config) {
                 submitBtn.textContent = '✓ Sendt';
                 form.reset();
                 setMsg('Tak! Vi vender tilbage på <strong>' + email.replace(/[<>]/g, '') + '</strong> inden for 24 timer.', 'success');
+            } else if (result.error === 'free_email_blocked') {
+                submitBtn.textContent = origBtnText;
+                setMsg('Brug venligst din arbejds-email. Personlige adresser accepteres ikke.', 'error');
             } else {
                 submitBtn.textContent = origBtnText;
                 setMsg('Noget gik galt. Prøv igen om et øjeblik, eller skriv direkte til <a href="mailto:hej@culturequest.io">hej@culturequest.io</a>.', 'error');

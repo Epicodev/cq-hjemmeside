@@ -243,6 +243,66 @@
     var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
     var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // Blocks free/personal email providers and known disposable services.
+    // Goal is to filter out fake data and only keep real business leads.
+    // Trade-off: very small businesses on Gmail get blocked too.
+    var FREE_EMAIL_DOMAINS = new Set([
+        'gmail.com', 'googlemail.com',
+        'yahoo.com', 'yahoo.co.uk', 'yahoo.dk', 'yahoo.de', 'yahoo.fr', 'yahoo.es', 'yahoo.it', 'yahoo.se', 'yahoo.no',
+        'ymail.com', 'rocketmail.com',
+        'hotmail.com', 'hotmail.co.uk', 'hotmail.dk', 'hotmail.de', 'hotmail.fr', 'hotmail.es', 'hotmail.it', 'hotmail.no', 'hotmail.se',
+        'outlook.com', 'outlook.dk', 'outlook.de', 'outlook.fr', 'outlook.es', 'outlook.it', 'outlook.co.uk', 'outlook.no', 'outlook.se',
+        'live.com', 'live.dk', 'live.no', 'live.se', 'live.de', 'live.fr', 'live.co.uk',
+        'msn.com',
+        'icloud.com', 'me.com', 'mac.com',
+        'aol.com', 'aim.com',
+        'protonmail.com', 'proton.me', 'pm.me',
+        'mail.com', 'gmx.com', 'gmx.de', 'gmx.net', 'gmx.at', 'gmx.ch',
+        'yandex.com', 'yandex.ru',
+        'mail.ru', 'rambler.ru', 'list.ru', 'bk.ru', 'inbox.ru',
+        'zoho.com',
+        'fastmail.com', 'fastmail.fm',
+        'tutanota.com', 'tutanota.de', 'tuta.io',
+        'web.de', 't-online.de',
+        'mail.dk', 'stofanet.dk', 'tdcadsl.dk', 'tdcspace.dk',
+        'privat.dk', 'webspeed.dk', 'forum.dk',
+        'sol.dk', 'youmail.dk', 'youseepost.dk'
+    ]);
+
+    var DISPOSABLE_EMAIL_DOMAINS = new Set([
+        'mailinator.com', 'mailinator.net',
+        '10minutemail.com', '10minutemail.net', '10minutemail.org',
+        'guerrillamail.com', 'guerrillamail.net', 'guerrillamail.biz', 'guerrillamail.de', 'guerrillamail.info',
+        'sharklasers.com',
+        'temp-mail.org', 'temp-mail.io', 'tempmail.com', 'tempmail.net',
+        'throwawaymail.com',
+        'yopmail.com', 'yopmail.net', 'yopmail.fr',
+        'maildrop.cc',
+        'trashmail.com', 'trashmail.de', 'trashmail.net',
+        'emailondeck.com', 'discard.email',
+        'fakemailgenerator.com',
+        'dispostable.com',
+        'getairmail.com',
+        'mailnesia.com',
+        'spamgourmet.com',
+        'mintemail.com',
+        'mytrashmail.com',
+        'mohmal.com',
+        'tempinbox.com',
+        'getnada.com', 'nada.email',
+        'fakeinbox.com',
+        'inboxbear.com', 'mailcatch.com',
+        'spam4.me', 'spambox.us',
+        'instantemailaddress.com'
+    ]);
+
+    function getEmailDomain(email) {
+        if (!email) return '';
+        var at = String(email).trim().toLowerCase().lastIndexOf('@');
+        if (at < 0) return '';
+        return email.slice(at + 1).trim().toLowerCase();
+    }
+
     var client = null;
     function getClient() {
         if (client) return client;
@@ -272,6 +332,14 @@
             return EMAIL_RE.test(trimmed) && trimmed.length <= 255;
         },
 
+        isBusinessEmail: function(email) {
+            var domain = getEmailDomain(email);
+            if (!domain) return false;
+            if (FREE_EMAIL_DOMAINS.has(domain)) return false;
+            if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) return false;
+            return true;
+        },
+
         capture: async function(opts) {
             opts = opts || {};
             var email = String(opts.email || '').trim().toLowerCase();
@@ -285,6 +353,10 @@
 
             if (!this.validateEmail(email)) {
                 return { ok: false, error: 'invalid_email' };
+            }
+
+            if (!this.isBusinessEmail(email)) {
+                return { ok: false, error: 'free_email_blocked' };
             }
 
             var supa = getClient();
@@ -21854,6 +21926,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 msg.textContent = '✓ The offer has been sent to ' + email + '. Check your inbox.';
                 // Also download PDF locally
                 setTimeout(() => generatePDF(), 400);
+            } else if (captureResult.error === 'free_email_blocked') {
+                msg.style.color = 'var(--danger-600)';
+                msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
             } else {
                 msg.style.color = 'var(--danger-600)';
                 msg.textContent = 'Something went wrong. Please try again in a moment.';
@@ -23116,6 +23191,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 msg.textContent = '✓ You are on the list. We will send an email when early access opens.';
                 input.value = '';
                 if (companyInput) companyInput.value = '';
+            } else if (result.error === 'free_email_blocked') {
+                msg.style.color = '#ffcccc';
+                msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
             } else {
                 msg.style.color = '#ffcccc';
                 msg.textContent = 'Something went wrong. Try again in a moment.';
@@ -27742,6 +27820,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     btn.textContent = '✓ Sent';
                     msg.style.color = '#059669';
                     msg.innerHTML = '<strong>Thanks!</strong> We will send an intro to ' + escapeHtml(payload.consultant.name.split(' ')[0]) + ' at <strong>' + escapeHtml(email) + '</strong> within 48 hours.';
+                } else if (result.error === 'free_email_blocked') {
+                    btn.textContent = 'Send me an intro ›';
+                    msg.style.color = '#b91c1c';
+                    msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
                 } else {
                     btn.textContent = 'Send me an intro ›';
                     msg.style.color = '#b91c1c';
@@ -30120,6 +30202,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     pushSummary('Company', company);
                     pushSummary('Phone', phone);
                     setMsg('Thank you! We will get back to you on <strong>' + email.replace(/[<>]/g, '') + '</strong> within 24 hours.', 'success');
+                } else if (result.error === 'free_email_blocked') {
+                    btn.textContent = origText;
+                    setMsg('Please use your work email. Personal addresses are not accepted.', 'error');
                 } else {
                     btn.textContent = origText;
                     setMsg('Something went wrong. Please try again, or write to <a href="mailto:hej@culturequest.io">hej@culturequest.io</a>.', 'error');
@@ -31466,6 +31551,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 emailEl.focus();
                 return;
             }
+            if (window.cqLead && window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+                msg.style.color = '#b91c1c';
+                msg.textContent = 'Please use your work email. Personal addresses (gmail, hotmail, outlook etc.) are not accepted.';
+                emailEl.focus();
+                return;
+            }
             if (!company) {
                 msg.style.color = '#b91c1c';
                 msg.textContent = 'Please enter your company name.';
@@ -31497,7 +31588,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.disabled = false;
                 btn.textContent = 'Open demo ›';
                 msg.style.color = '#b91c1c';
-                msg.textContent = 'Something went wrong. Please try again in a moment.';
+                if (result.error === 'free_email_blocked') {
+                    msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
+                } else {
+                    msg.textContent = 'Something went wrong. Please try again in a moment.';
+                }
             }
         });
     })();
@@ -32277,6 +32372,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 addSummaryLine('Early access', '90 days free');
                 await delay(500);
                 await showMusConfirmation();
+            } else if (result.error === 'free_email_blocked') {
+                btn.disabled = false;
+                btn.textContent = 'Try again';
+                msgEl.style.color = 'var(--danger-600)';
+                msgEl.textContent = 'Please use your work email. Personal addresses are not accepted.';
             } else {
                 btn.disabled = false;
                 btn.textContent = 'Try again';
@@ -33017,6 +33117,9 @@ document.addEventListener('DOMContentLoaded', function() {
             msg.style.color = 'var(--success-600)';
             msg.textContent = '✓ The offer has been sent to ' + email + '. Check your inbox.';
             setTimeout(() => generatePDF(), 400);
+        } else if (result && result.error === 'free_email_blocked') {
+            msg.style.color = 'var(--danger-600)';
+            msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
         } else {
             msg.style.color = 'var(--danger-600)';
             msg.textContent = 'Something went wrong. Try again or write to hej@culturequest.io.';
@@ -33310,7 +33413,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = input.value.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             fineprint.style.color = '#ff8a8a';
-            fineprint.textContent = 'Indtast en gyldig email-adresse.';
+            fineprint.textContent = 'Please enter a valid email address.';
+            return;
+        }
+        if (window.cqLead && window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+            fineprint.style.color = '#ff8a8a';
+            fineprint.textContent = 'Please use your work email. Personal addresses are not accepted.';
             return;
         }
 
@@ -36751,6 +36859,9 @@ window.renderCulturequestPDF = async function(config) {
                 input.value = '';
                 setFineprint(opts.successMessage.replace('{email}', email.replace(/[<>]/g, '')), '');
                 setTimeout(function() { btn.textContent = origBtnText; }, 4000);
+            } else if (result.error === 'free_email_blocked') {
+                btn.textContent = origBtnText;
+                setFineprint('Please use your work email. Personal addresses are not accepted.', '#c4253b');
             } else {
                 btn.textContent = origBtnText;
                 setFineprint('Something went wrong. Please try again in a moment.', '#c4253b');
@@ -37007,6 +37118,9 @@ window.renderCulturequestPDF = async function(config) {
                 submitBtn.textContent = '✓ Sent';
                 form.reset();
                 setMsg('Thanks! We\'ll get back to you at <strong>' + email.replace(/[<>]/g, '') + '</strong> within 24 hours.', 'success');
+            } else if (result.error === 'free_email_blocked') {
+                submitBtn.textContent = origBtnText;
+                setMsg('Please use your work email. Personal addresses are not accepted.', 'error');
             } else {
                 submitBtn.textContent = origBtnText;
                 setMsg('Something went wrong. Please try again in a moment, or write directly to <a href="mailto:hej@culturequest.io">hej@culturequest.io</a>.', 'error');
