@@ -455,6 +455,94 @@
 </script>
 
 <!-- ============================================================
+     APOLLO / SEQUENCE ATTRIBUTION
+     Captures ?em= (email) + UTM params on first page load, persists
+     in sessionStorage, and identifies the visitor in PostHog once
+     analytics consent has loaded the SDK. Lets us tie Apollo outbound
+     clicks to on-site behaviour without asking the user for anything.
+============================================================ -->
+<script>
+(function() {
+    function getParams() {
+        var p = {};
+        try {
+            new URLSearchParams(window.location.search).forEach(function(v, k) { p[k] = v; });
+        } catch (e) {}
+        return p;
+    }
+    function maybeDecode(s) {
+        if (!s) return s;
+        if (s.indexOf('@') !== -1) return s;
+        try {
+            var d = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+            if (d.indexOf('@') !== -1) return d;
+        } catch (e) {}
+        return s;
+    }
+    function captureAttribution() {
+        var p = getParams();
+        var em = p.em || p.utm_email;
+        var hasUtm = p.utm_source || p.utm_campaign || p.utm_medium;
+        if (!em && !hasUtm) return null;
+        var id = {};
+        if (em) {
+            var email = maybeDecode(em);
+            if (email && email.indexOf('@') > 0) id.email = email.toLowerCase().trim();
+        }
+        ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
+            if (p[k]) id[k] = p[k];
+        });
+        if (Object.keys(id).length === 0) return null;
+        try { sessionStorage.setItem('cq_attribution', JSON.stringify(id)); } catch (e) {}
+        if (em && window.history && window.history.replaceState) {
+            try {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('em');
+                url.searchParams.delete('utm_email');
+                window.history.replaceState({}, '', url.toString());
+            } catch (e) {}
+        }
+        return id;
+    }
+    function loadStored() {
+        try { return JSON.parse(sessionStorage.getItem('cq_attribution') || 'null'); } catch (e) { return null; }
+    }
+    function applyToPostHog() {
+        if (!window.posthog || typeof window.posthog.identify !== 'function') return false;
+        var stored = loadStored();
+        if (!stored) return true;
+        try {
+            var props = {};
+            ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
+                if (stored[k]) props[k] = stored[k];
+            });
+            if (stored.email) {
+                props.email = stored.email;
+                window.posthog.identify(stored.email, props);
+                window.posthog.capture('apollo_link_visited', {
+                    utm_source: stored.utm_source || null,
+                    utm_campaign: stored.utm_campaign || null,
+                    utm_medium: stored.utm_medium || null,
+                    page: window.location.pathname
+                });
+            } else if (Object.keys(props).length > 0) {
+                if (typeof window.posthog.register === 'function') window.posthog.register(props);
+            }
+        } catch (e) {}
+        return true;
+    }
+    captureAttribution();
+    if (!applyToPostHog()) {
+        var attempts = 0;
+        var poll = setInterval(function() {
+            attempts++;
+            if (applyToPostHog() || attempts > 60) clearInterval(poll);
+        }, 1000);
+    }
+})();
+</script>
+
+<!-- ============================================================
      CQTRACK, thin PostHog wrapper + auto-tracking
      Listens for consent before doing anything. cqLead.capture above
      already mirrors successful inserts to PostHog via cqTrack.
