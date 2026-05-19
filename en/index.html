@@ -308,6 +308,19 @@
                     console.warn('[cqLead] insert failed:', result.error);
                     return { ok: false, error: result.error.message || 'insert_failed' };
                 }
+                if (window.cqTrack) {
+                    window.cqTrack.identify(email, {
+                        last_lead_source: source,
+                        last_lead_at: new Date().toISOString()
+                    });
+                    window.cqTrack.event('lead_submitted', {
+                        source: source,
+                        page_url: lead.page_url,
+                        utm_source: lead.utm_source,
+                        utm_medium: lead.utm_medium,
+                        utm_campaign: lead.utm_campaign
+                    });
+                }
                 return { ok: true };
             } catch (err) {
                 console.warn('[cqLead] exception:', err);
@@ -315,6 +328,52 @@
             }
         }
     };
+})();
+</script>
+
+<!-- ============================================================
+     TRACKING WRAPPER, safe no-op until PostHog loads (consent-gated)
+     - window.cqTrack.event(name, props)        - capture a custom event
+     - window.cqTrack.identify(email, props)    - bind anon session to a person
+     - window.cqTrack.qualifier(name, action, props)  - shorthand for funnel
+     - Delegated handler: any element with [data-cq-track-cta="<label>"]
+       fires a 'cta_clicked' event automatically.
+============================================================ -->
+<script>
+(function() {
+    function safeCapture(name, props) {
+        try {
+            if (window.posthog && typeof window.posthog.capture === 'function') {
+                window.posthog.capture(name, props || {});
+            }
+        } catch (e) {}
+    }
+
+    window.cqTrack = {
+        event: safeCapture,
+        identify: function(email, props) {
+            try {
+                if (!email) return;
+                if (window.posthog && typeof window.posthog.identify === 'function') {
+                    window.posthog.identify(String(email).toLowerCase(), props || {});
+                }
+            } catch (e) {}
+        },
+        qualifier: function(name, action, props) {
+            var payload = Object.assign({ qualifier: name, action: action }, props || {});
+            safeCapture('qualifier_' + action, payload);
+        }
+    };
+
+    document.addEventListener('click', function(e) {
+        var el = e.target && e.target.closest && e.target.closest('[data-cq-track-cta]');
+        if (!el) return;
+        window.cqTrack.event('cta_clicked', {
+            label: el.getAttribute('data-cq-track-cta'),
+            location: window.location.pathname + window.location.hash,
+            href: el.getAttribute('href') || null
+        });
+    }, { capture: true });
 })();
 </script>
 
@@ -20512,11 +20571,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         </p>
 
                         <div class="apv-hero-ctas">
-                            <a href="#apv-qualifier" class="btn-lime">
+                            <a href="#apv-qualifier" class="btn-lime" data-cq-track-cta="apv-hero-book-demo">
                                 Book a risk assessment demo
                                 <span class="btn-lime-arrow">›</span>
                             </a>
-                            <a href="#apv-process" class="btn-outline">
+                            <a href="#apv-process" class="btn-outline" data-cq-track-cta="apv-hero-see-process">
                                 See how the process works
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -21396,6 +21455,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return appendBot(html);
         }
 
+        let _qStep = 0;
+        const QUALIFIER_NAME = 'apv-cycle';
+
         function buildChips(items, onPick) {
             const wrap = document.createElement('div');
             wrap.className = 'cv-choices';
@@ -21411,6 +21473,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (c !== chip) c.style.opacity = '0.4';
                     });
                     chip.classList.add('is-selected');
+                    _qStep += 1;
+                    if (window.cqTrack) {
+                        if (_qStep === 1) window.cqTrack.qualifier(QUALIFIER_NAME, 'started');
+                        window.cqTrack.qualifier(QUALIFIER_NAME, 'step', {
+                            step: _qStep,
+                            answer_id: item.id,
+                            answer_label: item.label
+                        });
+                    }
                     onPick(item);
                 });
                 wrap.appendChild(chip);
@@ -21676,6 +21747,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show offer box
             renderOfferBox(v);
 
+            if (window.cqTrack) {
+                window.cqTrack.qualifier(QUALIFIER_NAME, 'completed', {
+                    recommendation: v.recommendation && v.recommendation.primary,
+                    price: v.recommendation && v.recommendation.primaryPrice
+                });
+            }
+
             await delay(300);
             await botSay("You now have a full picture on the right. <strong>Download the offer as PDF</strong> or send it to your email so you have it ready for the meeting.", 900);
         }
@@ -21876,6 +21954,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (offerBox) { offerBox.style.display = 'none'; offerBox.innerHTML = ''; }
             if (defaultBox) defaultBox.style.display = 'block';
             answers = { cycle: null, size: null, industry: null, setup: null, driver: null, intent: null };
+            _qStep = 0;
             window._apvVerdict = null;
             startFlow();
         });
@@ -22141,11 +22220,11 @@ document.addEventListener('DOMContentLoaded', function() {
         </p>
 
         <div class="t1-hero-cta-row">
-            <a href="#t1-beta" class="btn-lime">
+            <a href="#t1-beta" class="btn-lime" data-cq-track-cta="1to1-hero-beta-signup">
                 <span>Be among the first</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
-            <a href="/en/contact" class="btn-outline">
+            <a href="/en/contact" class="btn-outline" data-cq-track-cta="1to1-hero-book-demo">
                 <span>Book an early-access demo</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
@@ -25096,11 +25175,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             The classic annual engagement survey is a snapshot. In a labour market where stress builds over weeks and resignations mature over months, that is too late. Culture intelligence is the <strong>engagement survey alternative</strong> that has taken over: continuous listening and pulse survey software that catches the patterns before they get expensive.
                         </p>
                         <div class="apv-hero-ctas">
-                            <a href="#tm-qualifier" class="btn-lime">
+                            <a href="#tm-qualifier" class="btn-lime" data-cq-track-cta="tm-hero-get-recommendation">
                                 Get recommendations for your setup
                                 <span class="btn-lime-arrow">›</span>
                             </a>
-                            <a href="#tm-fvf" class="btn-outline">
+                            <a href="#tm-fvf" class="btn-outline" data-cq-track-cta="tm-hero-see-difference">
                                 See the difference visually
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -28781,7 +28860,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </p>
 
                         <div class="apv-hero-ctas">
-                            <a href="#pp-qualifier" class="btn-lime">
+                            <a href="#pp-qualifier" class="btn-lime" data-cq-track-cta="pilot-hero-apply">
                                 Apply for a slot
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -31117,7 +31196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="demo-page-cta-row">
-                <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="btn-lime">
+                <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="btn-lime" data-cq-track-cta="demo-page-start-free">
                     Start for free
                     <span class="btn-lime-arrow">›</span>
                 </a>
@@ -31800,6 +31879,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return appendBot(html);
     }
 
+    let _pwStep = 0;
+    const PW_QUALIFIER = 'pricing-wizard';
+
     function buildChips(items, onPick) {
         const wrap = document.createElement('div');
         wrap.className = 'cv-choices';
@@ -31819,6 +31901,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (c !== chip) c.style.opacity = '0.4';
                 });
                 chip.classList.add('is-selected');
+                _pwStep += 1;
+                if (window.cqTrack) {
+                    if (_pwStep === 1) window.cqTrack.qualifier(PW_QUALIFIER, 'started');
+                    window.cqTrack.qualifier(PW_QUALIFIER, 'step', {
+                        step: _pwStep,
+                        answer_id: item.id,
+                        answer_label: item.label
+                    });
+                }
                 onPick(item);
             });
             wrap.appendChild(chip);
@@ -32462,6 +32553,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show offer box
         renderOfferBox(v);
 
+        if (window.cqTrack) {
+            window.cqTrack.qualifier(PW_QUALIFIER, 'completed', {
+                kind: v.kind || null,
+                monthly: v.totalMonthly || null,
+                onetime: v.totalOnetime || null
+            });
+        }
+
         await delay(300);
         await botSay("You have a full overview on the right. <strong>Download the offer as PDF</strong> or send it to your email so you have it ready for the meeting.", 900);
     }
@@ -32855,6 +32954,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startupPackage: null,
             musEmail: null
         };
+        _pwStep = 0;
         window._cvVerdict = null;
         startFlow();
     }

@@ -304,6 +304,19 @@
                     console.warn('[cqLead] insert failed:', result.error);
                     return { ok: false, error: result.error.message || 'insert_failed' };
                 }
+                if (window.cqTrack) {
+                    window.cqTrack.identify(email, {
+                        last_lead_source: source,
+                        last_lead_at: new Date().toISOString()
+                    });
+                    window.cqTrack.event('lead_submitted', {
+                        source: source,
+                        page_url: lead.page_url,
+                        utm_source: lead.utm_source,
+                        utm_medium: lead.utm_medium,
+                        utm_campaign: lead.utm_campaign
+                    });
+                }
                 return { ok: true };
             } catch (err) {
                 console.warn('[cqLead] exception:', err);
@@ -311,6 +324,52 @@
             }
         }
     };
+})();
+</script>
+
+<!-- ============================================================
+     TRACKING WRAPPER, safe no-op until PostHog loads (consent-gated)
+     - window.cqTrack.event(name, props)        - capture a custom event
+     - window.cqTrack.identify(email, props)    - bind anon session to a person
+     - window.cqTrack.qualifier(name, action, props)  - shorthand for funnel
+     - Delegated handler: any element with [data-cq-track-cta="<label>"]
+       fires a 'cta_clicked' event automatically.
+============================================================ -->
+<script>
+(function() {
+    function safeCapture(name, props) {
+        try {
+            if (window.posthog && typeof window.posthog.capture === 'function') {
+                window.posthog.capture(name, props || {});
+            }
+        } catch (e) {}
+    }
+
+    window.cqTrack = {
+        event: safeCapture,
+        identify: function(email, props) {
+            try {
+                if (!email) return;
+                if (window.posthog && typeof window.posthog.identify === 'function') {
+                    window.posthog.identify(String(email).toLowerCase(), props || {});
+                }
+            } catch (e) {}
+        },
+        qualifier: function(name, action, props) {
+            var payload = Object.assign({ qualifier: name, action: action }, props || {});
+            safeCapture('qualifier_' + action, payload);
+        }
+    };
+
+    document.addEventListener('click', function(e) {
+        var el = e.target && e.target.closest && e.target.closest('[data-cq-track-cta]');
+        if (!el) return;
+        window.cqTrack.event('cta_clicked', {
+            label: el.getAttribute('data-cq-track-cta'),
+            location: window.location.pathname + window.location.hash,
+            href: el.getAttribute('href') || null
+        });
+    }, { capture: true });
 })();
 </script>
 
@@ -20526,11 +20585,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         </p>
 
                         <div class="apv-hero-ctas">
-                            <a href="#apv-qualifier" class="btn-lime">
+                            <a href="#apv-qualifier" class="btn-lime" data-cq-track-cta="apv-hero-book-demo">
                                 Book en APV-demo
                                 <span class="btn-lime-arrow">›</span>
                             </a>
-                            <a href="#apv-process" class="btn-outline">
+                            <a href="#apv-process" class="btn-outline" data-cq-track-cta="apv-hero-see-process">
                                 Se hvordan forløbet fungerer
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -21410,6 +21469,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return appendBot(html);
         }
 
+        let _qStep = 0;
+        const QUALIFIER_NAME = 'apv-cycle';
+
         function buildChips(items, onPick) {
             const wrap = document.createElement('div');
             wrap.className = 'cv-choices';
@@ -21425,6 +21487,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (c !== chip) c.style.opacity = '0.4';
                     });
                     chip.classList.add('is-selected');
+                    _qStep += 1;
+                    if (window.cqTrack) {
+                        if (_qStep === 1) window.cqTrack.qualifier(QUALIFIER_NAME, 'started');
+                        window.cqTrack.qualifier(QUALIFIER_NAME, 'step', {
+                            step: _qStep,
+                            answer_id: item.id,
+                            answer_label: item.label
+                        });
+                    }
                     onPick(item);
                 });
                 wrap.appendChild(chip);
@@ -21690,6 +21761,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Vis tilbud-boks
             renderOfferBox(v);
 
+            if (window.cqTrack) {
+                window.cqTrack.qualifier(QUALIFIER_NAME, 'completed', {
+                    recommendation: v.recommendation && v.recommendation.primary,
+                    price: v.recommendation && v.recommendation.primaryPrice
+                });
+            }
+
             await delay(300);
             await botSay("I har nu et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email, så har I det klar til mødet.", 900);
         }
@@ -21890,6 +21968,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (offerBox) { offerBox.style.display = 'none'; offerBox.innerHTML = ''; }
             if (defaultBox) defaultBox.style.display = 'block';
             answers = { cycle: null, size: null, industry: null, setup: null, driver: null, intent: null };
+            _qStep = 0;
             window._apvVerdict = null;
             startFlow();
         });
@@ -22155,11 +22234,11 @@ document.addEventListener('DOMContentLoaded', function() {
         </p>
 
         <div class="t1-hero-cta-row">
-            <a href="#t1-beta" class="btn-lime">
+            <a href="#t1-beta" class="btn-lime" data-cq-track-cta="1to1-hero-beta-signup">
                 <span>Vær blandt de første</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
-            <a href="/kontakt" class="btn-outline">
+            <a href="/kontakt" class="btn-outline" data-cq-track-cta="1to1-hero-book-demo">
                 <span>Book en early-access demo</span>
                 <span class="btn-lime-arrow">›</span>
             </a>
@@ -25117,11 +25196,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             Den klassiske trivselsmåling på arbejdspladsen er en årlig fotostat. På et arbejdsmarked hvor stress udvikler sig på uger og opsigelser modnes på måneder, er det for sent. Culture intelligence er <strong>alternativet til den årlige trivselsmåling</strong> — kontinuerlig kulturmåling der fanger mønstrene før de bliver dyre.
                         </p>
                         <div class="apv-hero-ctas">
-                            <a href="#tm-qualifier" class="btn-lime">
+                            <a href="#tm-qualifier" class="btn-lime" data-cq-track-cta="tm-hero-get-recommendation">
                                 Få anbefalinger til jeres setup
                                 <span class="btn-lime-arrow">›</span>
                             </a>
-                            <a href="#tm-fvf" class="btn-outline">
+                            <a href="#tm-fvf" class="btn-outline" data-cq-track-cta="tm-hero-see-difference">
                                 Se forskellen visuelt
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -28871,7 +28950,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </p>
 
                         <div class="apv-hero-ctas">
-                            <a href="#pp-qualifier" class="btn-lime">
+                            <a href="#pp-qualifier" class="btn-lime" data-cq-track-cta="pilot-hero-apply">
                                 Ansøg om plads
                                 <span class="btn-lime-arrow">›</span>
                             </a>
@@ -31206,7 +31285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="demo-page-cta-row">
-                <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="btn-lime">
+                <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="btn-lime" data-cq-track-cta="demo-page-start-free">
                     Start gratis
                     <span class="btn-lime-arrow">›</span>
                 </a>
@@ -31889,6 +31968,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return appendBot(html);
     }
 
+    let _pwStep = 0;
+    const PW_QUALIFIER = 'pricing-wizard';
+
     function buildChips(items, onPick) {
         const wrap = document.createElement('div');
         wrap.className = 'cv-choices';
@@ -31908,6 +31990,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (c !== chip) c.style.opacity = '0.4';
                 });
                 chip.classList.add('is-selected');
+                _pwStep += 1;
+                if (window.cqTrack) {
+                    if (_pwStep === 1) window.cqTrack.qualifier(PW_QUALIFIER, 'started');
+                    window.cqTrack.qualifier(PW_QUALIFIER, 'step', {
+                        step: _pwStep,
+                        answer_id: item.id,
+                        answer_label: item.label
+                    });
+                }
                 onPick(item);
             });
             wrap.appendChild(chip);
@@ -32551,6 +32642,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Vis offer-box
         renderOfferBox(v);
 
+        if (window.cqTrack) {
+            window.cqTrack.qualifier(PW_QUALIFIER, 'completed', {
+                kind: v.kind || null,
+                monthly: v.totalMonthly || null,
+                onetime: v.totalOnetime || null
+            });
+        }
+
         await delay(300);
         await botSay("I har et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email, så har I det klar til mødet.", 900);
     }
@@ -32944,6 +33043,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startupPackage: null,
             musEmail: null
         };
+        _pwStep = 0;
         window._cvVerdict = null;
         startFlow();
     }
