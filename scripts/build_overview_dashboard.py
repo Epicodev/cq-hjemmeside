@@ -56,7 +56,7 @@ def trends(series, breakdown=None, date_from="-30d", interval="day",
         "interval": interval,
         "dateRange": {"date_from": date_from},
         "trendsFilter": {"display": display, "showValuesOnSeries": show_values_on_series},
-        "filterTestAccounts": True,
+        "filterTestAccounts": False,
     }
     if breakdown:
         source["breakdownFilter"] = breakdown
@@ -77,7 +77,7 @@ def funnel(steps, date_from="-30d", window_days=7):
             "funnelWindowIntervalUnit": "day",
             "funnelVizType": "steps",
         },
-        "filterTestAccounts": True,
+        "filterTestAccounts": False,
     }}
 
 

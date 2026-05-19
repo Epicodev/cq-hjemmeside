@@ -80,7 +80,7 @@ def create_cohort(name: str, groups: list, is_static=False) -> int:
 # === Query helpers (HogQL-based InsightVizNode payloads) ===
 
 def trends_query(series, breakdown=None, date_from="-30d", interval="day",
-                 display="ActionsLineGraph", filter_test_accounts=True):
+                 display="ActionsLineGraph", filter_test_accounts=False):
     """
     series: list of dicts like {"event": "$pageview", "math": "total"}
     breakdown: {"breakdown_type": "event", "breakdown": "$pathname"}  (or "person", etc)
@@ -106,7 +106,7 @@ def trends_query(series, breakdown=None, date_from="-30d", interval="day",
     return {"kind": "InsightVizNode", "source": source}
 
 
-def funnel_query(steps, date_from="-30d", funnel_window_days=7, filter_test_accounts=True,
+def funnel_query(steps, date_from="-30d", funnel_window_days=7, filter_test_accounts=False,
                  breakdown=None):
     """
     steps: list of {"event": "...", "name": "..."} dicts in order.
@@ -132,7 +132,7 @@ def funnel_query(steps, date_from="-30d", funnel_window_days=7, filter_test_acco
 
 
 def retention_query(target_event="$pageview", returning_event="$pageview",
-                    period="Week", date_from="-60d", filter_test_accounts=True):
+                    period="Week", date_from="-60d", filter_test_accounts=False):
     return {
         "kind": "InsightVizNode",
         "source": {
