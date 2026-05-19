@@ -21813,15 +21813,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     'The offer is indicative. Final pricing is confirmed after an onboarding call. All prices excl. VAT.' +
                 '</div>';
 
-            // Wire up actions
-            document.getElementById('apvCycDownloadBtn').addEventListener('click', generatePDF);
-            document.getElementById('apvCycEmailBtn').addEventListener('click', () => {
+            // Wire up actions — both download and send-to-email now require email
+            // before the PDF is delivered, so lead capture is guaranteed.
+            const apvCycShowEmailForm = () => {
                 document.getElementById('apvCycEmailForm').style.display = 'flex';
+                document.getElementById('apvCycDownloadBtn').style.display = 'none';
                 document.getElementById('apvCycEmailBtn').style.display = 'none';
                 document.getElementById('apvCycEmailInput').focus();
-            });
+            };
+            document.getElementById('apvCycDownloadBtn').addEventListener('click', apvCycShowEmailForm);
+            document.getElementById('apvCycEmailBtn').addEventListener('click', apvCycShowEmailForm);
             document.getElementById('apvCycEmailCancel').addEventListener('click', () => {
                 document.getElementById('apvCycEmailForm').style.display = 'none';
+                document.getElementById('apvCycDownloadBtn').style.display = 'inline-flex';
                 document.getElementById('apvCycEmailBtn').style.display = 'inline-flex';
             });
             document.getElementById('apvCycEmailSendBtn').addEventListener('click', sendEmail);
@@ -21889,6 +21893,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 msg.style.color = 'var(--danger-600)';
                 msg.textContent = 'Please enter a valid email address.';
+                return;
+            }
+            if (window.cqLead && window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+                msg.style.color = 'var(--danger-600)';
+                msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
                 return;
             }
 
@@ -32835,15 +32844,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 'ROI figures are conservative estimates based on Danish labour market data (Gallup, DA and others). Final price confirmed after onboarding conversation. All prices excl. VAT.' +
             '</div>';
 
-        // Wire up actions
-        document.getElementById('cvDownloadBtn').addEventListener('click', generatePDF);
-        document.getElementById('cvEmailBtn').addEventListener('click', () => {
+        // Wire up actions — both buttons require email-submit before PDF
+        const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
+            document.getElementById('cvDownloadBtn').style.display = 'none';
             document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
-        });
+        };
+        document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
+        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
+            document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
             document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
@@ -32910,14 +32922,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Final price confirmed after onboarding conversation. All prices excl. VAT.' +
             '</div>';
 
-        document.getElementById('cvDownloadBtn').addEventListener('click', generatePDF);
-        document.getElementById('cvEmailBtn').addEventListener('click', () => {
+        const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
+            document.getElementById('cvDownloadBtn').style.display = 'none';
             document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
-        });
+        };
+        document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
+        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
+            document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
             document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
@@ -33075,6 +33090,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!window.cqLead || !window.cqLead.validateEmail(email)) {
             msg.style.color = 'var(--danger-600)';
             msg.textContent = 'Enter a valid email address.';
+            return;
+        }
+        if (window.cqLead.isBusinessEmail && !window.cqLead.isBusinessEmail(email)) {
+            msg.style.color = 'var(--danger-600)';
+            msg.textContent = 'Please use your work email. Personal addresses are not accepted.';
             return;
         }
 
