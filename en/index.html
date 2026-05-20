@@ -22103,7 +22103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderOfferBox(v);
 
             await delay(300);
-            await botSay("You now have a full picture on the right. <strong>Download the offer as PDF</strong> or send it to your email so you have it ready for the meeting.", 900);
+            await botSay("You now have a full picture on the right. <strong>Download the offer as PDF</strong> so you have it ready for the meeting.", 900);
         }
 
         // === Render structured offer box (replaces simple summary) ===
@@ -22153,12 +22153,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 '<div class="apvCyc-offer-actions">' +
                     '<button class="apvCyc-btn-primary" id="apvCycDownloadBtn"><span>↓</span> Download as PDF</button>' +
-                    '<button class="apvCyc-btn-secondary" id="apvCycEmailBtn"><span>✉</span> Send to email</button>' +
                 '</div>' +
 
                 '<div class="apvCyc-email-form" id="apvCycEmailForm" style="display: none;">' +
                     '<input type="email" id="apvCycEmailInput" placeholder="you@example.com" class="apvCyc-email-input" />' +
-                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Send offer</button>' +
+                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Get offer</button>' +
                     '<button class="apvCyc-email-cancel" id="apvCycEmailCancel">Cancel</button>' +
                     '<div class="apvCyc-email-msg" id="apvCycEmailMsg"></div>' +
                 '</div>' +
@@ -22171,15 +22170,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const apvCycShowEmailForm = () => {
                 document.getElementById('apvCycEmailForm').style.display = 'flex';
                 document.getElementById('apvCycDownloadBtn').style.display = 'none';
-                document.getElementById('apvCycEmailBtn').style.display = 'none';
                 document.getElementById('apvCycEmailInput').focus();
             };
             document.getElementById('apvCycDownloadBtn').addEventListener('click', apvCycShowEmailForm);
-            document.getElementById('apvCycEmailBtn').addEventListener('click', apvCycShowEmailForm);
             document.getElementById('apvCycEmailCancel').addEventListener('click', () => {
                 document.getElementById('apvCycEmailForm').style.display = 'none';
                 document.getElementById('apvCycDownloadBtn').style.display = 'inline-flex';
-                document.getElementById('apvCycEmailBtn').style.display = 'inline-flex';
             });
             document.getElementById('apvCycEmailSendBtn').addEventListener('click', sendEmail);
         }
@@ -22255,7 +22251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = true;
-            btn.textContent = 'Sending...';
+            btn.textContent = 'Loading...';
 
             const v = window._apvVerdict;
             const apvMetadata = {
@@ -22281,11 +22277,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = false;
-            btn.textContent = 'Send offer';
+            btn.textContent = 'Get offer';
 
             if (captureResult.ok) {
                 msg.style.color = 'var(--success-600)';
-                msg.textContent = '✓ The offer has been sent to ' + email + '. Check your inbox.';
+                msg.textContent = '✓ Thanks! Your offer is downloading now.';
                 // Also download PDF locally
                 setTimeout(() => generatePDF(), 400);
             } else if (captureResult.error === 'free_email_blocked') {
@@ -33138,7 +33134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderApvOfferBox(v);
 
         await delay(300);
-        await botSay("You have a full overview on the right. <strong>Download the offer as PDF</strong> or send it to your email.", 900);
+        await botSay("You have a full overview on the right. <strong>Download the offer as PDF</strong>.", 900);
     }
 
     // === MUS confirmation ===
@@ -33199,7 +33195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderOfferBox(v);
 
         await delay(300);
-        await botSay("You have a full overview on the right. <strong>Download the offer as PDF</strong> or send it to your email so you have it ready for the meeting.", 900);
+        await botSay("You have a full overview on the right. <strong>Download the offer as PDF</strong> so you have it ready for the meeting.", 900);
     }
 
     // === Render structured offer box ===
@@ -33259,13 +33255,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             '<div class="apvCyc-offer-actions">' +
                 '<button class="apvCyc-btn-primary" id="cvDownloadBtn"><span>↓</span> Download as PDF</button>' +
-                '<button class="apvCyc-btn-secondary" id="cvEmailBtn"><span>✉</span> Send to email</button>' +
                 '<button class="apvCyc-btn-tertiary" id="cvOfferRestart">Start over</button>' +
             '</div>' +
 
             '<div class="apvCyc-email-form" id="cvEmailForm" style="display: none;">' +
                 '<input type="email" id="cvEmailInput" placeholder="you@email.com" class="apvCyc-email-input" />' +
-                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Send offer</button>' +
+                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Get offer</button>' +
                 '<button class="apvCyc-email-cancel" id="cvEmailCancel">Cancel</button>' +
                 '<div class="apvCyc-email-msg" id="cvEmailMsg"></div>' +
             '</div>' +
@@ -33274,19 +33269,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 'ROI figures are conservative estimates based on Danish labour market data (Gallup, DA and others). Final price confirmed after onboarding conversation. All prices excl. VAT.' +
             '</div>';
 
-        // Wire up actions — both buttons require email-submit before PDF
+        // Wire up actions — download button gates email-submit before PDF
         const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
             document.getElementById('cvDownloadBtn').style.display = 'none';
-            document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
         };
         document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
-        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
             document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
-            document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
         document.getElementById('cvOfferRestart').addEventListener('click', resetAll);
@@ -33337,13 +33329,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             '<div class="apvCyc-offer-actions">' +
                 '<button class="apvCyc-btn-primary" id="cvDownloadBtn"><span>↓</span> Download as PDF</button>' +
-                '<button class="apvCyc-btn-secondary" id="cvEmailBtn"><span>✉</span> Send to email</button>' +
                 '<button class="apvCyc-btn-tertiary" id="cvOfferRestart">Start over</button>' +
             '</div>' +
 
             '<div class="apvCyc-email-form" id="cvEmailForm" style="display: none;">' +
                 '<input type="email" id="cvEmailInput" placeholder="you@email.com" class="apvCyc-email-input" />' +
-                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Send offer</button>' +
+                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Get offer</button>' +
                 '<button class="apvCyc-email-cancel" id="cvEmailCancel">Cancel</button>' +
                 '<div class="apvCyc-email-msg" id="cvEmailMsg"></div>' +
             '</div>' +
@@ -33355,15 +33346,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
             document.getElementById('cvDownloadBtn').style.display = 'none';
-            document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
         };
         document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
-        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
             document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
-            document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
         document.getElementById('cvOfferRestart').addEventListener('click', resetAll);
@@ -33529,7 +33517,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         btn.disabled = true;
-        btn.textContent = 'Sending...';
+        btn.textContent = 'Loading...';
 
         const v = window._cvVerdict;
         const metadata = (v.kind === 'apv-once')
@@ -33562,10 +33550,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         btn.disabled = false;
-        btn.textContent = 'Send offer';
+        btn.textContent = 'Get offer';
         if (result && result.ok) {
             msg.style.color = 'var(--success-600)';
-            msg.textContent = '✓ The offer has been sent to ' + email + '. Check your inbox.';
+            msg.textContent = '✓ Thanks! Your offer is downloading now.';
             setTimeout(() => generatePDF(), 400);
         } else if (result && result.error === 'free_email_blocked') {
             msg.style.color = 'var(--danger-600)';

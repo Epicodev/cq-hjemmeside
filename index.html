@@ -22130,7 +22130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderOfferBox(v);
 
             await delay(300);
-            await botSay("I har nu et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email, så har I det klar til mødet.", 900);
+            await botSay("I har nu et samlet billede til højre. <strong>Download tilbuddet som PDF</strong>, så har I det klar til mødet.", 900);
         }
 
         // === Render structured offer box (replaces simple summary) ===
@@ -22180,12 +22180,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 '<div class="apvCyc-offer-actions">' +
                     '<button class="apvCyc-btn-primary" id="apvCycDownloadBtn"><span>↓</span> Download som PDF</button>' +
-                    '<button class="apvCyc-btn-secondary" id="apvCycEmailBtn"><span>✉</span> Send til email</button>' +
                 '</div>' +
 
                 '<div class="apvCyc-email-form" id="apvCycEmailForm" style="display: none;">' +
                     '<input type="email" id="apvCycEmailInput" placeholder="din@email.dk" class="apvCyc-email-input" />' +
-                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Send tilbud</button>' +
+                    '<button class="apvCyc-btn-primary" id="apvCycEmailSendBtn">Hent tilbud</button>' +
                     '<button class="apvCyc-email-cancel" id="apvCycEmailCancel">Annuller</button>' +
                     '<div class="apvCyc-email-msg" id="apvCycEmailMsg"></div>' +
                 '</div>' +
@@ -22199,15 +22198,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const apvCycShowEmailForm = () => {
                 document.getElementById('apvCycEmailForm').style.display = 'flex';
                 document.getElementById('apvCycDownloadBtn').style.display = 'none';
-                document.getElementById('apvCycEmailBtn').style.display = 'none';
                 document.getElementById('apvCycEmailInput').focus();
             };
             document.getElementById('apvCycDownloadBtn').addEventListener('click', apvCycShowEmailForm);
-            document.getElementById('apvCycEmailBtn').addEventListener('click', apvCycShowEmailForm);
             document.getElementById('apvCycEmailCancel').addEventListener('click', () => {
                 document.getElementById('apvCycEmailForm').style.display = 'none';
                 document.getElementById('apvCycDownloadBtn').style.display = 'inline-flex';
-                document.getElementById('apvCycEmailBtn').style.display = 'inline-flex';
             });
             document.getElementById('apvCycEmailSendBtn').addEventListener('click', sendEmail);
         }
@@ -22283,7 +22279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = true;
-            btn.textContent = 'Sender...';
+            btn.textContent = 'Henter...';
 
             const v = window._apvVerdict;
             const apvMetadata = {
@@ -22309,11 +22305,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = false;
-            btn.textContent = 'Send tilbud';
+            btn.textContent = 'Hent tilbud';
 
             if (captureResult.ok) {
                 msg.style.color = 'var(--success-600)';
-                msg.textContent = '✓ Tilbuddet er sendt til ' + email + '. Tjek din indbakke.';
+                msg.textContent = '✓ Tak! Tilbuddet downloades nu.';
                 // Også download PDF lokalt
                 setTimeout(() => generatePDF(), 400);
             } else if (captureResult.error === 'free_email_blocked') {
@@ -23568,7 +23564,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             btn.disabled = true;
-            btn.textContent = 'Sender...';
+            btn.textContent = 'Henter...';
 
             var result = { ok: false, error: 'no_sdk' };
             if (window.cqLead) {
@@ -30666,7 +30662,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 btn.disabled = true;
-                btn.textContent = 'Sender...';
+                btn.textContent = 'Henter...';
 
                 var result = await window.cqLead.capture({
                     email: email,
@@ -33242,7 +33238,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderApvOfferBox(v);
 
         await delay(300);
-        await botSay("I har et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email.", 900);
+        await botSay("I har et samlet billede til højre. <strong>Download tilbuddet som PDF</strong>.", 900);
     }
 
     // === MUS confirmation ===
@@ -33303,7 +33299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderOfferBox(v);
 
         await delay(300);
-        await botSay("I har et samlet billede til højre. <strong>Download tilbuddet som PDF</strong> eller send det til jeres email, så har I det klar til mødet.", 900);
+        await botSay("I har et samlet billede til højre. <strong>Download tilbuddet som PDF</strong>, så har I det klar til mødet.", 900);
     }
 
     // === Render structured offer box ===
@@ -33363,13 +33359,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             '<div class="apvCyc-offer-actions">' +
                 '<button class="apvCyc-btn-primary" id="cvDownloadBtn"><span>↓</span> Download som PDF</button>' +
-                '<button class="apvCyc-btn-secondary" id="cvEmailBtn"><span>✉</span> Send til email</button>' +
                 '<button class="apvCyc-btn-tertiary" id="cvOfferRestart">Start forfra</button>' +
             '</div>' +
 
             '<div class="apvCyc-email-form" id="cvEmailForm" style="display: none;">' +
                 '<input type="email" id="cvEmailInput" placeholder="din@email.dk" class="apvCyc-email-input" />' +
-                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Send tilbud</button>' +
+                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Hent tilbud</button>' +
                 '<button class="apvCyc-email-cancel" id="cvEmailCancel">Annuller</button>' +
                 '<div class="apvCyc-email-msg" id="cvEmailMsg"></div>' +
             '</div>' +
@@ -33382,15 +33377,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
             document.getElementById('cvDownloadBtn').style.display = 'none';
-            document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
         };
         document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
-        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
             document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
-            document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
         document.getElementById('cvOfferRestart').addEventListener('click', resetAll);
@@ -33441,13 +33433,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             '<div class="apvCyc-offer-actions">' +
                 '<button class="apvCyc-btn-primary" id="cvDownloadBtn"><span>↓</span> Download som PDF</button>' +
-                '<button class="apvCyc-btn-secondary" id="cvEmailBtn"><span>✉</span> Send til email</button>' +
                 '<button class="apvCyc-btn-tertiary" id="cvOfferRestart">Start forfra</button>' +
             '</div>' +
 
             '<div class="apvCyc-email-form" id="cvEmailForm" style="display: none;">' +
                 '<input type="email" id="cvEmailInput" placeholder="din@email.dk" class="apvCyc-email-input" />' +
-                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Send tilbud</button>' +
+                '<button class="apvCyc-btn-primary" id="cvEmailSendBtn">Hent tilbud</button>' +
                 '<button class="apvCyc-email-cancel" id="cvEmailCancel">Annuller</button>' +
                 '<div class="apvCyc-email-msg" id="cvEmailMsg"></div>' +
             '</div>' +
@@ -33459,15 +33450,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const cvShowEmailForm = () => {
             document.getElementById('cvEmailForm').style.display = 'flex';
             document.getElementById('cvDownloadBtn').style.display = 'none';
-            document.getElementById('cvEmailBtn').style.display = 'none';
             document.getElementById('cvEmailInput').focus();
         };
         document.getElementById('cvDownloadBtn').addEventListener('click', cvShowEmailForm);
-        document.getElementById('cvEmailBtn').addEventListener('click', cvShowEmailForm);
         document.getElementById('cvEmailCancel').addEventListener('click', () => {
             document.getElementById('cvEmailForm').style.display = 'none';
             document.getElementById('cvDownloadBtn').style.display = 'inline-flex';
-            document.getElementById('cvEmailBtn').style.display = 'inline-flex';
         });
         document.getElementById('cvEmailSendBtn').addEventListener('click', sendEmail);
         document.getElementById('cvOfferRestart').addEventListener('click', resetAll);
@@ -33633,7 +33621,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         btn.disabled = true;
-        btn.textContent = 'Sender...';
+        btn.textContent = 'Henter...';
 
         const v = window._cvVerdict;
         const metadata = (v.kind === 'apv-once')
@@ -33666,10 +33654,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         btn.disabled = false;
-        btn.textContent = 'Send tilbud';
+        btn.textContent = 'Hent tilbud';
         if (result && result.ok) {
             msg.style.color = 'var(--success-600)';
-            msg.textContent = '✓ Tilbuddet er sendt til ' + email + '. Tjek din indbakke.';
+            msg.textContent = '✓ Tak! Tilbuddet downloades nu.';
             setTimeout(() => generatePDF(), 400);
         } else if (result && result.error === 'free_email_blocked') {
             msg.style.color = 'var(--danger-600)';
@@ -37457,7 +37445,7 @@ window.renderCulturequestPDF = async function(config) {
             }
 
             btn.disabled = true;
-            btn.textContent = 'Sender...';
+            btn.textContent = 'Henter...';
 
             var result = await window.cqLead.capture({
                 email: email,
