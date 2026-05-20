@@ -114,6 +114,14 @@
 
     <!-- Blog articles with bilingual hreflang annotations -->
     <url>
+        <loc>https://culturequest.io/blog/forudsige-opsigelser</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="da-DK" href="https://culturequest.io/blog/forudsige-opsigelser"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://culturequest.io/blog/forudsige-opsigelser"/>
+    </url>
+    <url>
         <loc>https://culturequest.io/blog/digital-apv-guide</loc>
         <lastmod>2026-05-12</lastmod>
         <changefreq>monthly</changefreq>
