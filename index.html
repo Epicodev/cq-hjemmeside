@@ -23366,183 +23366,149 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 600;
 }
 
-/* === LEFT: Corkboard with polaroids === */
-.tm-fvf-corkboard {
+/* === Shared axes: both sides share team rows × time columns === */
+.tm-fvf-side { gap: 0; }
+.tm-fvf-side-head { margin-bottom: 18px; }
+
+/* === LEFT: Annual report grid (sparse, 2 målepunkter på 12 mdr) === */
+.tm-fvf-report {
     position: relative;
-    aspect-ratio: 1 / 0.95;
+    flex: 1;
     background:
-        radial-gradient(circle at 20% 30%, rgba(0,0,0,0.025) 1px, transparent 2px),
-        radial-gradient(circle at 70% 60%, rgba(0,0,0,0.03) 1px, transparent 2px),
-        radial-gradient(circle at 45% 80%, rgba(0,0,0,0.02) 1px, transparent 2px),
-        radial-gradient(circle at 85% 25%, rgba(0,0,0,0.025) 1px, transparent 2px),
-        linear-gradient(135deg, #ece2cf 0%, #e1d4ba 60%, #d6c8ac 100%);
-    border-radius: 12px;
+        radial-gradient(circle at 88% 6%, rgba(80,65,40,0.04) 1.5px, transparent 2px),
+        radial-gradient(circle at 12% 92%, rgba(80,65,40,0.04) 1.5px, transparent 2px),
+        linear-gradient(180deg, #fbf7ec 0%, #f3ecda 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(80, 65, 30, 0.10);
     box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.05),
-        inset 0 4px 16px rgba(0,0,0,0.04),
-        0 16px 32px -16px rgba(15, 17, 50, 0.12);
-    padding: 30px;
-    overflow: hidden;
-}
-.tm-fvf-corkboard::before {
-    /* Subtle paper grain, tiny dots scattered across (less brown, more neutral) */
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-        radial-gradient(circle at 12% 15%, rgba(80,65,40,0.05) 1.5px, transparent 2px),
-        radial-gradient(circle at 38% 22%, rgba(80,65,40,0.04) 1px, transparent 2px),
-        radial-gradient(circle at 62% 12%, rgba(80,65,40,0.05) 1.5px, transparent 2px),
-        radial-gradient(circle at 88% 28%, rgba(80,65,40,0.04) 1px, transparent 2px),
-        radial-gradient(circle at 8% 45%, rgba(80,65,40,0.045) 1px, transparent 2px),
-        radial-gradient(circle at 32% 58%, rgba(80,65,40,0.04) 1.5px, transparent 2px),
-        radial-gradient(circle at 72% 48%, rgba(80,65,40,0.045) 1px, transparent 2px),
-        radial-gradient(circle at 95% 65%, rgba(80,65,40,0.04) 1.5px, transparent 2px),
-        radial-gradient(circle at 18% 78%, rgba(80,65,40,0.05) 1px, transparent 2px),
-        radial-gradient(circle at 48% 88%, rgba(80,65,40,0.04) 1.5px, transparent 2px),
-        radial-gradient(circle at 78% 82%, rgba(80,65,40,0.045) 1px, transparent 2px);
-    pointer-events: none;
-}
-
-/* Decorative washi tape strip */
-.tm-fvf-tape {
-    position: absolute;
-    top: 16px;
-    right: -10px;
-    width: 80px;
-    height: 22px;
-    background: rgba(255, 240, 220, 0.85);
-    border: 1px dashed rgba(120, 85, 50, 0.25);
-    transform: rotate(38deg);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    z-index: 3;
-}
-
-/* Polaroid */
-.tm-fvf-polaroid {
-    position: absolute;
-    width: 200px;
-    background: #fefcf6;
-    padding: 12px 12px 0;
-    box-shadow:
-        0 8px 18px -4px rgba(0,0,0,0.25),
-        0 2px 4px rgba(0,0,0,0.08);
-    z-index: 1;
-}
-.tm-fvf-polaroid-1 {
-    top: 14%;
-    left: 8%;
-    transform: rotate(-5deg);
-    z-index: 2;
-}
-.tm-fvf-polaroid-2 {
-    bottom: 12%;
-    right: 6%;
-    transform: rotate(4deg);
-    z-index: 1;
-}
-
-.tm-fvf-thumbtack {
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #ff6b6b, #c92e2e 80%);
-    box-shadow:
-        0 2px 4px rgba(0,0,0,0.3),
-        inset 1px 1px 2px rgba(255,255,255,0.4);
-    z-index: 4;
-}
-.tm-fvf-thumbtack-yellow {
-    background: radial-gradient(circle at 35% 30%, #ffd84a, #d49a00 80%);
-}
-
-.tm-fvf-polaroid-photo {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: linear-gradient(180deg, #6b6f8a 0%, #4a4d65 100%);
-    border-radius: 2px;
-    overflow: hidden;
-    /* Faded vintage feel */
-    filter: saturate(0.75) contrast(0.92);
-}
-.tm-fvf-photo-score {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 30px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: -0.02em;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-.tm-fvf-photo-bars {
-    position: absolute;
-    bottom: 30px;
-    left: 14px;
-    right: 14px;
-    height: 50%;
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 16px 32px -16px rgba(15, 17, 50, 0.10);
+    padding: 24px 26px 22px;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+}
+.tm-fvf-report-stamp {
+    align-self: flex-start;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(80, 65, 30, 0.75);
+    border: 1.5px solid rgba(80, 65, 30, 0.32);
+    padding: 6px 11px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.5);
+    transform: rotate(-1.2deg);
+}
+.tm-fvf-report-stamp-meta {
+    margin-left: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(80, 65, 30, 0.55);
+}
+
+.tm-fvf-report-plot {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
+}
+.tm-fvf-report-rows {
+    display: flex;
+    flex-direction: column;
     gap: 5px;
 }
-.tm-fvf-photo-bar {
-    flex: 1;
-    height: var(--h, 50%);
-    background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
-    border-radius: 1px;
+.tm-fvf-report-row-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(40, 30, 10, 0.72);
+    line-height: 20px;
+    height: 20px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
 }
-.tm-fvf-photo-stamp {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    font-family: 'Courier New', monospace;
-    font-size: 9px;
+.tm-fvf-report-cells {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(5, 20px);
+    gap: 5px;
+}
+.tm-fvf-cell {
+    border-radius: 3px;
+    background-image: radial-gradient(circle at 50% 50%, rgba(60, 50, 30, 0.20) 0.9px, transparent 1.4px);
+    background-size: 5px 5px;
+    background-position: center;
+}
+.tm-fvf-cell.is-filled {
+    background: linear-gradient(180deg, #ad9d72 0%, #8a7a52 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.tm-fvf-report-axis {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-top: -10px;
+}
+.tm-fvf-report-axis-ticks {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 5px;
+    font-size: 10px;
     font-weight: 700;
-    color: rgba(255, 200, 130, 0.85);
     letter-spacing: 0.08em;
-    border: 1px solid rgba(255, 200, 130, 0.55);
-    padding: 2px 5px;
-    border-radius: 2px;
+    color: rgba(60, 45, 15, 0.55);
+    text-transform: uppercase;
 }
-.tm-fvf-polaroid-caption {
-    padding: 12px 4px 14px;
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 16px;
-    color: rgba(60, 40, 20, 0.75);
+.tm-fvf-report-axis-ticks span {
     text-align: center;
-    letter-spacing: 0.01em;
+    visibility: hidden;
+}
+.tm-fvf-report-axis-ticks span.is-mark { visibility: visible; }
+
+.tm-fvf-report-gaps {
+    border-top: 1px dashed rgba(80, 65, 30, 0.20);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.tm-fvf-report-gap {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 12.5px;
+    color: rgba(40, 30, 10, 0.78);
+    line-height: 1.4;
+}
+.tm-fvf-report-gap-time {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: rgba(40, 30, 10, 0.45);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+.tm-fvf-report-gap-body strong { color: rgba(40, 30, 10, 0.95); font-weight: 700; }
+.tm-fvf-report-gap-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #8a7a52;
+    margin-right: 8px;
+    vertical-align: middle;
 }
 
-/* Sticky note pinned bottom-left */
-.tm-fvf-note {
-    position: absolute;
-    bottom: 8%;
-    left: 6%;
-    width: 130px;
-    padding: 18px 12px 14px;
-    background: #fff8a8;
-    transform: rotate(-3deg);
-    box-shadow:
-        0 6px 14px -2px rgba(0,0,0,0.18),
-        0 1px 3px rgba(0,0,0,0.08);
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 15px;
-    color: rgba(80, 60, 20, 0.85);
-    text-align: center;
-    line-height: 1.25;
-    z-index: 1;
-}
-
-/* === RIGHT: Live streaming dashboard === */
-.tm-fvf-stream {
+/* === RIGHT: Live kulturpuls heatmap === */
+.tm-fvf-puls {
     position: relative;
-    aspect-ratio: 1 / 0.95;
+    flex: 1;
     background: #0e0e10;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -23550,15 +23516,13 @@ document.addEventListener('DOMContentLoaded', function() {
         0 16px 40px -16px rgba(15, 17, 50, 0.4),
         0 4px 12px -4px rgba(15, 17, 50, 0.25),
         inset 0 1px 0 rgba(255,255,255,0.04);
-    padding: 22px;
+    padding: 22px 24px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
     overflow: hidden;
 }
-
-/* Subtle dotted texture matching apv-law-section / merged dark section */
-.tm-fvf-stream::before {
+.tm-fvf-puls::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -23567,27 +23531,29 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: none;
 }
 
-.tm-fvf-stream-bar {
+.tm-fvf-puls-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 1;
+    flex-wrap: wrap;
+    gap: 8px;
 }
-.tm-fvf-stream-live {
+.tm-fvf-puls-live {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     background: rgba(239, 68, 68, 0.16);
     color: #fca5a5;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.14em;
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid rgba(239, 68, 68, 0.28);
 }
-.tm-fvf-stream-live-dot {
+.tm-fvf-puls-live-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
@@ -23600,80 +23566,112 @@ document.addEventListener('DOMContentLoaded', function() {
     70% { box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
     100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
-.tm-fvf-stream-bar-meta {
+.tm-fvf-puls-meta {
     display: flex;
     gap: 14px;
-    flex-wrap: wrap;
-}
-.tm-fvf-stream-bar-stat {
     font-size: 11px;
     color: rgba(255,255,255,0.55);
     font-variant-numeric: tabular-nums;
+    flex-wrap: wrap;
 }
-.tm-fvf-stream-bar-stat strong {
-    color: #fff;
-    font-weight: 700;
-    margin-right: 3px;
-}
+.tm-fvf-puls-meta strong { color: #fff; font-weight: 700; margin-right: 3px; }
 
-/* Wave / area chart with playhead */
-.tm-fvf-stream-wave {
+.tm-fvf-puls-plot {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
     position: relative;
-    flex: 1;
-    min-height: 110px;
-    background: rgba(255,255,255,0.02);
-    border-radius: 8px;
-    overflow: hidden;
     z-index: 1;
 }
-.tm-fvf-stream-wave svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-.tm-fvf-stream-playhead {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, transparent, #f59e0b 25%, #f59e0b 75%, transparent);
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
-    animation: tmFvfPlayhead 8s ease-in-out infinite;
-    will-change: left;
-}
-.tm-fvf-stream-playhead::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #f59e0b;
-    box-shadow: 0 0 8px #f59e0b;
-}
-@keyframes tmFvfPlayhead {
-    0%   { left: 0%; }
-    45%  { left: 65%; }
-    50%  { left: 65%; }
-    95%  { left: 100%; }
-    100% { left: 100%; }
-}
-
-/* Live event ticker */
-.tm-fvf-stream-events {
+.tm-fvf-puls-rows {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
+}
+.tm-fvf-puls-row-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.72);
+    line-height: 20px;
+    height: 20px;
+    text-align: right;
+}
+.tm-fvf-puls-cells {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 20px);
+    gap: 5px;
+}
+.tm-fvf-pc {
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+    animation: tmFvfCellIn 0.4s ease backwards;
+}
+.tm-fvf-pc.is-sundt    { background: linear-gradient(180deg, #10b981 0%, #059669 100%); }
+.tm-fvf-pc.is-vagtsom  { background: linear-gradient(180deg, #84cc16 0%, #65a30d 100%); }
+.tm-fvf-pc.is-advarsel { background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); }
+.tm-fvf-pc.is-risiko   { background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 0 8px rgba(239, 68, 68, 0.35); }
+@keyframes tmFvfCellIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.tm-fvf-puls-axis {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-top: -8px;
+}
+.tm-fvf-puls-axis-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+}
+
+.tm-fvf-puls-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.6);
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 12px;
     position: relative;
     z-index: 1;
 }
-.tm-fvf-stream-event {
+.tm-fvf-puls-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.tm-fvf-puls-legend-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.tm-fvf-puls-events {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+}
+.tm-fvf-puls-event {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 9px 12px;
+    padding: 8px 12px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 6px;
@@ -23682,87 +23680,53 @@ document.addEventListener('DOMContentLoaded', function() {
     line-height: 1.35;
     animation: tmFvfEventFade 0.6s ease;
 }
-.tm-fvf-stream-event:nth-child(1) { animation-delay: 0s; }
-.tm-fvf-stream-event:nth-child(2) { animation-delay: 0.15s; }
-.tm-fvf-stream-event:nth-child(3) { animation-delay: 0.3s; }
+.tm-fvf-puls-event:nth-child(1) { animation-delay: 0s; }
+.tm-fvf-puls-event:nth-child(2) { animation-delay: 0.15s; }
+.tm-fvf-puls-event:nth-child(3) { animation-delay: 0.3s; }
 @keyframes tmFvfEventFade {
     from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
 }
-.tm-fvf-stream-event-time {
+.tm-fvf-puls-event-time {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.04em;
     color: rgba(255,255,255,0.5);
     text-transform: uppercase;
     flex-shrink: 0;
-    width: 38px;
+    width: 40px;
     font-variant-numeric: tabular-nums;
 }
-.tm-fvf-stream-event-dot {
+.tm-fvf-puls-event-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
 }
-.tm-fvf-stream-event-dot.is-warn { background: #f59e0b; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
-.tm-fvf-stream-event-dot.is-good { background: #10b981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6); }
-.tm-fvf-stream-event-dot.is-risk { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
-.tm-fvf-stream-event-text { flex: 1; font-weight: 500; }
-
-/* Scrubber bar */
-.tm-fvf-stream-scrubber {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-    padding-top: 4px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-}
-.tm-fvf-stream-scrubber-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    flex-shrink: 0;
-}
-.tm-fvf-stream-scrubber-bar {
-    flex: 1;
-    height: 4px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 2px;
-    position: relative;
-}
-.tm-fvf-stream-scrubber-fill {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 78%;
-    background: linear-gradient(90deg, #6366f1, #f59e0b);
-    border-radius: 2px;
-}
-.tm-fvf-stream-scrubber-knob {
-    position: absolute;
-    top: 50%;
-    left: 78%;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
-}
+.tm-fvf-puls-event-dot.is-warn { background: #f59e0b; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6); }
+.tm-fvf-puls-event-dot.is-good { background: #10b981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6); }
+.tm-fvf-puls-event-dot.is-risk { background: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+.tm-fvf-puls-event-text { flex: 1; font-weight: 500; }
+.tm-fvf-puls-event-text strong { color: #fff; font-weight: 700; }
 
 /* Mobile */
 @media (max-width: 900px) {
     .tm-fvf-section { padding: 64px 20px; }
     .tm-fvf-grid { grid-template-columns: 1fr; gap: 32px; }
-    .tm-fvf-corkboard, .tm-fvf-stream { aspect-ratio: 1 / 1.05; }
-    .tm-fvf-polaroid { width: 160px; }
+    .tm-fvf-report, .tm-fvf-puls { padding: 20px 18px; }
+    .tm-fvf-report-plot, .tm-fvf-puls-plot,
+    .tm-fvf-report-axis, .tm-fvf-puls-axis {
+        grid-template-columns: 56px 1fr;
+        gap: 8px;
+    }
+    .tm-fvf-report-row-label, .tm-fvf-puls-row-label { font-size: 10px; }
+}
+@media (max-width: 520px) {
+    .tm-fvf-report-cells, .tm-fvf-puls-cells {
+        grid-template-rows: repeat(5, 16px);
+        gap: 3px;
+    }
+    .tm-fvf-report-row-label, .tm-fvf-puls-row-label { height: 16px; line-height: 16px; }
 }
 
 /* ============ TRIVSELSMÅLING HERO, text position override (balance: not too close to menu, but CTAs above floats) ============ */
@@ -24358,135 +24322,133 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <div class="tm-fvf-grid">
 
-                <!-- LEFT: Polaroid corkboard (klassisk trivselsmåling) -->
+                <!-- LEFT: Sparse annual-report grid (klassisk trivselsmåling) -->
                 <article class="tm-fvf-side tm-fvf-side-old">
                     <div class="tm-fvf-side-head">
                         <div class="tm-fvf-side-tag">Klassisk trivselsmåling</div>
-                        <div class="tm-fvf-side-meta">2 målepunkter på 12 måneder</div>
+                        <div class="tm-fvf-side-meta">2 målepunkter · 10 mdr. blank</div>
                     </div>
 
-                    <div class="tm-fvf-corkboard">
-                        <!-- Subtle washi tape decorative element -->
-                        <div class="tm-fvf-tape" aria-hidden="true"></div>
-
-                        <!-- Polaroid 1, January -->
-                        <div class="tm-fvf-polaroid tm-fvf-polaroid-1">
-                            <div class="tm-fvf-thumbtack" aria-hidden="true"></div>
-                            <div class="tm-fvf-polaroid-photo">
-                                <div class="tm-fvf-photo-score">7,3</div>
-                                <div class="tm-fvf-photo-bars">
-                                    <div class="tm-fvf-photo-bar" style="--h:62%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:48%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:74%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:55%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:68%"></div>
-                                </div>
-                                <div class="tm-fvf-photo-stamp">JAN 2024</div>
-                            </div>
-                            <div class="tm-fvf-polaroid-caption">Trivsel · Januar · 7,3</div>
+                    <div class="tm-fvf-report">
+                        <div class="tm-fvf-report-stamp">
+                            Årsrapport 2024
+                            <span class="tm-fvf-report-stamp-meta">5 teams · 2 målinger</span>
                         </div>
 
-                        <!-- Polaroid 2, July -->
-                        <div class="tm-fvf-polaroid tm-fvf-polaroid-2">
-                            <div class="tm-fvf-thumbtack" aria-hidden="true"></div>
-                            <div class="tm-fvf-polaroid-photo">
-                                <div class="tm-fvf-photo-score">7,1</div>
-                                <div class="tm-fvf-photo-bars">
-                                    <div class="tm-fvf-photo-bar" style="--h:58%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:42%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:71%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:51%"></div>
-                                    <div class="tm-fvf-photo-bar" style="--h:64%"></div>
-                                </div>
-                                <div class="tm-fvf-photo-stamp">JUL 2024</div>
+                        <div class="tm-fvf-report-plot">
+                            <div class="tm-fvf-report-rows">
+                                <div class="tm-fvf-report-row-label">Marketing</div>
+                                <div class="tm-fvf-report-row-label">R&amp;D</div>
+                                <div class="tm-fvf-report-row-label">Sales</div>
+                                <div class="tm-fvf-report-row-label">Support</div>
+                                <div class="tm-fvf-report-row-label">Drift</div>
                             </div>
-                            <div class="tm-fvf-polaroid-caption">Trivsel · Juli · 7,1</div>
+                            <div class="tm-fvf-report-cells" aria-hidden="true">
+                                <!-- 5 teams × 12 måneder. Kun Jan (col 1) og Jul (col 7) er udfyldte. Resten er stiplet "blankt". -->
+                                <div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div>
+                                <div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div>
+                                <div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div>
+                                <div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div>
+                                <div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell is-filled"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div><div class="tm-fvf-cell"></div>
+                            </div>
                         </div>
 
-                        <!-- Handwritten note pinned -->
-                        <div class="tm-fvf-note" aria-hidden="true">
-                            <div class="tm-fvf-thumbtack tm-fvf-thumbtack-yellow"></div>
-                            "Vi havde det jo fint…"
+                        <div class="tm-fvf-report-axis">
+                            <div></div>
+                            <div class="tm-fvf-report-axis-ticks">
+                                <span class="is-mark">Jan</span><span></span><span></span><span></span><span></span><span></span><span class="is-mark">Jul</span><span></span><span></span><span></span><span></span><span class="is-mark">Dec</span>
+                            </div>
+                        </div>
+
+                        <div class="tm-fvf-report-gaps">
+                            <div class="tm-fvf-report-gap">
+                                <span class="tm-fvf-report-gap-time">Mar</span>
+                                <span class="tm-fvf-report-gap-body"><span class="tm-fvf-report-gap-dot"></span><strong>Marketing:</strong> stress eskalerede i 6 uger</span>
+                            </div>
+                            <div class="tm-fvf-report-gap">
+                                <span class="tm-fvf-report-gap-time">Maj</span>
+                                <span class="tm-fvf-report-gap-body"><span class="tm-fvf-report-gap-dot"></span><strong>Drift:</strong> 2 opsigelser, ingen så det komme</span>
+                            </div>
+                            <div class="tm-fvf-report-gap">
+                                <span class="tm-fvf-report-gap-time">Sep</span>
+                                <span class="tm-fvf-report-gap-body"><span class="tm-fvf-report-gap-dot"></span><strong>Support:</strong> lederkonflikt ulmede i 7 uger</span>
+                            </div>
                         </div>
                     </div>
 
                     <p class="tm-fvf-side-foot">
-                        <strong>Mellem disse to billeder skete alt det vigtige.</strong> 4 stress-sygemeldinger, 2 opsigelser, en lederkonflikt der eskalerede stille. Kameraet var slukket.
+                        <strong>Kameraet var slukket i 10 ud af 12 måneder.</strong> Sygemeldinger, opsigelser, og ledere der havde mistet overblikket. Når næste måling kom, var skaderne sket.
                     </p>
                 </article>
 
-                <!-- RIGHT: Live streaming dashboard (culture intelligence) -->
+                <!-- RIGHT: Live kulturpuls heatmap (culture intelligence) -->
                 <article class="tm-fvf-side tm-fvf-side-new">
                     <div class="tm-fvf-side-head">
                         <div class="tm-fvf-side-tag tm-fvf-side-tag-strong">Culture intelligence</div>
-                        <div class="tm-fvf-side-meta">52 ugers kontinuerligt stream</div>
+                        <div class="tm-fvf-side-meta">Ugentlig puls · alle teams</div>
                     </div>
 
-                    <div class="tm-fvf-stream">
-                        <!-- Top bar: LIVE indicator + meta -->
-                        <div class="tm-fvf-stream-bar">
-                            <div class="tm-fvf-stream-live">
-                                <span class="tm-fvf-stream-live-dot" aria-hidden="true"></span>
-                                LIVE
+                    <div class="tm-fvf-puls">
+                        <div class="tm-fvf-puls-bar">
+                            <div class="tm-fvf-puls-live">
+                                <span class="tm-fvf-puls-live-dot" aria-hidden="true"></span>
+                                Live · Kulturpuls
                             </div>
-                            <div class="tm-fvf-stream-bar-meta">
-                                <span class="tm-fvf-stream-bar-stat"><strong>247</strong> events sidste uge</span>
-                                <span class="tm-fvf-stream-bar-stat"><strong>5</strong> teams</span>
-                            </div>
-                        </div>
-
-                        <!-- Wave / area chart: continuous flow -->
-                        <div class="tm-fvf-stream-wave">
-                            <svg viewBox="0 0 400 110" preserveAspectRatio="none" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="tm-fvf-wave-eng" x1="0" x2="0" y1="0" y2="1">
-                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.85"/>
-                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.45"/>
-                                    </linearGradient>
-                                    <linearGradient id="tm-fvf-wave-neu" x1="0" x2="0" y1="0" y2="1">
-                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.7"/>
-                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.45"/>
-                                    </linearGradient>
-                                    <linearGradient id="tm-fvf-wave-dis" x1="0" x2="0" y1="0" y2="1">
-                                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.65"/>
-                                        <stop offset="100%" stop-color="#ef4444" stop-opacity="0.4"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M0,32 C50,28 100,38 150,42 C200,46 250,30 300,24 C350,20 380,28 400,30 L400,68 C380,70 350,74 300,76 C250,78 200,80 150,76 C100,72 50,74 0,72 Z" fill="url(#tm-fvf-wave-eng)"/>
-                                <path d="M0,72 C50,74 100,72 150,76 C200,80 250,78 300,76 C350,74 380,70 400,68 L400,92 C380,94 350,96 300,95 C250,94 200,93 150,94 C100,95 50,94 0,93 Z" fill="url(#tm-fvf-wave-neu)"/>
-                                <path d="M0,93 C50,94 100,95 150,94 C200,93 250,94 300,95 C350,96 380,94 400,92 L400,110 L0,110 Z" fill="url(#tm-fvf-wave-dis)"/>
-                            </svg>
-                            <!-- Animated playhead crossing the stream -->
-                            <div class="tm-fvf-stream-playhead" aria-hidden="true"></div>
-                        </div>
-
-                        <!-- Live event ticker -->
-                        <div class="tm-fvf-stream-events">
-                            <div class="tm-fvf-stream-event">
-                                <span class="tm-fvf-stream-event-time">2 min</span>
-                                <span class="tm-fvf-stream-event-dot is-warn"></span>
-                                <span class="tm-fvf-stream-event-text">Stress stiger i Marketing-teamet · 3 medarbejdere</span>
-                            </div>
-                            <div class="tm-fvf-stream-event">
-                                <span class="tm-fvf-stream-event-time">14 min</span>
-                                <span class="tm-fvf-stream-event-dot is-good"></span>
-                                <span class="tm-fvf-stream-event-text">Anerkendelse +12 % i R&amp;D efter ny lederpraksis</span>
-                            </div>
-                            <div class="tm-fvf-stream-event">
-                                <span class="tm-fvf-stream-event-time">38 min</span>
-                                <span class="tm-fvf-stream-event-dot is-risk"></span>
-                                <span class="tm-fvf-stream-event-text">Silent disengagement-mønster identificeret · 2 nøglemedarbejdere</span>
+                            <div class="tm-fvf-puls-meta">
+                                <span><strong>5</strong> teams</span>
+                                <span><strong>247</strong> events / uge</span>
                             </div>
                         </div>
 
-                        <!-- Controls: scrubber bar (visual only) -->
-                        <div class="tm-fvf-stream-scrubber">
-                            <span class="tm-fvf-stream-scrubber-label">DEC</span>
-                            <div class="tm-fvf-stream-scrubber-bar">
-                                <div class="tm-fvf-stream-scrubber-fill"></div>
-                                <div class="tm-fvf-stream-scrubber-knob"></div>
+                        <div class="tm-fvf-puls-plot">
+                            <div class="tm-fvf-puls-rows">
+                                <div class="tm-fvf-puls-row-label">Marketing</div>
+                                <div class="tm-fvf-puls-row-label">R&amp;D</div>
+                                <div class="tm-fvf-puls-row-label">Sales</div>
+                                <div class="tm-fvf-puls-row-label">Support</div>
+                                <div class="tm-fvf-puls-row-label">Drift</div>
                             </div>
-                            <span class="tm-fvf-stream-scrubber-label">NU</span>
+                            <div class="tm-fvf-puls-cells" aria-hidden="true">
+                                <!-- 5 teams × 10 uger. Mønsteret: Marketing trender mod risiko, R&D stabil, Sales bygger advarsel, Support tidlig dyk, Drift næsten sund. -->
+                                <div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-risiko"></div><div class="tm-fvf-pc is-risiko"></div><div class="tm-fvf-pc is-risiko"></div>
+                                <div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div>
+                                <div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-risiko"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-vagtsom"></div>
+                                <div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div>
+                                <div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-sundt"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-advarsel"></div><div class="tm-fvf-pc is-vagtsom"></div><div class="tm-fvf-pc is-sundt"></div>
+                            </div>
+                        </div>
+
+                        <div class="tm-fvf-puls-axis">
+                            <div></div>
+                            <div class="tm-fvf-puls-axis-ticks">
+                                <span>Uge 1</span>
+                                <span>Uge 10 · Nu</span>
+                            </div>
+                        </div>
+
+                        <div class="tm-fvf-puls-legend">
+                            <span class="tm-fvf-puls-legend-item"><span class="tm-fvf-puls-legend-swatch is-sundt" style="background:linear-gradient(180deg,#10b981,#059669);"></span>Sundt</span>
+                            <span class="tm-fvf-puls-legend-item"><span class="tm-fvf-puls-legend-swatch is-vagtsom" style="background:linear-gradient(180deg,#84cc16,#65a30d);"></span>Vagtsom</span>
+                            <span class="tm-fvf-puls-legend-item"><span class="tm-fvf-puls-legend-swatch is-advarsel" style="background:linear-gradient(180deg,#f59e0b,#d97706);"></span>Advarsel</span>
+                            <span class="tm-fvf-puls-legend-item"><span class="tm-fvf-puls-legend-swatch is-risiko" style="background:linear-gradient(180deg,#ef4444,#dc2626);"></span>Risiko</span>
+                        </div>
+
+                        <div class="tm-fvf-puls-events">
+                            <div class="tm-fvf-puls-event">
+                                <span class="tm-fvf-puls-event-time">2 min</span>
+                                <span class="tm-fvf-puls-event-dot is-warn"></span>
+                                <span class="tm-fvf-puls-event-text"><strong>Marketing:</strong> stress eskalerer 4. uge i træk · 3 medarbejdere</span>
+                            </div>
+                            <div class="tm-fvf-puls-event">
+                                <span class="tm-fvf-puls-event-time">14 min</span>
+                                <span class="tm-fvf-puls-event-dot is-good"></span>
+                                <span class="tm-fvf-puls-event-text"><strong>R&amp;D:</strong> anerkendelse +12 % efter ny lederpraksis</span>
+                            </div>
+                            <div class="tm-fvf-puls-event">
+                                <span class="tm-fvf-puls-event-time">38 min</span>
+                                <span class="tm-fvf-puls-event-dot is-risk"></span>
+                                <span class="tm-fvf-puls-event-text"><strong>Drift:</strong> silent disengagement-mønster · 2 nøglepersoner</span>
+                            </div>
                         </div>
                     </div>
 
