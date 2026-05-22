@@ -16,7 +16,7 @@
         { "source": "/features/manager-login", "destination": "/", "type": 301 },
         { "source": "/features/psychological-safety-workshops", "destination": "/consult", "type": 301 },
         { "source": "/features/leadership-e-learning-module", "destination": "/consult", "type": 301 },
-        { "source": "/blog/how-to-predict-workplace-challenges-before-they-impact-performance", "destination": "/blog/forudse-arbejdsmiljoeudfordringer", "type": 301 }
+        { "source": "/blog/how-to-predict-workplace-challenges-before-they-impact-performance", "destination": "/en/blog/predict-workplace-challenges", "type": 301 }
     ],
     "rewrites": [
         { "source": "en", "destination": "/en/index.html" },
