@@ -1,4 +1,23 @@
 {
+    "redirects": [
+        { "source": "/da", "destination": "/", "type": 301 },
+        { "source": "/da/", "destination": "/", "type": 301 },
+        { "source": "/da/features", "destination": "/", "type": 301 },
+        { "source": "/da/features/apv-workplace-assessment", "destination": "/apv", "type": 301 },
+        { "source": "/da/features/ai-risk-analysis", "destination": "/apv", "type": 301 },
+        { "source": "/da/features/personal-leadership", "destination": "/consult", "type": 301 },
+        { "source": "/da/features/employee-coaching", "destination": "/consult", "type": 301 },
+        { "source": "/da/features/manager-login", "destination": "/", "type": 301 },
+        { "source": "/features", "destination": "/", "type": 301 },
+        { "source": "/features/apv-workplace-assessment", "destination": "/apv", "type": 301 },
+        { "source": "/features/ai-risk-analysis", "destination": "/apv", "type": 301 },
+        { "source": "/features/personal-leadership", "destination": "/consult", "type": 301 },
+        { "source": "/features/employee-coaching", "destination": "/consult", "type": 301 },
+        { "source": "/features/manager-login", "destination": "/", "type": 301 },
+        { "source": "/features/psychological-safety-workshops", "destination": "/consult", "type": 301 },
+        { "source": "/features/leadership-e-learning-module", "destination": "/consult", "type": 301 },
+        { "source": "/blog/how-to-predict-workplace-challenges-before-they-impact-performance", "destination": "/blog/forudse-arbejdsmiljoeudfordringer", "type": 301 }
+    ],
     "rewrites": [
         { "source": "en", "destination": "/en/index.html" },
         { "source": "en/risk-assessment", "destination": "/en/index.html" },
