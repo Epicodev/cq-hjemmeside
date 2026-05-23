@@ -15,6 +15,40 @@ const ROOT = __dirname;
 app.disable('x-powered-by');
 app.use(compression({ level: 6, threshold: 1024 }));
 
+// Security headers. CSP ships as Report-Only first so any missing origin only
+// logs to the browser console instead of breaking the site. Once you've
+// reloaded a few flows (cookie consent + PostHog, Apollo tracker, Storylane
+// demo embeds, jsPDF download) without violations in DevTools > Console,
+// rename the header to `Content-Security-Policy` to enforce.
+const CSP = [
+    "default-src 'self'",
+    // 'unsafe-inline' is required because the site has many inline <script>
+    // blocks (~50). Migrating to nonces would need a build step.
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://assets.apollo.io",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    // data: covers the ~12 inline base64 images. https: stays permissive
+    // because various blog/demo content references external imagery.
+    "img-src 'self' data: https:",
+    "connect-src 'self' https://ytiboqiihekaerznainv.supabase.co https://eu.i.posthog.com https://eu-assets.i.posthog.com https://*.ingest.posthog.com https://app.apollo.io https://assets.apollo.io",
+    "frame-src 'self' https://app.storylane.io",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests",
+].join('; ');
+
+app.use((_req, res, next) => {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=(), payment=(), usb=()');
+    res.setHeader('Content-Security-Policy-Report-Only', CSP);
+    next();
+});
+
 app.use(express.static(ROOT, {
     index: false,
     extensions: ['html'],
