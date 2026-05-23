@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "serve -s . -l tcp://0.0.0.0:${PORT:-3000}"
+    "start": "node server.js"
   },
   "dependencies": {
-    "serve": "^14.2.4"
+    "compression": "^1.7.4",
+    "express": "^4.21.0"
   },
   "engines": {
     "node": ">=18"
