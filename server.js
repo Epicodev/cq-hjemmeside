@@ -15,20 +15,10 @@ const ROOT = __dirname;
 app.disable('x-powered-by');
 app.use(compression({ level: 6, threshold: 1024 }));
 
-// Canonical host: 301 www → apex so Google consolidates all ranking signals on
-// https://culturequest.io (which is what the sitemap + canonical tags already
-// use). A permanent 301 — not a 302 — so authority transfers and the redirect
-// target gets indexed. Runs before everything else.
-// NOTE: this only fires if www traffic actually reaches this app. The existing
-// apex→www 302 must first be removed at its source (Railway custom-domain
-// redirect or, more likely given it's a 302, a registrar domain-forwarding rule).
-app.use((req, res, next) => {
-    const host = req.headers.host || '';
-    if (host.toLowerCase().startsWith('www.')) {
-        return res.redirect(301, 'https://' + host.slice(4) + req.originalUrl);
-    }
-    next();
-});
+// Canonical host is www.culturequest.io (the domain served by Railway). The
+// apex culturequest.io → www redirect is handled upstream at the DNS registrar,
+// and the *.up.railway.app duplicate is handled by the <link rel="canonical">
+// in index.html — so no host redirect is needed here.
 
 // Security headers. CSP ships as Report-Only first so any missing origin only
 // logs to the browser console instead of breaking the site. Once you've

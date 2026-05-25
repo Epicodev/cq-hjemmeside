@@ -24,4 +24,4 @@ User-agent: anthropic-ai
 Allow: /
 
 # Sitemap reference
-Sitemap: https://culturequest.io/sitemap.xml
+Sitemap: https://www.culturequest.io/sitemap.xml
