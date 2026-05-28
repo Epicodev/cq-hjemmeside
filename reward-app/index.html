@@ -26,52 +26,65 @@
     --bad: #ef4444;
     --gold: #f59e0b;
     --gold-soft: #fde68a;
-    --shadow: 0 10px 30px rgba(79, 70, 229, .15);
-    --radius: 22px;
+    --shadow: 0 1px 2px rgba(17,24,39,.04), 0 14px 34px rgba(79, 70, 229, .12);
+    --shadow-soft: 0 1px 2px rgba(17,24,39,.04), 0 6px 18px rgba(17,24,39,.06);
+    --radius: 26px;
     --tap: 64px;
+    --font: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; padding: 0; height: 100%; background: linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+  html, body { margin: 0; padding: 0; height: 100%; background:
+      radial-gradient(120% 90% at 50% -10%, #ffffff 0%, rgba(255,255,255,0) 45%),
+      linear-gradient(165deg, #f4f3ff 0%, #eef2ff 55%, #fdf2f8 130%);
+    background-attachment: fixed; color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
   body { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
   button { font-family: inherit; }
   .app { max-width: 980px; margin: 0 auto; padding: 18px 18px 80px; }
 
   /* Header */
-  header.top { display: flex; align-items: center; justify-content: space-between; padding: 8px 4px 16px; }
-  header.top h1 { font-size: 22px; margin: 0; letter-spacing: -0.01em; }
-  header.top h1 .emoji { margin-right: 6px; }
-  .icon-btn { width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--card); box-shadow: var(--shadow); display: grid; place-items: center; cursor: pointer; font-size: 22px; }
-  .icon-btn:active { transform: scale(.96); }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 10px 4px 18px; }
+  header.top h1 { font-size: 23px; margin: 0; letter-spacing: -0.02em; font-weight: 800; }
+  header.top h1 .emoji { margin-right: 8px; }
+  .icon-btn { width: 50px; height: 50px; border-radius: 16px; border: 0; background: var(--card); box-shadow: var(--shadow-soft); display: grid; place-items: center; cursor: pointer; font-size: 22px; transition: transform .12s ease; }
+  .icon-btn:active { transform: scale(.94); }
 
   /* Goal card */
-  .goal-card { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #ec4899 120%); color: white; border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
-  .goal-card .label { font-size: 14px; opacity: .85; letter-spacing: .04em; text-transform: uppercase; }
-  .goal-card h2 { margin: 6px 0 12px; font-size: 28px; line-height: 1.1; }
-  .saved-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
-  .saved-amount { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; }
-  .saved-of { opacity: .9; font-size: 18px; }
-  .progress-wrap { margin-top: 18px; }
-  .progress-track { height: 22px; background: rgba(255,255,255,.18); border-radius: 999px; overflow: hidden; backdrop-filter: blur(4px); }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #fde68a, #f59e0b); border-radius: 999px; transition: width .6s cubic-bezier(.2,.8,.2,1); position: relative; }
-  .progress-fill::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.18) 0 10px, transparent 10px 20px); }
-  .progress-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 14px; opacity: .9; }
-  .piggy { position: absolute; right: -10px; bottom: -22px; font-size: 140px; opacity: .18; user-select: none; pointer-events: none; }
-  .no-goal { text-align: center; padding: 8px 4px; }
-  .no-goal h2 { margin: 6px 0; }
-  .no-goal p { margin: 0; opacity: .9; }
+  .goal-card { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 58%, #ec4899 125%); color: white; border-radius: 28px; padding: 24px; box-shadow: 0 1px 2px rgba(17,24,39,.05), 0 20px 44px rgba(99,102,241,.30); position: relative; overflow: hidden; }
+  .goal-card::before { content: ""; position: absolute; top: -60px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,.10); }
+  .goal-card .label { font-size: 13px; opacity: .82; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+  .goal-card h2 { margin: 6px 0 0; font-size: 27px; line-height: 1.12; font-weight: 800; letter-spacing: -0.01em; }
+  .goal-main { display: flex; align-items: center; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+  .saved-block { flex: 1; min-width: 150px; }
+  .saved-amount { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .saved-of { opacity: .9; font-size: 16px; margin-top: 6px; font-weight: 600; }
+  .saved-meta { margin-top: 12px; font-size: 15px; font-weight: 700; background: rgba(255,255,255,.16); display: inline-block; padding: 7px 14px; border-radius: 999px; }
+  .saved-meta.done { background: rgba(255,255,255,.92); color: #b45309; }
+
+  /* Savings jar */
+  .jar { position: relative; width: 104px; height: 124px; flex: 0 0 auto; border-radius: 16px 16px 26px 26px;
+    background: rgba(255,255,255,.14); border: 3px solid rgba(255,255,255,.6); overflow: hidden;
+    box-shadow: inset 0 -8px 16px rgba(0,0,0,.08), inset 0 4px 10px rgba(255,255,255,.25); }
+  .jar-slot { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 34px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.55); z-index: 3; }
+  .jar-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: linear-gradient(180deg, #fde68a 0%, #fbbf24 55%, #f59e0b 100%); transition: height 1s cubic-bezier(.2,.8,.2,1); }
+  .jar-fill::before { content: ""; position: absolute; top: -7px; left: 0; right: 0; height: 12px; border-radius: 50%; background: #fef0c0; }
+  .jar-pct { position: absolute; inset: 0; display: grid; place-items: center; z-index: 2; font-weight: 800; font-size: 24px; color: #fff; text-shadow: 0 1px 5px rgba(120,53,15,.45); font-variant-numeric: tabular-nums; }
+  .no-goal { text-align: center; padding: 10px 4px; position: relative; z-index: 1; }
+  .no-goal h2 { margin: 8px 0; }
+  .no-goal p { margin: 0; opacity: .92; line-height: 1.4; }
 
   /* Section heading */
   h3.section { margin: 26px 8px 12px; font-size: 18px; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; }
 
   /* Activity grid */
-  .activities { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-  .activity { background: var(--card); border-radius: 20px; padding: 18px 16px; box-shadow: var(--shadow); border: 0; text-align: left; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; min-height: 130px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-  .activity:active { transform: scale(.97); }
-  .activity .emo { font-size: 36px; line-height: 1; }
-  .activity .name { font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.25; }
-  .activity .reward { display: inline-flex; align-items: center; gap: 6px; background: var(--good-soft); color: #065f46; padding: 6px 10px; border-radius: 999px; font-weight: 700; font-size: 15px; align-self: flex-start; }
+  .activities { display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 14px; }
+  .activity { position: relative; background: var(--card); border-radius: 22px; padding: 18px 16px; box-shadow: var(--shadow-soft); border: 0; text-align: left; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease; min-height: 148px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; overflow: hidden; }
+  .activity::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--accent, var(--brand)); }
+  .activity:active { transform: scale(.96); box-shadow: 0 1px 2px rgba(17,24,39,.04); }
+  .activity .emo-badge { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font-size: 30px; line-height: 1; background: var(--badge, #eef2ff); }
+  .activity .name { font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+  .activity .reward { display: inline-flex; align-items: center; gap: 5px; background: var(--good-soft); color: #047857; padding: 7px 12px; border-radius: 999px; font-weight: 800; font-size: 15px; align-self: flex-start; }
 
-  .empty-state { background: var(--card); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--ink-soft); box-shadow: var(--shadow); }
+  .empty-state { background: var(--card); border-radius: var(--radius); padding: 30px; text-align: center; color: var(--ink-soft); box-shadow: var(--shadow-soft); }
   .empty-state .big { font-size: 42px; margin-bottom: 6px; }
 
   /* History */
@@ -422,6 +435,31 @@
   }
   function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
+  // animation state for the savings count-up + jar fill
+  let prevSavings = state.savings;
+  let prevPct = 0;
+  function animateCount(node, from, to, dur) {
+    if (from === to) { node.textContent = fmt(to); return; }
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      node.textContent = fmt(Math.round(from + (to - from) * e));
+      if (t < 1) requestAnimationFrame(tick); else node.textContent = fmt(to);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const ACT_TINTS = [
+    { accent: '#6366f1', badge: '#eef2ff' },
+    { accent: '#10b981', badge: '#ecfdf5' },
+    { accent: '#f59e0b', badge: '#fffbeb' },
+    { accent: '#ec4899', badge: '#fdf2f8' },
+    { accent: '#3b82f6', badge: '#eff6ff' },
+    { accent: '#8b5cf6', badge: '#f5f3ff' },
+    { accent: '#14b8a6', badge: '#f0fdfa' },
+  ];
+
   // simple non-crypto PIN hash (good enough for keeping a kid out)
   async function hashPin(pin) {
     const enc = new TextEncoder().encode('sparegris:' + pin);
@@ -465,41 +503,50 @@
     const section = $('#goalSection');
     section.innerHTML = '';
     if (!state.goal) {
-      const card = el('div', { class: 'goal-card' });
-      const inner = el('div', { class: 'no-goal' }, [
-        el('div', { class: 'label' }, 'Velkommen'),
-        el('h2', {}, 'Lad os sætte et mål 🎯'),
-        el('p', {}, 'Tryk på tandhjulet ⚙️ for at vælge hvad I sparer op til.'),
-        el('div', { class: 'saved-row', style: 'justify-content:center; margin-top:14px' }, [
-          el('div', { class: 'saved-amount' }, fmt(state.savings)),
+      const savedEl = el('div', { class: 'saved-amount', style: 'margin-top:16px' }, fmt(prevSavings));
+      const card = el('div', { class: 'goal-card' }, [
+        el('div', { class: 'no-goal' }, [
+          el('div', { class: 'label' }, 'Velkommen'),
+          el('h2', {}, 'Lad os sætte et mål 🎯'),
+          el('p', {}, 'Tryk på tandhjulet ⚙️ øverst for at vælge hvad I sparer op til.'),
+          savedEl,
         ]),
       ]);
-      card.appendChild(inner);
       section.appendChild(card);
+      animateCount(savedEl, prevSavings, state.savings, 800);
+      prevSavings = state.savings; prevPct = 0;
       return;
     }
     const g = state.goal;
-    const pct = Math.min(100, Math.round((state.savings / g.amount) * 100));
+    const pct = g.amount > 0 ? Math.min(100, Math.round((state.savings / g.amount) * 100)) : 0;
     const remaining = Math.max(0, g.amount - state.savings);
+    let metaText, metaDone = false;
+    if (remaining <= 0) { metaText = 'Du klarede det! 🎉'; metaDone = true; }
+    else if (pct >= 85) metaText = 'Du er der næsten! Mangler ' + fmt(remaining);
+    else metaText = 'Mangler ' + fmt(remaining);
+
+    const fillEl = el('div', { class: 'jar-fill', style: 'height:' + prevPct + '%' });
+    const savedEl = el('div', { class: 'saved-amount' }, fmt(prevSavings));
     const card = el('div', { class: 'goal-card' }, [
       el('div', { class: 'label' }, 'Mål'),
       el('h2', {}, (g.emoji ? g.emoji + ' ' : '') + g.name),
-      el('div', { class: 'saved-row' }, [
-        el('div', { class: 'saved-amount' }, fmt(state.savings)),
-        el('div', { class: 'saved-of' }, 'af ' + fmt(g.amount)),
-      ]),
-      el('div', { class: 'progress-wrap' }, [
-        el('div', { class: 'progress-track' }, [
-          el('div', { class: 'progress-fill', style: 'width:' + pct + '%' }),
+      el('div', { class: 'goal-main' }, [
+        el('div', { class: 'jar' }, [
+          el('div', { class: 'jar-slot' }),
+          fillEl,
+          el('div', { class: 'jar-pct' }, pct + '%'),
         ]),
-        el('div', { class: 'progress-meta' }, [
-          el('div', {}, pct + '% færdig'),
-          el('div', {}, remaining > 0 ? 'Mangler ' + fmt(remaining) : 'Du klarede det! 🎉'),
+        el('div', { class: 'saved-block' }, [
+          savedEl,
+          el('div', { class: 'saved-of' }, 'af ' + fmt(g.amount)),
+          el('div', { class: 'saved-meta' + (metaDone ? ' done' : '') }, metaText),
         ]),
       ]),
-      el('div', { class: 'piggy' }, '🐷'),
     ]);
     section.appendChild(card);
+    requestAnimationFrame(() => { fillEl.style.height = pct + '%'; });
+    animateCount(savedEl, prevSavings, state.savings, 800);
+    prevSavings = state.savings; prevPct = pct;
   }
 
   function renderActivities() {
@@ -514,11 +561,12 @@
       return;
     }
     const grid = el('div', { class: 'activities' });
-    state.activities.forEach(a => {
-      const btn = el('button', { class: 'activity', onclick: () => promptCompleteActivity(a.id) }, [
-        el('div', { class: 'emo' }, a.emoji || '🏆'),
+    state.activities.forEach((a, i) => {
+      const t = ACT_TINTS[i % ACT_TINTS.length];
+      const btn = el('button', { class: 'activity', style: '--accent:' + t.accent + ';--badge:' + t.badge, onclick: () => promptCompleteActivity(a.id) }, [
+        el('div', { class: 'emo-badge' }, a.emoji || '🏆'),
         el('div', { class: 'name' }, a.name),
-        el('div', { class: 'reward' }, ['💰 +' + fmt(a.reward)]),
+        el('div', { class: 'reward' }, '+' + fmt(a.reward)),
       ]);
       grid.appendChild(btn);
     });
