@@ -408,10 +408,25 @@
   const KEY = 'sparegris.v1';
   const defaultState = () => ({
     goal: null,          // { name, amount, emoji }
-    activities: [        // sample activities
-      { id: id(), name: 'Cykel 10 min', reward: 10, emoji: '🚴' },
-      { id: id(), name: 'Cykel 20 min', reward: 20, emoji: '🚴' },
-      { id: id(), name: 'Cykel 30 min', reward: 30, emoji: '🚴' },
+    activities: [        // realistiske standard-aktiviteter for et barn på ~9 år
+      // Fysisk aktivitet
+      { id: id(), name: 'Cykel 20 min', reward: 15, emoji: '🚴' },
+      { id: id(), name: 'Løbe eller gåtur', reward: 15, emoji: '🏃' },
+      { id: id(), name: 'Leg ude i 30 min', reward: 15, emoji: '⚽' },
+      { id: id(), name: 'Gå tur med hunden', reward: 10, emoji: '🐕' },
+      // Pligter i hjemmet
+      { id: id(), name: 'Rydde op på værelset', reward: 10, emoji: '🧸' },
+      { id: id(), name: 'Tømme opvaskemaskinen', reward: 10, emoji: '🍽️' },
+      { id: id(), name: 'Dække bord', reward: 5, emoji: '🍴' },
+      { id: id(), name: 'Tage skraldet ud', reward: 5, emoji: '🗑️' },
+      { id: id(), name: 'Støvsuge', reward: 10, emoji: '🧹' },
+      { id: id(), name: 'Hjælpe med aftensmad', reward: 10, emoji: '🍳' },
+      { id: id(), name: 'Rede seng', reward: 5, emoji: '🛏️' },
+      // Læsning og skole
+      { id: id(), name: 'Læse 15 min', reward: 10, emoji: '📚' },
+      { id: id(), name: 'Lave lektier', reward: 10, emoji: '📝' },
+      // Rutiner
+      { id: id(), name: 'Øve på instrument', reward: 10, emoji: '🎵' },
     ],
     history: [],         // { id, activityId, name, emoji, amount, ts, undone? }
     savings: 0,
