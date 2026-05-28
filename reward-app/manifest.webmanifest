@@ -1,0 +1,16 @@
+{
+  "name": "Min Sparegris",
+  "short_name": "Sparegris",
+  "description": "Belønningssystem — spar op til dit mål gennem aktiviteter.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f3ff",
+  "theme_color": "#4f46e5",
+  "lang": "da",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
