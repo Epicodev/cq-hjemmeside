@@ -11,7 +11,914 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <meta name="theme-color" content="#4f53cc">
 
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <title>culturequest. Forudse opsigelser, stress og mistrivsel før de rammer bundlinjen</title>
+<style>
+  /* SEO archive: keep deployed body text in the DOM for crawlers, visually hidden.
+     Not display:none (which Google deprioritizes) — use clip-path/position so the
+     content is still rendered and accessible to screen readers + crawlers. */
+  .cqh-seo-archive {
+    position: absolute !important;
+    width: 1px !important; height: 1px !important;
+    padding: 0 !important; margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+/* === NEW BRAND KIT (hero + stats), injected === */
+
+  /* ====== Tokens (fall back if styles.css lacks them) ====== */
+  :root {
+    --cqh-midnight: #1e1b4b;
+    --cqh-cream: #f5efe2;
+    --cqh-indigo: #6366f1;
+    --cqh-indigo-deep: #383da0;
+    --cqh-butter: #f1d78c;
+    --cqh-terracotta: #c26a4c;
+    --cqh-moss: #4e5f3f;
+    --cqh-danger: #ef4444;
+    --cqh-warning: #f59e0b;
+    --cqh-ink: #0f172a;
+    --cqh-ink-muted: #475569;
+    --cqh-ink-faint: #94a3b8;
+  }
+  body { background: var(--cqh-cream); margin: 0; }
+
+  /* ============ NEW HERO (namespaced cqh-) ============ */
+  .cqh-hero {
+    position: relative; margin: 96px 16px 0;
+    border-radius: 32px; overflow: hidden;
+    height: 780px; max-height: 88vh; background: #1a1d2e;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+  }
+  .cqh-stage { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1); }
+  .cqh-stage.is-active { opacity: 1; }
+  .cqh-stage-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: 58% center;
+    transform: scale(1.05); animation: cqh-kenburns 20s ease-in-out infinite alternate;
+  }
+  @keyframes cqh-kenburns { 0% { transform: scale(1.04); } 100% { transform: scale(1.11); } }
+  .cqh-stage-anders .cqh-stage-bg { background-image: url('/assets/hero-fb-bg-1.jpeg'); }
+  .cqh-stage-sofie  .cqh-stage-bg { background-image: url('/assets/hero-fb-bg-2.jpeg'); }
+  .cqh-stage-mikkel .cqh-stage-bg { background-image: url('/assets/hero-fb-bg-3.jpeg'); }
+  .cqh-stage-maja   .cqh-stage-bg { background-image: url('/assets/hero-fb-bg-4.jpeg'); }
+
+  .cqh-gradient {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      linear-gradient(90deg, rgba(30,27,75,0.95) 0%, rgba(30,27,75,0.82) 26%, rgba(30,27,75,0.4) 48%, rgba(30,27,75,0.15) 66%, rgba(30,27,75,0.55) 100%),
+      linear-gradient(180deg, rgba(30,27,75,0.3) 0%, transparent 28%, transparent 68%, rgba(30,27,75,0.5) 100%);
+  }
+
+  .cqh-story { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .cqh-story-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+  .cqh-story-layer.is-active { opacity: 1; }
+  .cqh-thought {
+    position: absolute; left: 44%; top: 19%; max-width: 300px;
+    font-family: 'Fraunces', Georgia, serif; font-style: italic;
+    font-size: 22px; line-height: 1.35; color: rgba(245,239,226,0.96);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+  .cqh-thought::before {
+    content: ""; position: absolute; left: -18px; top: 6px;
+    width: 3px; height: calc(100% - 12px);
+    background: linear-gradient(180deg, var(--cqh-butter), transparent); border-radius: 999px;
+  }
+  .cqh-chip {
+    position: absolute; left: 44%; top: 42%;
+    display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: rgba(20,18,45,0.72); border: 1px solid rgba(245,239,226,0.16);
+    border-radius: 12px; backdrop-filter: blur(10px);
+    font-family: 'Inter', sans-serif; color: var(--cqh-cream);
+  }
+  .cqh-chip-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; padding: 3px 7px; border-radius: 5px;
+    background: rgba(239,68,68,0.18); color: #ffb4b4;
+  }
+  .cqh-chip-tag.amber { background: rgba(245,158,11,0.18); color: #ffd591; }
+  .cqh-chip-text { font-size: 13px; color: rgba(245,239,226,0.92); }
+  .cqh-particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* Hero scenario body text (live SEO content) — visually subordinate but readable */
+  .cqh-scene-desc {
+    position: absolute; left: 44%; top: 52%; max-width: 360px;
+    font-family: 'Manrope', sans-serif; font-size: 13.5px; line-height: 1.55;
+    color: rgba(245,239,226,0.78); text-shadow: 0 1px 12px rgba(0,0,0,0.55);
+    pointer-events: auto;
+  }
+  @media (max-width: 900px) { .cqh-scene-desc { display: none; } }
+
+  .cqh-content {
+    position: relative; z-index: 4; height: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    padding: 64px 64px 72px; align-items: center;
+  }
+  .cqh-text { max-width: 520px; }
+  .cqh-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,239,226,0.85);
+    padding: 8px 14px; background: rgba(245,239,226,0.08);
+    border: 1px solid rgba(245,239,226,0.18); border-radius: 8px;
+    margin-bottom: 28px; backdrop-filter: blur(8px);
+  }
+  .cqh-eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cqh-butter); animation: cqh-pulse 2.2s ease-out infinite; }
+  @keyframes cqh-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(241,215,140,0.6); }
+    70% { box-shadow: 0 0 0 12px rgba(241,215,140,0); }
+    100% { box-shadow: 0 0 0 0 rgba(241,215,140,0); }
+  }
+  .cqh-headline {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: clamp(44px, 5vw, 72px); line-height: 1.02;
+    font-weight: 700; letter-spacing: -0.03em; color: var(--cqh-cream); margin: 0 0 26px;
+  }
+  .cqh-name { display: inline-block; color: var(--cqh-butter); transition: opacity 0.5s ease; }
+  .cqh-name.is-changing { opacity: 0; }
+  .cqh-sub {
+    font-family: 'Manrope', sans-serif; font-size: 18px; line-height: 1.5;
+    color: rgba(245,239,226,0.78); max-width: 44ch; margin: 0 0 36px;
+  }
+  .cqh-ctas { display: flex; gap: 12px; align-items: center; }
+  .cqh-btn-primary, .cqh-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px;
+    font-family: 'Inter Tight', sans-serif; font-size: 15px; font-weight: 600;
+    text-decoration: none; border-radius: 10px;
+    transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1), background 0.25s;
+  }
+  .cqh-btn-primary { background: var(--cqh-butter); color: var(--cqh-midnight); box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+  .cqh-btn-primary:hover { transform: translateY(-1px); }
+  .cqh-btn-secondary { background: transparent; color: var(--cqh-cream); border: 1px solid rgba(245,239,226,0.25); }
+  .cqh-btn-secondary:hover { background: rgba(245,239,226,0.08); }
+  .cqh-arrow { transition: transform 0.25s; }
+  .cqh-btn-primary:hover .cqh-arrow { transform: translateX(3px); }
+
+  .cqh-reading {
+    background: var(--cqh-cream); color: var(--cqh-ink); border-radius: 20px; padding: 26px;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,239,226,0.08);
+    max-width: 430px; width: 100%; justify-self: end;
+    font-family: 'Inter Tight', sans-serif; position: relative; overflow: hidden;
+  }
+  .cqh-reading::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent); }
+  .cqh-rhead { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid rgba(15,23,42,0.08); margin-bottom: 18px; }
+  .cqh-live { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cqh-moss); }
+  .cqh-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cqh-moss); animation: cqh-pulse-green 2s ease-out infinite; }
+  @keyframes cqh-pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(78,95,63,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(78,95,63,0); }
+    100% { box-shadow: 0 0 0 0 rgba(78,95,63,0); }
+  }
+  .cqh-person { text-align: right; }
+  .cqh-pname { font-size: 15px; font-weight: 600; color: var(--cqh-midnight); letter-spacing: -0.01em; }
+  .cqh-prole { font-size: 12px; color: var(--cqh-ink-muted); font-family: 'Manrope', sans-serif; margin-top: 2px; }
+  .cqh-rsection { margin-bottom: 18px; }
+  .cqh-rsection:last-of-type { margin-bottom: 0; }
+  .cqh-rlabel { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cqh-ink-faint); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .cqh-rlabel::after { content: ""; flex: 1; height: 1px; background: rgba(15,23,42,0.08); }
+  .cqh-signal { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 7px 0; font-size: 13px; }
+  .cqh-sname { color: var(--cqh-midnight); font-weight: 500; }
+  .cqh-spark { width: 80px; height: 20px; display: block; }
+  .cqh-strend { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: var(--cqh-danger); min-width: 76px; text-align: right; }
+  .cqh-strend.severe { font-weight: 600; }
+  .cqh-pred { background: linear-gradient(135deg, rgba(30,27,75,0.04), rgba(99,102,241,0.04)); border: 1px solid rgba(30,27,75,0.1); border-radius: 12px; padding: 14px; margin-top: 4px; }
+  .cqh-prow { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; }
+  .cqh-plabel { font-size: 12px; color: var(--cqh-ink-muted); font-family: 'Manrope', sans-serif; }
+  .cqh-pvalue { font-family: 'Fraunces', Georgia, serif; font-size: 19px; color: var(--cqh-midnight); font-weight: 500; letter-spacing: -0.01em; }
+  .cqh-pvalue.accent { color: var(--cqh-terracotta); font-style: italic; }
+  .cqh-pbar { height: 4px; background: rgba(30,27,75,0.1); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .cqh-pfill { height: 100%; width: 78%; background: linear-gradient(90deg, var(--cqh-indigo), var(--cqh-terracotta)); border-radius: 999px; transition: width 0.8s cubic-bezier(0.2,0.8,0.2,1); }
+  .cqh-action { display: flex; align-items: center; gap: 10px; padding: 11px 13px; background: var(--cqh-midnight); color: var(--cqh-cream); border-radius: 10px; font-size: 12.5px; font-weight: 500; margin-top: 12px; line-height: 1.35; }
+  .cqh-action-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 4px; background: var(--cqh-butter); color: var(--cqh-midnight); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+  .cqh-rotator { position: absolute; bottom: 28px; left: 64px; display: flex; gap: 6px; z-index: 5; }
+  .cqh-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(245,239,226,0.3); transition: all 0.3s; cursor: pointer; }
+  .cqh-dot.is-active { background: var(--cqh-butter); width: 18px; border-radius: 999px; }
+  @media (max-width: 980px) {
+    .cqh-hero { height: auto; max-height: none; }
+    .cqh-content { grid-template-columns: 1fr; padding: 44px 24px 72px; gap: 36px; }
+    .cqh-reading { justify-self: stretch; max-width: 100%; }
+    .cqh-headline { font-size: 42px; }
+    .cqh-thought, .cqh-chip { display: none; }
+  }
+
+  /* ============ NEW STATS (cream editorial, full-width) ============ */
+  .cqstats-wrap { padding: 40px 0; }
+  .cqstats { background: transparent; color: var(--cqh-midnight); padding: 100px 80px; position: relative; overflow: hidden; }
+  .cqstats::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 18% 25%, rgba(99,102,241,0.05), transparent 55%), radial-gradient(ellipse at 82% 75%, rgba(194,106,76,0.04), transparent 60%); pointer-events: none; }
+  .cqstats__inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+  .cqstats__eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cqh-indigo-deep); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; font-family: 'Inter', sans-serif; }
+  .cqstats__eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep); }
+  .cqstats__eyebrow-meta { color: var(--cqh-ink-faint); font-weight: 400; text-transform: none; letter-spacing: 0.02em; }
+  .cqstats__headline { font-family: 'Fraunces', Georgia, serif; font-size: clamp(40px, 5vw, 64px); line-height: 1.02; font-weight: 400; letter-spacing: -0.025em; max-width: 22ch; margin: 0 0 24px; color: var(--cqh-midnight); }
+  .cqstats__headline em { font-style: italic; font-weight: 500; background-image: linear-gradient(transparent 72%, rgba(241,215,140,0.55) 72%); padding: 0 2px; color: var(--cqh-midnight); }
+  .cqstats__sub { font-family: 'Manrope', 'Inter', sans-serif; font-size: 18px; line-height: 1.55; color: var(--cqh-ink-muted); max-width: 58ch; margin: 0 0 80px; }
+  .cqstats__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid rgba(30,27,75,0.15); border-bottom: 1px solid rgba(30,27,75,0.15); }
+  .cqstats__stat { padding: 56px 40px 56px 0; border-right: 1px solid rgba(30,27,75,0.15); }
+  .cqstats__stat:last-child { border-right: none; padding-right: 0; }
+  .cqstats__stat:not(:first-child) { padding-left: 40px; }
+  .cqstats__finding { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cqh-ink-faint); font-weight: 600; margin-bottom: 12px; display: block; }
+  .cqstats__num { font-family: 'Fraunces', Georgia, serif; font-size: clamp(96px, 11vw, 168px); font-weight: 400; line-height: 0.85; letter-spacing: -0.055em; color: var(--cqh-midnight); margin-bottom: 28px; }
+  .cqstats__num-unit { font-size: 0.32em; color: var(--cqh-indigo-deep); margin-left: 6px; vertical-align: super; font-weight: 500; font-style: italic; }
+  .cqstats__label { font-family: 'Inter Tight', sans-serif; font-size: 22px; line-height: 1.25; font-weight: 500; letter-spacing: -0.015em; color: var(--cqh-midnight); margin-bottom: 12px; }
+  .cqstats__context { font-family: 'Manrope', 'Inter', sans-serif; font-size: 15px; line-height: 1.6; color: var(--cqh-ink-muted); max-width: 34ch; }
+  .cqstats__pullout { margin: 56px 0 0; padding: 32px 0 0; border-top: 1px solid rgba(30,27,75,0.15); font-family: 'Fraunces', Georgia, serif; font-size: 22px; line-height: 1.4; font-style: italic; color: var(--cqh-midnight); max-width: 52ch; font-weight: 400; }
+  .cqstats__pullout::before { content: ""; display: block; width: 40px; height: 2px; background: var(--cqh-terracotta); margin-bottom: 20px; }
+  .cqstats__footnote { margin-top: 48px; font-family: 'Inter', sans-serif; font-size: 12px; color: var(--cqh-ink-faint); line-height: 1.6; max-width: 80ch; letter-spacing: 0.01em; }
+  .cqstats__footnote strong { color: var(--cqh-ink-muted); font-weight: 600; }
+  @media (max-width: 900px) {
+    .cqstats { padding: 80px 24px; }
+    .cqstats__grid { grid-template-columns: 1fr; }
+    .cqstats__stat { border-right: none; padding: 40px 0 !important; border-bottom: 1px solid rgba(30,27,75,0.15); }
+    .cqstats__stat:last-child { border-bottom: none; }
+  }
+
+  /* === Pain-timeline brand update (typografi + farve, ingen struktur) === */
+  .pain-timeline-tag.section-tag {
+    background: transparent; border: none; padding: 0;
+    color: var(--cqh-indigo-deep); font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .pain-timeline-tag.section-tag::before { content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep); }
+  .pain-timeline-headline {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400;
+    font-size: clamp(40px, 5vw, 64px); letter-spacing: -0.025em; line-height: 1.04;
+  }
+  .pain-timeline-headline em { font-style: italic; font-weight: 500; color: var(--cqh-midnight); }
+
+  /* === DESIGN-SYSTEM TOKEN: editorial headlines across all sections === */
+  .section-headline,
+  .sandbox-headline,
+  .founders-head h2,
+  .tm-section-headline {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.05 !important;
+    color: var(--cqh-midnight) !important;
+    font-variation-settings: "opsz" 144 !important;
+    font-size: clamp(34px, 4.2vw, 54px) !important;
+  }
+  /* Quest section h2 + its .soft span: identical weight/family (no mix) */
+  .founders-head h2,
+  .founders-head h2 .soft {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-variation-settings: "opsz" 144 !important;
+    color: var(--cqh-midnight) !important;
+  }
+  /* Apply same optical-size lock to ALL editorial titles (Fraunces is a variable
+     font with opsz axis — without this, smaller titles render proportionally
+     bolder than larger ones, breaking visual consistency) */
+  .cqh-headline, .cases-headline, .faq-headline, .pricing-headline,
+  .pricing-headline-soft, .tl-headline, .cqstats__headline,
+  .apv-hero-headline, .t1-hero-headline, .c-hero-headline, .blog-hero-headline, .about-hero-headline,
+  .apv-law-headline, .apv-pt-headline, .apv-demo-headline,
+  .t1-features-headline, .t1-privacy-headline, .t1-synergy-headline, .t1-beta-headline,
+  .tm-fvf-headline, .tm-catches-headline, .tm-matrix-headline,
+  .c-consultants-headline, .c-dims-headline,
+  .about-mission-headline, .about-values-headline, .about-founders-headline,
+  .pp-faq-headline,
+  .pain-timeline-headline, .pain-timeline-conclusion-headline {
+    font-variation-settings: "opsz" 144 !important;
+  }
+  /* Sandbox sits on midnight bg: invert text colors so headline + eyebrow are readable */
+  .sandbox { background: var(--cqh-midnight) !important; }
+  .sandbox .sandbox-headline { color: var(--cqh-cream) !important; }
+  .sandbox .section-tag {
+    color: var(--cqh-butter) !important;
+  }
+  .sandbox .section-tag::before { background: var(--cqh-butter) !important; }
+  .sandbox .sandbox-sub { color: rgba(245,239,226,0.78) !important; }
+  /* Keep the headline one consistent treatment (uniform Fraunces midnight), like every
+     other section title. No italic clause, no muted second colour. */
+  .founders-head h2 .soft { font-style: normal; opacity: 1; color: var(--cqh-midnight) !important; }
+
+  /* === ONE font for EVERY title: unify the remaining sans/bold titles to Fraunces 400 === */
+  .cqh-headline,
+  .cases-headline,
+  .faq-headline,
+  .pricing-headline {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.05 !important;
+  }
+  /* light-background titles take midnight; the hero stays on its dark card so it keeps its light colour */
+  .cases-headline,
+  .faq-headline,
+  .pricing-headline { color: var(--cqh-midnight) !important; }
+  /* emphasis spans in headlines: no italic, no muted second colour (consistency) */
+  .pricing-headline .pricing-headline-soft { font-style: normal !important; font-weight: 400 !important; opacity: 1 !important; color: var(--cqh-midnight) !important; }
+
+  /* === Eyebrow treatment for home sections (sandbox + quest) === */
+  .sandbox .section-tag,
+  .founders-head .section-tag {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center; gap: 12px;
+  }
+  /* Quest/founders sits on cream → indigo-deep eyebrow */
+  .founders-head .section-tag { color: var(--cqh-indigo-deep) !important; }
+  .founders-head .section-tag::before { content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep); }
+  /* Sandbox sits on midnight → butter eyebrow (readable on dark bg) */
+  .sandbox .section-tag { color: var(--cqh-butter) !important; }
+  .sandbox .section-tag::before { content: ""; width: 28px; height: 1px; background: var(--cqh-butter); }
+
+  /* === Quest bento component layer → brand kit === */
+  /* Center card: midnight, the brand's dark moment (matching hero + timeline action
+     boxes), not brown. A subtle indigo-to-midnight gradient gives the dominant card
+     depth and keeps it distinct from the flat-midnight fc-3 beside it. */
+  .founders-bento .fc-2 {
+    background: linear-gradient(150deg, #26215f 0%, var(--cqh-midnight) 62%) !important;
+  }
+  .founders-bento .fc-2::after {
+    background: radial-gradient(ellipse at center, rgba(241,215,140,0.12) 0%, transparent 60%) !important;
+  }
+  /* Big editorial marks (APV / →) in Fraunces, echoing the stats numbers */
+  .founders-bento .fc-1 .fc-mark,
+  .founders-bento .fc-3 .fc-mark {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.04em !important;
+  }
+  .founders-bento .fc-1 .fc-mark { color: var(--cqh-midnight) !important; }
+  /* Flatten the glassmorphism eyebrow → flat butter-accented chip */
+  .founders-bento .fc-eyebrow {
+    background: rgba(241,215,140,0.12) !important;
+    border: 1px solid rgba(241,215,140,0.30) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: var(--cqh-butter) !important;
+  }
+  .founders-bento .fc-eyebrow-dot {
+    background: var(--cqh-butter) !important;
+    box-shadow: 0 0 10px rgba(241,215,140,0.55) !important;
+  }
+  /* Checkmarks → butter on espresso, the brand accent doing the affirmative work */
+  .founders-bento .fc-2 .fc-check {
+    background: var(--cqh-butter) !important;
+    color: var(--cqh-midnight) !important;
+  }
+  /* Disable parent fade so the children's motion IS the show */
+  .founders-bento .fc-checklist.fc-fade-content { opacity: 1 !important; transition: none !important; }
+  /* Items zoom in from alternate sides on every tab change — dramatic */
+  .founders-bento .fc-checklist li { opacity: 0; transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .founders-bento .fc-checklist li:nth-child(odd) { transform: translateX(-160px) scale(0.85) rotate(-3deg); }
+  .founders-bento .fc-checklist li:nth-child(even) { transform: translateX(160px) scale(0.85) rotate(3deg); }
+  .founders-bento .fc-checklist li:nth-child(1) { transition-delay: 0ms; }
+  .founders-bento .fc-checklist li:nth-child(2) { transition-delay: 130ms; }
+  .founders-bento .fc-checklist li:nth-child(3) { transition-delay: 260ms; }
+  .founders-bento .fc-checklist li:nth-child(4) { transition-delay: 390ms; }
+  .founders-bento .fc-checklist li:nth-child(5) { transition-delay: 520ms; }
+  .founders-bento .fc-checklist:not(.is-fading) li { opacity: 1; transform: none; }
+  /* Fast simultaneous fly-out so items reach the out-position before content swaps */
+  .founders-bento .fc-checklist.is-fading li { opacity: 0; transition: opacity 0.25s cubic-bezier(0.22,1,0.36,1), transform 0.25s cubic-bezier(0.22,1,0.36,1); transition-delay: 0ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .founders-bento .fc-checklist li { opacity: 1 !important; transform: none !important; transition: none; }
+  }
+  /* fc-2 stripped: confident editorial statement instead of a 5-point checklist */
+  .founders-bento .fc-2 .fc-statement {
+    font-family: 'Manrope', sans-serif;
+    font-size: 18px;
+    line-height: 1.62;
+    letter-spacing: -0.005em;
+    color: rgba(245,239,226,0.82);
+    margin: 30px 0 0;
+    max-width: 40ch;
+  }
+  /* fc-1 grid: indigo → midnight-tinted (quieter, on-brand) */
+  .founders-bento .fc-1 .fc-visual::before {
+    background-image:
+      linear-gradient(rgba(30,27,75,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,27,75,0.05) 1px, transparent 1px) !important;
+  }
+  .founders-bento .fc-1 .fc-tag { color: var(--cqh-indigo-deep) !important; }
+  .founders-bento .fc-3 .fc-tag { color: var(--cqh-butter) !important; }
+  /* fc-3: replace the empty abstract glyph with a signals → recommendation micro-viz */
+  .founders-bento .fc-3 .fc-mark { display: none !important; }
+  .founders-bento .fc-3 .fc-visual::before {
+    background-image:
+      linear-gradient(rgba(241,215,140,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(241,215,140,0.05) 1px, transparent 1px) !important;
+  }
+  .fc-signalviz { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .fc-sv-signals { display: flex; flex-direction: column; gap: 7px; }
+  .fc-sv-sig { height: 5px; border-radius: 999px; }
+  .fc-sv-sig.sev-warn { width: 34px; background: var(--cqh-warning); }
+  .fc-sv-sig.sev-high { width: 26px; background: var(--cqh-terracotta); }
+  .fc-sv-sig.sev-crit { width: 30px; background: var(--cqh-danger); }
+  .fc-sv-arrow { color: rgba(245,239,226,0.5); font-family: 'JetBrains Mono', monospace; font-size: 18px; }
+  .fc-sv-match { font-family: 'Inter Tight', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--cqh-midnight); background: var(--cqh-butter); padding: 8px 14px; border-radius: 8px; white-space: nowrap; }
+  .fc-tab.is-active .fc-tab-dot { background: var(--cqh-butter) !important; }
+
+  /* fc-2 stays the brand's midnight dark moment (cream text + butter accents, proven + readable);
+     per-module signal lives only in the tab dot below. */
+  /* active-tab dot takes its module's signature colour */
+  .fc-tab[data-module="apv"].is-active .fc-tab-dot { background: #4e5f3f !important; }
+  .fc-tab[data-module="oneone"].is-active .fc-tab-dot { background: var(--cqh-terracotta) !important; }
+  .fc-tab[data-module="elearning"].is-active .fc-tab-dot { background: var(--cqh-butter) !important; }
+
+  /* === Testimonials (cases) → brand kit === */
+  /* featured card: near-black ink → midnight; lime glow → butter */
+  .case-featured { background: var(--cqh-midnight) !important; }
+  .case-featured::before { background: radial-gradient(circle, rgba(241,215,140,0.16), transparent 70%) !important; }
+  /* quote marks: brand accents (terracotta on light cards, butter on the dark featured card) */
+  .case-quote-mark { color: var(--cqh-terracotta) !important; }
+  .case-featured .case-quote-mark { color: var(--cqh-butter) !important; }
+  /* featured company tag: lime → butter */
+  .case-featured .case-company-tag { color: var(--cqh-butter) !important; border-color: rgba(241,215,140,0.35) !important; }
+
+  /* === Testimonials motion (purposeful entrance, builds on the existing is-visible reveal) === */
+  /* refine the reveal easing to ease-out-quint (confident deceleration) */
+  .case-featured, .case-card {
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1) !important;
+  }
+  /* the big quote-mark draws in just after its card lands, drawing the eye to the quote */
+  .case-quote-mark { opacity: 0; transform: scale(0.82); transform-origin: left center; transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1); }
+  .case-featured.is-visible .case-quote-mark,
+  .case-card.is-visible .case-quote-mark { opacity: 1; transform: scale(1); transition-delay: calc(var(--reveal-i, 0) * 80ms + 200ms); }
+  /* featured card's butter glow fades in like a spotlight on the anchor quote */
+  .case-featured::before { opacity: 0; transition: opacity 0.9s ease; }
+  .case-featured.is-visible::before { opacity: 1; transition-delay: 260ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .case-quote-mark { opacity: 1 !important; transform: none !important; }
+    .case-featured::before { opacity: 1 !important; }
+  }
+
+  /* === Testimonials marquee: two rows drifting opposite directions === */
+  .cq-mq-wrap { display: flex; flex-direction: column; gap: 22px; margin-top: 8px; }
+  .cq-mq { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  .cq-mq-track { display: flex; gap: 20px; width: max-content; align-items: stretch; animation: cq-marquee 52s linear infinite; }
+  .cq-mq-track--rev { animation-direction: reverse; }
+  .cq-mq:hover .cq-mq-track { animation-play-state: paused; }
+  @keyframes cq-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .cq-mq .case-card, .cq-mq .case-featured { width: 380px; flex-shrink: 0; min-height: 0; opacity: 1 !important; transform: none; transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
+  .cq-mq .case-featured { width: 440px; }
+  .cq-mq .case-card:hover, .cq-mq .case-featured:hover { transform: translateY(-6px) !important; box-shadow: 0 16px 44px rgba(30,27,75,0.14); }
+  /* marquee cards are always visible: neutralise the scroll-reveal + quote-mark draw-in here */
+  .cq-mq .case-quote-mark { opacity: 1 !important; transform: none !important; }
+  .cq-mq .case-featured::before { opacity: 1 !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .cq-mq-track { animation: none; }
+    .cq-mq { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  }
+
+  /* === Home eyebrows → hairline prefix (match quest/stats), kill the indigo pill === */
+  .cases .section-tag, #faq .section-tag, #priser .section-tag {
+    background: transparent !important; border: none !important; padding: 0 !important;
+    color: var(--cqh-indigo-deep) !important; font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important; letter-spacing: 0.06em !important; text-transform: uppercase !important;
+    font-size: 13px !important; display: inline-flex !important; align-items: center; gap: 12px;
+  }
+  .cases .section-tag::before, #faq .section-tag::before, #priser .section-tag::before {
+    content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep);
+  }
+
+  /* === Pricing advisor (#priser) → brand kit === */
+  #priser .cv-summary-title { font-family: 'Fraunces', Georgia, serif !important; font-weight: 400 !important; font-size: 24px !important; letter-spacing: -0.02em !important; color: var(--cqh-midnight) !important; }
+  #priser .cv-total-amount { color: var(--cqh-midnight) !important; }
+  /* === Primary "convert" CTA = butter (consistent with hero), midnight text === */
+  .btn-accent { background: var(--cqh-butter) !important; color: var(--cqh-midnight) !important; }
+  .btn-accent:hover { background: #e8ca7a !important; }
+  #priser .cv-cta { background: var(--cqh-butter) !important; color: var(--cqh-midnight) !important; }
+  #priser .cv-cta:hover { background: #e8ca7a !important; }
+  #priser .cv-cta.is-disabled { background: var(--cqh-butter) !important; color: rgba(30,27,75,0.5) !important; }
+
+  /* === Footer → brand kit: midnight bg, butter primary CTA === */
+  footer { background: var(--cqh-midnight) !important; }
+  .footer-cta-primary { background: var(--cqh-butter) !important; color: var(--cqh-midnight) !important; }
+  .footer-cta-primary:hover { background: #e8ca7a !important; opacity: 1 !important; }
+
+  /* =====================================================
+     SUB-PAGE BRAND-KIT PASS (design only, no text touched)
+     ===================================================== */
+
+  /* All section eyebrows → hairline prefix (consistent across the whole site) */
+  .section-tag {
+    background: transparent !important; border: none !important; padding: 0 !important;
+    color: var(--cqh-indigo-deep) !important; font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important; letter-spacing: 0.06em !important; text-transform: uppercase !important;
+    font-size: 13px !important; display: inline-flex !important; align-items: center; gap: 12px;
+  }
+  .section-tag::before { content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep); }
+
+  /* Sub-page hero/section title classes → Fraunces 400 + midnight (cream-bg sections) */
+  .apv-hero-headline, .t1-hero-headline, .c-hero-headline, .blog-hero-headline, .about-hero-headline,
+  .apv-law-headline, .apv-pt-headline, .apv-demo-headline,
+  .t1-features-headline, .t1-privacy-headline, .t1-synergy-headline, .t1-beta-headline,
+  .tm-fvf-headline, .tm-catches-headline, .tm-matrix-headline,
+  .c-consultants-headline, .c-dims-headline,
+  .about-mission-headline, .about-values-headline, .about-founders-headline,
+  .pp-faq-headline {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.05 !important;
+    color: var(--cqh-midnight) !important;
+  }
+
+  /* =================================================================
+     UNIFIED DARK SURFACES (charcoal/near-black → brand midnight)
+     Every dark card / button / surface on every page lands on the same
+     midnight tone. No black-vs-blue clashes side-by-side.
+     ================================================================= */
+  /* var(--ink) backgrounds (across all sub-pages + global components) */
+  .btn-lime,
+  .tl29-pulse::after,
+  .bento-3 .bento-stat,
+  .sandbox-onboard-avatar,
+  .sandbox-onboard-msg-user,
+  .sandbox-onboard-send,
+  .sandbox-onboard-confirm,
+  .sandbox-btn-primary,
+  .sandbox-mini-signal[data-tip]:hover::after,
+  .fc-tab.is-active,
+  .cv-msg-user,
+  .apv-float-step,
+  .apv-pt-ci-pulse[data-tooltip]::after,
+  .apv-ind-bento-3 .apv-ind-bento-content,
+  /* 1to1 feature cards (#16161a) */
+  .t1-feat-card,
+  /* APV law cards (#16161a) */
+  .apv-law-demand,
+  .apv-law-case,
+  /* APV "Loven kræver mere" full-bleed dark section (#0e0e10) */
+  .apv-law-section,
+  /* Charcoal hero backdrops (#1a1d2e / #1a1f2e) */
+  .hero-fb,
+  .hero-right,
+  /* 1to1 dark sections + cards (#0f0f17 / #16161a) */
+  .t1-section-dark,
+  .t1-features,
+  .t1-privacy-visual,
+  .fc-3,
+  .fc-3 .fc-body,
+  .fc-3 .fc-visual,
+  /* Trivselsmåling dark sections (#0e0e10) */
+  .tm-catches,
+  .tm-fvf-stream,
+  /* Consult dark section (#0e0e10) */
+  .c-consultants,
+  /* Pilotprojekt timeline tags (#0e0e0e) */
+  .pp-tt-track-tag,
+  .pp-tt-step-dot
+  { background: var(--cqh-midnight) !important; }
+
+  /* Consult matcher submit CTA — was washed indigo (#1a1c3d), align with brand butter CTA */
+  .c-matcher-submit {
+    background: var(--cqh-butter) !important;
+    color: var(--cqh-midnight) !important;
+  }
+  .c-matcher-submit:hover { background: #e8ca7a !important; }
+
+  /* ====================================================================
+     HEADLINES + TEXT INSIDE DARK SECTIONS → light (cream) so they're readable.
+     My editorial-headline override sets color: midnight, which becomes invisible
+     against midnight bg. Re-invert specifically for known dark-bg sections.
+     ==================================================================== */
+  .t1-features .t1-features-headline,
+  .t1-features .t1-features-sub,
+  .t1-section-dark .section-headline,
+  .t1-privacy .t1-privacy-headline,
+  .t1-privacy .t1-privacy-sub,
+  .tm-catches .tm-catches-headline,
+  .tm-catches .tm-catches-sub,
+  .tm-fvf-stream .tm-fvf-headline,
+  .tm-fvf-stream .tm-fvf-sub,
+  .c-consultants .c-consultants-headline,
+  .c-consultants .c-consultants-sub,
+  .apv-law-section .apv-law-headline,
+  .apv-law-section .apv-law-sub {
+    color: var(--cqh-cream) !important;
+  }
+  /* Slightly softer cream for body sub-text under headline */
+  .t1-features .t1-features-sub,
+  .t1-privacy .t1-privacy-sub,
+  .tm-catches .tm-catches-sub,
+  .tm-fvf-stream .tm-fvf-sub,
+  .c-consultants .c-consultants-sub,
+  .apv-law-section .apv-law-sub {
+    color: rgba(245,239,226,0.72) !important;
+  }
+  /* Section eyebrows inside dark sections → butter (matches sandbox eyebrow) */
+  .t1-features .t1-features-eyebrow,
+  .t1-privacy .t1-privacy-eyebrow,
+  .tm-catches .tm-catches-eyebrow,
+  .tm-fvf-stream .tm-fvf-eyebrow,
+  .c-consultants .c-consultants-eyebrow,
+  .apv-law-section .apv-law-eyebrow {
+    color: var(--cqh-butter) !important;
+  }
+
+  /* APV law section sits as a dark island — soften the cards inside so they
+     don't all blend together with the section bg. Use slightly lighter indigo
+     gradient as elevation, like the cqh-hero data card. */
+  .apv-law-section .apv-law-demand,
+  .apv-law-section .apv-law-case {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(245,239,226,0.10) !important;
+  }
+  .apv-law-section .apv-law-demand:hover,
+  .apv-law-section .apv-law-case:hover {
+    background: rgba(255,255,255,0.07) !important;
+    border-color: rgba(241,215,140,0.25) !important;
+  }
+  /* Numbered eyebrow "01 · KRAV" etc. → butter on midnight */
+  .apv-law-section .apv-law-demand-num,
+  .apv-law-section .apv-law-case-tag { color: var(--cqh-butter) !important; }
+
+  /* =====================================================================
+     APV PROCESS TIMELINE → match homepage tlh-wrap visual treatment
+     (cream bg, hairline eyebrow, Fraunces midnight headline, indigo-deep accents)
+     Keep APV-specific content + interaction; only style.
+     ===================================================================== */
+  .apv-pt-section { background: transparent !important; }
+  .apv-pt-tag {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    color: var(--cqh-indigo-deep) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center; gap: 12px;
+    margin-bottom: 20px !important;
+  }
+  .apv-pt-tag::before { content: ""; width: 28px; height: 1px; background: var(--cqh-indigo-deep); }
+  .apv-pt-tag-dot { display: none !important; }
+  .apv-pt-headline {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-variation-settings: "opsz" 144 !important;
+    font-size: clamp(34px, 4.2vw, 54px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -0.025em !important;
+    color: var(--cqh-midnight) !important;
+    margin: 0 0 16px !important;
+  }
+  .apv-pt-sub {
+    font-family: 'Manrope', sans-serif !important;
+    font-size: 17px !important; line-height: 1.55 !important;
+    color: var(--cqh-ink-muted) !important;
+    max-width: 62ch !important;
+    margin: 0 0 32px !important;
+  }
+  /* Track labels — same hairline style as homepage timeline */
+  .apv-pt-track-label-tag {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--cqh-ink-muted) !important;
+  }
+  .apv-pt-track-apv .apv-pt-track-label-tag { color: var(--cqh-ink-muted) !important; }
+  .apv-pt-track-ci .apv-pt-track-label-tag { color: var(--cqh-indigo-deep) !important; }
+  .apv-pt-track-label-meta {
+    font-size: 11px !important;
+    color: var(--cqh-ink-faint) !important;
+    margin-top: 2px;
+  }
+  /* Legend dots — APV = ink-muted, CI = indigo-deep, same logic as homepage tracks */
+  .apv-pt-legend-dot-apv { background: var(--cqh-ink-muted) !important; }
+  .apv-pt-legend-dot-ci { background: var(--cqh-indigo-deep) !important; }
+
+  /* Hover states that flip to washed indigo (#252159) → keep within midnight family */
+  .t1-feat-card:hover { background: #2d2a6b !important; }
+
+  /* About-team photo caption: solid near-black → midnight */
+  .about-team-photo-caption { background: var(--cqh-midnight) !important; }
+
+  /* Gradients that started in charcoal → midnight-only gradients */
+  .t1-feat-card-featured {
+    background: linear-gradient(135deg, #2d2a6b 0%, var(--cqh-midnight) 100%) !important;
+  }
+  .t1-privacy-visual {
+    background: linear-gradient(135deg, var(--cqh-midnight) 0%, #2d2a6b 100%) !important;
+  }
+  .fc-3 .fc-visual {
+    background: linear-gradient(180deg, #2d2a6b 0%, var(--cqh-midnight) 100%) !important;
+  }
+
+  /* Sub-page primary "convert / action" CTAs → butter (consistent CTA voice) */
+  .cv-continue, .apv-qualifier-response-cta, .apvCyc-btn-primary {
+    background: var(--cqh-butter) !important; color: var(--cqh-midnight) !important;
+  }
+  .cv-continue:hover, .apv-qualifier-response-cta:hover, .apvCyc-btn-primary:hover {
+    background: #e8ca7a !important; opacity: 1 !important;
+  }
+
+  /* ================================================================
+     LIME (old brand) → BUTTER (current brand accent)
+     ================================================================ */
+  .manifest-eyebrow {
+    background: transparent !important; border: none !important; padding: 0 !important;
+    color: var(--cqh-butter) !important;
+  }
+  .manifest-eyebrow-dot,
+  .t1-beta-status-dot { background: var(--cqh-butter) !important; box-shadow: 0 0 12px rgba(241,215,140,0.5) !important; }
+  .t1-beta-submit:hover { background: var(--cqh-butter) !important; color: var(--cqh-midnight) !important; }
+  .t1-beta-perk-num { color: var(--cqh-butter) !important; }
+  .mission-bg-gradient {
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(99,102,241,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, rgba(241,215,140,0.1) 0%, transparent 60%) !important;
+  }
+  #priser .cv-chip:hover { border-color: var(--cqh-indigo-deep) !important; color: var(--cqh-indigo-deep) !important; }
+  #priser .cv-chip.is-selected { background: var(--cqh-midnight) !important; border-color: var(--cqh-midnight) !important; color: var(--cqh-cream) !important; }
+
+  /* ====================================================================
+     OLD INDIGO #6366f1 → BRAND INDIGO-DEEP #383da0
+     ====================================================================
+     Old SaaS purple-indigo appeared as solid bg on 15+ sub-page tags/badges
+     /chat bubbles. Unify to brand indigo-deep (darker, on-brand) or midnight.
+  */
+  /* Tags / badges / numbered pills → indigo-deep (matches new section-tag accent) */
+  .t1-hero-status,
+  .t1-synergy-annot-num,
+  .c-profile-tag,
+  .c-format-tag.is-forløb,
+  .demo-page-also-card-tag,
+  .tl29-panel-tag { background: var(--cqh-indigo-deep) !important; color: var(--cqh-cream) !important; }
+
+  /* Larger structural blocks (chat bubbles, panel sections, eyebrow blocks) → midnight */
+  .t1-coach-chat-msg.t1-coach-chat-bot,
+  .t1-flow-prep-tip,
+  .t1-synergy-screen-block.t1-synergy-block,
+  .tl29-panel-section.tl29-panel-section-ac { background: var(--cqh-midnight) !important; color: var(--cqh-cream) !important; }
+
+  /* Bot chat bubble: keep text readable on midnight (was on light indigo) */
+  .t1-coach-chat-msg.t1-coach-chat-bot strong { color: var(--cqh-butter) !important; }
+
+  /* Eyebrow blocks that used #6366f1 → align to hairline section-tag pattern */
+  .t1-synergy-eyebrow,
+  .c-hero-eyebrow,
+  .apv-hero-eyebrow {
+    background: transparent !important;
+    color: var(--cqh-indigo-deep) !important;
+    border: none !important;
+    padding-left: 0 !important;
+  }
+
+  /* FAQ items: no fill — just hairline divider between items, text on cream */
+  .faq-item,
+  .faq-item:hover,
+  .faq-item[open] {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(56, 61, 160, 0.12) !important;
+    color: var(--cqh-midnight) !important;
+  }
+  .faq-item:last-child { border-bottom: none !important; }
+
+  /* ====================================================================
+     KILL AI-SLOP DECORATIVE GRADIENTS (4-stop indigo on .t1-beta)
+     ==================================================================== */
+  .t1-beta {
+    background: var(--cqh-midnight) !important;
+  }
+  /* If .t1-beta has a glow ::before pseudo, soften to single warm hint */
+  .t1-beta::before {
+    background: radial-gradient(circle at 75% 30%, rgba(241,215,140,0.10), transparent 60%) !important;
+    opacity: 0.8 !important;
+  }
+
+  /* ====================================================================
+     UI POLISH: outline button text + card radius rhythm
+     ==================================================================== */
+  .btn-outline { color: var(--cqh-midnight) !important; border-color: var(--cqh-midnight) !important; }
+  .btn-outline:hover { background: var(--cqh-midnight) !important; color: var(--cqh-cream) !important; }
+
+  /* Pilotprojekt float-cards 12px → 18px (matches rest of brand card rhythm) */
+  .apv-float.pp-float-cycle,
+  .apv-float.pp-float-trend,
+  .apv-float.pp-float-report { border-radius: 18px !important; }
+
+  /* === Quest "connected journey" rail: 3 numbered steps joined by a thin line === */
+  .qj-rail { max-width: 1600px; margin: 4px auto 44px; padding: 0 16px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; position: relative; }
+  .qj-rail::before { content: ""; position: absolute; top: 13px; left: 16.67%; right: 16.67%; height: 1px; background: rgba(56,61,160,0.28); z-index: 0; }
+  .qj-step { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; position: relative; z-index: 1; }
+  .qj-node { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(56,61,160,0.35); background: var(--cqh-cream); box-shadow: 0 0 0 6px var(--cqh-cream); display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cqh-indigo-deep); }
+  .qj-label { font-family: 'Inter Tight', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; color: var(--cqh-ink-muted); max-width: 20ch; }
+  @media (max-width: 760px) {
+    .qj-rail { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
+    .qj-rail::before { display: none; }
+    .qj-step { flex-direction: row; align-items: center; gap: 12px; text-align: left; }
+  }
+
+  /* === PAIN TIMELINE (hybrid horizontal-pan), self-contained with scoped vars === */
+  .tlh-wrap { --midnight:#1e1b4b; --cream:#f5efe2; --indigo:#6366f1; --indigo-deep:#383da0; --butter:#f1d78c; --terracotta:#c26a4c; --moss:#4e5f3f; --danger:#ef4444; --warning:#f59e0b; --ink:#0f172a; --ink-muted:#475569; --ink-faint:#94a3b8; --rule:rgba(30,27,75,0.14); height:520vh; position:relative; }
+  .tlh-section { position:sticky; top:0; min-height:100vh; display:flex; flex-direction:column; justify-content:center; max-width:1200px; margin:0 auto; padding:48px 48px; }
+  .tlh-wrap .tl-eyebrow { font-size:13px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--indigo-deep); margin-bottom:20px; display:flex; align-items:center; gap:12px; font-family:'Inter',sans-serif; }
+  .tlh-wrap .tl-eyebrow::before { content:""; width:28px; height:1px; background:var(--indigo-deep); }
+  .tlh-wrap .tl-headline { font-family:'Fraunces',Georgia,serif; font-size:clamp(34px,4.2vw,54px); font-weight:400; line-height:1.04; letter-spacing:-0.025em; color:var(--midnight); margin:0 0 16px; }
+  .tlh-wrap .tl-headline em { font-style:italic; font-weight:500; }
+  .tlh-wrap .tl-sub { font-family:'Manrope',sans-serif; font-size:17px; line-height:1.55; color:var(--ink-muted); max-width:62ch; margin:0 0 40px; }
+  .tlh-viz { position:relative; height:220px; margin-bottom:8px; overflow:hidden; }
+  .tlh-line { position:absolute; left:0; right:0; height:2px; }
+  .tlh-line-classic { top:56px; border-top:1px dashed rgba(30,27,75,0.28); height:0; }
+  .tlh-line-ci { top:168px; background:var(--rule); border-radius:999px; }
+  .tlh-line-ci-past { position:absolute; left:0; top:168px; height:2px; width:35%; background:linear-gradient(90deg, rgba(99,102,241,0.25), var(--indigo)); border-radius:999px; }
+  .tlh-head { position:absolute; left:35%; top:30px; bottom:26px; width:2px; background:var(--midnight); z-index:7; }
+  .tlh-head::before { content:attr(data-week); position:absolute; top:-26px; left:50%; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; color:var(--cream); background:var(--midnight); padding:3px 9px; border-radius:5px; white-space:nowrap; }
+  .tlh-head::after { content:"NU"; position:absolute; bottom:-22px; left:50%; transform:translateX(-50%); font-family:'Inter',sans-serif; font-size:9px; font-weight:600; letter-spacing:0.14em; color:var(--ink-faint); }
+  .tlh-labels { position:absolute; left:0; top:0; bottom:0; width:220px; z-index:8; background:transparent; pointer-events:none; }
+  .tlh-label { position:absolute; left:0; }
+  .tlh-label-classic { top:40px; }
+  .tlh-label-ci { top:152px; }
+  .tlh-label-tag { font-size:13px; font-weight:600; color:var(--ink-muted); font-family:'Inter Tight',sans-serif; }
+  .tlh-label-ci .tlh-label-tag { color:var(--indigo-deep); }
+  .tlh-label-meta { font-size:11px; color:var(--ink-faint); margin-top:2px; line-height:1.3; }
+  .tlh-pan { position:absolute; top:0; left:0; height:100%; will-change:transform; }
+  body.is-scrubbing .tlh-pan { transition:none; }
+  .tlh-month { position:absolute; top:100px; transform:translateX(-50%); font-family:'Inter',sans-serif; font-size:11px; color:var(--ink-faint); letter-spacing:0.04em; }
+  .tlh-wrap .tl-dot { position:absolute; transform:translate(-50%,-50%); width:18px; height:18px; border-radius:50%; border:2px solid var(--cream); cursor:pointer; padding:0; background:var(--ink-faint); z-index:3; transition:transform 0.25s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.25s, background 0.25s; }
+  .tlh-wrap .tl-dot-classic { top:56px; background:#fff; border:2px solid var(--ink-faint); }
+  .tlh-wrap .tl-dot-ci { top:168px; }
+  .tlh-wrap .tl-dot-ci.sev-warn { background:var(--warning); }
+  .tlh-wrap .tl-dot-ci.sev-high { background:var(--terracotta); }
+  .tlh-wrap .tl-dot-ci.sev-crit { background:var(--danger); }
+  .tlh-wrap .tl-dot-outcome { top:56px; width:22px; height:22px; background:var(--midnight); border:2px solid var(--cream); box-shadow:0 0 0 4px rgba(30,27,75,0.12); }
+  .tlh-wrap .tl-dot-outcome::after { content:"✕"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--cream); font-size:10px; font-weight:700; }
+  .tlh-wrap .tl-dot:focus-visible { outline:3px solid var(--indigo); outline-offset:3px; }
+  .tlh-wrap .tl-dot:hover { transform:translate(-50%,-50%) scale(1.15); }
+  .tlh-wrap .tl-dot.is-reached { box-shadow:0 0 0 4px rgba(99,102,241,0.12); }
+  .tlh-wrap .tl-dot.is-active { transform:translate(-50%,-50%) scale(1.35); box-shadow:0 0 0 5px rgba(99,102,241,0.22); z-index:5; }
+  .tlh-wrap .tl-dot.is-active .tl-dot-caption { opacity:0; }
+  .tl-dot-caption { position:absolute; top:22px; left:50%; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:10px; white-space:nowrap; color:var(--ink-faint); pointer-events:none; }
+  .tl-dot-classic .tl-dot-caption, .tl-dot-outcome .tl-dot-caption { top:auto; bottom:22px; }
+  .tlh-wrap .tl-controls { display:flex; align-items:center; gap:16px; margin:28px 0 26px; flex-wrap:wrap; }
+  .tlh-wrap .tl-btn { display:inline-flex; align-items:center; gap:8px; padding:11px 18px; font-family:'Inter Tight',sans-serif; font-size:14px; font-weight:600; border-radius:10px; border:1px solid var(--rule); background:#fff; color:var(--midnight); cursor:pointer; transition:transform 0.2s, background 0.2s, border-color 0.2s; }
+  .tlh-wrap .tl-btn:hover:not(:disabled) { transform:translateY(-1px); border-color:var(--indigo); }
+  .tlh-wrap .tl-btn:disabled { opacity:0.4; cursor:not-allowed; }
+  .tlh-wrap .tl-btn-primary { background:var(--midnight); color:var(--cream); border-color:var(--midnight); }
+  .tlh-wrap .tl-btn:focus-visible { outline:3px solid var(--indigo); outline-offset:2px; }
+  .tl-progress { flex:1; min-width:80px; height:3px; background:var(--rule); border-radius:999px; position:relative; overflow:hidden; }
+  .tl-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--midnight); border-radius:999px; transition:width 0.25s ease; }
+  body.is-scrubbing .tl-progress-fill { transition:none; }
+  .tl-step-count { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint); }
+  .tlh-wrap .tl-hint { font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-faint); width:100%; }
+  .tl-detail { border:1px solid var(--rule); border-radius:16px; overflow:hidden; background:#fff; min-height:200px; position:relative; }
+  .tl-detail-inner { padding:30px 32px; transition:opacity 0.3s ease; }
+  .tl-detail.is-changing .tl-detail-inner { opacity:0; }
+  .tl-detail-head { display:flex; align-items:baseline; gap:14px; margin-bottom:6px; }
+  .tl-detail-week { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:500; color:var(--cream); background:var(--midnight); padding:3px 9px; border-radius:5px; }
+  .tl-detail-track { font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; }
+  .tl-detail-track.classic { color:var(--ink-faint); }
+  .tl-detail-track.ci { color:var(--indigo-deep); }
+  .tl-detail-track.outcome { color:var(--midnight); }
+  .tl-detail-title { font-family:'Fraunces',Georgia,serif; font-size:27px; font-weight:500; letter-spacing:-0.02em; color:var(--midnight); margin:12px 0 16px; line-height:1.15; }
+  .tl-detail-forecast { display:flex; gap:12px; align-items:baseline; margin:0 0 18px; padding:12px 16px; border-radius:10px; border-left:3px solid var(--ink-faint); background:#faf7f0; font-family:'Manrope',sans-serif; font-size:14px; line-height:1.45; }
+  .tl-detail-forecast-tag { font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; flex-shrink:0; }
+  .tl-detail-forecast-text { color:var(--midnight); }
+  .tl-detail-forecast-text strong { font-weight:600; }
+  .tl-detail-forecast.tone-watch { border-color:var(--indigo); background:rgba(99,102,241,0.06); }
+  .tl-detail-forecast.tone-watch .tl-detail-forecast-tag { color:var(--indigo-deep); }
+  .tl-detail-forecast.tone-risk { border-color:var(--terracotta); background:rgba(194,106,76,0.07); }
+  .tl-detail-forecast.tone-risk .tl-detail-forecast-tag { color:var(--terracotta); }
+  .tl-detail-forecast.tone-crit { border-color:var(--danger); background:rgba(239,68,68,0.06); }
+  .tl-detail-forecast.tone-crit .tl-detail-forecast-tag { color:var(--danger); }
+  .tl-detail-grid { display:grid; grid-template-columns:1.3fr 1fr; gap:28px; }
+  .tl-detail-metrics { display:flex; flex-direction:column; gap:10px; }
+  .tl-metric { display:flex; align-items:center; gap:12px; font-size:14px; }
+  .tl-metric-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .tl-metric-text { color:var(--ink-muted); font-family:'Manrope',sans-serif; line-height:1.4; }
+  .tl-metric-text strong { color:var(--midnight); font-weight:600; }
+  .tl-detail-action { background:var(--midnight); color:var(--cream); border-radius:12px; padding:18px; align-self:start; }
+  .tl-detail-action-label { font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,239,226,0.55); margin-bottom:8px; }
+  .tl-detail-action-text { font-family:'Manrope',sans-serif; font-size:14px; line-height:1.5; color:var(--cream); }
+  .tl-detail-action.classic-note { background:#f3eee1; color:var(--ink-muted); border:1px dashed rgba(30,27,75,0.2); }
+  .tl-detail-action.classic-note .tl-detail-action-label { color:var(--ink-faint); }
+  .tl-detail-action.classic-note .tl-detail-action-text { color:var(--ink-muted); }
+  .tlh-wrap .tl-conclusion { margin:26px 0 0; padding-top:26px; border-top:1px solid var(--rule); font-family:'Fraunces',Georgia,serif; font-size:clamp(22px,2.6vw,32px); font-weight:400; line-height:1.25; color:var(--midnight); max-width:24ch; opacity:0; transform:translateY(8px); transition:opacity 0.4s ease, transform 0.4s ease; }
+  .tlh-wrap .tl-conclusion.is-shown { opacity:1; transform:none; }
+  .tlh-wrap .tl-conclusion em { font-style:italic; color:var(--terracotta); }
+  @media (max-width:900px) {
+    .tlh-wrap { height:auto; }
+    .tlh-section { position:relative; min-height:0; height:auto; padding:56px 22px; }
+    .tlh-viz { height:auto; overflow:visible; }
+    .tlh-labels, .tlh-head, .tlh-line, .tlh-line-ci-past { display:none; }
+    .tlh-pan { position:relative; width:100% !important; transform:none !important; height:120px; }
+    .tlh-wrap .tl-dot-classic, .tlh-wrap .tl-dot-outcome { top:24px; }
+    .tlh-wrap .tl-dot-ci { top:96px; }
+    .tlh-month { top:58px; }
+    .tl-detail-grid { grid-template-columns:1fr; gap:16px; }
+    .tlh-wrap .tl-conclusion { opacity:1; transform:none; }
+  }
+</style>
 
 <!-- ============================================================
      SEO / GEO META, primary discovery surface
@@ -19120,400 +20027,130 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- ============ HERO ============ -->
 <!-- HERO: Rounded full-image cinema, no progress bar -->
-<section class="hero hero-fb">
+<section class="cqh-hero">
+  <div class="cqh-stage cqh-stage-anders is-active"><div class="cqh-stage-bg"></div></div>
+  <div class="cqh-stage cqh-stage-sofie"><div class="cqh-stage-bg"></div></div>
+  <div class="cqh-stage cqh-stage-mikkel"><div class="cqh-stage-bg"></div></div>
+  <div class="cqh-stage cqh-stage-maja"><div class="cqh-stage-bg"></div></div>
+  <div class="cqh-gradient"></div>
 
-    <!-- All photo stages stack here, crossfading -->
-    <div class="hero-fb-cinema">
-
-        <!-- Wide establishing -->
-        <div class="hero-fb-stage hero-fb-stage-wide">
-            <div class="hero-fb-bg hero-fb-bg-wide"></div>
-        </div>
-
-        <!-- Case 1: Anders, manglende anerkendelse -->
-        <div class="hero-fb-stage hero-fb-stage-1">
-            <div class="hero-fb-bg hero-fb-bg-1"></div>
-
-            <!-- Overlay: thought bubble + atmospheric particles -->
-            <div class="overlay-1">
-                <!-- Subtle warm glow over the desk -->
-                <div class="overlay-screen-glow"></div>
-
-                <!-- Dust particles drifting -->
-                <svg class="overlay-particles" viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
-                    <g fill="rgba(232, 197, 152, 0.5)">
-                        <circle cx="900" cy="180" r="1">
-                            <animate attributeName="cy" values="180;120;180" dur="9s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.5;0" dur="9s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="1050" cy="220" r="1">
-                            <animate attributeName="cy" values="220;160;220" dur="11s" begin="2s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="11s" begin="2s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="800" cy="300" r="1.2">
-                            <animate attributeName="cy" values="300;240;300" dur="10s" begin="4s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.5;0" dur="10s" begin="4s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="1150" cy="350" r="1">
-                            <animate attributeName="cy" values="350;290;350" dur="12s" begin="6s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.3;0" dur="12s" begin="6s" repeatCount="indefinite"/>
-                        </circle>
-                    </g>
-                </svg>
-
-                <!-- Thought bubble: his inner monologue -->
-                <div class="overlay-thought overlay-thought-anders">
-                    <div class="overlay-thought-text">"Tre års arbejde. Ingen har set det."</div>
-                </div>
-
-                <!-- Subtle metric: how long since recognition -->
-                <div class="overlay-notification overlay-notification-anders">
-                    <div class="overlay-notif-tag">14 DAGE</div>
-                    <div class="overlay-notif-text">Ingen besked fra leder</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Case 2: Sofie, psykologisk tryghed -->
-        <div class="hero-fb-stage hero-fb-stage-2">
-            <div class="hero-fb-bg hero-fb-bg-2"></div>
-
-            <!-- Overlay: typing-and-deleting message bubble -->
-            <div class="overlay-2">
-                <!-- Inner thought - what she really feels -->
-                <div class="overlay-thought overlay-thought-sofie">
-                    <div class="overlay-thought-text">"Sidste gang jeg sagde noget blev jeg mødt med stilhed."</div>
-                </div>
-
-                <!-- A chat bubble that types text but never sends -->
-                <div class="overlay-chat-bubble">
-                    <div class="overlay-chat-typing">
-                        <span class="overlay-chat-text">Skal jeg sige det</span><span class="overlay-chat-cursor">|</span>
-                    </div>
-                </div>
-
-                <!-- "Sent" indicator that never appears - the message stays unsent -->
-                <div class="overlay-status overlay-status-sofie">
-                    <span class="overlay-status-dot"></span>
-                    <span>Slettet · Ikke sendt</span>
-                </div>
-
-                <!-- Atmospheric particles -->
-                <svg class="overlay-particles" viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
-                    <g fill="rgba(255, 255, 255, 0.3)">
-                        <circle cx="950" cy="200" r="1">
-                            <animate attributeName="cy" values="200;140;200" dur="10s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="10s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="1100" cy="260" r="1">
-                            <animate attributeName="cy" values="260;200;260" dur="12s" begin="3s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.3;0" dur="12s" begin="3s" repeatCount="indefinite"/>
-                        </circle>
-                    </g>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Case 3: Mikkel, leder-tillid brister -->
-        <div class="hero-fb-stage hero-fb-stage-3">
-            <div class="hero-fb-bg hero-fb-bg-3"></div>
-
-            <!-- Overlay: meeting-cancelled notification + thought -->
-            <div class="overlay-3">
-                <!-- His inner thought -->
-                <div class="overlay-thought overlay-thought-mikkel">
-                    <div class="overlay-thought-text">"Tredje gang. Jeg gider ikke spørge igen."</div>
-                </div>
-
-                <!-- Calendar notification that appears -->
-                <div class="overlay-calendar-notif">
-                    <div class="overlay-calendar-icon">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                            <rect x="1.5" y="2.5" width="11" height="9.5" rx="1" stroke="currentColor" stroke-width="1.2"/>
-                            <line x1="4" y1="1" x2="4" y2="3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                            <line x1="10" y1="1" x2="10" y2="3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                            <line x1="1.5" y1="5.5" x2="12.5" y2="5.5" stroke="currentColor" stroke-width="1.2"/>
-                        </svg>
-                    </div>
-                    <div class="overlay-calendar-content">
-                        <div class="overlay-calendar-title">Møde udskudt</div>
-                        <div class="overlay-calendar-meta">3. gang i træk · uge 12</div>
-                    </div>
-                    <div class="overlay-calendar-strike"></div>
-                </div>
-
-                <!-- Subtle red signal dot pulsing -->
-                <div class="overlay-signal-dot"></div>
-
-                <!-- Atmospheric particles -->
-                <svg class="overlay-particles" viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
-                    <g fill="rgba(255, 200, 180, 0.4)">
-                        <circle cx="850" cy="220" r="1">
-                            <animate attributeName="cy" values="220;160;220" dur="9s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="9s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="1000" cy="300" r="1">
-                            <animate attributeName="cy" values="300;240;300" dur="11s" begin="2s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="11s" begin="2s" repeatCount="indefinite"/>
-                        </circle>
-                    </g>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Case 4: Maja, stress eskalation -->
-        <div class="hero-fb-stage hero-fb-stage-4">
-            <div class="hero-fb-bg hero-fb-bg-4"></div>
-
-            <!-- Overlay: late-night clock + sleep-tracker + thought -->
-            <div class="overlay-4">
-                <!-- Her inner thought -->
-                <div class="overlay-thought overlay-thought-maja">
-                    <div class="overlay-thought-text">"Ingen ved hvor sent jeg arbejder. Jeg siger det heller ikke."</div>
-                </div>
-
-                <!-- Clock that subtly ticks forward -->
-                <div class="overlay-clock">
-                    <div class="overlay-clock-time">
-                        <span id="majaTime">21:47</span>
-                    </div>
-                    <div class="overlay-clock-label">Stadig på arbejde</div>
-                    <div class="overlay-clock-progress">
-                        <div class="overlay-clock-bar"></div>
-                    </div>
-                </div>
-
-                <!-- Sleep deficit indicator -->
-                <div class="overlay-sleep">
-                    <div class="overlay-sleep-icon">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <path d="M9.5 6.5C9.5 8.5 8 10 6 10C4 10 2.5 8.5 2.5 6.5C2.5 4.5 4 3 6 3C5 4 5 5.5 6 6.5C7 7.5 8.5 7.5 9.5 6.5Z" fill="currentColor" opacity="0.9"/>
-                        </svg>
-                    </div>
-                    <div class="overlay-sleep-content">
-                        <div class="overlay-sleep-label">Søvn-underskud</div>
-                        <div class="overlay-sleep-value">-12t denne uge</div>
-                    </div>
-                </div>
-
-                <!-- Glow that pulses subtly (laptop screen reflection) -->
-                <div class="overlay-laptop-glow"></div>
-
-                <!-- Atmospheric particles -->
-                <svg class="overlay-particles" viewBox="0 0 1400 720" preserveAspectRatio="xMidYMid slice">
-                    <g fill="rgba(180, 150, 220, 0.3)">
-                        <circle cx="900" cy="260" r="1">
-                            <animate attributeName="cy" values="260;200;260" dur="10s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="10s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="1080" cy="340" r="1">
-                            <animate attributeName="cy" values="340;280;340" dur="11s" begin="3s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0;0.4;0" dur="11s" begin="3s" repeatCount="indefinite"/>
-                        </circle>
-                    </g>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Conclusion -->
-        <div class="hero-fb-stage hero-fb-stage-conclusion">
-            <div class="hero-fb-bg hero-fb-bg-wide"></div>
-            <div class="hero-fb-conclusion-overlay"></div>
-        </div>
+  <div class="cqh-story">
+    <div class="cqh-story-layer cqh-s-anders is-active">
+      <div class="cqh-thought">"Tre års arbejde. Ingen har set det."</div>
+      <p class="cqh-scene-desc">Har givet sjæl og energi i tre år. Ingen har sagt det højt. Han gør nu præcis det, der står i hans rolle. Intet mere.</p>
+      <div class="cqh-chip"><span class="cqh-chip-tag">14 DAGE</span><span class="cqh-chip-text">Ingen besked fra leder</span></div>
+      <svg class="cqh-particles" viewBox="0 0 1400 780" preserveAspectRatio="xMidYMid slice"><g fill="rgba(241,215,140,0.5)">
+        <circle cx="900" cy="180" r="1.2"><animate attributeName="cy" values="180;120;180" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.6;0" dur="9s" repeatCount="indefinite"/></circle>
+        <circle cx="1050" cy="240" r="1"><animate attributeName="cy" values="240;170;240" dur="11s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.5;0" dur="11s" begin="2s" repeatCount="indefinite"/></circle>
+        <circle cx="820" cy="320" r="1.3"><animate attributeName="cy" values="320;250;320" dur="10s" begin="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.5;0" dur="10s" begin="4s" repeatCount="indefinite"/></circle>
+      </g></svg>
     </div>
-
-    <!-- Gradient overlay: heavy on left for text legibility, fades to right -->
-    <div class="hero-fb-gradient"></div>
-
-    <!-- Cursor-follow spotlight (desktop only, soft warm glow) -->
-    <div class="hero-fb-spotlight" aria-hidden="true"></div>
-
-    <!-- LEFT: Static text overlay -->
-    <div class="hero-fb-text">
-        <div class="hero-fb-eyebrow">
-            <span class="hero-fb-eyebrow-dot"></span>
-            <span>Culture intelligence</span>
-        </div>
-
-        <h1 class="hero-fb-headline">
-            Se kulturen,<br>
-            før den koster dig <span class="hero-fb-name-rotator"><span class="hero-fb-name hero-fb-name-default">en medarbejder.</span><span class="hero-fb-name hero-fb-name-anders" aria-hidden="true">Anders.</span><span class="hero-fb-name hero-fb-name-sofie" aria-hidden="true">Sofie.</span><span class="hero-fb-name hero-fb-name-mikkel" aria-hidden="true">Mikkel.</span><span class="hero-fb-name hero-fb-name-maja" aria-hidden="true">Maja.</span></span>
-        </h1>
-
-        <!-- Mobile story rotator: sync'd with name rotator so each persona gets
-             a moment of context (tag + thought + signal). Hidden on desktop where
-             the overlay storytelling above the photo already tells this story. -->
-        <div class="hero-fb-mobile-story" aria-hidden="true">
-            <div class="hero-fb-story hero-fb-story-default">
-                <span class="hero-fb-story-tag">Predictive culture intelligence</span>
-                <span class="hero-fb-story-quote">Fire mennesker. Fire mønstre vi fanger før de bliver til opsigelser.</span>
-            </div>
-            <div class="hero-fb-story hero-fb-story-anders">
-                <span class="hero-fb-story-tag">Manglende anerkendelse</span>
-                <span class="hero-fb-story-quote">"Tre års arbejde. Ingen har set det."</span>
-                <span class="hero-fb-story-signal">14 dage uden besked fra leder</span>
-            </div>
-            <div class="hero-fb-story hero-fb-story-sofie">
-                <span class="hero-fb-story-tag">Psykologisk utryghed</span>
-                <span class="hero-fb-story-quote">"Sidste gang jeg sagde noget blev jeg mødt med stilhed."</span>
-                <span class="hero-fb-story-signal">Beskeden slettet inden afsendelse</span>
-            </div>
-            <div class="hero-fb-story hero-fb-story-mikkel">
-                <span class="hero-fb-story-tag">Brudt tillid</span>
-                <span class="hero-fb-story-quote">"Tredje gang. Jeg gider ikke spørge igen."</span>
-                <span class="hero-fb-story-signal">3. møde aflyst i træk · uge 12</span>
-            </div>
-            <div class="hero-fb-story hero-fb-story-maja">
-                <span class="hero-fb-story-tag">Skjult stress</span>
-                <span class="hero-fb-story-quote">"Ingen ved hvor sent jeg arbejder. Jeg siger det heller ikke."</span>
-                <span class="hero-fb-story-signal">21:47 stadig på arbejde · −12t søvn denne uge</span>
-            </div>
-        </div>
-
-        <p class="hero-fb-sub">
-            Culturequest aflæser kulturen kontinuerligt og varsler dig om opsigelser, stress og ledelsesproblemer uger før de rammer bundlinjen.
-        </p>
-
-        <div class="hero-fb-ctas">
-            <a href="https://live.culturequest.io/signup" class="hero-fb-link hero-fb-link-primary" target="_blank" rel="noopener noreferrer">
-                Start gratis
-                <span class="btn-lime-arrow">›</span>
-            </a>
-            <a href="/demo" class="hero-fb-link">
-                Se klikbar demo
-                <span class="btn-lime-arrow">›</span>
-            </a>
-        </div>
+    <div class="cqh-story-layer cqh-s-sofie">
+      <div class="cqh-thought">"Sidste gang jeg sagde noget blev jeg mødt med stilhed."</div>
+      <p class="cqh-scene-desc">Sagde modige ting på et møde sidste måned. Mødt med stilhed. Nu sender hun bare PowerPoints. Hun siger ikke fra længere.</p>
+      <div class="cqh-chip"><span class="cqh-chip-tag">Slettet</span><span class="cqh-chip-text">Ikke sendt</span></div>
     </div>
-
-    <!-- RIGHT: Case cards -->
-    <div class="hero-fb-cards">
-
-        <div class="hero-fb-card hero-fb-card-1">
-            <div class="hero-fb-card-tag">Motivation · Manglende anerkendelse</div>
-            <div class="hero-fb-card-name">Anders, 41. Senior Engineer</div>
-            <p class="hero-fb-card-text">
-                Har givet sjæl og energi i tre år. Ingen har sagt det højt. Han gør nu præcis det, der står i hans rolle. Intet mere.
-            </p>
-            <div class="hero-fb-card-foot">
-                <span class="hero-fb-card-time">7 ugers fald</span>
-                <span class="hero-fb-card-status">● Uopdaget</span>
-            </div>
-        </div>
-
-        <div class="hero-fb-card hero-fb-card-2">
-            <div class="hero-fb-card-tag">Psykologisk tryghed · Stilhed</div>
-            <div class="hero-fb-card-name">Sofie, 33. Product Manager</div>
-            <p class="hero-fb-card-text">
-                Sagde modige ting på et møde sidste måned. Mødt med stilhed. Nu sender hun bare PowerPoints. Hun siger ikke fra længere.
-            </p>
-            <div class="hero-fb-card-foot">
-                <span class="hero-fb-card-time">5 ugers fald</span>
-                <span class="hero-fb-card-status">● Uopdaget</span>
-            </div>
-        </div>
-
-        <div class="hero-fb-card hero-fb-card-3">
-            <div class="hero-fb-card-tag">Ledelse · Tillid brister</div>
-            <div class="hero-fb-card-name">Mikkel, 28. Customer Success</div>
-            <p class="hero-fb-card-text">
-                Bad om en samtale for tre uger siden. Den blev udskudt. Igen. Han er holdt op med at spørge.
-            </p>
-            <div class="hero-fb-card-foot">
-                <span class="hero-fb-card-time">3 ugers fald</span>
-                <span class="hero-fb-card-status">● Uopdaget</span>
-            </div>
-        </div>
-
-        <div class="hero-fb-card hero-fb-card-4">
-            <div class="hero-fb-card-tag">Stress · Eskalation i stilhed</div>
-            <div class="hero-fb-card-name">Maja, 36. Marketing Lead</div>
-            <p class="hero-fb-card-text">
-                Kommer tidligere. Bliver længere. Sover dårligere. Smiler stadig på møderne. Hun siger det til ingen.
-            </p>
-            <div class="hero-fb-card-foot">
-                <span class="hero-fb-card-time">9 ugers fald</span>
-                <span class="hero-fb-card-status">● Uopdaget</span>
-            </div>
-        </div>
-
-        <div class="hero-fb-card hero-fb-card-conclusion">
-            <div class="hero-fb-conclusion-text">
-                <span class="hero-fb-conclusion-line">Fire mennesker.</span>
-                <span class="hero-fb-conclusion-line">Fire signaler.</span>
-                <span class="hero-fb-conclusion-line hero-fb-conclusion-line-3">Ingen leder havde set det.</span>
-            </div>
-        </div>
+    <div class="cqh-story-layer cqh-s-mikkel">
+      <div class="cqh-thought">"Tredje gang. Jeg gider ikke spørge igen."</div>
+      <p class="cqh-scene-desc">Bad om en samtale for tre uger siden. Den blev udskudt. Igen. Han er holdt op med at spørge.</p>
+      <div class="cqh-chip"><span class="cqh-chip-tag">Møde udskudt</span><span class="cqh-chip-text">3. gang i træk · uge 12</span></div>
     </div>
+    <div class="cqh-story-layer cqh-s-maja">
+      <div class="cqh-thought">"Ingen ved hvor sent jeg arbejder. Jeg siger det heller ikke."</div>
+      <p class="cqh-scene-desc">Kommer tidligere. Bliver længere. Sover dårligere. Smiler stadig på møderne. Hun siger det til ingen.</p>
+      <div class="cqh-chip"><span class="cqh-chip-tag amber">Søvn-underskud</span><span class="cqh-chip-text">Stadig på arbejde · -12t denne uge</span></div>
+    </div>
+  </div>
+
+  <div class="cqh-content">
+    <div class="cqh-text">
+      <div class="cqh-eyebrow"><span class="cqh-eyebrow-dot"></span>Culture intelligence</div>
+      <h1 class="cqh-headline">Se kulturen,<br>før den koster dig <span class="cqh-name" id="cqh-name">en medarbejder.</span></h1>
+      <p class="cqh-sub">Culturequest aflæser kulturen kontinuerligt og varsler dig om opsigelser, stress og ledelsesproblemer uger før de rammer bundlinjen.</p>
+      <div class="cqh-ctas">
+        <a href="#" class="cqh-btn-primary">Start gratis <span class="cqh-arrow">›</span></a>
+        <a href="/demo" class="cqh-btn-secondary">Se klikbar demo</a>
+      </div>
+    </div>
+    <div class="cqh-reading">
+      <div class="cqh-rhead">
+        <div class="cqh-live"><span class="cqh-live-dot"></span><span>● Uopdaget</span></div>
+        <div class="cqh-person"><div class="cqh-pname" id="cqh-rname">Anders, 41.</div><div class="cqh-prole" id="cqh-rrole">Senior Engineer</div></div>
+      </div>
+      <div class="cqh-rsection">
+        <div class="cqh-rlabel">Signaler</div>
+        <div class="cqh-signal"><span class="cqh-sname" id="cqh-s1n">Anerkendelse</span><svg class="cqh-spark" viewBox="0 0 80 20" preserveAspectRatio="none"><path id="cqh-sp1" d="M 0 5 L 11 6 L 23 8 L 34 9 L 46 11 L 57 13 L 69 15 L 80 17" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/><circle id="cqh-sc1" cx="80" cy="17" r="2.5" fill="#ef4444"/></svg><span class="cqh-strend" id="cqh-s1t">↘ -34%</span></div>
+        <div class="cqh-signal"><span class="cqh-sname" id="cqh-s2n">Initiativ</span><svg class="cqh-spark" viewBox="0 0 80 20" preserveAspectRatio="none"><path id="cqh-sp2" d="M 0 3 L 11 4 L 23 6 L 34 10 L 46 13 L 57 15 L 69 16 L 80 18" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/><circle id="cqh-sc2" cx="80" cy="18" r="2.5" fill="#ef4444"/></svg><span class="cqh-strend severe" id="cqh-s2t">↘↘ -58%</span></div>
+        <div class="cqh-signal"><span class="cqh-sname" id="cqh-s3n">Engagement</span><svg class="cqh-spark" viewBox="0 0 80 20" preserveAspectRatio="none"><path id="cqh-sp3" d="M 0 4 L 11 5 L 23 6 L 34 8 L 46 10 L 57 11 L 69 13 L 80 14" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/><circle id="cqh-sc3" cx="80" cy="14" r="2.5" fill="#f59e0b"/></svg><span class="cqh-strend" id="cqh-s3t">↘ -22%</span></div>
+      </div>
+      <div class="cqh-rsection">
+        <div class="cqh-rlabel">Status</div>
+        <div class="cqh-pred">
+          <div class="cqh-prow"><span class="cqh-plabel">Mulig opsigelse</span><span class="cqh-pvalue accent" id="cqh-pt">7 ugers fald</span></div>
+          <div class="cqh-prow"><span class="cqh-plabel">Konfidens</span><span class="cqh-pvalue" id="cqh-pc">78%</span></div>
+          <div class="cqh-pbar"><div class="cqh-pfill" id="cqh-pb"></div></div>
+        </div>
+        <div class="cqh-action"><span class="cqh-action-icon">→</span><span id="cqh-pa">Motivation · Manglende anerkendelse</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cqh-rotator" id="cqh-rotator">
+    <div class="cqh-dot is-active" data-i="0"></div>
+    <div class="cqh-dot" data-i="1"></div>
+    <div class="cqh-dot" data-i="2"></div>
+    <div class="cqh-dot" data-i="3"></div>
+  </div>
 </section>
 
 <script>
 (function() {
-    const hero = document.querySelector('.hero-fb');
-    if (!hero) return;
-    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
-
-    // Cursor-follow spotlight
-    const spotlight = hero.querySelector('.hero-fb-spotlight');
-    if (spotlight) {
-        let rafId = null;
-        let pendingX = 0, pendingY = 0;
-
-        function updateSpotlight() {
-            spotlight.style.setProperty('--mouse-x', pendingX + 'px');
-            spotlight.style.setProperty('--mouse-y', pendingY + 'px');
-            rafId = null;
-        }
-
-        hero.addEventListener('mousemove', function(e) {
-            const rect = hero.getBoundingClientRect();
-            pendingX = e.clientX - rect.left;
-            pendingY = e.clientY - rect.top;
-            if (rafId === null) {
-                rafId = requestAnimationFrame(updateSpotlight);
-            }
-        });
-    }
-
-    // 3D tilt on case cards
-    const cards = hero.querySelector('.hero-fb-cards');
-    if (cards) {
-        const MAX_TILT = 11; // degrees
-        let tiltRaf = null;
-        let tiltX = 0, tiltY = 0;
-        let resetTimer = null;
-
-        function updateTilt() {
-            cards.style.setProperty('--card-tilt-x', tiltX + 'deg');
-            cards.style.setProperty('--card-tilt-y', tiltY + 'deg');
-            tiltRaf = null;
-        }
-
-        cards.addEventListener('mousemove', function(e) {
-            cards.classList.remove('is-resetting');
-            const rect = cards.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width;
-            const y = (e.clientY - rect.top) / rect.height;
-            tiltY = (x - 0.5) * 2 * MAX_TILT;
-            tiltX = (0.5 - y) * 2 * MAX_TILT;
-            if (tiltRaf === null) {
-                tiltRaf = requestAnimationFrame(updateTilt);
-            }
-        });
-
-        cards.addEventListener('mouseleave', function() {
-            cards.classList.add('is-resetting');
-            tiltX = 0;
-            tiltY = 0;
-            if (tiltRaf === null) {
-                tiltRaf = requestAnimationFrame(updateTilt);
-            }
-            clearTimeout(resetTimer);
-            resetTimer = setTimeout(function() {
-                cards.classList.remove('is-resetting');
-            }, 800);
-        });
-    }
+  const personas = [
+    { stage:'anders', name:'Anders, 41.', role:'Senior Engineer',
+      signals:[{n:'Anerkendelse',d:'M 0 5 L 11 6 L 23 8 L 34 9 L 46 11 L 57 13 L 69 15 L 80 17',y:17,c:'#ef4444',t:'↘ -34%',sev:false},{n:'Initiativ',d:'M 0 3 L 11 4 L 23 6 L 34 10 L 46 13 L 57 15 L 69 16 L 80 18',y:18,c:'#ef4444',t:'↘↘ -58%',sev:true},{n:'Engagement',d:'M 0 4 L 11 5 L 23 6 L 34 8 L 46 10 L 57 11 L 69 13 L 80 14',y:14,c:'#f59e0b',t:'↘ -22%',sev:false}],
+      pred:{t:'7 ugers fald',c:'78%',b:78,a:'Motivation · Manglende anerkendelse'} },
+    { stage:'sofie', name:'Sofie, 33.', role:'Product Manager',
+      signals:[{n:'Psykologisk tryghed',d:'M 0 4 L 11 6 L 23 8 L 34 10 L 46 12 L 57 13 L 69 15 L 80 17',y:17,c:'#ef4444',t:'↘ -41%',sev:true},{n:'Mødedeltagelse',d:'M 0 6 L 11 6 L 23 7 L 34 9 L 46 11 L 57 12 L 69 14 L 80 16',y:16,c:'#ef4444',t:'↘ -29%',sev:false},{n:'Initiativ',d:'M 0 3 L 11 5 L 23 8 L 34 11 L 46 14 L 57 15 L 69 16 L 80 18',y:18,c:'#ef4444',t:'↘↘ -64%',sev:true}],
+      pred:{t:'5 ugers fald',c:'83%',b:83,a:'Psykologisk tryghed · Stilhed'} },
+    { stage:'mikkel', name:'Mikkel, 28.', role:'Customer Success',
+      signals:[{n:'Leder-tilgængelighed',d:'M 0 3 L 11 4 L 23 6 L 34 8 L 46 10 L 57 13 L 69 15 L 80 17',y:17,c:'#ef4444',t:'↘↘ -52%',sev:true},{n:'Initiativ',d:'M 0 4 L 11 5 L 23 7 L 34 9 L 46 12 L 57 14 L 69 15 L 80 16',y:16,c:'#ef4444',t:'↘ -38%',sev:false},{n:'Engagement',d:'M 0 5 L 11 6 L 23 7 L 34 8 L 46 10 L 57 12 L 69 13 L 80 14',y:14,c:'#f59e0b',t:'↘ -19%',sev:false}],
+      pred:{t:'3 ugers fald',c:'71%',b:71,a:'Ledelse · Tillid brister'} },
+    { stage:'maja', name:'Maja, 36.', role:'Marketing Lead',
+      signals:[{n:'Arbejdsmønster',d:'M 0 17 L 11 15 L 23 12 L 34 9 L 46 7 L 57 5 L 69 4 L 80 3',y:3,c:'#ef4444',t:'↗ +47% timer',sev:true},{n:'Søvn-signaler',d:'M 0 3 L 11 4 L 23 6 L 34 9 L 46 12 L 57 15 L 69 16 L 80 18',y:18,c:'#ef4444',t:'↘↘ -55%',sev:true},{n:'Stress-markører',d:'M 0 17 L 11 15 L 23 12 L 34 10 L 46 8 L 57 6 L 69 4 L 80 3',y:3,c:'#ef4444',t:'↗↗ +62%',sev:true}],
+      pred:{t:'9 ugers fald',c:'86%',b:86,a:'Stress · Eskalation i stilhed'} },
+  ];
+  let i = 0;
+  const stages = document.querySelectorAll('.cqh-stage');
+  const storyLayers = document.querySelectorAll('.cqh-story-layer');
+  const dots = document.querySelectorAll('.cqh-dot');
+  const heroName = document.getElementById('cqh-name');
+  function render(idx) {
+    const p = personas[idx];
+    stages.forEach(s => s.classList.remove('is-active'));
+    document.querySelector('.cqh-stage-' + p.stage).classList.add('is-active');
+    storyLayers.forEach(s => s.classList.remove('is-active'));
+    document.querySelector('.cqh-s-' + p.stage).classList.add('is-active');
+    const firstName = p.name.split(',')[0];
+    heroName.classList.add('is-changing');
+    setTimeout(() => { heroName.textContent = firstName + '.'; heroName.classList.remove('is-changing'); }, 500);
+    document.getElementById('cqh-rname').textContent = p.name;
+    document.getElementById('cqh-rrole').textContent = p.role;
+    p.signals.forEach((s, j) => {
+      document.getElementById('cqh-s'+(j+1)+'n').textContent = s.n;
+      const path = document.getElementById('cqh-sp'+(j+1)); path.setAttribute('d', s.d); path.setAttribute('stroke', s.c);
+      const circ = document.getElementById('cqh-sc'+(j+1)); circ.setAttribute('cy', s.y); circ.setAttribute('fill', s.c);
+      const tr = document.getElementById('cqh-s'+(j+1)+'t'); tr.textContent = s.t; tr.className = 'cqh-strend' + (s.sev ? ' severe' : '');
+    });
+    document.getElementById('cqh-pt').textContent = p.pred.t;
+    document.getElementById('cqh-pc').textContent = p.pred.c;
+    document.getElementById('cqh-pb').style.width = p.pred.b + '%';
+    document.getElementById('cqh-pa').textContent = p.pred.a;
+    dots.forEach(d => d.classList.remove('is-active')); dots[idx].classList.add('is-active');
+  }
+  function next() { i = (i + 1) % personas.length; render(i); }
+  let interval = setInterval(next, 6500);
+  dots.forEach(d => d.addEventListener('click', e => { clearInterval(interval); i = parseInt(e.target.dataset.i, 10); render(i); interval = setInterval(next, 6500); }));
+  render(0);
 })();
 </script>
 
@@ -19550,833 +20187,267 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- ============ STATS BENTO ============ -->
-<section class="section">
-    <div class="section-tag">Hvilken forskel gør vi?</div>
-    <h2 class="section-headline">
-        Når kultur bliver til intelligence,<br>
-        får forretningen tre tal tilbage.
-    </h2>
-    <p class="section-subhead body-text">
-        Forskningen er klar, og bygger 30 år tilbage. Når kultur bliver målbar og handlebar, ser virksomheder i gennemsnit dette:
-    </p>
-
-    <div class="stats-bento">
-        <!-- Card 1 -->
-        <div class="bento-card bento-1">
-            <div class="bento-image"></div>
-            <div class="bento-stat">
-                <div class="bento-stat-num">41%</div>
-                <div class="bento-stat-label">mindre fravær</div>
-                <div class="bento-stat-source">Gallup · engagerede vs. ikke-engagerede teams</div>
-            </div>
+<!-- ============ NEW STATS (Variant B) ============ -->
+<div class="cqstats-wrap">
+<section class="cqstats">
+    <div class="cqstats__inner">
+        <div class="cqstats__eyebrow">Hvilken forskel gør vi?</div>
+        <h2 class="cqstats__headline">Når kultur bliver til intelligence,<br>får forretningen tre tal tilbage.</h2>
+        <p class="cqstats__sub">Forskningen er klar, og bygger 30 år tilbage. Når kultur bliver målbar og handlebar, ser virksomheder i gennemsnit dette:</p>
+        <div class="cqstats__grid">
+            <div class="cqstats__stat"><div class="cqstats__num">41<span class="cqstats__num-unit">%</span></div><div class="cqstats__label">mindre fravær</div><p class="cqstats__context">Gallup · engagerede vs. ikke-engagerede teams</p></div>
+            <div class="cqstats__stat"><div class="cqstats__num">59<span class="cqstats__num-unit">%</span></div><div class="cqstats__label">lavere medarbejder-omsætning</div><p class="cqstats__context">Gallup · høj-engagement virksomheder</p></div>
+            <div class="cqstats__stat"><div class="cqstats__num">23<span class="cqstats__num-unit">%</span></div><div class="cqstats__label">højere indtjening</div><p class="cqstats__context">Gallup · top-quartile engagement</p></div>
         </div>
-
-        <!-- Card 2 -->
-        <div class="bento-card bento-2">
-            <div class="bento-stat">
-                <div class="bento-stat-num">59%</div>
-                <div class="bento-stat-label">lavere medarbejder-omsætning</div>
-                <div class="bento-stat-source">Gallup · høj-engagement virksomheder</div>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bento-card bento-3">
-            <div class="bento-image"></div>
-            <div class="bento-stat">
-                <div class="bento-stat-num">23%</div>
-                <div class="bento-stat-label">højere indtjening</div>
-                <div class="bento-stat-source">Gallup · top-quartile engagement</div>
-            </div>
-        </div>
-    </div>
-
-    <p class="bento-disclaimer">Tal fra Gallup State of the Global Workplace 2024. Meta-analyse af 2,7 mio medarbejdere på tværs af 276 organisationer. culturequest er bygget på samme forskningsforståelse.</p>
-</section>
-
-<!-- ============ PAIN SECTION, TIMELINE ============ -->
-<div class="pain-timeline-wrap">
-<section class="pain-timeline-section">
-    <div class="pain-timeline-inner">
-        <div class="pain-timeline-header">
-            <div class="section-tag pain-timeline-tag">Hvorfor klassiske trivselsmålinger ikke længere er nok</div>
-            <h2 class="pain-timeline-headline">
-                Det trivselsmålinger ikke fanger.
-            </h2>
-            <p class="pain-timeline-sub">
-                Klassiske trivselsmålinger giver to øjebliksbilleder på 52 uger. Imellem dem sker alt det der betyder noget: stress bygger sig op, motivation falder, ledelsesproblemer ulmer, og opsigelser modnes uden at nogen ser det. Culture intelligence aflæser kulturen kontinuerligt, så du kan handle mens vinduet stadig er åbent.
-            </p>
-            <div class="tl30-legend">
-                <div class="tl30-legend-item">
-                    <div class="tl30-legend-dot tl30-legend-dot-pulse"></div>
-                    <span>Hover på målepunkter for at se hvad algoritmen analyserer</span>
-                </div>
-                <div class="tl30-legend-item">
-                    <div class="tl30-legend-dot tl30-legend-dot-finding"></div>
-                    <span>Klik på fund-prikker for at se det fulde mønster</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Timeline visualization -->
-        <div class="timeline-container">
-            <!-- ============ CLASSIC TRACK (TOP) ============ -->
-            <div class="timeline-track timeline-track-old">
-                <div class="timeline-track-label">
-                    <div class="timeline-track-label-tag">Klassisk trivselsmåling</div>
-                    <div class="timeline-track-label-meta">2 målepunkter på 12 måneder</div>
-                </div>
-                <div class="timeline-track-line">
-
-                    <!-- Måling 1, uge 4: hover-only -->
-                    <div class="tl29-survey" style="left: 7%;">
-                        <div class="tl29-survey-dot"></div>
-                        <div class="tl29-survey-card tl29-survey-card-down">
-                            <div class="tl29-survey-card-header">
-                                <div>
-                                    <div class="tl29-survey-card-title">Måling 1</div>
-                                    <div class="tl29-survey-card-meta">Uge 4 · Januar</div>
-                                </div>
-                                <div class="tl29-survey-card-chip">20 spørgsmål · 4 kategorier</div>
-                            </div>
-                            <div class="tl29-survey-card-cats">
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Ledelse</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 78%; background: #ec4899;"></span></span>
-                                    <span class="tl29-cat-score">78</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Stress &amp; arbejdsbyrde</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 72%; background: var(--gray-400);"></span></span>
-                                    <span class="tl29-cat-score">72</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Psykologisk tryghed</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 81%; background: #10b981;"></span></span>
-                                    <span class="tl29-cat-score">81</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Team-dynamik</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 75%; background: #06b6d4;"></span></span>
-                                    <span class="tl29-cat-score">75</span>
-                                </div>
-                            </div>
-                            <div class="tl29-survey-card-foot">"Godt niveau" · Resultatet sendes til ledelsen 6 uger senere.</div>
-                        </div>
-                        <div class="tl29-survey-hint">Hover for resultat</div>
-                    </div>
-
-                    <!-- Sygemelding 1: uge 12 (åben, peger op) -->
-                    <div class="tl29-event tl29-event-incident" style="left: 23%;">
-                        <div class="tl29-event-dot"></div>
-                        <div class="tl29-event-card">
-                            <div class="tl29-event-card-tag">UGE 12 · STRESS-SYGEMELDING</div>
-                            <div class="tl29-event-card-title">Mette · 8 ugers fravær</div>
-                            <div class="tl29-event-card-detail">Arbejdsbyrde + ledelseskonflikt. Ingen havde set det komme.</div>
-                        </div>
-                    </div>
-
-                    <!-- Mental tilbagetrækning: uge 18 (åben, peger op) -->
-                    <div class="tl29-event tl29-event-quiet" style="left: 35%;">
-                        <div class="tl29-event-dot"></div>
-                        <div class="tl29-event-card">
-                            <div class="tl29-event-card-tag">UGE 18 · MENTAL TILBAGETRÆKNING</div>
-                            <div class="tl29-event-card-title">Jonas trækker sig</div>
-                            <div class="tl29-event-card-detail">Stoppet med at byde ind på møder. Manglende anerkendelse.</div>
-                        </div>
-                    </div>
-
-                    <!-- Sygemelding 2: uge 24 (åben, peger op) -->
-                    <div class="tl29-event tl29-event-incident" style="left: 46%;">
-                        <div class="tl29-event-dot"></div>
-                        <div class="tl29-event-card">
-                            <div class="tl29-event-card-tag">UGE 24 · STRESS-SYGEMELDING</div>
-                            <div class="tl29-event-card-title">Søren · 4 ugers fravær</div>
-                            <div class="tl29-event-card-detail">Endnu et tilfælde. Mønstret bliver tydeligt, bagefter.</div>
-                        </div>
-                    </div>
-
-                    <!-- Måling 2, uge 30: hover-only -->
-                    <div class="tl29-survey" style="left: 58%;">
-                        <div class="tl29-survey-dot"></div>
-                        <div class="tl29-survey-card tl29-survey-card-down">
-                            <div class="tl29-survey-card-header">
-                                <div>
-                                    <div class="tl29-survey-card-title">Måling 2</div>
-                                    <div class="tl29-survey-card-meta">Uge 30 · Juli</div>
-                                </div>
-                                <div class="tl29-survey-card-chip tl29-survey-card-chip-warning">Halvårligt</div>
-                            </div>
-                            <div class="tl29-survey-card-cats">
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Ledelse</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 54%; background: #ec4899;"></span></span>
-                                    <span class="tl29-cat-score tl29-cat-score-down">54</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Stress &amp; arbejdsbyrde</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 48%; background: var(--gray-400);"></span></span>
-                                    <span class="tl29-cat-score tl29-cat-score-down">48</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Psykologisk tryghed</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 62%; background: #10b981;"></span></span>
-                                    <span class="tl29-cat-score tl29-cat-score-down">62</span>
-                                </div>
-                                <div class="tl29-cat">
-                                    <span class="tl29-cat-name">Team-dynamik</span>
-                                    <span class="tl29-cat-bar"><span class="tl29-cat-bar-fill" style="width: 58%; background: #06b6d4;"></span></span>
-                                    <span class="tl29-cat-score tl29-cat-score-down">58</span>
-                                </div>
-                            </div>
-                            <div class="tl29-survey-card-foot tl29-survey-card-foot-warning">Markant fald, men hvorfor? Ledelsen mangler kontekst og handlerum.</div>
-                        </div>
-                        <div class="tl29-survey-hint">Hover for resultat</div>
-                    </div>
-
-                    <!-- Opsigelse: uge 38 (åben, peger op) -->
-                    <div class="tl29-event tl29-event-resignation" style="left: 73%;">
-                        <div class="tl29-event-dot"></div>
-                        <div class="tl29-event-card tl29-event-card-resignation">
-                            <div class="tl29-event-card-tag">UGE 38 · OPSIGELSE</div>
-                            <div class="tl29-event-card-title">Mette siger op</div>
-                            <div class="tl29-event-card-detail">Vendte tilbage fra sygemelding. Kunne ikke holde til mere.</div>
-                        </div>
-                    </div>
-
-                    <!-- Mental tilbagetrækning 2: uge 46 (åben, peger op) -->
-                    <div class="tl29-event tl29-event-quiet" style="left: 80%;">
-                        <div class="tl29-event-dot"></div>
-                        <div class="tl29-event-card">
-                            <div class="tl29-event-card-tag">UGE 46 · STILLE OPSIGELSE</div>
-                            <div class="tl29-event-card-title">Anne checker ud mentalt</div>
-                            <div class="tl29-event-card-detail">På arbejde fysisk. Væk i hovedet. Ingen afgang noteret.</div>
-                        </div>
-                    </div>
-
-                    <!-- TOTAL: Hvad det kostede at IKKE fange det -->
-                    <div class="tl30-total-inline tl30-total-inline-cost" style="left: 100%;">
-                        <div class="tl30-total-inline-tag">ÅRETS REGNING</div>
-                        <div class="tl30-total-inline-headline">Ingen så det komme</div>
-                        <div class="tl30-total-inline-list">
-                            <span><strong>2</strong> stress-sygemeldinger</span>
-                            <span><strong>1</strong> opsigelse</span>
-                            <span><strong>1</strong> stille opsigelse</span>
-                        </div>
-                        <div class="tl30-total-inline-amount tl30-total-inline-amount-cost">1,5-2,5 mio kr</div>
-                        <div class="tl30-total-inline-amount-label">Estimeret tab</div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- TIME AXIS -->
-            <div class="timeline-axis">
-                <span class="tl29-axis-month" style="left: 0%;">JAN</span>
-                <span class="tl29-axis-month" style="left: 8.3%;">FEB</span>
-                <span class="tl29-axis-month" style="left: 16.6%;">MAR</span>
-                <span class="tl29-axis-month" style="left: 25%;">APR</span>
-                <span class="tl29-axis-month" style="left: 33.3%;">MAJ</span>
-                <span class="tl29-axis-month" style="left: 41.6%;">JUN</span>
-                <span class="tl29-axis-month" style="left: 50%;">JUL</span>
-                <span class="tl29-axis-month" style="left: 58.3%;">AUG</span>
-                <span class="tl29-axis-month" style="left: 66.6%;">SEP</span>
-                <span class="tl29-axis-month" style="left: 75%;">OKT</span>
-                <span class="tl29-axis-month" style="left: 83.3%;">NOV</span>
-                <span class="tl29-axis-month" style="left: 91.6%;">DEC</span>
-            </div>
-
-            <!-- Mobile-only divider that frames the contrast between the two tracks -->
-            <div class="pain-timeline-mobile-divider" aria-hidden="true">
-                <div class="pain-timeline-mobile-divider-line"></div>
-                <div class="pain-timeline-mobile-divider-text">
-                    <span class="pain-timeline-mobile-divider-eyebrow">Samme år. Samme team.</span>
-                    <strong>Anden historie.</strong>
-                </div>
-                <div class="pain-timeline-mobile-divider-line"></div>
-            </div>
-
-            <!-- ============ CULTURE INTELLIGENCE TRACK (BOTTOM) ============ -->
-            <div class="timeline-track timeline-track-new">
-                <div class="timeline-track-label">
-                    <div class="timeline-track-label-tag"><strong>culture intelligence</strong></div>
-                    <div class="timeline-track-label-meta">Månedlige målinger · roterende kategorier</div>
-                </div>
-                <div class="timeline-track-line">
-
-                    <!-- EKG/heartbeat pulse animation overlay -->
-                    <svg class="tl29-ekg" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 0,20 L 100,20 L 110,15 L 115,25 L 120,5 L 125,30 L 130,20 L 250,20 L 260,15 L 265,25 L 270,5 L 275,30 L 280,20 L 400,20 L 410,15 L 415,25 L 420,5 L 425,30 L 430,20 L 600,20 L 610,15 L 615,25 L 620,5 L 625,30 L 630,20 L 800,20 L 810,15 L 815,25 L 820,5 L 825,30 L 830,20 L 1000,20 L 1010,15 L 1015,25 L 1020,5 L 1025,30 L 1030,20 L 1200,20 L 1210,15 L 1215,25 L 1220,5 L 1225,30 L 1230,20 L 1400,20 L 1410,15 L 1415,25 L 1420,5 L 1425,30 L 1430,20 L 1600,20 L 1610,15 L 1615,25 L 1620,5 L 1625,30 L 1630,20 L 1800,20 L 1810,15 L 1815,25 L 1820,5 L 1825,30 L 1830,20 L 2000,20" stroke="rgba(99, 102, 241, 0.35)" stroke-width="1.5" fill="none" />
-                    </svg>
-
-                    <!-- Måling 1 (uge 4) + Fund (uge 5) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Leder efter: kombination af høj belastning + lav kontrol (burnout-risiko)" style="left: 7%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-1" style="left: 9%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-info"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 2 (uge 8) + Fund (uge 9) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Leder efter: passiv neutralitet og fald i anerkendelses-frekvens (tidlige tegn på mental tilbagetrækning)" style="left: 15%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-2" style="left: 17%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                        <div class="tl29-finding-mobile">
-                            <div class="tl29-finding-mobile-tag">Tidligt signal · Uge 9</div>
-                            <div class="tl29-finding-mobile-title">Anerkendelses-frekvens falder</div>
-                            <div class="tl29-finding-mobile-data">Passiv neutralitet er fordoblet på 5 uger. Gallup's mest robuste exit-prædiktor er aktiveret.</div>
-                            <div class="tl29-finding-mobile-cta">Tryk for konkrete tiltag →</div>
-                        </div>
-                    </div>
-
-                    <!-- Måling 3 (uge 13) + Fund (uge 14) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: divergens mellem social tilknytning og formålsklarhed (silent disengagement-mønster)" style="left: 25%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-3" style="left: 27%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-info"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 4 (uge 17) + Fund (uge 18) - ALERT -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Sammenligner: trend siden uge 4 (acceleration-detektion)" style="left: 33%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-4" style="left: 35%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-alert"></div>
-                        <div class="tl29-finding-label tl29-finding-label-alert">Alert</div>
-                        <div class="tl29-finding-mobile is-alert">
-                            <div class="tl29-finding-mobile-tag">Burnout-kombo aktiveret · Uge 18</div>
-                            <div class="tl29-finding-mobile-title">Karasek-tærskel passeret. Stress + lav kontrol.</div>
-                            <div class="tl29-finding-mobile-data">Mønstret matcher 87 % af stress-sygemeldinger 4-6 uger før de sker.</div>
-                            <div class="tl29-finding-mobile-vs">⚡ 6 uger før Mette går ned i uge 24</div>
-                            <div class="tl29-finding-mobile-cta">Tryk for handleplan →</div>
-                        </div>
-                    </div>
-
-                    <!-- Måling 5 (uge 22) + Fund (uge 23) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Sammenligner: trend siden uge 8 (vurderer om passiv neutralitet bider sig fast)" style="left: 42%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-5" style="left: 44%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 6 (uge 26) + Fund (uge 27) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: kombination af lav mening + intakt sammenhold (klassisk 'jeg-leder-andet-job'-profil)" style="left: 50%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-6" style="left: 52%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 7 (uge 30) + Fund (uge 31) - HANDL NU -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Tre cyklusser indsamlet: nu sammenholder algoritmen mønstre på tværs af alle dimensioner" style="left: 58%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding tl29-finding-urgent-marker" data-finding="finding-7" style="left: 60%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-urgent"></div>
-                        <div class="tl29-finding-label tl29-finding-label-urgent">Handl nu</div>
-                        <div class="tl29-finding-mobile is-urgent">
-                            <div class="tl29-finding-mobile-tag">Handl nu · Uge 31</div>
-                            <div class="tl29-finding-mobile-title">Multi-flag aktiveret: burnout-kombo + tillids-gap + acceleration</div>
-                            <div class="tl29-finding-mobile-data">3 algoritme-flags samtidig. Estimeret eksponering: 1-2,5 mio kr.</div>
-                            <div class="tl29-finding-mobile-vs">⚡ Klassisk måling 2 fanger først problemet i uge 30 — for sent</div>
-                            <div class="tl29-finding-mobile-cta">Tryk for handleplan →</div>
-                        </div>
-                    </div>
-
-                    <!-- Måling 8 (uge 35) + Fund (uge 36) -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Leder efter: spredning af mønstret til andre medarbejdere (kulturel smittespredning)" style="left: 67%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-8" style="left: 69%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-warn"></div>
-                        <div class="tl29-finding-label">Fund</div>
-                    </div>
-
-                    <!-- Måling 9 (uge 39) + Fund (uge 40) - HANDL NU -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Leder efter: kollektiv tilbagetrækning (når sammenhold begynder at vakle)" style="left: 75%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding tl29-finding-urgent-marker" data-finding="finding-9" style="left: 77%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-urgent"></div>
-                        <div class="tl29-finding-label tl29-finding-label-urgent">Handl nu</div>
-                    </div>
-
-                    <!-- Måling 10 (uge 43) + Fund (uge 44) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: stress-niveau, oplevet kontrol, restitution, ledelses-tillid · Validerer: om interventionen i uge 32 har haft målbar effekt" style="left: 83%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-10" style="left: 85%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
-                        <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
-                        <div class="tl29-finding-mobile is-good">
-                            <div class="tl29-finding-mobile-tag">Intervention virker · Uge 44</div>
-                            <div class="tl29-finding-mobile-title">Acceleration vendt. Første målbare effekt.</div>
-                            <div class="tl29-finding-mobile-data">Stress 76 → 58. Kontrol 32 → 51. Positiv trend i 8 cyklusser.</div>
-                            <div class="tl29-finding-mobile-cta">Tryk for hvad der virkede →</div>
-                        </div>
-                    </div>
-
-                    <!-- Måling 11 (uge 47) + Fund (uge 48) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: motivation, energi, anerkendelse, psykologisk tryghed · Validerer: om tilliden til lederen er ved at genopbygges" style="left: 90%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-11" style="left: 92%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
-                        <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
-                    </div>
-
-                    <!-- Måling 12 (uge 52) + Fund (uge 52) - good -->
-                    <div class="tl29-pulse" data-tooltip="Måler: oplevet mening, fastholdelses-intent, kollegiale bånd · Bekræfter: om afdelingen er stabiliseret eller stadig i risikozonen" style="left: 88%;">
-                        <div class="tl29-pulse-dot"></div>
-                        <div class="tl29-pulse-label">Måling</div>
-                    </div>
-                    <div class="tl29-finding" data-finding="finding-12" style="left: 91%;">
-                        <div class="tl29-finding-dot tl29-finding-dot-good"></div>
-                        <div class="tl29-finding-label tl29-finding-label-good">Fund</div>
-                        <div class="tl29-finding-mobile is-good">
-                            <div class="tl29-finding-mobile-tag">Året opsummeret · Uge 52</div>
-                            <div class="tl29-finding-mobile-title">36 uger fra første signal til afværget krise</div>
-                            <div class="tl29-finding-mobile-data">Højeste samlede team-score i 12 måneder. Mindst 2 opsigelser undgået.</div>
-                            <div class="tl29-finding-mobile-vs">⚡ Klassisk trivselsmåling havde aldrig set noget af dette</div>
-                            <div class="tl29-finding-mobile-cta">Tryk for de fulde tal →</div>
-                        </div>
-                    </div>
-
-                    <!-- TOTAL: Hvad culture intelligence sparede -->
-                    <div class="tl30-total-inline tl30-total-inline-value" style="left: 100%;">
-                        <div class="tl30-total-inline-tag tl30-total-inline-tag-value">ÅRETS VÆRDI</div>
-                        <div class="tl30-total-inline-headline">Krise afværget i uge 32</div>
-                        <div class="tl30-total-inline-list">
-                            <span><strong>2</strong> opsigelser undgået</span>
-                            <span><strong>36</strong> ugers tidlig varsel</span>
-                            <span><strong>12</strong> datapunkter til ledelsen</span>
-                        </div>
-                        <div class="tl30-total-inline-amount tl30-total-inline-amount-value">600k-1,2 mio kr</div>
-                        <div class="tl30-total-inline-amount-label">Estimeret besparelse</div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ============ FINDING DETAIL PANEL (slides in from right) ============ -->
-        <div class="tl29-panel" id="tl29-panel">
-            <div class="tl29-panel-overlay"></div>
-            <div class="tl29-panel-card">
-                <button class="tl29-panel-close" aria-label="Luk">×</button>
-                <div class="tl29-panel-header">
-                    <div class="tl29-panel-tag" id="tl29-panel-tag">FUND</div>
-                    <div class="tl29-panel-week" id="tl29-panel-week">Uge 5</div>
-                </div>
-                <h3 class="tl29-panel-title" id="tl29-panel-title">Baseline etableret</h3>
-                <div class="tl29-panel-section">
-                    <div class="tl29-panel-section-label">Hvad vi har set i data</div>
-                    <p id="tl29-panel-data">Stress-niveau lidt over branche-snit hos 3 ud af 20 medarbejdere. Workload-belastning under tærsklen, men i opadgående trend.</p>
-                </div>
-                <div class="tl29-panel-section">
-                    <div class="tl29-panel-section-label">Hvorfor vi tror der er risiko</div>
-                    <p id="tl29-panel-risk">For tidligt at konkludere. Men mønstret matcher det vi typisk ser 6-12 uger før første sygemelding.</p>
-                </div>
-                <div class="tl29-panel-section">
-                    <div class="tl29-panel-section-label">Konsekvens hvis intet sker</div>
-                    <p id="tl29-panel-consequence">Mønstret eskalerer typisk over 8-10 uger. Risiko for stress-sygemelding stiger gradvist.</p>
-                </div>
-                <div class="tl29-panel-section tl29-panel-section-action">
-                    <div class="tl29-panel-section-label">Hvad du som leder kan gøre</div>
-                    <ul id="tl29-panel-actions">
-                        <li>Hold øje med stress-niveau næste måned</li>
-                        <li>Tjek 1:1-rytme, særligt for de tre medarbejdere</li>
-                        <li>Mindre intervention nu, før mønstret bider sig fast</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Research provenance, small caption under timeline -->
-        <div class="pain-timeline-research">
-            <span class="pain-timeline-research-label">Forskningsforankret</span>
-            <span class="pain-timeline-research-text">Signalerne er baseret på culturequest's spørgeramme på tværs af 9 dimensioner, kombineret med Gallup's exit-pattern-analyser, Edmondson's research om psykologisk tryghed, og dansk APV-forskning. Klik på handlings-ikonerne for at se konkrete tiltag.</span>
-        </div>
-
-        <!-- ====== ACTION PANEL, slides in from right when action button clicked ====== -->
-        <div class="action-panel" id="actionPanel" aria-hidden="true">
-            <div class="action-panel-overlay" data-close></div>
-            <div class="action-panel-card" role="dialog" aria-modal="true" aria-labelledby="actionPanelTitle">
-
-                <button class="action-panel-close" data-close type="button" aria-label="Luk panel">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </button>
-
-                <!-- ===== ACTION 1: Anerkendelses-praksis (uge 10) ===== -->
-                <div class="action-panel-content" data-action-id="anerkendelse">
-                    <div class="action-panel-header">
-                        <div class="action-panel-icon">
-                            <svg width="22" height="22" viewBox="0 0 14 14" fill="none">
-                                <path d="M7 1.5L8.5 5L12.5 5.5L9.5 8.2L10.3 12L7 10.2L3.7 12L4.5 8.2L1.5 5.5L5.5 5L7 1.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="action-panel-eyebrow">
-                            <span class="action-panel-week">Uge 10 · Tidlig intervention</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-motivation">Motivation</span>
-                        </div>
-                        <h3 class="action-panel-title" id="actionPanelTitle">Generel anerkendelses-praksis</h3>
-                        <p class="action-panel-subtitle">Anerkendelsen i dit team falder. Du ved ikke hvem. Men det betyder ikke noget. En generel kulturændring rammer alle, der har brug for det.</p>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Hvad signalerne har vist</div>
-                        <div class="action-panel-findings">
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: var(--warning-500);"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">Anerkendelses-score: 4,1 → 3,6</div>
-                                    <div class="action-panel-finding-meta">2-3 medarbejdere oplever ikke at deres arbejde bliver set</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Konkrete handlinger til hele teamet</div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">1</div>
-                            <div>
-                                <div class="action-panel-step-title">Indfør 5-minutters team-tak</div>
-                                <p class="action-panel-step-text">På næste team-møde, brug 5 minutter hvor hver person nævner én ting en kollega har gjort godt den sidste uge. Det skal være konkret. Ikke "godt arbejde" men "Sofie reddede min præsentation til kunden i tirsdags".</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">2</div>
-                            <div>
-                                <div class="action-panel-step-title">Send tre konkrete beskeder denne uge</div>
-                                <p class="action-panel-step-text">Skriv en privat besked til tre forskellige mennesker på dit team. Ikke en gruppe-tak. "Tak fordi du tog ansvar for X i går. Det betød reelt noget."</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">3</div>
-                            <div>
-                                <div class="action-panel-step-title">Synliggør usynligt arbejde</div>
-                                <p class="action-panel-step-text">På næste status-møde, nævn én person hvis arbejde ikke er åbenlyst men holder noget kørende. admin, dokumentation, mentoring af kollega. Sig det højt.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section action-panel-section-outcome">
-                        <div class="action-panel-section-label">Forventet resultat</div>
-                        <div class="action-panel-outcome">
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">+0,4</div>
-                                <div class="action-panel-outcome-label">Anerkendelses-score over 4 uger</div>
-                            </div>
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">73%</div>
-                                <div class="action-panel-outcome-label">Færre tidlige exit-signaler i gruppen</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ===== ACTION 2: Strukturér 1:1-rytme (uge 22) ===== -->
-                <div class="action-panel-content" data-action-id="lederdialog">
-                    <div class="action-panel-header">
-                        <div class="action-panel-icon">
-                            <svg width="22" height="22" viewBox="0 0 14 14" fill="none">
-                                <path d="M2 2H10C10.5 2 11 2.5 11 3V8C11 8.5 10.5 9 10 9H7L4.5 11.5V9H3C2.5 9 2 8.5 2 8V3C2 2.5 2.5 2 3 2Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="action-panel-eyebrow">
-                            <span class="action-panel-week">Uge 22 · Mønster bekræftet</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-ledelse">Ledelse</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-tryghed">Psykologisk tryghed</span>
-                        </div>
-                        <h3 class="action-panel-title">Strukturér din 1:1-rytme</h3>
-                        <p class="action-panel-subtitle">To dimensioner peger samme vej: medarbejdere har fået færre 1:1-samtaler, og de siger mindre fra på møder. Strukturér din ledelses-rytme uden at vide hvem.</p>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Hvad signalerne har vist</div>
-                        <div class="action-panel-findings">
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: #f97316;"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">1:1-frekvens er halveret</div>
-                                    <div class="action-panel-finding-meta">Fra hver 2. uge til hver 4. uge i gennemsnit</div>
-                                </div>
-                            </div>
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: var(--primary-500);"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">Aktiv mødedeltagelse: 4,3 → 3,7</div>
-                                    <div class="action-panel-finding-meta">Færre input på team-møder de sidste 5 uger</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Konkrete handlinger til hele teamet</div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">1</div>
-                            <div>
-                                <div class="action-panel-step-title">Lås 1:1-møder ind i kalenderen</div>
-                                <p class="action-panel-step-text">Hver 14. dag, samme tid, ikke-flytbar. Hellere 25 minutter hver 14. dag end 60 minutter hver 6. uge. Konsistens slår intensitet.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">2</div>
-                            <div>
-                                <div class="action-panel-step-title">Brug to faste spørgsmål</div>
-                                <p class="action-panel-step-text">"Hvad er det sværeste lige nu?" og "Hvad ville få det til at fungere bedre?". Ikke "hvordan går det" som folk altid svarer "fint" på. De to spørgsmål åbner reelt rum.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">3</div>
-                            <div>
-                                <div class="action-panel-step-title">Aflyt din egen møde-kultur</div>
-                                <p class="action-panel-step-text">På næste team-møde, læg mærke til hvem der ikke har sagt noget i 15 minutter. Spørg dem direkte men generelt: "Mads, hvordan ser du det fra din side?". uden at presse.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section action-panel-section-outcome">
-                        <div class="action-panel-section-label">Forventet resultat</div>
-                        <div class="action-panel-outcome">
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">+0,6</div>
-                                <div class="action-panel-outcome-label">Tryghed-score over 6 uger</div>
-                            </div>
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">2,4×</div>
-                                <div class="action-panel-outcome-label">Højere chance for tidlig signalering</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ===== ACTION 3: Pulse-check team-energi (uge 30) ===== -->
-                <div class="action-panel-content" data-action-id="teamenergi">
-                    <div class="action-panel-header">
-                        <div class="action-panel-icon">
-                            <svg width="22" height="22" viewBox="0 0 14 14" fill="none">
-                                <path d="M1.5 7H3L4.5 4L6 10L7.5 6L9 8H12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="action-panel-eyebrow">
-                            <span class="action-panel-week">Uge 30 · Eskalation begynder</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-social">Social</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-stress">Stress</span>
-                        </div>
-                        <h3 class="action-panel-title">Pulse-check team-energi</h3>
-                        <p class="action-panel-subtitle">Teamets sociale fællesskab svækkes samtidig med at stress-niveauet stiger. Det er en farlig kombination. Her er hvad du kan gøre uden 1-til-1 indgreb.</p>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Hvad signalerne har vist</div>
-                        <div class="action-panel-findings">
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: #0891b2;"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">Tilhørsforhold: 4,2 → 3,5</div>
-                                    <div class="action-panel-finding-meta">Mindre social interaktion uden for opgaver</div>
-                                </div>
-                            </div>
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: var(--danger-600);"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">Energi-niveau falder</div>
-                                    <div class="action-panel-finding-meta">Søvn-mønster er ændret hos flere medarbejdere</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Konkrete handlinger til hele teamet</div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">1</div>
-                            <div>
-                                <div class="action-panel-step-title">Aflyst et møde. eksplicit</div>
-                                <p class="action-panel-step-text">Vælg ét tilbagevendende møde og aflyst det offentligt. Sig: "Vi har for mange møder. Den her time er jeres. brug den til at arbejde uden afbrydelser." Det signalerer at du beskytter deres tid.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">2</div>
-                            <div>
-                                <div class="action-panel-step-title">Strukturér social tid</div>
-                                <p class="action-panel-step-text">Indfør én ugentlig 30-min team-rutine uden agenda. kaffemøde, walking-meeting, fælles frokost. Strukturér det så det ikke er valgfrit ekstra arbejde, men en del af ugen.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">3</div>
-                            <div>
-                                <div class="action-panel-step-title">Vis selv at du sætter grænser</div>
-                                <p class="action-panel-step-text">Send ikke arbejdsmails efter kl. 18. Forlad kontoret kl. 16 én gang denne uge. Folk modellerer dit eksempel. også når du ikke siger det højt.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">4</div>
-                            <div>
-                                <div class="action-panel-step-title">Tjek arbejdsbelastning anonymt</div>
-                                <p class="action-panel-step-text">Brug culturequest's puls-funktion til at sende én konkret spørgsmål: "Hvor mange opgaver står du med lige nu, der ikke kan vente?". så du kan se mønsteret uden at skulle spørge enkeltpersoner.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section action-panel-section-outcome">
-                        <div class="action-panel-section-label">Forventet resultat</div>
-                        <div class="action-panel-outcome">
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">-32%</div>
-                                <div class="action-panel-outcome-label">Færre stress-relaterede sygefraværsdage</div>
-                            </div>
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">+0,5</div>
-                                <div class="action-panel-outcome-label">Energi-score over 6 uger</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ===== ACTION 4: Akut team-intervention (uge 36) ===== -->
-                <div class="action-panel-content" data-action-id="akut">
-                    <div class="action-panel-header">
-                        <div class="action-panel-icon action-panel-icon-urgent">
-                            <svg width="22" height="22" viewBox="0 0 14 14" fill="none">
-                                <path d="M7 1V8M7 11.5V12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="action-panel-eyebrow">
-                            <span class="action-panel-week action-panel-week-urgent">Uge 36 · Forecast aktiveret</span>
-                            <span class="action-panel-dim-tag action-panel-dim-tag-tryghed">Psykologisk tryghed</span>
-                        </div>
-                        <h3 class="action-panel-title">Akut team-intervention</h3>
-                        <p class="action-panel-subtitle">culturequest har nu data nok til at forudsige opsigelse inden for 6-8 uger. Lige nu er vinduet til at handle. du har stadig tid, men ikke meget.</p>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Hvorfor det er kritisk nu</div>
-                        <div class="action-panel-findings">
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: var(--primary-500);"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">73% siger op inden for 6 uger</div>
-                                    <div class="action-panel-finding-meta">Når tryghed brister sammen med faldende anerkendelse, er beslutningen typisk allerede truffet mentalt</div>
-                                </div>
-                            </div>
-                            <div class="action-panel-finding">
-                                <div class="action-panel-finding-dot" style="background: var(--primary-500);"></div>
-                                <div>
-                                    <div class="action-panel-finding-title">Vinduet lukker hurtigt</div>
-                                    <div class="action-panel-finding-meta">Efter uge 40 er sandsynligheden for at vende beslutningen halveret</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section">
-                        <div class="action-panel-section-label">Akutte handlinger denne uge</div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">1</div>
-                            <div>
-                                <div class="action-panel-step-title">Indkald til en team-retrospektiv</div>
-                                <p class="action-panel-step-text">Inden for de næste 7 dage. Format: 60 minutter, hele teamet. Spørgsmål: "Hvad har vi tabt det sidste halve år?" og "Hvad savner vi at gøre igen?". det åbner for ærlig snak uden at pege på enkeltpersoner.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">2</div>
-                            <div>
-                                <div class="action-panel-step-title">Genoptag 1:1-rytme NU. alle</div>
-                                <p class="action-panel-step-text">Bestil møder med hele teamet inden for 14 dage. Ikke struktureret performance. bare check-in. Spørg: "Hvad har du brug for fra mig de næste 4 uger?"</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">3</div>
-                            <div>
-                                <div class="action-panel-step-title">Ændr én ting synligt</div>
-                                <p class="action-panel-step-text">Folk siger op fordi de ikke tror tingene vil ændre sig. Vis at de gør. Annullér et meningsløst møde, sig nej til et projekt, omfordel en byrde. Synligt. Med begrundelse.</p>
-                            </div>
-                        </div>
-
-                        <div class="action-panel-step">
-                            <div class="action-panel-step-num">4</div>
-                            <div>
-                                <div class="action-panel-step-title">Tag dialog med din egen leder</div>
-                                <p class="action-panel-step-text">Vis dem culturequest-data. Bed om ressourcer eller mandat til at ændre noget strukturelt. Det er ikke svaghed at signalere opad. det er ledelse.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-panel-section action-panel-section-outcome">
-                        <div class="action-panel-section-label">Forventet resultat ved akut handling</div>
-                        <div class="action-panel-outcome">
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">~50%</div>
-                                <div class="action-panel-outcome-label">Reduktion i sandsynlig opsigelse</div>
-                            </div>
-                            <div class="action-panel-outcome-stat">
-                                <div class="action-panel-outcome-num">3-6</div>
-                                <div class="action-panel-outcome-label">Måneder gevinst i fastholdelse</div>
-                            </div>
-                        </div>
-                        <div class="action-panel-outcome-note">
-                            Forudsætning: handling skal ske inden uge 40. Efter det punkt halveres effekten.
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <p class="cqstats__footnote">Tal fra Gallup State of the Global Workplace 2024. Meta-analyse af 2,7 mio medarbejdere på tværs af 276 organisationer. culturequest er bygget på samme forskningsforståelse.</p>
     </div>
 </section>
 </div>
 
-<!-- Conclusion after sticky timeline section so it can't be clipped by overflow:hidden -->
-<section class="pain-timeline-conclusion-section">
-    <div class="pain-timeline-conclusion">
-        <div class="pain-timeline-conclusion-headline">
-            De fleste virksomheder har ikke et trivsels-problem.<br>
-            <span class="pain-timeline-conclusion-emphasis">De har et timing-problem.</span>
-        </div>
+
+<!-- ============ PAIN TIMELINE, hybrid horizontal-pan (scroll-driven + stepped) ============ -->
+<div class="tlh-wrap" id="cqtlWrap">
+  <section class="tlh-section">
+    <div class="tl-eyebrow">Hvorfor klassiske trivselsmålinger ikke længere er nok</div>
+    <h2 class="tl-headline">Det trivselsmålinger ikke fanger.</h2>
+    <p class="tl-sub">Klassiske trivselsmålinger giver to øjebliksbilleder på 52 uger. Imellem dem sker alt det der betyder noget: stress bygger sig op, motivation falder, ledelsesproblemer ulmer, og opsigelser modnes uden at nogen ser det. Culture intelligence aflæser kulturen kontinuerligt, så du kan handle mens vinduet stadig er åbent.</p>
+
+    <div class="tlh-viz" id="cqtlViz">
+      <div class="tlh-line tlh-line-classic"></div>
+      <div class="tlh-line tlh-line-ci"></div>
+      <div class="tlh-line-ci-past"></div>
+      <div class="tlh-head" id="cqtlHead" data-week="Uge 4"></div>
+      <div class="tlh-pan" id="cqtlPan"><div id="cqtlMonths"></div></div>
+      <div class="tlh-labels">
+        <div class="tlh-label tlh-label-classic"><div class="tlh-label-tag">Klassisk trivselsmåling</div><div class="tlh-label-meta">2 målepunkter på 12 måneder</div></div>
+        <div class="tlh-label tlh-label-ci"><div class="tlh-label-tag">Culture intelligence</div><div class="tlh-label-meta">Månedlige målinger · roterende kategorier</div></div>
+      </div>
     </div>
-</section>
+
+    <div class="tl-controls">
+      <button class="tl-btn" id="cqtlPrev" aria-label="Forrige punkt">‹ Forrige</button>
+      <button class="tl-btn tl-btn-primary" id="cqtlNext" aria-label="Næste punkt">Næste ›</button>
+      <div class="tl-progress" aria-hidden="true"><div class="tl-progress-fill" id="cqtlProgress"></div></div>
+      <span class="tl-step-count" id="cqtlStepcount">1 / 7</span>
+      <span class="tl-hint">Klik på fund-prikker for at se det fulde mønster</span>
+    </div>
+
+    <div class="tl-detail" id="cqtlDetail"><div class="tl-detail-inner" id="cqtlDetailInner"></div></div>
+
+    <blockquote class="tl-conclusion" id="cqtlConclusion">
+      De fleste virksomheder har ikke et trivsels-problem.<br>De har et timing-problem.
+    </blockquote>
+  </section>
+</div>
+<script>
+(function() {
+  const E = [
+    { week:'Uge 4',  pos:8,  lane:'classic', sev:null, track:'Klassisk måling 1',
+      title:'"Godt niveau."',
+      metrics:[
+        {c:'#10b981', t:'<strong>Anerkendelse 78 · Kontrol 80 · Tryghed 82.</strong> Hele teamet på 14 ser sundt ud.'},
+        {c:'#94a3b8', t:'Ét øjebliksbillede på en 0-100 skala. Næste måling er om 26 uger.'},
+      ],
+      action:{type:'classic', label:'Hvad fanger den', text:'Kun niveauet lige nu. Ingen prognose, ingen pris, ingen navne. Mønstret der er ved at starte, er usynligt for en gennemsnitsscore.'} },
+    { week:'Uge 9',  pos:17, lane:'ci', sev:'warn', track:'Emerging risk',
+      title:'Anerkendelse begynder at glide.',
+      metrics:[
+        {c:'#f59e0b', t:'<strong>Anerkendelse 78 → 64 hos 3 af 14 medarbejdere.</strong> Lille fald, men det gentager sig uge for uge.'},
+        {c:'#6366f1', t:'Anerkendelse er en stærkere exit-driver end løn (Gallup).'},
+      ],
+      forecast:{ tag:'Tidlig mulighed', tone:'watch', text:'For tidligt til en exit-prognose. Men handlet nu kan op til <strong>45%</strong> af anerkendelses-drevet opsigelse forebygges (Workhuman/Gallup).' },
+      action:{type:'ci', label:'Anbefalet handling', text:'Konkret, specifik anerkendelse i næste 1:1 hos de 3. Det billigste tidspunkt at gribe ind er nu.'} },
+    { week:'Uge 17', pos:33, lane:'ci', sev:'warn', track:'Emerging risk',
+      title:'Kontrol falder. Nu er det en kombination.',
+      metrics:[
+        {c:'#f97316', t:'<strong>Kontrol 80 → 66 hos 5 af 14.</strong> 1:1-kadencen er halveret i samme periode.'},
+        {c:'#6366f1', t:'Lav kontrol + faldende anerkendelse er Karaseks belastningsmønster. To drivere, ikke én.'},
+      ],
+      forecast:{ tag:'Prognose', tone:'risk', text:'Forhøjet risiko for stress og mental tilbagetrækning i teamet. Stiger hver måling kadencen ikke genoprettes.' },
+      action:{type:'ci', label:'Anbefalet handling', text:'Genopret fast 1:1-kadence. Det enkleste tiltag med størst effekt på dette stadie.'} },
+    { week:'Uge 27', pos:52, lane:'ci', sev:'high', track:'Elevated risk',
+      title:'Energi og tryghed falder sammen.',
+      metrics:[
+        {c:'#0891b2', t:'<strong>Energi 58 · Tryghed 54 hos 6 af 14.</strong> Begge drivere falder samtidig.'},
+        {c:'#ef4444', t:'Kombinationen udløser klyngen "silent disengagement" (JD-R + Edmondson). Folk holder igen, før de holder op.'},
+      ],
+      forecast:{ tag:'Prognose', tone:'risk', text:'<strong>~40% risiko</strong> for at miste mindst én i klyngen inden 16 uger. Est. tab <strong>300.000-600.000 kr</strong> pr. medarbejder.' },
+      action:{type:'ci', label:'Anbefalet handling', text:'Tjek arbejdsbelastning og tryghed samtidig. To signaler der falder sammen hos 6 personer er sjældent tilfældigt.'} },
+    { week:'Uge 30', pos:58, lane:'classic', sev:null, track:'Klassisk måling 2',
+      title:'"Markant fald, men hvorfor?"',
+      metrics:[
+        {c:'#ef4444', t:'<strong>Samlet score er nu 58.</strong> Målingen viser tallet, ikke årsagen og ikke hvem.'},
+        {c:'#94a3b8', t:'Faldet skete for 21 uger siden. Ledelsen mangler kontekst og handlerum.'},
+      ],
+      action:{type:'classic', label:'Problemet', text:'Stadig ingen prognose og ingen pris. Den klassiske måling fanger faldet 21 uger efter culture intelligence, og uden at pege på hvad der driver det.'} },
+    { week:'Uge 40', pos:77, lane:'ci', sev:'crit', track:'Critical risk',
+      title:'Vinduet er ved at lukke.',
+      metrics:[
+        {c:'#ef4444', t:'<strong>Fastholdelse 38 + tryghed 44 hos en nøglemedarbejder.</strong> Risikoscoren er accelereret 12 point på to målinger.'},
+        {c:'#c26a4c', t:'75% af frivillig opsigelse er forebyggelig (Work Institute). Men kun hvis man når at handle.'},
+      ],
+      forecast:{ tag:'Prognose', tone:'crit', text:'<strong>~70% risiko</strong> for opsigelse inden 6 uger. Est. tab <strong>500.000-900.000 kr</strong> for at genbesætte en specialist.' },
+      action:{type:'ci', label:'Anbefalet handling', text:'Handl i dag. Direkte samtale, ikke en survey. Beslutningen er ved at blive truffet mentalt.'} },
+    { week:'Uge 46', pos:88, lane:'outcome', sev:'crit', track:'Resultatet',
+      title:'Opsigelsen lander.',
+      metrics:[
+        {c:'#ef4444', t:'<strong>Nøglemedarbejderen siger op.</strong> Den klassiske måling fangede aldrig hvorfor.'},
+        {c:'#6366f1', t:'Culture intelligence gav det første varsel i uge 9. 37 ugers forspring.'},
+      ],
+      forecast:{ tag:'Realiseret', tone:'crit', text:'1 nøglemedarbejder tabt. Est. tab <strong>500.000-900.000 kr</strong>. Varslet var der 37 uger før.' },
+      action:{type:'ci', label:'Pointen', text:'Forskellen mellem 37 ugers varsel og nul er forskellen mellem en samtale og en opsigelse.'} },
+  ];
+  const N = E.length;
+  const months = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+  const HEAD_FRAC = 0.35, PAN_FACTOR = 2.2;
+
+  const wrap = document.getElementById('cqtlWrap');
+  const viz = document.getElementById('cqtlViz');
+  const pan = document.getElementById('cqtlPan');
+  const monthsEl = document.getElementById('cqtlMonths');
+  const head = document.getElementById('cqtlHead');
+  const detail = document.getElementById('cqtlDetail');
+  const detailInner = document.getElementById('cqtlDetailInner');
+  const stepcount = document.getElementById('cqtlStepcount');
+  const progressFill = document.getElementById('cqtlProgress');
+  const prevBtn = document.getElementById('cqtlPrev');
+  const nextBtn = document.getElementById('cqtlNext');
+  const conclusion = document.getElementById('cqtlConclusion');
+  if (!wrap || !viz || !pan) return;
+
+  months.forEach((m, i) => {
+    const el = document.createElement('div');
+    el.className = 'tlh-month';
+    el.style.left = (i / 11 * 100) + '%';
+    el.textContent = m;
+    monthsEl.appendChild(el);
+  });
+
+  E.forEach((ev, i) => {
+    const b = document.createElement('button');
+    let cls = 'tl-dot ';
+    if (ev.lane === 'outcome') cls += 'tl-dot-outcome';
+    else if (ev.lane === 'classic') cls += 'tl-dot-classic';
+    else cls += 'tl-dot-ci' + (ev.sev ? ' sev-' + ev.sev : '');
+    b.className = cls;
+    b.style.left = ev.pos + '%';
+    b.dataset.i = i;
+    b.setAttribute('aria-label', ev.week + ': ' + ev.title.replace(/"/g, ''));
+    const cap = document.createElement('span');
+    cap.className = 'tl-dot-caption';
+    cap.textContent = ev.week;
+    b.appendChild(cap);
+    b.addEventListener('click', () => goTo(i));
+    pan.appendChild(b);
+    ev._b = b;
+  });
+
+  const weekFromPos = (pos) => Math.round(pos * 0.52);
+
+  let cur = -1;
+  function renderDetail(ev) {
+    const cls = ev.lane === 'classic' ? 'classic' : (ev.lane === 'outcome' ? 'outcome' : 'ci');
+    const isNote = ev.action.type === 'classic';
+    detailInner.innerHTML =
+      '<div class="tl-detail-head"><span class="tl-detail-week">' + ev.week + '</span>' +
+      '<span class="tl-detail-track ' + cls + '">' + ev.track + '</span></div>' +
+      '<div class="tl-detail-title">' + ev.title + '</div>' +
+      (ev.forecast ? '<div class="tl-detail-forecast tone-' + ev.forecast.tone + '"><span class="tl-detail-forecast-tag">' + ev.forecast.tag + '</span><span class="tl-detail-forecast-text">' + ev.forecast.text + '</span></div>' : '') +
+      '<div class="tl-detail-grid"><div class="tl-detail-metrics">' +
+      ev.metrics.map(m => '<div class="tl-metric"><span class="tl-metric-dot" style="background:' + m.c + '"></span><span class="tl-metric-text">' + m.t + '</span></div>').join('') +
+      '</div><div class="tl-detail-action ' + (isNote ? 'classic-note' : '') + '"><div class="tl-detail-action-label">' + ev.action.label + '</div><div class="tl-detail-action-text">' + ev.action.text + '</div></div></div>';
+  }
+
+  function setStep(i) {
+    if (i === cur) return;
+    cur = i;
+    E.forEach((e, idx) => {
+      e._b.classList.toggle('is-active', idx === i);
+      e._b.classList.toggle('is-reached', idx <= i);
+    });
+    detail.classList.add('is-changing');
+    setTimeout(() => { renderDetail(E[i]); detail.classList.remove('is-changing'); }, 180);
+    stepcount.textContent = (i + 1) + ' / ' + N;
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === N - 1;
+    conclusion.classList.toggle('is-shown', i === N - 1);
+  }
+
+  let HEAD_X = 0, PAN_W = 0;
+  function measure() {
+    const w = viz.clientWidth;
+    HEAD_X = w * HEAD_FRAC;
+    PAN_W = w * PAN_FACTOR;
+    pan.style.width = PAN_W + 'px';
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth <= 900;
+  const scrollMode = !(reduce || isMobile);
+
+  function jumpScroll(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    const runway = wrap.offsetHeight - window.innerHeight;
+    const top = wrap.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + (i / (N - 1)) * runway + 2, behavior: 'smooth' });
+  }
+  function jumpStatic(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    setStep(i);
+    head.setAttribute('data-week', 'Uge ' + weekFromPos(E[i].pos));
+    progressFill.style.width = (i / (N - 1) * 100) + '%';
+  }
+  const goTo = scrollMode ? jumpScroll : jumpStatic;
+
+  let ticking = false, scrubTimer = null;
+  function update() {
+    const runway = wrap.offsetHeight - window.innerHeight;
+    const scrolled = Math.max(0, Math.min(runway, -wrap.getBoundingClientRect().top));
+    const progress = runway > 0 ? scrolled / runway : 0;
+    const seg = progress * (N - 1);
+    const idx = Math.min(N - 2, Math.floor(seg));
+    const frac = seg - idx;
+    const readingPos = progress >= 1 ? E[N - 1].pos : E[idx].pos + (E[idx + 1].pos - E[idx].pos) * frac;
+    const translate = HEAD_X - (readingPos / 100) * PAN_W;
+    pan.style.transform = 'translateX(' + translate + 'px)';
+    head.setAttribute('data-week', 'Uge ' + weekFromPos(readingPos));
+    progressFill.style.width = (progress * 100) + '%';
+    setStep(Math.max(0, Math.min(N - 1, Math.round(seg))));
+    ticking = false;
+  }
+  function onScroll() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    document.body.classList.add('is-scrubbing');
+    clearTimeout(scrubTimer);
+    scrubTimer = setTimeout(() => document.body.classList.remove('is-scrubbing'), 140);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(cur - 1));
+  nextBtn.addEventListener('click', () => goTo(cur + 1));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(cur + 1);
+    else if (e.key === 'ArrowLeft') goTo(cur - 1);
+  });
+
+  if (scrollMode) {
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { measure(); onScroll(); });
+    renderDetail(E[0]);
+    update();
+    // Re-measure once layout settles (handles late font load / image sizing).
+    // Without this, viz.clientWidth can read 0 at IIFE-time, leaving pan width 0.
+    requestAnimationFrame(() => { measure(); update(); });
+    window.addEventListener('load', () => { measure(); update(); });
+  } else {
+    renderDetail(E[0]);
+    jumpStatic(0);
+  }
+})();
+</script>
+
+
+<!-- Conclusion is inside the new tlh-wrap section (blockquote.tl-conclusion); duplicate from deployed removed -->
 
 
 
@@ -32144,124 +32215,121 @@ document.addEventListener('DOMContentLoaded', function() {
         </p>
     </div>
 
-    <div class="cases-grid">
-        <!-- Column 1 -->
-        <div class="cases-col">
-            <!-- Featured signature case (dark) -->
-            <div class="case-featured">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Culturequest guidede os sikkert gennem vores APV og leverede værdifulde indsigter i vores kultur. Softwaren er intuitiv, og samlet set hjalp Culturequest os med at afdække indsigter, som vi ikke ville have opnået på egen hånd.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">JK</div>
-                    <div class="case-author">
-                        <div class="case-author-name">Joy Kolby</div>
-                        <div class="case-author-role">Administrationschef</div>
+    <div class="cq-mq-wrap">
+        <!-- Row A: drifts left -->
+        <div class="cq-mq">
+            <div class="cq-mq-track" data-dup>
+                <div class="case-featured">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Culturequest guidede os sikkert gennem vores APV og leverede værdifulde indsigter i vores kultur. Softwaren er intuitiv, og samlet set hjalp Culturequest os med at afdække indsigter, som vi ikke ville have opnået på egen hånd.
+                        </p>
                     </div>
-                    <div class="case-company-tag">CamVision</div>
-                </div>
-            </div>
-
-            <!-- Short case -->
-            <div class="case-card case-card-short">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Det føltes enkelt, tilgængeligt og langt mindre 'corporate' end lignende udbydere.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">MJ</div>
-                    <div class="case-author">
-                        <div class="case-author-name">Maria Jacobsen</div>
-                        <div class="case-author-role">Driftsdirektør</div>
+                    <div class="case-meta">
+                        <div class="case-avatar">JK</div>
+                        <div class="case-author">
+                            <div class="case-author-name">Joy Kolby</div>
+                            <div class="case-author-role">Administrationschef</div>
+                        </div>
+                        <div class="case-company-tag">CamVision</div>
                     </div>
-                    <div class="case-company-tag">Abzu</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Column 2 -->
-        <div class="cases-col">
-            <!-- Medium case -->
-            <div class="case-card">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Culturequest har givet os indsigt og værktøjer til aktivt at forbedre medarbejdernes trivsel. Det har styrket vores fokus, skabt mere åben dialog og gjort vores initiativer langt mere effektive.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">LS</div>
-                    <div class="case-author">
-                        <div class="case-author-name">Lone Spangsberg</div>
-                        <div class="case-author-role">Økonomidirektør</div>
+                <div class="case-card">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Culturequest har givet os indsigt og værktøjer til aktivt at forbedre medarbejdernes trivsel. Det har styrket vores fokus, skabt mere åben dialog og gjort vores initiativer langt mere effektive.
+                        </p>
                     </div>
-                    <div class="case-company-tag">Vica Danmark</div>
-                </div>
-            </div>
-
-            <!-- Long case -->
-            <div class="case-card case-card-tall">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Culturequest gør det muligt for vores ledere at engagere sig med deres teams hurtigere, når trivselsspørgsmål opstår. De giver lederne indblik i effekten af udmeldinger fra topledelsen. Sparringssessionerne med en Culturequest-konsulent skaber også reel værdi ved at levere konstruktive, skræddersyede løsninger.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">CD</div>
-                    <div class="case-author">
-                        <div class="case-author-name">Claus Damm</div>
-                        <div class="case-author-role">CFO</div>
+                    <div class="case-meta">
+                        <div class="case-avatar">LS</div>
+                        <div class="case-author">
+                            <div class="case-author-name">Lone Spangsberg</div>
+                            <div class="case-author-role">Økonomidirektør</div>
+                        </div>
+                        <div class="case-company-tag">Vica Danmark</div>
                     </div>
-                    <div class="case-company-tag">Jydsk Planteservice</div>
+                </div>
+                <div class="case-card">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Culturequest hjælper os med at forstå, hvad vi gør godt, hvad der er okay, og hvor vi skal tage handling – med konstruktiv analyse og feedback. Det har gjort vores antagelser og mavefornemmelser synlige, hvilket gør os i stand til at handle mere effektivt og træffe bedre beslutninger.
+                        </p>
+                    </div>
+                    <div class="case-meta">
+                        <div class="case-avatar">NK</div>
+                        <div class="case-author">
+                            <div class="case-author-name">Nikolaj Kure Jensen</div>
+                            <div class="case-author-role">Partner</div>
+                        </div>
+                        <div class="case-company-tag">Baagøe | Schou</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Column 3 -->
-        <div class="cases-col">
-            <!-- Medium case -->
-            <div class="case-card">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Tidligere var vores hjemmelavede undersøgelser subjektive og tidskrævende. Culturequest har gjort processen både nemmere og mere professionel. Vi har nu en solid platform at bygge på.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">RL</div>
-                    <div class="case-author">
-                        <div class="case-author-name">René Lynge</div>
-                        <div class="case-author-role">Administrerende direktør</div>
+        <!-- Row B: drifts right -->
+        <div class="cq-mq">
+            <div class="cq-mq-track cq-mq-track--rev" data-dup>
+                <div class="case-card">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Tidligere var vores hjemmelavede undersøgelser subjektive og tidskrævende. Culturequest har gjort processen både nemmere og mere professionel. Vi har nu en solid platform at bygge på.
+                        </p>
                     </div>
-                    <div class="case-company-tag">Concens</div>
-                </div>
-            </div>
-
-            <!-- Medium case -->
-            <div class="case-card">
-                <div>
-                    <div class="case-quote-mark">"</div>
-                    <p class="case-quote">
-                        Culturequest hjælper os med at forstå, hvad vi gør godt, og hvor vi skal tage handling. Det har gjort vores antagelser synlige og gør os i stand til at handle mere effektivt.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <div class="case-avatar">NK</div>
-                    <div class="case-author">
-                        <div class="case-author-name">Nikolaj Kure Jensen</div>
-                        <div class="case-author-role">Partner</div>
+                    <div class="case-meta">
+                        <div class="case-avatar">RL</div>
+                        <div class="case-author">
+                            <div class="case-author-name">René Lynge</div>
+                            <div class="case-author-role">Administrerende direktør</div>
+                        </div>
+                        <div class="case-company-tag">Concens</div>
                     </div>
-                    <div class="case-company-tag">Baagøe | Schou</div>
+                </div>
+                <div class="case-card">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Culturequest gør det muligt for vores ledere at engagere sig med deres teams hurtigere, når trivselsspørgsmål opstår. De giver lederne indblik i effekten af udmeldinger fra topledelsen. Sparringssessionerne med en Culturequest-konsulent skaber også reel værdi ved at levere konstruktive, skræddersyede løsninger.
+                        </p>
+                    </div>
+                    <div class="case-meta">
+                        <div class="case-avatar">CD</div>
+                        <div class="case-author">
+                            <div class="case-author-name">Claus Damm</div>
+                            <div class="case-author-role">CFO</div>
+                        </div>
+                        <div class="case-company-tag">Jydsk Planteservice</div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div>
+                        <div class="case-quote-mark">"</div>
+                        <p class="case-quote">
+                            Det føltes enkelt, tilgængeligt og langt mindre 'corporate' end lignende udbydere.
+                        </p>
+                    </div>
+                    <div class="case-meta">
+                        <div class="case-avatar">MJ</div>
+                        <div class="case-author">
+                            <div class="case-author-name">Maria Jacobsen</div>
+                            <div class="case-author-role">Driftsdirektør</div>
+                        </div>
+                        <div class="case-company-tag">Abzu</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+    document.querySelectorAll('.cq-mq-track[data-dup]').forEach(track => {
+      track.querySelectorAll(':scope > *').forEach(node => track.appendChild(node.cloneNode(true)));
+    });
+    </script>
 </section>
 
 <script>
@@ -38775,6 +38843,173 @@ window.renderCulturequestPDF = async function(config) {
     };
 })();
 </script>
+
+<!-- SEO content preserved from deployed culturequest.io for SEO/GEO parity -->
+<aside class="cqh-seo-archive" aria-hidden="true">
+  <p>Skal jeg sige det</p>
+  <p>Slettet · Ikke sendt</p>
+  <p>21:47</p>
+  <p>Stadig på arbejde</p>
+  <p>-12t denne uge</p>
+  <p>Anders.</p>
+  <p>Sofie.</p>
+  <p>Mikkel.</p>
+  <p>Maja.</p>
+  <p>Predictive culture intelligence</p>
+  <p>Fire mennesker. Fire mønstre vi fanger før de bliver til opsigelser.</p>
+  <p>Manglende anerkendelse</p>
+  <p>14 dage uden besked fra leder</p>
+  <p>Psykologisk utryghed</p>
+  <p>Beskeden slettet inden afsendelse</p>
+  <p>Brudt tillid</p>
+  <p>3. møde aflyst i træk · uge 12</p>
+  <p>Skjult stress</p>
+  <p>21:47 stadig på arbejde · −12t søvn denne uge</p>
+  <p>Anders, 41. Senior Engineer</p>
+  <p>Psykologisk tryghed · Stilhed</p>
+  <p>Sofie, 33. Product Manager</p>
+  <p>5 ugers fald</p>
+  <p>Ledelse · Tillid brister</p>
+  <p>Mikkel, 28. Customer Success</p>
+  <p>3 ugers fald</p>
+  <p>Stress · Eskalation i stilhed</p>
+  <p>Maja, 36. Marketing Lead</p>
+  <p>9 ugers fald</p>
+  <p>Fire mennesker.</p>
+  <p>Fire signaler.</p>
+  <p>Ingen leder havde set det.</p>
+  <p>41%</p>
+  <p>59%</p>
+  <p>23%</p>
+  <p>ÅRETS REGNING</p>
+  <p>Ingen så det komme</p>
+  <p>stress-sygemeldinger</p>
+  <p>opsigelse</p>
+  <p>stille opsigelse</p>
+  <p>Estimeret tab</p>
+  <p>Samme år. Samme team.</p>
+  <p>Anden historie.</p>
+  <p>culture intelligence</p>
+  <p>Tidligt signal · Uge 9</p>
+  <p>Anerkendelses-frekvens falder</p>
+  <p>Passiv neutralitet er fordoblet på 5 uger. Gallup's mest robuste exit-prædiktor er aktiveret.</p>
+  <p>Tryk for konkrete tiltag →</p>
+  <p>Alert</p>
+  <p>Burnout-kombo aktiveret · Uge 18</p>
+  <p>Karasek-tærskel passeret. Stress + lav kontrol.</p>
+  <p>Mønstret matcher 87 % af stress-sygemeldinger 4-6 uger før de sker.</p>
+  <p>⚡ 6 uger før Mette går ned i uge 24</p>
+  <p>Tryk for handleplan →</p>
+  <p>Handl nu · Uge 31</p>
+  <p>Multi-flag aktiveret: burnout-kombo + tillids-gap + acceleration</p>
+  <p>3 algoritme-flags samtidig. Estimeret eksponering: 1-2,5 mio kr.</p>
+  <p>⚡ Klassisk måling 2 fanger først problemet i uge 30 — for sent</p>
+  <p>Intervention virker · Uge 44</p>
+  <p>Acceleration vendt. Første målbare effekt.</p>
+  <p>Stress 76 → 58. Kontrol 32 → 51. Positiv trend i 8 cyklusser.</p>
+  <p>Tryk for hvad der virkede →</p>
+  <p>Året opsummeret · Uge 52</p>
+  <p>36 uger fra første signal til afværget krise</p>
+  <p>Højeste samlede team-score i 12 måneder. Mindst 2 opsigelser undgået.</p>
+  <p>⚡ Klassisk trivselsmåling havde aldrig set noget af dette</p>
+  <p>Tryk for de fulde tal →</p>
+  <p>ÅRETS VÆRDI</p>
+  <p>Krise afværget i uge 32</p>
+  <p>opsigelser undgået</p>
+  <p>ugers tidlig varsel</p>
+  <p>datapunkter til ledelsen</p>
+  <p>600k-1,2 mio kr</p>
+  <p>Estimeret besparelse</p>
+  <p>Uge 5</p>
+  <p>Stress-niveau lidt over branche-snit hos 3 ud af 20 medarbejdere. Workload-belastning under tærsklen, men i opadgående trend.</p>
+  <p>Mønstret eskalerer typisk over 8-10 uger. Risiko for stress-sygemelding stiger gradvist.</p>
+  <p>Hvad du som leder kan gøre</p>
+  <p>Tjek 1:1-rytme, særligt for de tre medarbejdere</p>
+  <p>Mindre intervention nu, før mønstret bider sig fast</p>
+  <p>Forskningsforankret</p>
+  <p>Signalerne er baseret på culturequest's spørgeramme på tværs af 9 dimensioner, kombineret med Gallup's exit-pattern-analyser, Edmondson's research om psykologisk tryghed, og dansk APV-forskning. Klik på handlings-ikonerne for at se konkrete tiltag.</p>
+  <p>Uge 10 · Tidlig intervention</p>
+  <p>Motivation</p>
+  <p>Generel anerkendelses-praksis</p>
+  <p>Anerkendelsen i dit team falder. Du ved ikke hvem. Men det betyder ikke noget. En generel kulturændring rammer alle, der har brug for det.</p>
+  <p>Hvad signalerne har vist</p>
+  <p>Anerkendelses-score: 4,1 → 3,6</p>
+  <p>2-3 medarbejdere oplever ikke at deres arbejde bliver set</p>
+  <p>Konkrete handlinger til hele teamet</p>
+  <p>Indfør 5-minutters team-tak</p>
+  <p>På næste team-møde, brug 5 minutter hvor hver person nævner én ting en kollega har gjort godt den sidste uge. Det skal være konkret. Ikke "godt arbejde" men "Sofie reddede min præsentation til kunden i tirsdags".</p>
+  <p>Send tre konkrete beskeder denne uge</p>
+  <p>Skriv en privat besked til tre forskellige mennesker på dit team. Ikke en gruppe-tak. "Tak fordi du tog ansvar for X i går. Det betød reelt noget."</p>
+  <p>Synliggør usynligt arbejde</p>
+  <p>På næste status-møde, nævn én person hvis arbejde ikke er åbenlyst men holder noget kørende. admin, dokumentation, mentoring af kollega. Sig det højt.</p>
+  <p>Forventet resultat</p>
+  <p>+0,4</p>
+  <p>Anerkendelses-score over 4 uger</p>
+  <p>73%</p>
+  <p>Færre tidlige exit-signaler i gruppen</p>
+  <p>Uge 22 · Mønster bekræftet</p>
+  <p>Strukturér din 1:1-rytme</p>
+  <p>To dimensioner peger samme vej: medarbejdere har fået færre 1:1-samtaler, og de siger mindre fra på møder. Strukturér din ledelses-rytme uden at vide hvem.</p>
+  <p>1:1-frekvens er halveret</p>
+  <p>Fra hver 2. uge til hver 4. uge i gennemsnit</p>
+  <p>Aktiv mødedeltagelse: 4,3 → 3,7</p>
+  <p>Færre input på team-møder de sidste 5 uger</p>
+  <p>Lås 1:1-møder ind i kalenderen</p>
+  <p>Hver 14. dag, samme tid, ikke-flytbar. Hellere 25 minutter hver 14. dag end 60 minutter hver 6. uge. Konsistens slår intensitet.</p>
+  <p>Brug to faste spørgsmål</p>
+  <p>"Hvad er det sværeste lige nu?" og "Hvad ville få det til at fungere bedre?". Ikke "hvordan går det" som folk altid svarer "fint" på. De to spørgsmål åbner reelt rum.</p>
+  <p>Aflyt din egen møde-kultur</p>
+  <p>På næste team-møde, læg mærke til hvem der ikke har sagt noget i 15 minutter. Spørg dem direkte men generelt: "Mads, hvordan ser du det fra din side?". uden at presse.</p>
+  <p>+0,6</p>
+  <p>Tryghed-score over 6 uger</p>
+  <p>2,4×</p>
+  <p>Højere chance for tidlig signalering</p>
+  <p>Uge 30 · Eskalation begynder</p>
+  <p>Social</p>
+  <p>Stress</p>
+  <p>Pulse-check team-energi</p>
+  <p>Teamets sociale fællesskab svækkes samtidig med at stress-niveauet stiger. Det er en farlig kombination. Her er hvad du kan gøre uden 1-til-1 indgreb.</p>
+  <p>Tilhørsforhold: 4,2 → 3,5</p>
+  <p>Mindre social interaktion uden for opgaver</p>
+  <p>Energi-niveau falder</p>
+  <p>Søvn-mønster er ændret hos flere medarbejdere</p>
+  <p>Aflyst et møde. eksplicit</p>
+  <p>Vælg ét tilbagevendende møde og aflyst det offentligt. Sig: "Vi har for mange møder. Den her time er jeres. brug den til at arbejde uden afbrydelser." Det signalerer at du beskytter deres tid.</p>
+  <p>Strukturér social tid</p>
+  <p>Indfør én ugentlig 30-min team-rutine uden agenda. kaffemøde, walking-meeting, fælles frokost. Strukturér det så det ikke er valgfrit ekstra arbejde, men en del af ugen.</p>
+  <p>Vis selv at du sætter grænser</p>
+  <p>Send ikke arbejdsmails efter kl. 18. Forlad kontoret kl. 16 én gang denne uge. Folk modellerer dit eksempel. også når du ikke siger det højt.</p>
+  <p>Tjek arbejdsbelastning anonymt</p>
+  <p>Brug culturequest's puls-funktion til at sende én konkret spørgsmål: "Hvor mange opgaver står du med lige nu, der ikke kan vente?". så du kan se mønsteret uden at skulle spørge enkeltpersoner.</p>
+  <p>-32%</p>
+  <p>Færre stress-relaterede sygefraværsdage</p>
+  <p>+0,5</p>
+  <p>Energi-score over 6 uger</p>
+  <p>Uge 36 · Forecast aktiveret</p>
+  <p>Akut team-intervention</p>
+  <p>culturequest har nu data nok til at forudsige opsigelse inden for 6-8 uger. Lige nu er vinduet til at handle. du har stadig tid, men ikke meget.</p>
+  <p>Hvorfor det er kritisk nu</p>
+  <p>73% siger op inden for 6 uger</p>
+  <p>Når tryghed brister sammen med faldende anerkendelse, er beslutningen typisk allerede truffet mentalt</p>
+  <p>Vinduet lukker hurtigt</p>
+  <p>Efter uge 40 er sandsynligheden for at vende beslutningen halveret</p>
+  <p>Akutte handlinger denne uge</p>
+  <p>Indkald til en team-retrospektiv</p>
+  <p>Inden for de næste 7 dage. Format: 60 minutter, hele teamet. Spørgsmål: "Hvad har vi tabt det sidste halve år?" og "Hvad savner vi at gøre igen?". det åbner for ærlig snak uden at pege på enkeltpersoner.</p>
+  <p>Genoptag 1:1-rytme NU. alle</p>
+  <p>Bestil møder med hele teamet inden for 14 dage. Ikke struktureret performance. bare check-in. Spørg: "Hvad har du brug for fra mig de næste 4 uger?"</p>
+  <p>Ændr én ting synligt</p>
+  <p>Folk siger op fordi de ikke tror tingene vil ændre sig. Vis at de gør. Annullér et meningsløst møde, sig nej til et projekt, omfordel en byrde. Synligt. Med begrundelse.</p>
+  <p>Tag dialog med din egen leder</p>
+  <p>Vis dem culturequest-data. Bed om ressourcer eller mandat til at ændre noget strukturelt. Det er ikke svaghed at signalere opad. det er ledelse.</p>
+  <p>Forventet resultat ved akut handling</p>
+  <p>~50%</p>
+  <p>Reduktion i sandsynlig opsigelse</p>
+  <p>3-6</p>
+  <p>Måneder gevinst i fastholdelse</p>
+  <p>Forudsætning: handling skal ske inden uge 40. Efter det punkt halveres effekten.</p>
+  <p>Culturequest hjælper os med at forstå, hvad vi gør godt, og hvor vi skal tage handling. Det har gjort vores antagelser synlige og gør os i stand til at handle mere effektivt.</p>
+</aside>
 
 </body>
 </html>
