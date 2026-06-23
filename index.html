@@ -1534,8 +1534,140 @@
         };
     }
 
+    // === Hot visitor intent scoring ===
+    // Accumulate score per session. When threshold crossed, fire hot-visitor-notify
+    // edge function (sends email to founders). Dedupe per distinct_id × 24h to
+    // avoid alert-spam on repeat visits.
+    var HOT_VISITOR_ENDPOINT = 'https://ytiboqiihekaerznainv.supabase.co/functions/v1/hot-visitor-notify';
+    var HOT_VISITOR_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh'; // anon key - safe in client
+    var HOT_VISITOR_THRESHOLD = 50;
+    var HOT_VISITOR_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+
+    var INTENT_WEIGHTS = {
+        // High-intent conversion events
+        'pricing_wizard_finished': 25,
+        'pricing_wizard_started': 15,
+        'pricing_section_viewed': 10,
+        'sandbox_demo_started': 15,
+        'sandbox_step_shown': 3,
+        'demo_gate_viewed': 10,
+        'pilot_qualifier_started': 20,
+        'pilot_qualifier_step': 5,
+        'pilot_qualifier_finished': 30,
+        'apv-cycle_viewed': 12,
+        'apv-cycle_finished': 25,
+        'apollo_link_visited': 20, // visitor came from outbound sequence
+        // Engagement depth
+        'page_engaged': 5,
+        'faq_viewed': 8,
+        'pricing_wizard_step': 3,
+    };
+    var DEPTH_WEIGHTS = { 25: 0, 50: 2, 75: 5, 100: 8 };
+
+    var sessionScore = 0;
+    var sessionSignals = [];
+
+    function getDistinctId() {
+        try {
+            if (window.posthog && typeof window.posthog.get_distinct_id === 'function') {
+                return window.posthog.get_distinct_id();
+            }
+        } catch (e) {}
+        return 'unknown';
+    }
+
+    function getSessionUrl() {
+        try {
+            if (window.posthog && typeof window.posthog.get_session_replay_url === 'function') {
+                return window.posthog.get_session_replay_url();
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    function inCooldown(distinctId) {
+        try {
+            var raw = localStorage.getItem('cq_hotvisitor_until');
+            if (!raw) return false;
+            var data = JSON.parse(raw);
+            return data && data.id === distinctId && data.until > Date.now();
+        } catch (e) { return false; }
+    }
+
+    function markCooldown(distinctId) {
+        try {
+            localStorage.setItem('cq_hotvisitor_until', JSON.stringify({
+                id: distinctId,
+                until: Date.now() + HOT_VISITOR_COOLDOWN_MS
+            }));
+        } catch (e) {}
+    }
+
+    function fireHotVisitorAlert() {
+        var distinctId = getDistinctId();
+        if (inCooldown(distinctId)) return;
+        markCooldown(distinctId);
+
+        var utm = {};
+        try {
+            var p = new URLSearchParams(window.location.search);
+            ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
+                var v = p.get(k);
+                if (v) utm[k] = v;
+            });
+        } catch (e) {}
+
+        var payload = Object.assign({
+            distinct_id: distinctId,
+            intent_score: sessionScore,
+            signals: sessionSignals.slice(),
+            page_url: (window.location.href || '').slice(0, 500),
+            referrer: (document.referrer || '').slice(0, 500) || null,
+            user_agent: (navigator.userAgent || '').slice(0, 300),
+            posthog_session_url: getSessionUrl()
+        }, utm);
+
+        // Fire-and-forget — never block UI
+        try {
+            fetch(HOT_VISITOR_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + HOT_VISITOR_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(function() { /* silent */ });
+        } catch (e) {}
+
+        // Also log to PostHog so we can analyse hot-visitor patterns later
+        if (window.posthog && typeof window.posthog.capture === 'function') {
+            window.posthog.capture('hot_visitor_threshold_crossed', {
+                intent_score: sessionScore,
+                signal_count: sessionSignals.length
+            });
+        }
+    }
+
+    function addIntentSignal(eventName, props) {
+        var points = INTENT_WEIGHTS[eventName] || 0;
+        // Scroll depth has separate weight table
+        if (eventName === 'scroll_depth_reached' && props && DEPTH_WEIGHTS[props.depth_pct]) {
+            points = DEPTH_WEIGHTS[props.depth_pct];
+            eventName = 'scroll_depth_' + props.depth_pct;
+        }
+        if (points <= 0) return;
+        sessionScore += points;
+        sessionSignals.push({ event: eventName, points: points, ts: new Date().toISOString() });
+        if (sessionScore >= HOT_VISITOR_THRESHOLD) {
+            fireHotVisitorAlert();
+        }
+    }
+
     window.cqTrack = {
         event: safe(function(name, props) {
+            // Add to intent score BEFORE forwarding to PostHog
+            try { addIntentSignal(name, props); } catch (_) {}
             if (!window.posthog || typeof window.posthog.capture !== 'function') return;
             window.posthog.capture(name, props || {});
         }),
