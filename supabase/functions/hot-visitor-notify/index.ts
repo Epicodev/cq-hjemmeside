@@ -103,8 +103,12 @@ function buildHotVisitorEmail(p: HotVisitorPayload): string {
 
     ${sessionLink}
 
-    <p style="font-size: 12px; color: #6f7090; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid #e0e0e8;">
-        Tjek <a href="https://app.apollo.io" style="color: #383da0;">Apollo Dashboard</a> for at se om Apollo har identificeret hvilket firma der står bag denne session.
+    <p style="margin: 16px 0 0;">
+        <a href="https://app.apollo.io/#/engagement/website-visitors" style="display: inline-block; padding: 11px 20px; background: #c26a4c; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 600;">Åbn Apollo Website Visitors →</a>
+    </p>
+
+    <p style="font-size: 12px; color: #6f7090; margin: 16px 0 0; padding-top: 16px; border-top: 1px solid #e0e0e8;">
+        Apollo identificerer typisk 25-40 % af B2B-trafik via reverse-IP. Filtrer på <strong>"Last 1 hour"</strong> eller <strong>"Today"</strong> for at finde den session der lige trigged denne alert. Hvis Apollo ikke har match, er det enten privat-IP, VPN, mobil-IP, eller et firma uden i Apollos database.
     </p>
 </body></html>`;
 }
