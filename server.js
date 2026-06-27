@@ -207,6 +207,14 @@ app.use(express.static(ROOT, {
     },
 }));
 
+// Ferie-udgifter: standalone local expense tracker. Static middleware already
+// serves /ferie/* files; this just maps the bare /ferie and /ferie/ to it
+// (express.static runs with index:false, so the dir would otherwise 404-to-home).
+app.get(['/ferie', '/ferie/'], (_req, res) => {
+    res.setHeader('Cache-Control', 'public, max-age=300, must-revalidate');
+    res.sendFile(path.join(ROOT, 'ferie', 'index.html'));
+});
+
 // SPA fallback: serve route-specific HTML variant with correct title/canonical.
 // Falls back to homepage variant for unknown paths (404-as-home behaviour is
 // preserved from previous version, just with correct meta tags).

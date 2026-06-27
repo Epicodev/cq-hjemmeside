@@ -1,0 +1,19 @@
+{
+  "name": "Ferie-udgifter",
+  "short_name": "Ferie",
+  "description": "Lokal tracker til ferieudgifter — data gemmes på din enhed.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f1ea",
+  "theme_color": "#f4f1ea",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
