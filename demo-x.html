@@ -1554,7 +1554,11 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   /* ============ PERSONALISERING ============ */
   function sanitize(s) {
     if (!s) return null;
-    s = String(s).replace(/<[^>]*>/g, '').replace(/[<>"'&]/g, '').trim();
+    s = String(s);
+    // Uudfyldte flettefelter fra mail-værktøjer ({{company}}, %7B osv.)
+    // må aldrig vises. Ligner værdien en template-variabel, ignoreres den.
+    if (s.indexOf('{') !== -1 || s.indexOf('}') !== -1) return null;
+    s = s.replace(/<[^>]*>/g, '').replace(/[<>"'&]/g, '').trim();
     return s.length > 0 ? s.slice(0, 40) : null;
   }
   var params = new URLSearchParams(location.search);
@@ -2474,7 +2478,10 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   var COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
   var params = new URLSearchParams(location.search);
-  function clean(s) { return s ? String(s).replace(/[<>"'&]/g, '').slice(0, 60) : null; }
+  function clean(s) {
+    if (!s || /[{}]/.test(String(s))) return null;
+    return String(s).replace(/[<>"'&]/g, '').slice(0, 60);
+  }
   var leadProps = {
     demo_company: clean(params.get('c')) || 'ukendt',
     demo_lead: clean(params.get('n')) || 'ukendt',
