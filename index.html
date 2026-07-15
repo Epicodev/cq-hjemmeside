@@ -35616,6 +35616,31 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         }
     }
 
+    // Fælles håndaflevering til /aar: payload i localStorage + personaliseret URL
+    function sbWriteHandoff() {
+        try {
+            localStorage.setItem('cq_sb_handoff', JSON.stringify({
+                company: obState.company || null,
+                sizeNum: obState.sizeNum || null,
+                email: obState.email || null,
+                deptname: obState.deptname || null,
+                deptdesc: obState.deptdesc || null,
+                purpose: obState.purpose || null,
+                ts: Date.now()
+            }));
+        } catch (e) {}
+    }
+    function sbYearUrl(campaign) {
+        const yp = new URLSearchParams();
+        if (obState.company) yp.set('c', obState.company);
+        if (obState.sizeNum) yp.set('m', obState.sizeNum);
+        if (obState.email) yp.set('em', obState.email);
+        yp.set('utm_source', 'sandbox');
+        yp.set('utm_medium', 'site');
+        yp.set('utm_campaign', campaign || 'sandbox-handoff');
+        return '/aar?' + yp.toString();
+    }
+
     async function obFinish() {
         obProgress.textContent = 'Færdig';
 
@@ -35633,24 +35658,35 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obShowTyping();
         await obDelay(900);
         obHideTyping();
-        obAppendBot(`Tak ${obState.company}! Jeg har tilpasset demoen til jer. <strong>Lad os bygge din kulturmåling →</strong>`);
+        const deptTxt = obState.deptname ? ` og det, du fortalte om ${obState.deptname},` : '';
+        obAppendBot(`Tak ${obState.company}! Ud fra jeres svar${deptTxt} har jeg sat et helt måleår op. <strong>Lad os se, hvordan de næste 12 måneder kunne se ud hos jer →</strong>`);
 
-        // Add a "Let's go" button
+        // Primær: direkte ind i måleåret. Sekundær: byg selv en måling først.
         await obDelay(500);
         obInputArea.innerHTML = '';
         const startWrap = document.createElement('div');
         startWrap.className = 'sandbox-onboard-chips-confirm';
         startWrap.style.justifyContent = 'flex-start';
+        startWrap.style.gap = '10px';
+        startWrap.style.flexWrap = 'wrap';
         startWrap.innerHTML = `
-            <button type="button" class="sandbox-onboard-confirm">
-                Byg jeres kulturmåling
+            <button type="button" class="sandbox-onboard-confirm" id="obYearGo">
+                Se jeres 12 måneder
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
+            <button type="button" class="sandbox-onboard-chip" id="obBuildGo">Byg selv en måling først</button>
         `;
         obInputArea.appendChild(startWrap);
-        startWrap.querySelector('button').addEventListener('click', () => {
+        startWrap.querySelector('#obYearGo').addEventListener('click', () => {
+            obState.completed = true;
+            applyOnboardingToSandbox();
+            sbWriteHandoff();
+            if (window.cqTrack) window.cqTrack.event('sandbox_year_handoff', { from: 'chat' });
+            window.location.href = sbYearUrl('chat-handoff');
+        });
+        startWrap.querySelector('#obBuildGo').addEventListener('click', () => {
             obState.completed = true;
             applyOnboardingToSandbox();
             showStage(1);
@@ -36276,9 +36312,17 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obState.completed = true;
         applyOnboardingToSandbox();
         // Marker chatten som brugt, så onboardingen ikke starter forfra ovenpå
-        obAppendBot('En kollega har delt denne opsætning med dig. Analysen er klar nedenfor, og du kan justere målingen undervejs.');
+        obAppendBot('Opsætningen er indlæst. Du kan justere målingen og udforske platformen nedenfor.');
         if (window.cqTrack) window.cqTrack.event('sandbox_share_opened', { company_provided: !!obState.company });
-        setTimeout(() => showStage(3), 600);
+        const wantedStage = parseInt(q.get('stage'), 10);
+        const goStage = [1, 3, 4].includes(wantedStage) ? wantedStage : 3;
+        setTimeout(() => {
+            if (goStage === 4) {
+                const btn = document.getElementById('sbExploreBtn');
+                if (btn) { btn.click(); return; }
+            }
+            showStage(goStage);
+        }, 600);
     })();
 
     // Bro til trin 4 (Udforsk platformen): eksponér stage-skift + state

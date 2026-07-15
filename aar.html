@@ -1067,6 +1067,17 @@ body {
   transition: background-color 0.2s ease;
 }
 .btn-ghost:hover { background: rgba(245, 239, 226, 0.08); }
+.cta-tryrow {
+  display: none;
+  margin-top: 22px; gap: 12px; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+}
+.cta-tryrow.is-on { display: flex; }
+.cta-try-label {
+  font-family: 'Inter', sans-serif; font-size: 13px;
+  color: rgba(245, 239, 226, 0.6); width: 100%;
+}
+
 .cta-micro {
   margin-top: 44px; font-family: 'Inter', sans-serif; font-size: 12px;
   color: rgba(245, 239, 226, 0.45); letter-spacing: 0.04em;
@@ -1540,6 +1551,11 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       <a class="btn-primary js-cta-mail" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Skriv direkte til Benjamin →</a>
       <a class="btn-ghost js-cta-pilot" href="https://culturequest.io/pilotprojekt" target="_blank" rel="noopener">Se pilotprogrammet</a>
     </div>
+    <div class="cta-tryrow" id="ctaTryRow">
+      <span class="cta-try-label">Eller prøv selv platformen af:</span>
+      <a class="btn-ghost" id="tryBuild" href="/#oplev">Se hvordan man laver en undersøgelse →</a>
+      <a class="btn-ghost" id="tryExplore" href="/#oplev">Udforsk dashboardet →</a>
+    </div>
     <p class="cta-micro">Knappen åbner en færdigskrevet mail til mig. Ret i den, eller send den som den er, jeg svarer samme dag. Tallene på siden er et modelleret eksempel, ikke rigtige medarbejderdata.</p>
   </div>
 </section>
@@ -1643,6 +1659,23 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     ctaHead.textContent = hasCompany
       ? 'Hvordan ser det ud hos ' + company + '?'
       : 'Hvordan ser det ud hos jer?';
+  }
+
+  // Sandbox-ankomster får "prøv selv"-spor tilbage til sandboxens trin
+  var fromSandbox = !!(HAND.deptname || HAND.purpose || params.get('utm_source') === 'sandbox');
+  if (fromSandbox) {
+    var tryRow = document.getElementById('ctaTryRow');
+    if (tryRow) {
+      tryRow.classList.add('is-on');
+      var back = new URLSearchParams();
+      back.set('sb', '1');
+      if (hasCompany) back.set('c', company);
+      if (hasEmp) back.set('m', employees);
+      var tryBuild = document.getElementById('tryBuild');
+      var tryExplore = document.getElementById('tryExplore');
+      if (tryBuild) tryBuild.setAttribute('href', '/?' + back.toString() + '&stage=1#oplev');
+      if (tryExplore) tryExplore.setAttribute('href', '/?' + back.toString() + '&stage=4#oplev');
+    }
   }
   document.title = hasCompany
     ? '12 måneder · ' + company + ' · culturequest'
