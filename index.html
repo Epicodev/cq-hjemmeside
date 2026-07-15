@@ -21027,7 +21027,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="sbx-scrub-label" id="sbxScrubLabel">December</span>
                         <input type="range" id="sbxScrub" class="sbx-scrub" min="1" max="12" step="0.05" value="12" aria-label="Vælg måned">
                         <button type="button" class="sandbox-btn sandbox-btn-secondary" id="sbxBackBtn">← Tilbage til analysen</button>
-                        <span class="sbx-explore-hint">Træk i måneden og se et helt måleår udfolde sig. Fanerne kan klikkes, og assistenten nederst til højre kan åbnes.</span>
+                        <div class="sbx-tasks" id="sbxTasks" aria-label="Prøv selv">
+                            <span class="sbx-task" data-task="juli">Find signaturen i juli</span>
+                            <span class="sbx-task" data-task="chat">Læs assistentens plan</span>
+                            <span class="sbx-task" data-task="segment">Se segmenterne</span>
+                        </div>
+                        <span class="sbx-explore-hint">Modelleret eksempel-år for én afdeling (Teknik, 14 medarbejdere). I den rigtige platform er det jeres egne tal, måned for måned.</span>
+                        <div class="sbx-tasks-done" id="sbxTasksDone">
+                            Det var runde ét. Vil du se det med jeres egne tal? <a id="sbxDoneMail" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin →</a>
+                        </div>
                     </div>
                     <div id="sbxWin">
 <div class="appwin">
@@ -21039,7 +21047,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div class="app" id="dashMain" data-focus="none">
           <!-- Sidebar (platform 1:1) -->
-          <nav class="psb" aria-hidden="true">
+          <div class="psb" role="navigation" aria-hidden="true">
             <div class="psb-logo">
               <div class="psb-logo-mark js-avatar">DV</div>
               <div class="psb-logo-name js-company">Demovirksomhed</div>
@@ -21091,7 +21099,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="psb-user-mail js-leadmail">amalie@firma.dk</div>
               </div>
             </div>
-          </nav>
+          </div>
 
           <!-- Main content -->
           <main class="pmain">
@@ -35242,6 +35250,30 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .sbx-explore-hint {
   font-family: 'Inter', sans-serif; font-size: 12px; color: #8a8a8e; width: 100%;
 }
+.sbx-tasks { display: flex; gap: 8px; flex-wrap: wrap; }
+.sbx-task {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  color: #6b6b70; background: #f4f4f6; border: 1px solid #ebebeb;
+  border-radius: 999px; padding: 6px 12px 6px 26px; position: relative;
+  transition: all 0.3s ease;
+}
+.sbx-task::before {
+  content: ""; position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+  width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #c6c6cc;
+  transition: all 0.3s ease;
+}
+.sbx-task.is-done { color: #15803d; background: #f0fdf4; border-color: rgba(34, 197, 94, 0.35); }
+.sbx-task.is-done::before {
+  border-color: #22c55e; background: #22c55e;
+  content: "✓"; color: #fff; font-size: 8px; line-height: 11px; text-align: center;
+}
+.sbx-tasks-done {
+  display: none; width: 100%;
+  font-family: 'Inter', sans-serif; font-size: 13px; color: #171717;
+  padding: 8px 0 0;
+}
+.sbx-tasks-done.is-on { display: block; animation: stageIn 0.35s ease-out; }
+.sbx-tasks-done a { color: #383da0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 880px) {
   .sandbox-stage .appwin { height: 560px; }
 }
@@ -36688,9 +36720,26 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   var userView = null;
   var built = false;
 
+  /* Mikro-opgaver: guider udforskningen og kvitterer, naar pointerne er set */
+  var tasksDone = {};
+  function doneTask(name) {
+    if (tasksDone[name]) return;
+    tasksDone[name] = true;
+    var chipEl = document.querySelector('.sbx-task[data-task="' + name + '"]');
+    if (chipEl) chipEl.classList.add('is-done');
+    if (window.cqTrack) window.cqTrack.event('sandbox_explore_task', { task: name });
+    if (tasksDone.juli && tasksDone.chat && tasksDone.segment) {
+      var doneRow = document.getElementById('sbxTasksDone');
+      if (doneRow) doneRow.classList.add('is-on');
+      if (window.cqTrack) window.cqTrack.event('sandbox_explore_completed', {});
+    }
+  }
+
   function render(wf) {
     renderBoard(win, wf, { userView: userView, exploreChat: true });
     if (scrubLabel) scrubLabel.textContent = MONTHS[Math.max(0, Math.min(11, Math.round(wf) - 1))];
+    if (wf >= 6.5 && wf < 7.6) doneTask('juli');
+    if (win.__faOpen && wf >= 7.6) doneTask('chat');
   }
 
   function fillAll(sel, val) {
@@ -36707,6 +36756,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         t.addEventListener('click', function () {
           userView = t.getAttribute('data-view');
           setView(win, userView);
+          if (userView === 'quad') doneTask('segment');
           render(scrub ? parseFloat(scrub.value) : 12);
         });
       });
@@ -36739,6 +36789,14 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     fillAll('.js-leadmail', state.email || 'demo@' + company.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 14) + '.dk');
     var title = win.querySelector('.pmain-title');
     if (title) title.textContent = first ? 'Hej, ' + first : 'Hej';
+
+    // Personaliseret book-link i opgave-kvitteringen
+    var doneMail = document.getElementById('sbxDoneMail');
+    if (doneMail) {
+      var subj = state.company ? 'Vis os vores egne tal · ' + state.company : 'Vis os vores egne tal';
+      var body = 'Hej Benjamin\n\nJeg har udforsket platformen i jeres sandbox' + (state.company ? ' for ' + state.company : '') + '. Lad os tage de 20 minutter.\n\nForeslå et par tidspunkter, der passer dig.';
+      doneMail.setAttribute('href', 'mailto:bvb@culturequest.io?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body));
+    }
 
     win.__faOpen = false;
     userView = null;
