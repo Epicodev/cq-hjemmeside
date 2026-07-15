@@ -1584,6 +1584,35 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     : 'DB';
   var mailDomain = hasCompany ? company.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 14) : 'virksomheden';
   var leadMail = (hasName ? leadFirst.toLowerCase().replace(/[^a-z0-9æøå]/g, '') : 'demo') + '@' + mailDomain + '.dk';
+  // Håndaflevering fra sandboxen: afdeling + beskrivelse via localStorage
+  // (fritekst hører ikke hjemme i en URL). Udløber efter 6 timer.
+  var HAND = { deptname: null, deptdesc: null, purpose: null };
+  try {
+    var handRaw = localStorage.getItem('cq_sb_handoff');
+    if (handRaw) {
+      var hp = JSON.parse(handRaw);
+      var cleanHand = function (s, max) {
+        if (s == null) return null;
+        s = String(s).trim();
+        if (!s || /[{}<>"'&]/.test(s)) return null;
+        return s.slice(0, max);
+      };
+      if (hp && hp.ts && Date.now() - hp.ts < 6 * 3600 * 1000) {
+        HAND.deptname = cleanHand(hp.deptname, 28);
+        HAND.deptdesc = cleanHand(hp.deptdesc, 110);
+        HAND.purpose = cleanHand(hp.purpose, 60);
+        if (!hasCompany && cleanHand(hp.company, 40)) {
+          company = cleanHand(hp.company, 40);
+          hasCompany = true;
+        }
+        if (!hasEmp && hp.sizeNum >= 5 && hp.sizeNum <= 9999) {
+          employees = hp.sizeNum;
+          hasEmp = true;
+        }
+      }
+    }
+  } catch (e) {}
+
   var respondents = Math.round(employees * 0.91);
   var orgName = hasCompany ? company : 'Jeres virksomhed';
   var initials = hasCompany
@@ -1818,6 +1847,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     { t: 'Ingen opsigelse.', l: 'Julefrokost. Teamet er intakt. Ingen ved, hvor tæt det var.', d: 'Ingen exits i segmentet. Estimeret undgået omkostning: 300-600.000 kr pr. nøglemedarbejder.', cls: 'is-positive' }
   ];
 
+
   var ICONS = {
     variance: '<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
     comment: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
@@ -1841,6 +1871,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   var VIEW_MAP = ['heat', 'heat', 'heat', 'likert', 'heat', 'heat', 'konsens', 'likert', 'heat', 'quad', 'konsens', 'heat'];
   var FOCUS_MAP = ['kpi', 'none', 'alerts', 'views', 'alerts', 'none', 'alerts', 'chat', 'chat', 'views', 'alerts', 'kpi'];
   /* Typing-vinduer: [start, botbesked-tidspunkt] — månedsskala */
+  /* Sandbox-håndaflevering: deres afdeling bliver historiens hovedperson.
+     Datanøgler (W.quad) omdøbes, så alle opslag forbliver konsistente. */
+  var DEPT_STORY = 'Teknik';
+  if (HAND.deptname) {
+    DEPT_STORY = HAND.deptname;
+    W.forEach(function (w) {
+      if (w.quad && w.quad.Teknik) { w.quad[DEPT_STORY] = w.quad.Teknik; if (DEPT_STORY !== 'Teknik') delete w.quad.Teknik; }
+    });
+    DEPTS[0] = DEPT_STORY;
+    ALERTS.forEach(function (a) {
+      if (a.meta) a.meta = a.meta.split('Teknik').join(DEPT_STORY);
+      if (a.title) a.title = a.title.split('Teknik').join(DEPT_STORY);
+      if (a.body) a.body = a.body.split('Teknik').join(DEPT_STORY);
+    });
+  }
+
   var TYPING_WINDOWS = [[7.35, 7.65], [8.15, 8.5], [8.95, 9.3], [10.6, 10.9]];
 
   /* ============ HELPERS ============ */
@@ -2218,6 +2264,41 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   }
 
   /* ============ STORY BEATS ============ */
+  if (HAND.deptname) {
+    STORY.forEach(function (s) {
+      s.t = s.t.split('Teknik').join(DEPT_STORY);
+      s.l = s.l.split('Teknik').join(DEPT_STORY);
+      s.d = s.d.split('Teknik').join(DEPT_STORY);
+    });
+    // Markup-tekster (chat, view-titler, konsens): sikker tekst-node sweep
+    var sweepRoots = document.querySelectorAll('.appwin');
+    sweepRoots.forEach(function (root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      var node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.indexOf('Teknik') !== -1) {
+          node.nodeValue = node.nodeValue.split('Teknik').join(DEPT_STORY);
+        }
+      }
+    });
+    // Assistenten citerer deres egen beskrivelse med en driver-vinkling
+    if (HAND.deptdesc) {
+      var driverLine = 'Det giver mig et godt udgangspunkt for at vægte driverne rigtigt.';
+      var dl = HAND.deptdesc.toLowerCase();
+      if (/kunde|support|service|telefon|borger/.test(dl)) driverLine = 'Den type arbejde slider typisk på oplevet kontrol og arbejdspres, så dem følger jeg tættest hos jer.';
+      else if (/udvikl|software|teknik|ingeni|it\b|kode/.test(dl)) driverLine = 'I den type roller er udviklingsmuligheder og anerkendelse de første drivere, der glider.';
+      else if (/salg|marked|kommerciel/.test(dl)) driverLine = 'I den type roller er anerkendelse og klare mål de første drivere, der glider.';
+      else if (/produktion|lager|logistik|drift|montage/.test(dl)) driverLine = 'Dér er arbejdsmiljø og oplevet indflydelse typisk de første signaler.';
+      var firstMsg = document.querySelector('.fa-msg.bot');
+      if (firstMsg) {
+        var quote = document.createElement('div');
+        quote.style.marginTop = '8px';
+        quote.textContent = 'I beskrev selv ' + DEPT_STORY + ' sådan her: "' + HAND.deptdesc + '". ' + driverLine;
+        firstMsg.appendChild(quote);
+      }
+    }
+  }
+
   var storyWrap = document.getElementById('storyBeats');
   if (storyWrap) {
     STORY.forEach(function (s, i) {

@@ -35319,6 +35319,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         sizeNum: null,        // numeric for math
         values: [],           // array of value labels
         purpose: null,        // string label
+        deptname: null,       // afdeling tættest på brugeren
+        deptdesc: null,       // hvad laver afdelingen (fritekst)
         completed: false
     };
 
@@ -35353,6 +35355,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
                 { label: '51–100', num: 75 },
                 { label: '101–250', num: 175 },
                 { label: '250+', num: 400 }
+            ]
+        },
+        {
+            id: 'deptname',
+            type: 'text',
+            placeholder: 'Fx Kundeservice',
+            messages: [
+                'Lad os sætte jeres organisation op. Hvilken afdeling eller hvilket team er du tættest på i hverdagen?'
+            ]
+        },
+        {
+            id: 'deptdesc',
+            type: 'text',
+            placeholder: 'Fx supporterer kunder og håndterer onboarding',
+            messages: [
+                'Og med en linje: hvad laver {deptname}? Jo mere konkret, jo bedre kan jeg tilpasse jeres måleår.'
             ]
         },
         {
@@ -35428,7 +35446,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     }
 
     function obInterpolate(str) {
-        return str.replace('{company}', obState.company || '');
+        return str.replace('{company}', obState.company || '').replace('{deptname}', obState.deptname || 'afdelingen');
     }
 
     async function obAsk(idx) {
@@ -35789,6 +35807,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
             yp.set('utm_medium', 'site');
             yp.set('utm_campaign', 'sandbox-handoff');
             yearBtn.setAttribute('href', '/aar?' + yp.toString());
+            if (!yearBtn.__handoffBound) {
+                yearBtn.__handoffBound = true;
+                yearBtn.addEventListener('click', () => {
+                    try {
+                        localStorage.setItem('cq_sb_handoff', JSON.stringify({
+                            company: obState.company || null,
+                            sizeNum: obState.sizeNum || null,
+                            email: obState.email || null,
+                            deptname: obState.deptname || null,
+                            deptdesc: obState.deptdesc || null,
+                            purpose: obState.purpose || null,
+                            ts: Date.now()
+                        }));
+                    } catch (e) {}
+                });
+            }
         }
 
         // CTA-trappe: personaliseret mail til Benjamin
@@ -36000,6 +36034,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obState.sizeNum = null;
         obState.values = [];
         obState.purpose = null;
+        obState.deptname = null;
+        obState.deptdesc = null;
         obState.completed = false;
         obCurrentIdx = 0;
         if (obThread) obThread.innerHTML = '';
@@ -36247,7 +36283,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 
     // Bro til trin 4 (Udforsk platformen): eksponér stage-skift + state
     window.__sbShowStage = (n) => showStage(n);
-    window.__sbGetState = () => ({ company: obState.company, sizeNum: obState.sizeNum, email: obState.email });
+    window.__sbGetState = () => ({ company: obState.company, sizeNum: obState.sizeNum, email: obState.email, deptname: obState.deptname, deptdesc: obState.deptdesc, purpose: obState.purpose });
 })();
 </script>
 
