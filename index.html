@@ -21012,7 +21012,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="sandbox-cta-row">
                                 <button type="button" id="sbPdfBtn" class="sandbox-btn sandbox-btn-secondary">Download jeres startpakke (PDF)</button>
                                 <a id="sbMailBtn" class="sandbox-btn sandbox-btn-secondary" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin →</a>
-                                <button type="button" id="sbExploreBtn" class="sandbox-btn sandbox-btn-primary">Udforsk platformen →</button>
+                                <a id="sbYearBtn" class="sandbox-btn sandbox-btn-primary" href="/aar" target="_blank" rel="noopener">Se jeres 12 måneder udfolde sig →</a>
+                                <button type="button" id="sbExploreBtn" class="sandbox-btn sandbox-btn-secondary">Udforsk platformen →</button>
                                 <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start gratis prøveperiode →</a>
                             </div>
                             <button type="button" id="sbShareBtn" class="sandbox-share">Kopiér link til ledergruppen</button>
@@ -35775,6 +35776,19 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         const resultCtaP = document.querySelector('.sandbox-result-cta p');
         if (resultCtaP && obState.company) {
             resultCtaP.textContent = `Det er en simulation. I den rigtige platform er det ${obState.company}'s egne medarbejdere, og signalerne kommer fra reelle data, uge for uge.`;
+        }
+
+        // Håndaflevering: scroll-året på /aar med deres egne data
+        const yearBtn = document.getElementById('sbYearBtn');
+        if (yearBtn) {
+            const yp = new URLSearchParams();
+            if (obState.company) yp.set('c', obState.company);
+            if (obState.sizeNum) yp.set('m', obState.sizeNum);
+            if (obState.email) yp.set('em', obState.email);
+            yp.set('utm_source', 'sandbox');
+            yp.set('utm_medium', 'site');
+            yp.set('utm_campaign', 'sandbox-handoff');
+            yearBtn.setAttribute('href', '/aar?' + yp.toString());
         }
 
         // CTA-trappe: personaliseret mail til Benjamin
