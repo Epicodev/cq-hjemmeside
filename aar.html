@@ -966,6 +966,9 @@ body {
   .roi-out { padding: 26px 22px; }
 }
 
+/* Embed-mode (overlay på forsiden): parentens Luk-knap erstatter book-pill */
+.is-embed .book-pill { display: none !important; }
+
 /* ============ PERSISTENT BOOK-PILL ============ */
 .book-pill {
   position: fixed; top: 18px; right: 18px; z-index: 90;
@@ -1578,6 +1581,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     return s.length > 0 ? s.slice(0, 40) : null;
   }
   var params = new URLSearchParams(location.search);
+  var IS_EMBED = params.get('embed') === '1';
+  if (IS_EMBED) document.documentElement.classList.add('is-embed');
   // Uden ?c= kører siden i generisk tilstand: ingen opdigtede firmanavne,
   // bare "I er en virksomhed på X medarbejdere".
   var company = sanitize(params.get('c'));
@@ -1675,6 +1680,16 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       var tryExplore = document.getElementById('tryExplore');
       if (tryBuild) tryBuild.setAttribute('href', '/?' + back.toString() + '&stage=1#oplev');
       if (tryExplore) tryExplore.setAttribute('href', '/?' + back.toString() + '&stage=4#oplev');
+      if (IS_EMBED && window.parent !== window) {
+        var bridge = function (stage) {
+          return function (e) {
+            e.preventDefault();
+            try { window.parent.postMessage({ type: 'cq-sandbox-stage', stage: stage }, window.location.origin); } catch (err) {}
+          };
+        };
+        if (tryBuild) tryBuild.addEventListener('click', bridge(1));
+        if (tryExplore) tryExplore.addEventListener('click', bridge(4));
+      }
     }
   }
   document.title = hasCompany

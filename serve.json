@@ -54,6 +54,12 @@
     ],
     "headers": [
         {
+            "source": "**",
+            "headers": [
+                { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+            ]
+        },
+        {
             "source": "**/*.@(html|xml|txt|json)",
             "headers": [
                 { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
