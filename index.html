@@ -29577,46 +29577,18 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     .pp-marquee-track { animation: none; }
 }
 
-/* ============ Match-section: keep dark frame, but make cards/content inside LIGHT ============ */
-/* Section frame stays dark (.apv-law-section base), only cards and content are flipped to light */
+/* ============ Match-section (pilot): kortene følger det mørke glas-design ============
+   Brand-laget tvinger .apv-law-demand/.apv-law-case til mørkt glas med !important,
+   så tekstfarverne HER skal være lyse. (Det gamle lys-kort-tema gav mørk tekst
+   på mørkt glas = usynlig tekst.) De lyse chips beholdes, de fungerer på mørkt. */
 
-#page-pilotprojekt .apv-law-demand {
-    background: #ffffff;
-    border-color: rgba(99, 102, 241, 0.22);
-}
-#page-pilotprojekt .apv-law-demand:hover {
-    border-color: rgba(99, 102, 241, 0.4);
-    background: #ffffff;
-}
-#page-pilotprojekt .apv-law-demand::before {
-    background: radial-gradient(ellipse at 50% -20%, rgba(99, 102, 241, 0.08), transparent 70%);
-}
-#page-pilotprojekt .apv-law-demand-num {
-    color: #4f53cc;
-}
-#page-pilotprojekt .apv-law-demand-title {
-    color: #0e0e0e;
-}
-#page-pilotprojekt .apv-law-demand-text {
-    color: #2a2c40;
-}
 #page-pilotprojekt .apv-law-demand-text strong {
-    color: #0e0e0e;
-}
-#page-pilotprojekt .apv-law-demand-cite {
-    color: #6f7090;
-    border-top-color: rgba(15, 17, 50, 0.1);
+    color: #ffffff;
 }
 #page-pilotprojekt .apv-law-demand-cite-tag {
     background: #ecebfd;
     color: #4f53cc;
     border-color: rgba(99, 102, 241, 0.18);
-}
-
-/* Case cards: light on dark frame */
-#page-pilotprojekt .apv-law-case {
-    background: #ffffff;
-    border-color: rgba(255, 255, 255, 0.12);
 }
 #page-pilotprojekt .apv-law-case-tag {
     background: #ecebfd;
@@ -29628,23 +29600,11 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     color: #b45309;
     border-color: rgba(245, 158, 11, 0.25);
 }
-#page-pilotprojekt .apv-law-case-meta {
-    color: #6f7090;
-}
-#page-pilotprojekt .apv-law-case-summary {
-    color: #2a2c40;
-}
 #page-pilotprojekt .apv-law-case-summary strong {
-    color: #0e0e0e;
-}
-#page-pilotprojekt .apv-law-case-penalty {
-    color: #0e0e0e;
+    color: #ffffff;
 }
 #page-pilotprojekt .apv-law-case-penalty.is-warning {
-    color: #b45309;
-}
-#page-pilotprojekt .apv-law-case-penalty-unit {
-    color: #6f7090;
+    color: #fbbf24;
 }
 
 /* Dual-track simplified, uses pp-tt-* classes (rebuilt clean, not scroll-positioned) */
