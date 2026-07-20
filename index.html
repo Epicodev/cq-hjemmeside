@@ -20768,7 +20768,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Sådan føles skiftet fra trivselsmåling til culture intelligence.
         </h2>
         <p class="sandbox-sub body-text">
-            Tag en runde i vores sandbox. Byg en kulturmåling som CEO, besvar den fra medarbejderens side, læs AI-analysen som leder.
+            Fortæl assistenten lidt om jer, og se et helt måleår udfolde sig med jeres virksomhed og jeres afdeling i hovedrollen.
         </p>
         <div class="sandbox-disclaimer">
             <span class="sandbox-disclaimer-dot"></span>
@@ -35740,7 +35740,6 @@ body.sbx-lock { overflow: hidden; }
                     <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" class="sandbox-onboard-chip" id="obBuildGo">Byg selv en måling først</button>
         `;
         obInputArea.appendChild(startWrap);
         startWrap.querySelector('#obYearGo').addEventListener('click', () => {
@@ -35748,11 +35747,7 @@ body.sbx-lock { overflow: hidden; }
             applyOnboardingToSandbox();
             sbOpenYear('chat-handoff');
         });
-        startWrap.querySelector('#obBuildGo').addEventListener('click', () => {
-            obState.completed = true;
-            applyOnboardingToSandbox();
-            showStage(1);
-        });
+
     }
 
     function applyOnboardingToSandbox() {
