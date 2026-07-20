@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>12 måneder med culture intelligence · culturequest</title>
+<meta name="description" content="Følg et helt måleår i culturequest: fra første driver-glidning til Recovery Pattern. Privat demo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="12 måneder. Ét mønster. Ingen opsigelse.">
+<meta property="og:description" content="Følg et helt måleår i culturequest-dashboardet: fra første driver-glidning i marts til Recovery Pattern i november. 2 minutters scroll.">
+<meta property="og:image" content="https://culturequest.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="12 måneder. Ét mønster. Ingen opsigelse.">
+<meta name="twitter:description" content="Følg et helt måleår i culturequest-dashboardet. 2 minutters scroll.">
+<meta name="twitter:image" content="https://culturequest.io/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   culturequest · privat demo
+   "12 uger på 75 sekunder"
+   Ramme: website-brand (midnight/cream/Fraunces)
+   Dashboard: 1:1 platform-skin (shadcn/ui, hvid, Inter, #6366f1)
+   ============================================================ */
+:root {
+  /* Website frame tokens */
+  --midnight: #1e1b4b;
+  --cream: #f5efe2;
+  --butter: #f1d78c;
+  --terracotta: #c26a4c;
+  --indigo-deep: #383da0;
+  --ink-muted: #475569;
+  --ink-faint: #94a3b8;
+  --rule: rgba(30, 27, 75, 0.14);
+  --card-frame: #fdfaf3;
+
+  /* Platform tokens (fra web-client/src/index.css, shadcn) */
+  --p-bg: #ffffff;
+  --p-fg: #171717;
+  --p-muted-fg: #8a8a8e;
+  --p-border: #ebebeb;
+  --p-muted: #f7f7f7;
+  --p-sidebar: #fbfbfb;
+  --p-cq: #6366f1;
+  --p-radius: 10px;
+  --p-emerald: #10b981;
+  --p-emerald-bg: #ecfdf5;
+  --p-emerald-fg: #047857;
+  --p-red: #ef4444;
+  --p-red-bg: #fef2f2;
+  --p-red-fg: #b91c1c;
+  --p-amber-bg: #fffbeb;
+  --p-amber-fg: #b45309;
+  --p-indigo-bg: #eef2ff;
+  --p-indigo-fg: #4338ca;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: auto; }
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--cream);
+  color: var(--midnight);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--butter); color: var(--midnight); }
+
+/* ============ SCROLLY WRAPPER ============ */
+.scrolly { height: 1500vh; position: relative; }
+.stage {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  background: var(--midnight);
+  transition: background-color 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stage.is-light { background: var(--cream); }
+.stage::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(245,239,226,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 1; transition: opacity 0.9s ease;
+}
+.stage.is-light::before { opacity: 0; }
+.stage::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 180px rgba(239, 68, 68, 0);
+  transition: box-shadow 1.2s ease;
+}
+.stage.is-alarm::after { box-shadow: inset 0 0 180px rgba(239, 68, 68, 0.15); }
+
+/* ============ INTRO ============ */
+.intro {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.intro .beat {
+  position: absolute; max-width: 17ch; text-align: center;
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(36px, 5.6vw, 76px);
+  line-height: 1.08; letter-spacing: -0.025em;
+  color: var(--cream);
+  opacity: 0; transform: translateY(14px);
+  will-change: opacity, transform;
+}
+.intro .beat em { font-style: italic; color: var(--butter); }
+.intro .beat.small {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(245, 239, 226, 0.65);
+  max-width: none;
+}
+.intro .scroll-cue {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  color: rgba(245, 239, 226, 0.8);
+  font-family: 'Inter Tight', sans-serif; font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0; animation: cueIn 1s ease 1.2s forwards;
+  transition: opacity 0.4s ease;
+}
+.intro .scroll-cue::before,
+.intro .scroll-cue::after {
+  content: ""; width: 13px; height: 13px;
+  border-right: 2.5px solid var(--butter); border-bottom: 2.5px solid var(--butter);
+  transform: rotate(45deg);
+  animation: cueDrop 1.5s ease-in-out infinite;
+}
+.intro .scroll-cue::before { order: 2; }
+.intro .scroll-cue::after { order: 3; margin-top: -14px; animation-delay: 0.22s; }
+@keyframes cueIn { to { opacity: 1; } }
+@keyframes cueDrop {
+  0%, 100% { opacity: 0.25; transform: rotate(45deg) translate(0, 0); }
+  50% { opacity: 1; transform: rotate(45deg) translate(4px, 4px); }
+}
+
+/* Nudge under demoen: vises når man går i stå midt i historien */
+.scroll-nudge {
+  position: fixed; bottom: 22px; left: 50%; z-index: 80;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(30, 27, 75, 0.92); color: var(--cream);
+  border: 1px solid rgba(245, 239, 226, 0.18);
+  font-family: 'Inter Tight', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 18px; border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.25);
+  opacity: 0; transform: translateX(-50%) translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.scroll-nudge.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.scroll-nudge::after {
+  content: ""; width: 9px; height: 9px; margin-top: -5px;
+  border-right: 2px solid var(--butter); border-bottom: 2px solid var(--butter);
+  transform: rotate(45deg);
+  animation: cueDrop 1.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-nudge { display: none; }
+}
+
+/* ============ BOARD LAYOUT (frame) ============ */
+.board {
+  position: absolute; inset: 0; z-index: 5;
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: 22px; padding: 18px 26px;
+  opacity: 0; transform: scale(0.985);
+  transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  align-items: center;
+}
+.board.is-on { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ---- Story column (website-brand fortæller) ---- */
+.story {
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; padding-left: 16px;
+}
+.rail {
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  height: 62%; width: 2px; background: var(--rule); border-radius: 2px;
+}
+.rail-fill {
+  position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+  background: var(--indigo-deep); border-radius: 2px;
+}
+.week-label {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--indigo-deep);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.week-label::before { content: ""; width: 24px; height: 1px; background: var(--indigo-deep); }
+.week-no {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(34px, 3.5vw, 52px);
+  line-height: 1; letter-spacing: -0.025em;
+  color: var(--midnight);
+  margin-bottom: 24px;
+}
+.story-beats { position: relative; min-height: 220px; }
+.sbeat {
+  position: absolute; top: 0; left: 0; right: 0;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.sbeat.is-live { opacity: 1; transform: none; }
+.sbeat h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 500; font-size: 25px; letter-spacing: -0.02em;
+  margin-bottom: 13px; color: var(--midnight);
+}
+.sbeat .leder, .sbeat .data { font-size: 14px; line-height: 1.55; margin-bottom: 12px; }
+.sbeat .leder { color: var(--ink-muted); }
+.sbeat .leder strong, .sbeat .data strong { font-weight: 700; }
+.sbeat .data {
+  color: var(--midnight); background: var(--card-frame);
+  border: 1px solid var(--rule); border-radius: 10px;
+  padding: 12px 14px;
+}
+.sbeat .data::before {
+  content: "CULTUREQUEST SER"; display: block;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; color: var(--indigo-deep); margin-bottom: 6px;
+}
+.sbeat .data.is-danger { border-color: rgba(239, 68, 68, 0.4); }
+.sbeat .data.is-danger::before { color: var(--p-red-fg); content: "ALGORITME-ALARM"; }
+.sbeat .data.is-positive { border-color: rgba(16, 185, 129, 0.4); }
+.sbeat .data.is-positive::before { color: var(--p-emerald-fg); content: "VENDING"; }
+
+/* ============ BROWSER WINDOW ============ */
+.appwin {
+  background: var(--p-bg);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(30, 27, 75, 0.22), 0 4px 18px rgba(30, 27, 75, 0.10);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  height: min(92vh, 860px);
+  border: 1px solid rgba(30, 27, 75, 0.08);
+}
+.chrome {
+  display: flex; align-items: center; gap: 14px;
+  background: #f1f1f3; border-bottom: 1px solid #e3e3e6;
+  padding: 9px 14px; flex-shrink: 0;
+}
+.chrome-dots { display: flex; gap: 6px; }
+.chrome-dots span { width: 11px; height: 11px; border-radius: 50%; }
+.chrome-dots span:nth-child(1) { background: #fc5f57; }
+.chrome-dots span:nth-child(2) { background: #fdbc2e; }
+.chrome-dots span:nth-child(3) { background: #29c73f; }
+.chrome-url {
+  flex: 1; max-width: 420px; margin: 0 auto;
+  background: #fff; border: 1px solid #e3e3e6; border-radius: 7px;
+  font-family: 'Inter', sans-serif; font-size: 12px; color: #6b6b70;
+  padding: 5px 12px; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.chrome-url .lock { color: #29a35a; margin-right: 5px; }
+
+/* ============ APP (platform-skin, shadcn) ============ */
+.app {
+  flex: 1; display: flex; min-height: 0;
+  font-family: 'Inter', sans-serif; color: var(--p-fg);
+  background: var(--p-bg);
+}
+
+/* Sidebar */
+.psb {
+  width: 196px; flex-shrink: 0;
+  background: var(--p-sidebar); border-right: 1px solid var(--p-border);
+  display: flex; flex-direction: column;
+  padding: 12px 10px;
+}
+.psb-logo {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px 14px;
+}
+.psb-logo-mark {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: linear-gradient(135deg, #6366f1, #4f53cc);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 12px;
+}
+.psb-logo-name { font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
+.psb-group-label {
+  font-size: 10.5px; font-weight: 500; color: var(--p-muted-fg);
+  padding: 10px 8px 4px; letter-spacing: 0.01em;
+}
+.psb-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 8px; border-radius: 7px;
+  font-size: 13px; font-weight: 500; color: #3f3f46;
+  cursor: default; margin-bottom: 1px;
+}
+.psb-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; opacity: 0.75; }
+.psb-item.is-active { background: #ededf0; color: var(--p-fg); font-weight: 600; }
+.psb-item.is-active svg { opacity: 1; }
+.psb-spacer { flex: 1; }
+.psb-user {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px; border-top: 1px solid var(--p-border); margin-top: 8px;
+}
+.psb-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--p-indigo-bg); color: var(--p-indigo-fg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; flex-shrink: 0;
+}
+.psb-user-meta { min-width: 0; }
+.psb-user-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.psb-user-mail { font-size: 10.5px; color: var(--p-muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Main */
+.pmain {
+  flex: 1; min-width: 0; display: flex; flex-direction: column;
+  padding: 18px 22px; gap: 14px; overflow: hidden;
+}
+.pmain-head { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.pmain-title { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+.pmain-sub { font-size: 12.5px; color: var(--p-muted-fg); margin-top: 2px; }
+.pmain-filter {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--p-border); border-radius: 8px;
+  font-size: 12.5px; font-weight: 500; color: #3f3f46;
+  padding: 6px 12px; background: #fff;
+}
+.pmain-filter .live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--p-emerald);
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.pmain-filter b { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* KPI cards (shadcn card style) */
+.kpis { display: grid; grid-template-columns: 1.2fr 1fr 1fr 0.95fr 0.95fr; gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
+.kpi {
+  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  padding: 13px 15px; position: relative;
+  transition: opacity 0.55s ease, box-shadow 0.55s ease;
+}
+.kpi-label {
+  font-size: 12px; font-weight: 500; color: var(--p-muted-fg);
+  display: flex; align-items: center; gap: 5px; margin-bottom: 9px;
+}
+.kpi-arrow-link {
+  position: absolute; top: 11px; right: 12px;
+  color: var(--p-muted-fg); opacity: 0.7;
+}
+.kpi-arrow-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.kpi-row { display: flex; align-items: center; gap: 9px; }
+.kpi-value {
+  font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.kpi-suffix { font-size: 13px; color: var(--p-muted-fg); font-weight: 500; }
+.kpi-delta {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 11.5px; font-weight: 600;
+  padding: 2.5px 8px; border-radius: 999px;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.kpi-delta.up { color: var(--p-emerald-fg); background: var(--p-emerald-bg); }
+.kpi-delta.down { color: var(--p-red-fg); background: var(--p-red-bg); }
+.kpi-delta.flat { color: var(--p-muted-fg); background: var(--p-muted); }
+.kpi-spark { position: absolute; right: 14px; bottom: 12px; width: 90px; height: 30px; }
+.kpi-spark path { fill: none; stroke: var(--p-emerald); stroke-width: 2; stroke-linecap: round; transition: stroke 0.5s ease; }
+.kpi-spark.band-amber path { stroke: #eab308; }
+.kpi-spark .spark-fill { fill: url(#sparkGrad); stroke: none !important; opacity: 0.5; }
+
+/* Dimension cards */
+.dims { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
+.dim {
+  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  padding: 10px 12px;
+  transition: opacity 0.55s ease, box-shadow 0.55s ease, border-color 0.6s ease;
+}
+.dim-name {
+  font-size: 10.5px; font-weight: 500; color: var(--p-muted-fg);
+  margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dim-score-row { display: flex; align-items: baseline; justify-content: space-between; }
+.dim-score {
+  font-size: 21px; font-weight: 600; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.dim-arrow { font-size: 11px; font-weight: 600; }
+.dim-arrow.up { color: var(--p-emerald-fg); }
+.dim-arrow.down { color: var(--p-red-fg); }
+.dim-arrow.flat { color: var(--p-muted-fg); }
+.dim-bar { height: 3px; border-radius: 3px; background: var(--p-muted); margin-top: 8px; overflow: hidden; }
+.dim-bar-fill { height: 100%; border-radius: 3px; background: var(--p-cq); transition: background-color 0.6s ease; }
+.dim.is-hot { border-color: rgba(239, 68, 68, 0.35); }
+.dim.is-hot .dim-bar-fill { background: var(--p-red); }
+
+/* Main row: views + alerts */
+.mainrow { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; flex: 1; min-height: 0; }
+
+.views {
+  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
+  transition: opacity 0.55s ease, box-shadow 0.55s ease;
+}
+/* shadcn tabs */
+.view-tabs {
+  display: inline-flex; gap: 2px; margin-bottom: 12px;
+  background: var(--p-muted); border-radius: 8px; padding: 3px;
+  align-self: flex-start;
+}
+.vtab {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  color: var(--p-muted-fg); background: transparent; border: none;
+  padding: 5px 13px; border-radius: 6px; cursor: default;
+  transition: all 0.3s ease;
+}
+.vtab.is-active { color: var(--p-fg); background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-weight: 600; }
+.explore-mode .vtab { cursor: pointer; }
+.explore-mode .vtab:hover { color: var(--p-fg); }
+
+.view-stack { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.view {
+  position: absolute; inset: 0;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex; flex-direction: column;
+}
+.view.is-active { opacity: 1; transform: none; pointer-events: auto; }
+
+/* Heatmap */
+.heat { display: grid; grid-template-columns: 86px repeat(5, 1fr); gap: 4px; align-content: start; }
+.heat-h {
+  font-size: 9.5px; font-weight: 500; color: var(--p-muted-fg);
+  text-align: center; align-self: end; padding-bottom: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.heat-r { font-size: 12px; font-weight: 500; color: var(--p-fg); display: flex; align-items: center; }
+.heat-c {
+  border-radius: 7px; padding: 10px 4px; text-align: center;
+  font-size: 12.5px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.heat-note, .hist-note, .quad-note { margin-top: 10px; font-size: 11px; color: var(--p-muted-fg); }
+.hist-note strong { color: var(--p-amber-fg); font-weight: 600; }
+
+/* Svarfordeling (Likert, platform 1:1) */
+.likert { flex: 1; display: flex; flex-direction: column; }
+.likert-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.likert-score {
+  min-width: 38px; height: 38px; border-radius: 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
+  background: #fffbeb; color: #b45309;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.likert-score.band-green { background: #f0fdf4; color: #15803d; }
+.likert-score.band-orange { background: #fff7ed; color: #c2410c; }
+.likert-q { flex: 1; font-size: 12.5px; font-weight: 600; color: var(--p-fg); line-height: 1.3; }
+.likert-seg { color: var(--p-muted-fg); font-weight: 500; }
+.likert-badge {
+  font-size: 10.5px; font-weight: 600; white-space: nowrap;
+  padding: 3px 10px; border-radius: 999px;
+  background: #fffbeb; color: #b45309;
+}
+.likert-badge.band-green { background: #ecfdf5; color: #047857; }
+.likert-badge.band-orange { background: #fff7ed; color: #c2410c; }
+.likert-badge.band-red { background: #fef2f2; color: #b91c1c; }
+.likert-bar {
+  display: flex; height: 26px; border-radius: 999px; overflow: hidden;
+  margin-bottom: 14px;
+}
+.likert-bar span {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; color: #fff;
+  min-width: 0; overflow: hidden; white-space: nowrap;
+  transition: flex-grow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.likert-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.likert-lab { text-align: center; }
+.likert-lab .dot { display: inline-block; width: 14px; height: 5px; border-radius: 3px; margin-bottom: 4px; }
+.likert-lab .nm { font-size: 10px; font-weight: 600; color: var(--p-fg); display: block; }
+.likert-lab .ct { font-size: 9.5px; color: var(--p-muted-fg); font-variant-numeric: tabular-nums; }
+
+/* Kulturel overensstemmelse (platform 1:1) */
+.konsens { flex: 1; display: flex; flex-direction: column; }
+.konsens-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.konsens-title { font-size: 12.5px; font-weight: 600; color: var(--p-fg); }
+.konsens-stats {
+  display: flex; gap: 0; background: var(--p-muted); border-radius: 8px;
+  padding: 8px 4px; margin-bottom: 10px;
+}
+.konsens-stat { flex: 1; text-align: center; }
+.konsens-stat b { display: block; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.konsens-stat span { font-size: 9.5px; color: var(--p-muted-fg); }
+.konsens-bars { flex: 1; display: flex; align-items: flex-end; gap: 6px; min-height: 70px; padding: 0 2px; }
+.konsens-bar {
+  flex: 1; border-radius: 5px 5px 2px 2px; min-height: 2px;
+  transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.5s ease;
+}
+.konsens-axis {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; padding: 5px 2px 0;
+  border-top: 1px solid var(--p-border); margin-top: 4px;
+}
+.konsens-axis span { font-size: 8.5px; color: var(--p-muted-fg); text-align: center; font-variant-numeric: tabular-nums; }
+.konsens-warn {
+  margin-top: 8px; font-size: 10.5px; font-weight: 600; color: var(--p-red-fg);
+  display: none; align-items: center; gap: 5px;
+}
+.konsens-warn.is-on { display: flex; }
+.konsens-warn::before { content: "⚠"; font-size: 11px; }
+
+/* KPI extras */
+.kpi-note { font-size: 10.5px; color: var(--p-muted-fg); margin-top: 7px; }
+.kpi-rrbar { height: 6px; border-radius: 999px; background: var(--p-muted); margin-top: 9px; overflow: hidden; }
+.kpi-rrbar-fill {
+  height: 100%; border-radius: 999px; width: 91%;
+  background: var(--p-emerald);
+  transition: width 0.4s ease, background-color 0.5s ease;
+}
+.kpi-rrbar-fill.band-amber { background: #eab308; }
+.kpi-rrbar-fill.band-red { background: var(--p-red); }
+
+/* Quadrant */
+.quad { flex: 1; position: relative; min-height: 140px; }
+.quad-plot { position: absolute; inset: 16px 8px 24px 8px; border-left: 1px solid var(--p-border); border-bottom: 1px solid var(--p-border); }
+.quad-mid-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #f1f1f3; }
+.quad-mid-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #f1f1f3; }
+.quad-zone {
+  position: absolute; font-size: 9px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--p-muted-fg); opacity: 0.8;
+}
+.quad-dot {
+  position: absolute; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--p-cq); border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  transform: translate(-50%, 50%);
+  transition: background-color 0.5s ease;
+}
+.quad-dot.is-risk { background: var(--p-red); }
+.quad-dot-label {
+  position: absolute; transform: translate(-50%, 50%) translate(0, -15px);
+  font-size: 10px; font-weight: 600; color: var(--p-fg); white-space: nowrap;
+}
+.quad-trail { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.quad-trail polyline { fill: none; stroke: rgba(239, 68, 68, 0.4); stroke-width: 1.5; stroke-dasharray: 3 4; }
+
+/* Alerts (Signaler) */
+.alerts {
+  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
+  transition: opacity 0.55s ease, box-shadow 0.55s ease;
+}
+.alerts-head {
+  font-size: 13px; font-weight: 600; color: var(--p-fg);
+  margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;
+}
+.alerts-sub { font-size: 11px; color: var(--p-muted-fg); margin-bottom: 10px; }
+.alerts-count {
+  font-size: 11px; font-weight: 600;
+  background: var(--p-muted); color: var(--p-fg);
+  padding: 2px 9px; border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+.alerts-list { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 7px; }
+.alert {
+  border: 1px solid var(--p-border); border-radius: 9px; padding: 9px 11px;
+  display: flex; gap: 9px; align-items: flex-start;
+  opacity: 0; transform: translateX(14px); max-height: 0; overflow: hidden;
+  padding-top: 0; padding-bottom: 0; margin: 0; border-width: 0;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              max-height 0.5s ease, padding 0.5s ease, border-width 0.1s ease;
+}
+.alert.is-in {
+  opacity: 1; transform: none; max-height: 120px;
+  padding-top: 9px; padding-bottom: 9px; border-width: 1px;
+}
+.alert-ico {
+  width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.alert-ico svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.alert-content { min-width: 0; }
+.alert-meta { font-size: 10px; font-weight: 500; color: var(--p-muted-fg); margin-bottom: 2px; font-variant-numeric: tabular-nums; }
+.alert-title { font-size: 12.5px; font-weight: 600; color: var(--p-fg); margin-bottom: 2px; }
+.alert-body { font-size: 11.5px; line-height: 1.45; color: #5c5c63; }
+.alert.sev-warning .alert-ico { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.alert.sev-danger { border-color: rgba(239, 68, 68, 0.35); background: #fffafa; }
+.alert.sev-danger .alert-ico { background: var(--p-red-bg); color: var(--p-red-fg); }
+.alert.sev-info .alert-ico { background: var(--p-indigo-bg); color: var(--p-indigo-fg); }
+.alert.sev-reco { border-color: rgba(99, 102, 241, 0.4); background: #fbfbff; }
+.alert.sev-reco .alert-ico { background: var(--p-cq); color: #fff; }
+.alert.sev-positive .alert-ico { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.alert.sev-danger.is-in { animation: alertShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.45s; }
+@keyframes alertShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); } 40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); } 80% { transform: translateX(1px); }
+}
+.alerts-empty {
+  font-size: 12px; color: var(--p-muted-fg);
+  padding: 8px 0; font-style: italic;
+  transition: opacity 0.4s ease;
+}
+.alerts-empty.is-gone { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+/* Spotlight focus */
+.app[data-focus="kpi"] .views, .app[data-focus="kpi"] .alerts, .app[data-focus="kpi"] .dims { opacity: 0.35; }
+.app[data-focus="dims"] .views, .app[data-focus="dims"] .alerts, .app[data-focus="dims"] .kpis { opacity: 0.35; }
+.app[data-focus="views"] .kpis, .app[data-focus="views"] .alerts, .app[data-focus="views"] .dims { opacity: 0.35; }
+.app[data-focus="alerts"] .kpis, .app[data-focus="alerts"] .views, .app[data-focus="alerts"] .dims { opacity: 0.35; }
+.app[data-focus="alerts"] .alerts { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
+.app[data-focus="views"] .views { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
+
+/* ============ FLOATING ASSISTANT (platform 1:1) ============ */
+.appwin { position: relative; }
+.fa-launcher {
+  position: absolute; right: 16px; bottom: 16px; z-index: 40;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+.fa-launcher:hover { transform: scale(1.06); }
+.fa-launcher svg { width: 22px; height: 22px; }
+.fa-badge {
+  position: absolute; top: -2px; right: -2px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--p-red); border: 2px solid #fff;
+  opacity: 0; transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fa-badge.is-on { opacity: 1; transform: scale(1); animation: faBadgePulse 1.6s ease-in-out infinite; }
+@keyframes faBadgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+.fa-panel {
+  position: absolute; right: 16px; bottom: 74px; z-index: 39;
+  width: 384px; max-width: calc(100% - 32px);
+  height: 560px; max-height: calc(100% - 96px);
+  background: #fff; border: 1px solid var(--p-border); border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.08);
+  display: flex; flex-direction: column; overflow: hidden;
+  opacity: 0; transform: translateY(14px) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: 'Inter', sans-serif;
+}
+.fa-panel.is-open { opacity: 1; transform: none; pointer-events: auto; }
+.fa-head {
+  display: flex; align-items: center; gap: 9px;
+  padding: 14px 14px 13px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6); flex-shrink: 0;
+}
+.fa-head-ico {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2); color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.fa-head-ico svg { width: 15px; height: 15px; }
+.fa-head-meta { flex: 1; min-width: 0; }
+.fa-head-name { font-size: 13px; font-weight: 700; color: #fff; }
+.fa-head-status { font-size: 10.5px; color: rgba(255, 255, 255, 0.75); display: flex; align-items: center; gap: 5px; }
+.fa-head-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.fa-body {
+  flex: 1; overflow-y: auto; padding: 14px 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  background: #fcfcfd;
+  scroll-behavior: smooth;
+}
+.fa-msg {
+  flex-shrink: 0;
+  max-width: 86%; border-radius: 16px; padding: 10px 14px;
+  font-size: 13px; line-height: 1.55; white-space: pre-line;
+  opacity: 0; transform: translateY(8px); max-height: 0; overflow: hidden;
+  padding-top: 0; padding-bottom: 0; margin: 0;
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              max-height 0.45s ease, padding 0.45s ease;
+}
+.fa-msg.is-in {
+  opacity: 1; transform: none; max-height: 620px;
+  padding-top: 10px; padding-bottom: 10px;
+}
+.fa-msg.bot { align-self: flex-start; background: #f1f1f4; color: var(--p-fg); border-bottom-left-radius: 5px; }
+.fa-msg.user {
+  align-self: flex-end; color: #fff;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-bottom-right-radius: 5px;
+}
+.fa-msg.bot strong { font-weight: 600; }
+.fa-welcome {
+  flex-shrink: 0;
+  align-self: flex-start; background: #f1f1f4; color: var(--p-fg);
+  border-radius: 16px; border-bottom-left-radius: 5px;
+  padding: 10px 14px; font-size: 13px; line-height: 1.55;
+  transition: opacity 0.3s ease;
+}
+.fa-welcome.is-gone { display: none; }
+.fa-typing {
+  flex-shrink: 0;
+  align-self: flex-start; background: #f1f1f4; border-radius: 16px;
+  border-bottom-left-radius: 5px; padding: 11px 14px;
+  display: none; gap: 4px; align-items: center;
+}
+.fa-typing.is-on { display: flex; }
+.fa-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: #9ca3af;
+  animation: faBounce 1.2s ease-in-out infinite;
+}
+.fa-typing span:nth-child(2) { animation-delay: 0.15s; }
+.fa-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes faBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+.fa-composer {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-top: 1px solid var(--p-border);
+  background: #fff; flex-shrink: 0;
+}
+.fa-input {
+  flex: 1; border: 1px solid var(--p-border); border-radius: 999px;
+  padding: 8px 14px; font-family: 'Inter', sans-serif; font-size: 12px;
+  color: var(--p-muted-fg); background: #fff; pointer-events: none;
+}
+.fa-send {
+  width: 32px; height: 32px; border-radius: 50%; border: none;
+  background: var(--p-cq); color: #fff; opacity: 0.5;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.fa-send svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- Guide chip (fortæller-pegepind, flytter blikket måned for måned) ---- */
+.guide-chip {
+  position: absolute; z-index: 42; left: 0; top: 0;
+  display: flex; align-items: center; gap: 9px;
+  max-width: 320px;
+  background: var(--midnight); color: var(--cream);
+  border-radius: 999px; padding: 9px 16px 9px 12px;
+  font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 600; line-height: 1.35;
+  box-shadow: 0 12px 34px rgba(30, 27, 75, 0.4);
+  opacity: 0; transform: translateY(6px);
+  pointer-events: none;
+  transition: left 0.75s cubic-bezier(0.22, 1, 0.36, 1), top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.35s ease, transform 0.35s ease;
+}
+.guide-chip.is-on { opacity: 1; transform: none; }
+.guide-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--butter); flex-shrink: 0;
+  animation: guidePulse 1.7s ease-in-out infinite;
+}
+@keyframes guidePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(241, 215, 140, 0.55); }
+  55% { box-shadow: 0 0 0 7px rgba(241, 215, 140, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide-chip { display: none; }
+}
+
+/* Chat spotlight */
+.app[data-focus="chat"] .kpis, .app[data-focus="chat"] .views,
+.app[data-focus="chat"] .alerts, .app[data-focus="chat"] .dims { opacity: 0.35; }
+.appwin.is-chatfocus .fa-panel {
+  box-shadow: 0 0 0 2px var(--p-cq), 0 22px 60px rgba(99, 102, 241, 0.28);
+}
+
+@media (max-width: 900px) {
+  .fa-panel { width: calc(100% - 24px); right: 12px; bottom: 66px; height: 300px; }
+  .fa-launcher { right: 12px; bottom: 12px; width: 42px; height: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fa-panel { opacity: 1; transform: none; pointer-events: auto; }
+  .fa-msg { opacity: 1; transform: none; max-height: none; padding: 9px 13px; }
+  .fa-typing { display: none !important; }
+}
+
+/* ============ POST-SCROLL SECTIONS (website-brand) ============ */
+.payoff {
+  background: var(--midnight); color: var(--cream);
+  padding: 140px 28px; text-align: center; position: relative;
+}
+.payoff::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(245,239,226,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.payoff-inner { max-width: 760px; margin: 0 auto; position: relative; }
+.payoff h2 {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.06; letter-spacing: -0.025em; margin-bottom: 30px;
+}
+.payoff h2 em { font-style: italic; color: var(--butter); }
+.payoff p {
+  font-size: 17px; line-height: 1.65; color: rgba(245, 239, 226, 0.82);
+  max-width: 56ch; margin: 0 auto 18px;
+}
+.payoff .stat-line { display: flex; justify-content: center; gap: 44px; margin-top: 48px; flex-wrap: wrap; }
+.payoff .stat { text-align: center; }
+.payoff .stat-num {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 500; font-size: 44px; letter-spacing: -0.02em; color: var(--butter);
+  font-variant-numeric: tabular-nums;
+}
+.payoff .stat-lbl {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: rgba(245, 239, 226, 0.6); margin-top: 6px;
+}
+.payoff-bridge { margin-top: 56px; }
+.payoff-bridge p { font-size: 17px; }
+.trust {
+  margin-top: 64px; padding-top: 44px;
+  border-top: 1px solid rgba(245, 239, 226, 0.14);
+  text-align: left;
+}
+.trust-head {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-style: italic; font-size: 22px; line-height: 1.35;
+  color: var(--cream); margin-bottom: 28px; max-width: 46ch;
+}
+.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.trust-t {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--butter);
+  margin-bottom: 8px;
+}
+.trust-grid p { font-size: 14.5px; line-height: 1.6; color: rgba(245, 239, 226, 0.72); margin: 0; }
+.payoff-quote {
+  margin: 72px auto 0; max-width: 620px;
+}
+.payoff-quote p {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-style: italic; font-size: 24px; line-height: 1.45;
+  color: var(--cream); margin-bottom: 16px;
+}
+.payoff-quote cite {
+  font-family: 'Inter', sans-serif; font-style: normal; font-size: 13px;
+  font-weight: 500; letter-spacing: 0.04em; color: rgba(245, 239, 226, 0.6);
+}
+@media (max-width: 720px) {
+  .trust-grid { grid-template-columns: 1fr; gap: 22px; }
+}
+
+/* ============ ROI ============ */
+.roi {
+  background: var(--midnight); color: var(--cream);
+  padding: 110px 28px 120px; position: relative;
+}
+.roi::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(245,239,226,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.roi-inner { max-width: 1040px; margin: 0 auto; position: relative; }
+.roi .eyebrow { color: var(--butter); }
+.roi .eyebrow::before { background: var(--butter); }
+.roi h2 {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(32px, 4vw, 50px);
+  line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 14px;
+}
+.roi h2 em { font-style: italic; color: var(--butter); }
+.roi .sub {
+  font-size: 16.5px; line-height: 1.6; color: rgba(245, 239, 226, 0.75);
+  max-width: 54ch; margin-bottom: 52px;
+}
+.roi-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+.roi-field { display: block; margin-bottom: 34px; }
+.roi-lab {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 12px; gap: 16px;
+}
+.roi-lab span:first-child {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245, 239, 226, 0.7);
+}
+.roi-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 600;
+  color: var(--cream); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.roi input[type="range"] {
+  width: 100%; accent-color: var(--butter); cursor: pointer; height: 22px;
+}
+.roi-note {
+  font-size: 12.5px; line-height: 1.6; color: rgba(245, 239, 226, 0.5);
+  margin-top: 8px; max-width: 44ch;
+}
+.roi-out {
+  border: 1px solid rgba(245, 239, 226, 0.16); border-radius: 18px;
+  padding: 36px 38px; background: rgba(245, 239, 226, 0.03);
+}
+.roi-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
+  padding: 13px 0; border-bottom: 1px solid rgba(245, 239, 226, 0.1);
+}
+.roi-row .l { font-size: 14px; color: rgba(245, 239, 226, 0.72); line-height: 1.45; }
+.roi-row .v {
+  font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 600;
+  color: var(--cream); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.roi-big { margin-top: 26px; }
+.roi-big .l {
+  font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase; color: rgba(245, 239, 226, 0.6);
+  margin-bottom: 8px;
+}
+.roi-big .v {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 500; font-size: clamp(40px, 5vw, 58px); letter-spacing: -0.02em;
+  color: var(--butter); font-variant-numeric: tabular-nums; line-height: 1;
+}
+.roi-big .v small {
+  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
+  color: rgba(245, 239, 226, 0.6); letter-spacing: 0; margin-left: 6px;
+}
+.roi-levels-label {
+  font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase; color: rgba(245, 239, 226, 0.7);
+  margin-bottom: 10px;
+}
+.roi-levels { display: flex; gap: 8px; margin-bottom: 26px; flex-wrap: wrap; }
+.roi-level {
+  border: 1px solid rgba(245, 239, 226, 0.28); border-radius: 999px;
+  background: transparent; color: rgba(245, 239, 226, 0.78);
+  font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+  padding: 9px 15px; cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.roi-level:hover { border-color: rgba(245, 239, 226, 0.55); }
+.roi-level.is-active { background: var(--butter); color: var(--midnight); border-color: var(--butter); }
+.roi-row .src { display: block; font-size: 11px; color: rgba(245, 239, 226, 0.45); margin-top: 3px; }
+.roi-skip {
+  margin-top: 24px; font-size: 12.5px; line-height: 1.65; color: rgba(245, 239, 226, 0.55);
+}
+.roi-skip strong { color: rgba(245, 239, 226, 0.75); font-weight: 600; }
+.roi-how {
+  margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(245, 239, 226, 0.12);
+}
+.roi-how summary {
+  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--butter);
+}
+.roi-how summary::-webkit-details-marker { display: none; }
+.roi-how summary::after { content: "+"; font-size: 16px; transition: transform 0.25s ease; }
+.roi-how[open] summary::after { transform: rotate(45deg); }
+.roi-how-body { margin-top: 18px; max-width: 90ch; }
+.roi-how-body p {
+  font-size: 13px; line-height: 1.7; color: rgba(245, 239, 226, 0.6); margin-bottom: 12px;
+}
+.roi-how-body p strong { color: rgba(245, 239, 226, 0.85); font-weight: 600; }
+.roi-sources {
+  margin-top: 48px; padding-top: 26px; border-top: 1px solid rgba(245, 239, 226, 0.12);
+  font-size: 12.5px; line-height: 1.7; color: rgba(245, 239, 226, 0.5); max-width: 90ch;
+}
+@media (max-width: 860px) {
+  .roi-grid { grid-template-columns: 1fr; gap: 40px; }
+  .roi-out { padding: 26px 22px; }
+}
+
+/* Embed-mode (overlay på forsiden): parentens Luk-knap erstatter book-pill */
+.is-embed .book-pill { display: none !important; }
+
+/* ============ PERSISTENT BOOK-PILL ============ */
+.book-pill {
+  position: fixed; top: 18px; right: 18px; z-index: 90;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--butter); color: var(--midnight);
+  font-family: 'Inter Tight', sans-serif; font-size: 13.5px; font-weight: 600;
+  padding: 11px 19px; border-radius: 999px; text-decoration: none;
+  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.28);
+  opacity: 0; transform: translateY(-10px); pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.book-pill.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.book-pill:hover { filter: brightness(1.05); }
+@media (max-width: 720px) {
+  /* Bund-venstre på mobil: chat-launcheren bor nederst til højre */
+  .book-pill { top: auto; bottom: 16px; right: auto; left: 16px; font-size: 13px; padding: 10px 16px; }
+}
+
+/* Explore */
+.explore { padding: 110px 28px 90px; max-width: 1280px; margin: 0 auto; }
+.explore-head { max-width: 660px; margin-bottom: 44px; }
+.eyebrow {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--indigo-deep);
+  display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--indigo-deep); }
+.explore h2 {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(32px, 4vw, 50px);
+  line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 16px;
+}
+.explore .sub { font-size: 16.5px; line-height: 1.6; color: var(--ink-muted); max-width: 58ch; }
+.scrubber {
+  display: flex; align-items: center; gap: 18px;
+  background: var(--card-frame); border: 1px solid var(--rule); border-radius: 14px;
+  padding: 16px 20px; margin-bottom: 16px;
+}
+.scrubber-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
+  color: var(--midnight); white-space: nowrap; min-width: 104px;
+  font-variant-numeric: tabular-nums;
+}
+.scrubber input[type="range"] {
+  flex: 1; -webkit-appearance: none; appearance: none; height: 4px;
+  background: linear-gradient(90deg, var(--indigo-deep) var(--fill, 0%), rgba(30, 27, 75, 0.12) var(--fill, 0%));
+  border-radius: 4px; outline: none; cursor: pointer;
+}
+.scrubber input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--midnight); border: 3px solid var(--cream);
+  box-shadow: 0 1px 6px rgba(30, 27, 75, 0.4); cursor: grab;
+}
+.scrubber input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--midnight); border: 3px solid var(--cream);
+  box-shadow: 0 1px 6px rgba(30, 27, 75, 0.4); cursor: grab;
+}
+.explore-board .appwin { height: auto; min-height: 620px; box-shadow: 0 18px 50px rgba(30, 27, 75, 0.14); }
+.explore-board .mainrow { min-height: 290px; }
+.explore-note {
+  margin-top: 14px; font-size: 12.5px; color: var(--ink-faint);
+  font-family: 'Inter', sans-serif; max-width: 70ch;
+}
+
+/* CTA */
+.cta {
+  background: var(--midnight); color: var(--cream);
+  padding: 120px 28px; text-align: center; position: relative; overflow: hidden;
+}
+.cta::before {
+  content: ""; position: absolute; top: -30%; right: -10%;
+  width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(241, 215, 140, 0.12), transparent 65%);
+  pointer-events: none;
+}
+.cta-inner { max-width: 680px; margin: 0 auto; position: relative; }
+.cta h2 {
+  font-family: 'Fraunces', Georgia, serif; font-variation-settings: "opsz" 144;
+  font-weight: 400; font-size: clamp(34px, 4.6vw, 58px);
+  line-height: 1.06; letter-spacing: -0.025em; margin-bottom: 22px;
+}
+.cta p { font-size: 17px; line-height: 1.6; color: rgba(245, 239, 226, 0.82); margin-bottom: 40px; }
+.cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--butter); color: var(--midnight);
+  font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 15.5px;
+  padding: 15px 30px; border-radius: 12px; text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.btn-primary:hover { background: #e8ca7a; transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--cream);
+  border: 1px solid rgba(245, 239, 226, 0.3);
+  font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 15.5px;
+  padding: 15px 30px; border-radius: 12px; text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.btn-ghost:hover { background: rgba(245, 239, 226, 0.08); }
+.cta-micro {
+  margin-top: 44px; font-family: 'Inter', sans-serif; font-size: 12px;
+  color: rgba(245, 239, 226, 0.45); letter-spacing: 0.04em;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1180px) {
+  .board { grid-template-columns: 270px 1fr; }
+  .psb { width: 54px; padding: 12px 7px; }
+  .psb-logo-name, .psb-group-label, .psb-item span, .psb-user-meta { display: none; }
+  .psb-item { justify-content: center; padding: 9px 0; }
+  .psb-user { justify-content: center; border-top: none; }
+  .week-no { font-size: 56px; }
+}
+@media (max-width: 900px) {
+  .scrolly { height: 1300vh; }
+  .board { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 10px; padding: 12px; align-items: stretch; }
+  .story { padding-left: 0; justify-content: flex-start; padding-top: 4px; }
+  .rail { display: none; }
+  .week-no { font-size: 40px; margin-bottom: 8px; }
+  .story-beats { min-height: 130px; }
+  .sbeat h3 { font-size: 18px; margin-bottom: 7px; }
+  .sbeat .leder { display: none; }
+  .sbeat .data { font-size: 12.5px; padding: 10px 12px; }
+  .appwin { height: auto; flex: 1; min-height: 0; }
+  .psb { display: none; }
+  .pmain { padding: 12px 14px; gap: 10px; }
+  .pmain-sub { display: none; }
+  .kpis { grid-template-columns: 1fr 1fr; }
+  .kpi:nth-child(3) { display: none; }
+  .kpi-spark { display: none; }
+  .kpi-value { font-size: 24px; }
+  .dims { gap: 6px; }
+  .dim { padding: 7px 8px; }
+  .dim-name { font-size: 8.5px; }
+  .dim-score { font-size: 16px; }
+  .dim-bar { display: none; }
+  .mainrow { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  .views { min-height: 180px; }
+  .alerts { max-height: 190px; }
+  .heat { grid-template-columns: 64px repeat(5, 1fr); gap: 3px; }
+  .heat-c { padding: 7px 2px; font-size: 11px; border-radius: 5px; }
+  .heat-h { font-size: 7.5px; }
+  .heat-r { font-size: 10px; }
+  .intro .beat { font-size: clamp(30px, 8.4vw, 48px); }
+  .explore { padding: 80px 16px 60px; }
+  .explore-board .appwin { min-height: auto; }
+  .chrome-url { font-size: 10px; }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .scrolly { height: auto; }
+  .stage { position: relative; height: auto; min-height: 100vh; background: var(--cream); }
+  .stage::before { display: none; }
+  .intro { position: relative; height: 50vh; }
+  .intro .beat { position: relative; opacity: 1 !important; transform: none !important; color: var(--midnight); display: none; }
+  .intro .beat:first-child { display: block; }
+  .board { position: relative; opacity: 1; transform: none; pointer-events: auto; }
+  .sbeat { position: relative; opacity: 1; transform: none; display: none; }
+  .sbeat:last-child { display: block; }
+  .alert { opacity: 1; transform: none; max-height: none; padding: 9px 11px; border-width: 1px; }
+  * { animation: none !important; transition-duration: 0.01s !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ ACT 1: SCROLLY ============ -->
+<div class="scrolly" id="scrolly">
+  <div class="stage" id="stage">
+
+    <!-- Intro beats -->
+    <div class="intro" id="intro">
+      <p class="beat js-beat0" data-beat="0">I er en virksomhed på <span class="js-emp">34</span> medarbejdere.</p>
+      <p class="beat" data-beat="1">I løbet af året begynder nogle af dem at kigge <em>væk.</em></p>
+      <p class="beat" data-beat="2">Ingen ser det komme.</p>
+      <p class="beat small" data-beat="3">Det her er de 12 måneder, som tallene så dem</p>
+      <div class="scroll-cue">Scroll for at starte · 2 min</div>
+    </div>
+
+    <!-- Board: story + browser window -->
+    <div class="board" id="board">
+      <aside class="story">
+        <div class="rail"><div class="rail-fill" id="railFill"></div></div>
+        <div class="week-label">Måleår · 12 målinger</div>
+        <div class="week-no"><span id="weekNum">Januar</span></div>
+        <div class="story-beats" id="storyBeats"></div>
+      </aside>
+
+      <div class="appwin">
+        <div class="chrome">
+          <div class="chrome-dots"><span></span><span></span><span></span></div>
+          <div class="chrome-url"><span class="lock">&#128274;</span>app.culturequest.io/dashboard</div>
+          <div style="width: 47px;"></div>
+        </div>
+
+        <div class="app" id="dashMain" data-focus="none">
+          <!-- Sidebar (platform 1:1) -->
+          <nav class="psb" aria-hidden="true">
+            <div class="psb-logo">
+              <div class="psb-logo-mark js-avatar">DV</div>
+              <div class="psb-logo-name js-company">Demovirksomhed</div>
+            </div>
+            <div class="psb-group-label">Platform</div>
+            <div class="psb-item is-active">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              <span>Dashboard</span>
+            </div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>
+              <span>Analyse</span>
+            </div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+              <span>Assistent</span>
+            </div>
+            <div class="psb-group-label">Feedback</div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
+              <span>Kulturundersøgelser</span>
+            </div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Kommentarer</span>
+            </div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M2 22h20"/><path d="M10 6h4M10 10h4M10 14h4"/></svg>
+              <span>APV</span>
+            </div>
+            <div class="psb-group-label">Generelt</div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 10h1M9 14h1M14 10h1M14 14h1"/></svg>
+              <span>Organisation</span>
+            </div>
+            <div class="psb-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Indstillinger</span>
+            </div>
+            <div class="psb-spacer"></div>
+            <div class="psb-item psb-help">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+              <span>Hjælpecenter</span>
+            </div>
+            <div class="psb-user">
+              <div class="psb-avatar js-leadinitials">DB</div>
+              <div class="psb-user-meta">
+                <div class="psb-user-name js-leadname">Demo-bruger</div>
+                <div class="psb-user-mail js-leadmail">demo@virksomheden.dk</div>
+              </div>
+            </div>
+          </nav>
+
+          <!-- Main content -->
+          <main class="pmain">
+            <div class="pmain-head">
+              <div>
+                <div class="pmain-title">Hej, <span class="js-leadfirst"></span></div>
+                <div class="pmain-sub">Få et overblik over din organisations kultur og engagement</div>
+              </div>
+              <div class="pmain-filter"><span class="live-dot"></span>Seneste måling · <b class="js-liveweek">Januar</b></div>
+            </div>
+
+            <div class="kpis">
+              <div class="kpi">
+                <div class="kpi-label">Kultur score</div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+                <div class="kpi-row">
+                  <span class="kpi-value js-cs">79</span>
+                  <span class="kpi-suffix">/100</span>
+                  <span class="kpi-delta flat js-cs-delta">—</span>
+                </div>
+                <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path class="spark-fill js-sparkfill" d=""></path>
+                  <path class="js-sparkline" d=""></path>
+                </svg>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Engagement-score</div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+                <div class="kpi-row">
+                  <span class="kpi-value js-eng">74</span>
+                  <span class="kpi-suffix">/100</span>
+                  <span class="kpi-delta flat js-eng-delta">—</span>
+                </div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Svarprocent</div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+                <div class="kpi-row">
+                  <span class="kpi-value js-rr">91</span>
+                  <span class="kpi-suffix">%</span>
+                </div>
+                <div class="kpi-rrbar"><div class="kpi-rrbar-fill js-rrbar"></div></div>
+              </div>
+              <div class="kpi kpi-compact">
+                <div class="kpi-label">Undersøgelser</div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+                <div class="kpi-row">
+                  <span class="kpi-value js-surveys">1</span>
+                </div>
+                <div class="kpi-note">Næste måling · <span class="js-nextmonth">Februar</span></div>
+              </div>
+              <div class="kpi kpi-compact">
+                <div class="kpi-label">Organisation</div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+                <div class="kpi-row">
+                  <span class="kpi-value js-emp2">34</span>
+                  <span class="kpi-suffix">medarb.</span>
+                </div>
+                <div class="kpi-note">4 afdelinger · 3 teams</div>
+              </div>
+            </div>
+
+            <div class="dims js-dims"></div>
+
+            <div class="mainrow">
+              <div class="views">
+                <div class="view-tabs js-vtabs">
+                  <button class="vtab is-active" data-view="heat">Heatmap</button>
+                  <button class="vtab" data-view="likert">Svarfordeling</button>
+                  <button class="vtab" data-view="konsens">Overensstemmelse</button>
+                  <button class="vtab" data-view="quad">Segmenter</button>
+                </div>
+                <div class="view-stack">
+                  <div class="view is-active" data-view="heat">
+                    <div class="heat js-heat"></div>
+                    <div class="heat-note">Kategoriscorer pr. afdeling. Skala 0 til 100.</div>
+                  </div>
+                  <div class="view" data-view="likert">
+                    <div class="likert">
+                      <div class="likert-head">
+                        <span class="likert-score js-likertscore">54</span>
+                        <div class="likert-q">Hvor ofte føler du dig stresset? <span class="likert-seg">· Teknik</span></div>
+                        <span class="likert-badge js-likertbadge">Overvej et initiativ</span>
+                      </div>
+                      <div class="likert-bar js-likertbar"></div>
+                      <div class="likert-labels js-likertlabels"></div>
+                      <div class="heat-note js-histnote">Fordelingen samler sig pænt om et lavt stressniveau.</div>
+                    </div>
+                  </div>
+                  <div class="view" data-view="konsens">
+                    <div class="konsens">
+                      <div class="konsens-head">
+                        <div class="konsens-title">Kulturel overensstemmelse <span class="likert-seg">· Teknik</span></div>
+                        <span class="likert-badge js-konsensbadge">Høj overensstemmelse</span>
+                      </div>
+                      <div class="konsens-stats">
+                        <div class="konsens-stat"><b class="js-kgns">75</b><span>Gennemsnit</span></div>
+                        <div class="konsens-stat"><b class="js-kmed">74</b><span>Median</span></div>
+                        <div class="konsens-stat"><b>14</b><span>Medarbejdere</span></div>
+                      </div>
+                      <div class="konsens-bars js-konsens"></div>
+                      <div class="konsens-axis js-konsensaxis"></div>
+                      <div class="konsens-warn js-konsenswarn"></div>
+                    </div>
+                  </div>
+                  <div class="view" data-view="quad">
+                    <div class="quad">
+                      <div class="quad-plot">
+                        <div class="quad-mid-v"></div>
+                        <div class="quad-mid-h"></div>
+                        <div class="quad-zone" style="top: 4px; right: 6px;">Thriving</div>
+                        <div class="quad-zone" style="top: 4px; left: 6px;">At risk</div>
+                        <div class="quad-zone" style="bottom: 4px; right: 6px;">Developing</div>
+                        <div class="quad-zone" style="bottom: 4px; left: 6px;">Critical</div>
+                        <svg class="quad-trail js-quadtrail"><polyline points=""/></svg>
+                        <div class="js-quaddots"></div>
+                      </div>
+                    </div>
+                    <div class="quad-note">Lodret: engagement. Vandret: trend. Hver prik er en afdeling.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alerts">
+                <div class="alerts-head">Signaler <span class="alerts-count js-alertcount">0</span></div>
+                <div class="alerts-sub">Automatisk detektion på tværs af målinger</div>
+                <div class="alerts-list js-alerts">
+                  <div class="alerts-empty js-alertsempty">Ingen aktive signaler. Algoritmerne lytter.</div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+
+        <!-- Floating assistant (platform 1:1) -->
+        <button class="fa-launcher js-fa-launcher" type="button" aria-label="Åbn assistent">
+          <svg viewBox="33 48 165 165" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"><path d="M60.1,128v-25.6c0-23.4,19-42.3,42.4-42.3H128c23.4,0,42.4,19,42.4,42.3v98l-30-30h-37.9C79,170.4,60.1,151.4,60.1,128z"/></svg>
+          <span class="fa-badge js-fa-badge"></span>
+        </button>
+        <div class="fa-panel js-fa-panel" role="dialog" aria-label="Assistent">
+          <div class="fa-head">
+            <div class="fa-head-ico">
+              <svg viewBox="33 48 165 165" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"><path d="M60.1,128v-25.6c0-23.4,19-42.3,42.4-42.3H128c23.4,0,42.4,19,42.4,42.3v98l-30-30h-37.9C79,170.4,60.1,151.4,60.1,128z"/></svg>
+            </div>
+            <div class="fa-head-meta">
+              <div class="fa-head-name">Assistent</div>
+              <div class="fa-head-status">Online · kender jeres data</div>
+            </div>
+          </div>
+          <div class="fa-body js-fa-body">
+            <div class="fa-welcome js-fa-welcome">Hej! Jeg er culturequest-assistenten. Spørg mig om jeres kulturdata, eller vent til jeg opfanger noget, der kræver din opmærksomhed.</div>
+            <div class="fa-msg bot" data-chat-week="7.65">Jeg har flagget en <strong>Silent Disengagement-signatur</strong> i Teknik: lav anerkendelse, begrænset udvikling og faldende fastholdelse hos 6 af 14 — mens den samlede trivsel ser uændret ud. Det er derfor, jeres samlede score ikke har advaret jer. Vil du se min analyse?</div>
+            <div class="fa-msg user" data-chat-week="8.1">Ja. Hvor alvorligt er det?</div>
+            <div class="fa-msg bot" data-chat-week="8.5">Mønstret matcher Gallup's exit-pattern med 8-12 ugers varsel. Estimat: 15-25% af segmentet i forhøjet risiko.
+
+Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst vægt), <strong>2) udviklingsmuligheder</strong>, <strong>3) oplevet indflydelse</strong>. Arbejdsbelastning er sekundær her — det er ikke et burnout-mønster, så flere ressourcer løser det ikke.</div>
+            <div class="fa-msg user" data-chat-week="8.85">Hvad er planen?</div>
+            <div class="fa-msg bot" data-chat-week="9.3">Tre spor, i rækkefølge:
+
+<strong>STRUKTURELT (uge 1-2):</strong> Flyt ejerskab for to leverancer til teamet selv — indflydelse skal løftes af reelt ansvar, ikke snak. Synliggør to interne udviklingsspor med navne og datoer.
+
+<strong>LEDELSESADFÆRD (løbende):</strong> Anerkendelse skal være specifik og offentlig — ét konkret bidrag fremhævet pr. uge, ikke generel ros. Rejst feedback lukkes synligt: "I sagde X, vi har gjort Y."
+
+<strong>MÅLEPUNKT (næste 2 målinger):</strong> Jeg følger anerkendelse + fastholdelse i segmentet. Vender de ikke, eskalerer jeg med forslag om ekstern samtalerunde.</div>
+            <div class="fa-msg user" data-chat-week="10.0">Sæt i gang. Jeg tager det med på ledermødet mandag.</div>
+            <div class="fa-msg bot" data-chat-week="10.9">Opdatering efter oktober-målingen: anerkendelse +5, oplevet indflydelse +4 i segmentet. Fastholdelsen er stabiliseret. Jeg forventer Recovery Pattern-bekræftelse i november, hvis udviklingen holder.</div>
+            <div class="fa-typing js-fa-typing"><span></span><span></span><span></span></div>
+          </div>
+          <div class="fa-composer">
+            <div class="fa-input">Spørg assistenten…</div>
+            <button class="fa-send" type="button" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAYOFF ============ -->
+<section class="payoff">
+  <div class="payoff-inner">
+    <h2>Du så 12 måneder<br>på 75 <em>sekunder.</em></h2>
+    <p>De fleste opdager det først i exit-samtalen. Til den tid koster erstatningen 300 til 600.000 kr pr. nøglemedarbejder, og mønstret har allerede spredt sig til de næste på holdet.</p>
+    <p>culturequest måler månedligt, leder efter forskningsdokumenterede kombinationer, ikke enkelttal, og siger til, mens der stadig er tid til at handle.</p>
+    <div class="stat-line">
+      <div class="stat"><div class="stat-num">marts</div><div class="stat-lbl">Første driver-glidning noteret</div></div>
+      <div class="stat"><div class="stat-num">juli</div><div class="stat-lbl">Signatur flagget · forskningscitat</div></div>
+      <div class="stat"><div class="stat-num">300-600k</div><div class="stat-lbl">Pr. fastholdt nøglemedarbejder</div></div>
+    </div>
+    <div class="payoff-bridge">
+      <p>I den her historie var det 6 ud af 14 i én afdeling. Med <span class="js-emp">34</span> medarbejdere er der flere steder, et mønster kan gemme sig. Og forskningen er klar: 3 ud af 4 frivillige opsigelser kan forebygges. Regn selv efter længere nede.</p>
+    </div>
+    <div class="trust">
+      <div class="trust-head">Det spørgsmål, enhver HR-chef stiller først: kan man se, hvem der har svaret?</div>
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-t">Nej. Ingen enkeltpersoner</div>
+          <p>Svar anonymiseres og aggregeres. Ledere ser aldrig, hvem der har svaret hvad.</p>
+        </div>
+        <div class="trust-item">
+          <div class="trust-t">Signaler på gruppeniveau</div>
+          <p>Mønstre vises for teams og segmenter, aldrig for navne. "6 af 14" er et mønster, ikke en liste.</p>
+        </div>
+        <div class="trust-item">
+          <div class="trust-t">GDPR indbygget</div>
+          <p>Samtykke, indsigt og sletning er en del af platformen, ikke et tillæg.</p>
+        </div>
+      </div>
+    </div>
+    <blockquote class="payoff-quote">
+      <p>"Det har gjort vores antagelser og mavefornemmelser synlige, hvilket gør os i stand til at handle mere effektivt og træffe bedre beslutninger."</p>
+      <cite>Nikolaj Kure Jensen · Partner, Baagøe | Schou</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ============ EXPLORE ============ -->
+<section class="explore">
+  <div class="explore-head">
+    <div class="eyebrow">Prøv selv</div>
+    <h2>Spol tilbage. Træk i månederne.</h2>
+    <p class="sub">Det samme år, nu med dig ved rattet. Træk i tidslinjen og se hvordan hvert signal byggede sig op, måling for måling. Fanerne og assistenten kan klikkes.</p>
+  </div>
+  <div class="scrubber">
+    <span class="scrubber-label js-scrubweek">December</span>
+    <input type="range" id="scrub" min="1" max="12" step="0.05" value="12" aria-label="Vælg måned">
+  </div>
+  <div class="explore-board explore-mode" id="exploreBoard"></div>
+  <p class="explore-note">Tallene er et modelleret eksempel-forløb baseret på mønstre fra rigtige målinger i danske SMV'er. Jeres egne tal vil se anderledes ud, det er hele pointen.</p>
+</section>
+
+<!-- ============ ROI ============ -->
+<section class="roi" id="roi">
+  <div class="roi-inner">
+    <div class="eyebrow">Regnestykket</div>
+    <h2>Regn selv <em>efter.</em></h2>
+    <p class="sub">Fem tal, som I kender bedre end nogen anden. Forskningens satser, altid fra den forsigtige ende af spændet. Og et effekt-niveau, I selv vælger, for vi har ikke set jeres data endnu.</p>
+    <div class="roi-grid">
+      <div class="roi-in">
+        <label class="roi-field">
+          <div class="roi-lab"><span>Medarbejdere</span><span class="roi-val" id="roiEmpVal">120</span></div>
+          <input type="range" id="roiEmp" min="10" max="500" step="5" value="120" aria-label="Antal medarbejdere">
+        </label>
+        <label class="roi-field">
+          <div class="roi-lab"><span>Gennemsnitlig årsløn inkl. pension</span><span class="roi-val" id="roiSalVal">540.000 kr</span></div>
+          <input type="range" id="roiSal" min="300000" max="1000000" step="10000" value="540000" aria-label="Gennemsnitlig årsløn">
+        </label>
+        <label class="roi-field">
+          <div class="roi-lab"><span>Frivillige opsigelser sidste 12 mdr</span><span class="roi-val" id="roiExitVal">12</span></div>
+          <input type="range" id="roiExit" min="0" max="80" step="1" value="12" aria-label="Frivillige opsigelser om året">
+          <p class="roi-note">Kender du ikke tallet, er 10-15% af staben et normalt dansk niveau.</p>
+        </label>
+        <label class="roi-field">
+          <div class="roi-lab"><span>Sygedage pr. medarbejder pr. år</span><span class="roi-val" id="roiSickVal">8,4</span></div>
+          <input type="range" id="roiSick" min="0" max="20" step="0.1" value="8.4" aria-label="Sygedage pr. medarbejder om året">
+          <p class="roi-note">Dansk gennemsnit er 8,4 dage (DA, 2025). Privat sektor 7,9, offentlig 13,3.</p>
+        </label>
+        <label class="roi-field">
+          <div class="roi-lab"><span>Stress- eller langtidssygemeldinger sidste 12 mdr</span><span class="roi-val" id="roiStressVal">2</span></div>
+          <input type="range" id="roiStress" min="0" max="20" step="1" value="2" aria-label="Langtidssygemeldinger om året">
+        </label>
+      </div>
+      <div class="roi-out">
+        <div class="roi-levels-label">Hvor meget effekt tør I regne med?</div>
+        <div class="roi-levels" role="radiogroup" aria-label="Effekt-niveau">
+          <button type="button" class="roi-level" data-level="skeptisk">Skeptisk · 1 af 10</button>
+          <button type="button" class="roi-level is-active" data-level="forsigtig">Forsigtig · 1 af 4</button>
+          <button type="button" class="roi-level" data-level="ambitios">Ambitiøs · 4 af 10</button>
+        </div>
+        <div class="roi-row">
+          <span class="l">Fastholdelse: opsigelser fanget, før de bliver til exits
+            <span class="src">50% af årsløn pr. exit (SHRM/Gallup: 50-200%) · 75% forebyggeligt (Work Institute)</span>
+          </span>
+          <span class="v" id="roiChA">608.000 kr</span>
+        </div>
+        <div class="roi-row">
+          <span class="l">Sygefravær: den del, der skyldes psykisk arbejdsmiljø
+            <span class="src">Kun løndelen (årsløn/220 dage) · op mod hver 4. sygedag er psykosocial (NFA)</span>
+          </span>
+          <span class="v" id="roiChB">124.000 kr</span>
+        </div>
+        <div class="roi-row">
+          <span class="l">Stress-forløb: langtidssygemeldinger, der aldrig starter
+            <span class="src">300.000 kr pr. forløb, dansk skøn (analyser: 250-500.000 kr, nogle over 1 mio.)</span>
+          </span>
+          <span class="v" id="roiChC">150.000 kr</span>
+        </div>
+        <div class="roi-big">
+          <div class="l">Estimeret potentiale, jeres tal og forskningens satser</div>
+          <div class="v"><span id="roiSave">882.000 kr</span><small>/år</small></div>
+        </div>
+        <p class="roi-skip"><strong>Med vilje ikke medregnet:</strong> produktivitetsgevinsten ved højere engagement (Gallup finder 23% højere indtjening i toppen), vikar- og overheadomkostninger på sygedage, presenteeism, og sparet tid på APV og målinger. Regnestykket undervurderer sandsynligvis. Det er meningen.</p>
+      </div>
+    </div>
+    <details class="roi-how">
+      <summary>Sådan regner vi, kilde for kilde</summary>
+      <div class="roi-how-body">
+        <p><strong>Fastholdelse:</strong> jeres frivillige opsigelser × 50% af årslønnen pr. exit. SHRM og Gallup finder 50-200% af årslønnen, Bersin op til det dobbelte, vi bruger bunden af spændet. Heraf regner Work Institute (Retention Report) 75% som forebyggeligt, og Workhuman + Gallup (2024) fandt, at anerkendelse alene kunne have forhindret 45%. Til sidst ganger vi med jeres valgte effekt-niveau: hvor stor en del af de forebyggelige exits, der reelt fanges i tide.</p>
+        <p><strong>Sygefravær:</strong> medarbejdere × sygedage × dagsløn (årsløn delt med 220 arbejdsdage). Vi regner kun den direkte løn under fravær, intet produktionstab, ingen vikar, ingen overhead. NFA-forskningen tilskriver op mod hver fjerde sygedag det psykiske arbejdsmiljø, så kun 25% af fraværet indgår, og derfra kun jeres effekt-niveau.</p>
+        <p><strong>Stress-forløb:</strong> antal langtidssygemeldinger × 300.000 kr. Danske analyser estimerer 250-500.000 kr pr. forløb i produktionstab, genbesættelse og opfølgning, enkelte helt op over 1 mio. kr. Vi bruger et forsigtigt punktestimat og holder det adskilt fra løndelen i sygefraværet ovenfor.</p>
+        <p><strong>Effekt-niveauerne:</strong> Skeptisk regner med at 1 ud af 10 forebyggelige forløb fanges, Forsigtig 1 ud af 4, Ambitiøs 4 ud af 10. Ingen af dem er et løfte. Vi kender ikke jeres kultur endnu, og det er præcis derfor, man måler den.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2 class="js-ctahead">Hvordan ser det ud hos jer?</h2>
+    <p>Demoen her er et eksempel. Om jeres egne tal ligner, ved hverken du eller vi endnu. Det tager 20 minutter at finde ud af, og hvis en pilot ikke giver mening hos jer, er det også et fint svar.</p>
+    <div class="cta-row">
+      <a class="btn-primary js-cta-mail" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Skriv direkte til Benjamin →</a>
+      <a class="btn-ghost js-cta-pilot" href="https://culturequest.io/pilotprojekt" target="_blank" rel="noopener">Se pilotprogrammet</a>
+    </div>
+
+    <p class="cta-micro">Knappen åbner en færdigskrevet mail til mig. Ret i den, eller send den som den er, jeg svarer samme dag. Tallene på siden er et modelleret eksempel, ikke rigtige medarbejderdata.</p>
+  </div>
+</section>
+
+<a class="book-pill js-cta-mail" id="bookPill" href="mailto:bvb@culturequest.io">Book 20 min med Benjamin →</a>
+<div class="scroll-nudge" id="scrollNudge" aria-hidden="true">Scroll videre</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ PERSONALISERING ============ */
+  function sanitize(s) {
+    if (!s) return null;
+    s = String(s);
+    // Uudfyldte flettefelter fra mail-værktøjer ({{company}}, %7B osv.)
+    // må aldrig vises. Ligner værdien en template-variabel, ignoreres den.
+    if (s.indexOf('{') !== -1 || s.indexOf('}') !== -1) return null;
+    s = s.replace(/<[^>]*>/g, '').replace(/[<>"'&]/g, '').trim();
+    return s.length > 0 ? s.slice(0, 40) : null;
+  }
+  var params = new URLSearchParams(location.search);
+  var IS_EMBED = params.get('embed') === '1';
+  if (IS_EMBED) document.documentElement.classList.add('is-embed');
+  // Uden ?c= kører siden i generisk tilstand: ingen opdigtede firmanavne,
+  // bare "I er en virksomhed på X medarbejdere".
+  var company = sanitize(params.get('c'));
+  var hasCompany = !!company;
+  var employees = parseInt(params.get('m'), 10);
+  var hasEmp = employees >= 5 && employees <= 9999;
+  if (!hasEmp) employees = 34;
+  var leadName = sanitize(params.get('n'));
+  // Offentlig udgave: intet navn-param? Udled fornavn fra email, ellers neutral.
+  var emRaw = params.get('em') || '';
+  if (!leadName && emRaw.indexOf('@') > 0 && emRaw.indexOf('{') === -1) {
+    var pref = emRaw.split('@')[0].split(/[._-]/)[0].replace(/[^a-zA-ZæøåÆØÅ]/g, '');
+    if (pref) leadName = pref.charAt(0).toUpperCase() + pref.slice(1).toLowerCase();
+  }
+  var hasName = !!leadName;
+  if (!hasName) leadName = 'Demo-bruger';
+  var leadFirst = hasName ? leadName.split(/\s+/)[0] : '';
+  var leadInitials = hasName
+    ? leadName.split(/\s+/).map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase()
+    : 'DB';
+  var mailDomain = hasCompany ? company.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 14) : 'virksomheden';
+  var leadMail = (hasName ? leadFirst.toLowerCase().replace(/[^a-z0-9æøå]/g, '') : 'demo') + '@' + mailDomain + '.dk';
+  // Håndaflevering fra sandboxen: afdeling + beskrivelse via localStorage
+  // (fritekst hører ikke hjemme i en URL). Udløber efter 6 timer.
+  var HAND = { deptname: null, deptdesc: null, purpose: null };
+  try {
+    var handRaw = localStorage.getItem('cq_sb_handoff');
+    if (handRaw) {
+      var hp = JSON.parse(handRaw);
+      var cleanHand = function (s, max) {
+        if (s == null) return null;
+        s = String(s).trim();
+        if (!s || /[{}<>"'&]/.test(s)) return null;
+        return s.slice(0, max);
+      };
+      if (hp && hp.ts && Date.now() - hp.ts < 6 * 3600 * 1000) {
+        HAND.deptname = cleanHand(hp.deptname, 28);
+        HAND.deptdesc = cleanHand(hp.deptdesc, 110);
+        HAND.purpose = cleanHand(hp.purpose, 60);
+        if (!hasCompany && cleanHand(hp.company, 40)) {
+          company = cleanHand(hp.company, 40);
+          hasCompany = true;
+        }
+        if (!hasEmp && hp.sizeNum >= 5 && hp.sizeNum <= 9999) {
+          employees = hp.sizeNum;
+          hasEmp = true;
+        }
+      }
+    }
+  } catch (e) {}
+
+  var respondents = Math.round(employees * 0.91);
+  var orgName = hasCompany ? company : 'Jeres virksomhed';
+  var initials = hasCompany
+    ? company.split(/\s+/).map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase()
+    : 'JV';
+
+  document.querySelectorAll('.js-company').forEach(function (el) { el.textContent = orgName; });
+  document.querySelectorAll('.js-emp').forEach(function (el) { el.textContent = employees; });
+  document.querySelectorAll('.js-emp2').forEach(function (el) { el.textContent = employees; });
+  document.querySelectorAll('.js-avatar').forEach(function (el) { el.textContent = initials; });
+  document.querySelectorAll('.js-leadfirst').forEach(function (el) { el.textContent = leadFirst; });
+  if (!hasName) {
+    document.querySelectorAll('.pmain-title').forEach(function (el) { el.textContent = 'Hej'; });
+  }
+  document.querySelectorAll('.js-leadname').forEach(function (el) { el.textContent = leadName; });
+  document.querySelectorAll('.js-leadinitials').forEach(function (el) { el.textContent = leadInitials; });
+  document.querySelectorAll('.js-leadmail').forEach(function (el) { el.textContent = leadMail; });
+
+  var beat0 = document.querySelector('.js-beat0');
+  if (beat0) {
+    // Uden ?m= må vi ikke påstå et konkret medarbejdertal for et navngivet firma
+    if (hasCompany && hasEmp) beat0.textContent = company + ' har ' + employees + ' medarbejdere.';
+    else if (hasCompany) beat0.textContent = company + ' har dygtige medarbejdere.';
+    else beat0.textContent = 'I er en virksomhed på ' + employees + ' medarbejdere.';
+  }
+  var ctaHead = document.querySelector('.js-ctahead');
+  if (ctaHead) {
+    ctaHead.textContent = hasCompany
+      ? 'Hvordan ser det ud hos ' + company + '?'
+      : 'Hvordan ser det ud hos jer?';
+  }
+
+  document.title = hasCompany
+    ? '12 måneder · ' + company + ' · culturequest'
+    : '12 måneder · culturequest';
+
+  /* ============ CTA-LINKS ============ */
+  // Sæt BOOKING_URL til et Calendly/booking-link, så peger alle CTA'er derhen
+  // i stedet for mail. Tom streng = personaliseret mailto.
+  var BOOKING_URL = '';
+  var mailSubject = hasCompany ? 'Vis os vores egne tal · ' + company : 'Vis os vores egne tal';
+  var mailBody = 'Hej Benjamin\n\nJeg har set demoen. Lad os tage de 20 minutter.\n\nForeslå et par tidspunkter, der passer dig.\n\n' + leadName;
+  var ctaHref = BOOKING_URL || ('mailto:bvb@culturequest.io?subject=' + encodeURIComponent(mailSubject) + '&body=' + encodeURIComponent(mailBody));
+  document.querySelectorAll('.js-cta-mail').forEach(function (el) {
+    el.setAttribute('href', ctaHref);
+    if (BOOKING_URL) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+  });
+
+  /* ============ ROI-BEREGNER ============
+     Tre værdikanaler, alle satser fra den forsigtige ende af offentlig
+     forskning. Effekt-niveauet (hvor stor andel der reelt fanges) vælger
+     den besøgende selv, så vi aldrig lover noget på deres vegne. */
+  (function () {
+    var empIn = document.getElementById('roiEmp');
+    var exitIn = document.getElementById('roiExit');
+    var salIn = document.getElementById('roiSal');
+    var sickIn = document.getElementById('roiSick');
+    var stressIn = document.getElementById('roiStress');
+    if (!empIn || !exitIn || !salIn || !sickIn || !stressIn) return;
+
+    var LEVELS = {
+      skeptisk:  { ret: 0.10, sick: 0.10, stress: 0.10 },
+      forsigtig: { ret: 0.25, sick: 0.20, stress: 0.25 },
+      ambitios:  { ret: 0.40, sick: 0.35, stress: 0.40 }
+    };
+    var level = 'forsigtig';
+
+    function fmtKr(v) {
+      if (v >= 1000000) {
+        var mio = v / 1000000;
+        return (mio >= 10 ? Math.round(mio) : (Math.round(mio * 10) / 10)).toLocaleString('da-DK') + ' mio. kr';
+      }
+      return (Math.round(v / 1000) * 1000).toLocaleString('da-DK') + ' kr';
+    }
+
+    var exitTouched = false, stressTouched = false;
+    empIn.value = Math.max(10, Math.min(500, employees));
+
+    function values() {
+      var emp = parseInt(empIn.value, 10);
+      if (!exitTouched) exitIn.value = Math.max(1, Math.round(emp * 0.10));
+      if (!stressTouched) stressIn.value = Math.max(0, Math.round(emp * 0.015));
+      return {
+        emp: emp,
+        exits: parseInt(exitIn.value, 10),
+        sal: parseInt(salIn.value, 10),
+        sick: parseFloat(sickIn.value),
+        stress: parseInt(stressIn.value, 10)
+      };
+    }
+
+    function calc() {
+      var v = values();
+      var L = LEVELS[level];
+
+      // Kanal A: fastholdelse. 50% af årsløn pr. exit (bunden af SHRM/Gallup
+      // 50-200%), 75% forebyggeligt (Work Institute), × effekt-niveau.
+      var chA = v.exits * (v.sal * 0.5) * 0.75 * L.ret;
+
+      // Kanal B: sygefravær. Kun løndelen (årsløn/220 arbejdsdage), 25%
+      // psykosocial andel (NFA: op mod hver fjerde sygedag), × effekt-niveau.
+      var chB = v.emp * v.sick * (v.sal / 220) * 0.25 * L.sick;
+
+      // Kanal C: stress-langtidsforløb. 300.000 kr pr. forløb (danske
+      // analyser: 250-500k, nogle over 1 mio.), × effekt-niveau.
+      var chC = v.stress * 300000 * L.stress;
+
+      document.getElementById('roiEmpVal').textContent = v.emp.toLocaleString('da-DK');
+      document.getElementById('roiExitVal').textContent = v.exits.toLocaleString('da-DK');
+      document.getElementById('roiSalVal').textContent = v.sal.toLocaleString('da-DK') + ' kr';
+      document.getElementById('roiSickVal').textContent = v.sick.toLocaleString('da-DK');
+      document.getElementById('roiStressVal').textContent = v.stress.toLocaleString('da-DK');
+      document.getElementById('roiChA').textContent = fmtKr(chA);
+      document.getElementById('roiChB').textContent = fmtKr(chB);
+      document.getElementById('roiChC').textContent = fmtKr(chC);
+      document.getElementById('roiSave').textContent = fmtKr(chA + chB + chC);
+      return v;
+    }
+
+    /* Profil-event: leadets egne tal er salgsindsigt. Debounced, max 5 gange. */
+    var profTimer = null, profCount = 0;
+    function scheduleProfile(v) {
+      clearTimeout(profTimer);
+      profTimer = setTimeout(function () {
+        if (profCount >= 5) return;
+        profCount++;
+        try {
+          if (window.posthog && window.posthog.capture) {
+            window.posthog.capture('demo_roi_profile', {
+              employees: v.emp, exits: v.exits, salary: v.sal,
+              sick_days: v.sick, stress_cases: v.stress, level: level
+            });
+          }
+        } catch (e) {}
+      }, 3000);
+    }
+
+    var roiUsed = false;
+    function onInput(e) {
+      if (e && e.target === exitIn) exitTouched = true;
+      if (e && e.target === stressIn) stressTouched = true;
+      if (!roiUsed) { roiUsed = true; if (window.__cqTrack) window.__cqTrack('demo_roi_used'); }
+      scheduleProfile(calc());
+    }
+    [empIn, exitIn, salIn, sickIn, stressIn].forEach(function (el) {
+      el.addEventListener('input', onInput);
+    });
+
+    document.querySelectorAll('.roi-level').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        level = btn.getAttribute('data-level');
+        document.querySelectorAll('.roi-level').forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        onInput();
+      });
+    });
+
+    calc();
+  })();
+
+  /* ============ DATA ============ */
+  var DIM_NAMES = ['Trivsel', 'Tillid & Tryghed', 'Tilhørsforhold', 'Formål & Udvikling', 'Arbejdsmiljø'];
+  var DIM_SHORT = ['Trivsel', 'Tillid', 'Tilhør', 'Formål', 'Arb.miljø'];
+  var DEPTS = ['Teknik', 'Salg', 'Drift', 'Admin'];
+  var MONTHS = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
+
+  /* 12 månedlige målinger. Bemærk naturlig måned-til-måned variation
+     (op OG ned) — mønstret ligger i kombinationerne, ikke i en glat kurve. */
+  var W = [
+    { cs: 79, eng: 74, rr: 91, dims: [79, 81, 77, 76, 80],
+      heat: [[78, 82, 76, 75, 79], [80, 82, 78, 77, 81], [76, 78, 74, 73, 77], [81, 83, 79, 78, 82]],
+      likert: [0, 1, 3, 5, 2], lscore: 76, konsens: [0, 0, 1, 2, 6, 4, 1],
+      quad: { Teknik: [0.5, 78], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 78, eng: 73, rr: 89, dims: [78, 80, 77, 74, 80],
+      heat: [[76, 79, 76, 72, 79], [79, 81, 78, 76, 80], [75, 78, 74, 72, 77], [81, 82, 79, 78, 82]],
+      likert: [0, 1, 3, 5, 2], lscore: 75, konsens: [0, 0, 1, 2, 6, 4, 1],
+      quad: { Teknik: [0.3, 76], Salg: [0.35, 79], Drift: [0.08, 75], Admin: [0.2, 81] } },
+    { cs: 79, eng: 74, rr: 92, dims: [79, 78, 76, 75, 81],
+      heat: [[77, 78, 74, 73, 80], [81, 82, 79, 78, 81], [76, 77, 74, 73, 78], [82, 83, 80, 79, 82]],
+      likert: [0, 2, 3, 4, 2], lscore: 72, konsens: [0, 0, 1, 3, 6, 3, 1],
+      quad: { Teknik: [0.4, 77], Salg: [0.45, 81], Drift: [0.12, 76], Admin: [0.25, 82] } },
+    { cs: 77, eng: 72, rr: 90, dims: [77, 79, 76, 72, 79],
+      heat: [[74, 77, 75, 69, 78], [80, 81, 77, 77, 81], [75, 77, 73, 72, 76], [81, 82, 79, 78, 82]],
+      likert: [1, 2, 3, 4, 1], lscore: 68, konsens: [0, 1, 2, 3, 5, 3, 0],
+      quad: { Teknik: [0.1, 74], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 76, eng: 71, rr: 88, dims: [77, 75, 75, 71, 79],
+      heat: [[73, 71, 72, 67, 77], [79, 80, 78, 76, 80], [74, 77, 73, 71, 76], [80, 82, 79, 77, 82]],
+      likert: [1, 3, 3, 3, 1], lscore: 63, konsens: [0, 1, 2, 4, 5, 2, 0],
+      quad: { Teknik: [-0.1, 72], Salg: [0.38, 79], Drift: [0.09, 74], Admin: [0.2, 81] } },
+    { cs: 74, eng: 69, rr: 79, dims: [75, 73, 74, 68, 78],
+      heat: [[71, 68, 70, 64, 77], [78, 80, 77, 75, 80], [74, 76, 72, 71, 76], [80, 82, 78, 77, 81]],
+      likert: [2, 3, 2, 3, 1], lscore: 58, konsens: [0, 2, 3, 3, 4, 2, 0],
+      quad: { Teknik: [-0.3, 69], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 72, eng: 66, rr: 90, dims: [74, 69, 72, 65, 78],
+      heat: [[69, 62, 67, 59, 76], [79, 80, 77, 75, 81], [73, 76, 72, 70, 76], [80, 81, 78, 77, 81]],
+      likert: [2, 4, 2, 2, 1], lscore: 54, konsens: [1, 2, 4, 3, 3, 1, 0],
+      quad: { Teknik: [-0.55, 65], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 71, eng: 65, rr: 91, dims: [73, 67, 71, 63, 77],
+      heat: [[67, 58, 65, 56, 75], [78, 80, 77, 75, 80], [73, 75, 71, 70, 75], [80, 81, 78, 76, 81]],
+      likert: [3, 4, 2, 2, 0], lscore: 50, konsens: [1, 3, 4, 3, 2, 1, 0],
+      quad: { Teknik: [-0.7, 62], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 70, eng: 64, rr: 92, dims: [73, 66, 71, 63, 78],
+      heat: [[67, 57, 65, 56, 76], [79, 80, 77, 76, 80], [72, 75, 71, 69, 75], [80, 81, 78, 76, 81]],
+      likert: [3, 4, 2, 2, 0], lscore: 50, konsens: [1, 3, 4, 3, 2, 1, 0],
+      quad: { Teknik: [-0.75, 61], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 72, eng: 66, rr: 93, dims: [74, 69, 72, 66, 78],
+      heat: [[69, 62, 67, 60, 76], [79, 81, 78, 76, 80], [73, 75, 72, 70, 76], [80, 82, 78, 77, 81]],
+      likert: [2, 3, 3, 2, 1], lscore: 57, konsens: [1, 2, 4, 4, 2, 1, 0],
+      quad: { Teknik: [-0.3, 64], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 74, eng: 69, rr: 91, dims: [76, 73, 74, 70, 79],
+      heat: [[72, 68, 70, 66, 78], [80, 82, 78, 77, 81], [74, 76, 72, 71, 76], [81, 82, 79, 78, 82]],
+      likert: [1, 2, 4, 3, 1], lscore: 65, konsens: [0, 1, 3, 5, 4, 1, 0],
+      quad: { Teknik: [0.2, 68], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } },
+    { cs: 76, eng: 71, rr: 94, dims: [77, 75, 75, 73, 79],
+      heat: [[74, 72, 72, 70, 78], [80, 82, 78, 77, 81], [75, 77, 73, 72, 76], [81, 83, 79, 78, 82]],
+      likert: [1, 2, 3, 4, 1], lscore: 70, konsens: [0, 1, 2, 5, 4, 2, 0],
+      quad: { Teknik: [0.45, 72], Salg: [0.4, 80], Drift: [0.1, 75], Admin: [0.2, 81] } }
+  ];
+
+  var STORY = [
+    { t: 'Baseline.', l: 'Nytårs-kickoff. Planer, budget, god energi.', d: '__RESP__ svar. 91% deltagelse. Kulturscore 79. Baseline etableret på tværs af alle kategorier.', cls: '' },
+    { t: 'Roligt.', l: 'Vinterferie og drift. Ingen bekymringer på bordet.', d: 'Normal månedsvariation, plus/minus 2 point. Intet flag.', cls: '' },
+    { t: 'Første glidning.', l: 'Lederen ser: ingenting. Marts ligner februar.', d: 'Anerkendelse glider hos 3 af 14 i Teknik. Enkeltstående driver, under mønster-tærskel. Noteret.', cls: '' },
+    { t: 'Støj eller signal?', l: 'Kvartalsafslutning. Tallene retter sig lidt, alle ånder ud.', d: 'Scoren retter sig, men spredningen i svarene vokser. Konsensus i Teknik er ved at splitte.', cls: '' },
+    { t: 'Kombinationen.', l: 'Travlhed før sommer. "Det er bare en spidsbelastning."', d: 'Oplevet indflydelse falder oveni stigende arbejdspres. To af tre Karasek-betingelser opfyldt. Flag.', cls: '' },
+    { t: 'Sommerstilhed.', l: 'Sommerfest og halvtomt kontor. Høj stemning.', d: 'Svarprocent 79 pga. ferie. Men mønstret består hos dem, der svarer.', cls: '' },
+    { t: 'Signaturen.', l: 'Ferietid. Kontoret er fredeligt, driften kører.', d: 'Silent Disengagement-signatur hos 6 af 14 i Teknik: lav anerkendelse + begrænset udvikling + faldende fastholdelse. Samlet trivsel: fremstår uændret.', cls: 'is-danger' },
+    { t: 'Rådgivningen.', l: 'Alle er tilbage. Lederen åbner assistenten direkte fra alarmen.', d: '3-sporet interventionsplan genereret: strukturelt, ledelsesadfærd, målepunkter. Forankret i mønstrets drivere.', cls: '' },
+    { t: 'Interventionen.', l: 'Ansvar flyttet, udviklingsspor gjort synlige med navne og datoer.', d: 'Effekt kan ikke måles endnu. Men variansen stiger ikke længere.', cls: '' },
+    { t: 'Første vending.', l: 'Efterårets 1:1-samtaler føles anderledes. Mere ærlige.', d: 'Anerkendelse +5, indflydelse +4 i segmentet siden september. Fastholdelsesintention stabiliseret.', cls: '' },
+    { t: 'Recovery.', l: 'En af de seks søger internt i stedet for eksternt.', d: 'Recovery Pattern: risk-band forbedring, anden måling i træk. Vedvarende, ikke et enkeltudsving.', cls: 'is-positive' },
+    { t: 'Ingen opsigelse.', l: 'Julefrokost. Teamet er intakt. Ingen ved, hvor tæt det var.', d: 'Ingen exits i segmentet. Estimeret undgået omkostning: 300-600.000 kr pr. nøglemedarbejder.', cls: 'is-positive' }
+  ];
+
+
+  var ICONS = {
+    variance: '<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    comment: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    split: '<svg viewBox="0 0 24 24"><path d="M16 3h5v5M8 3H3v5M21 3l-7 7M3 3l7 7M12 12v9"/></svg>',
+    alarm: '<svg viewBox="0 0 24 24"><path d="M10.3 3.9a2 2 0 0 1 3.4 0l8 13.8a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3z"/><path d="M12 9v4M12 17h.01"/></svg>',
+    spark: '<svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>',
+    check: '<svg viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4L12 14l-3-3"/></svg>'
+  };
+
+  /* Signaler fra mønster-kataloget: enkelt driver (WATCH) → kombination (HIGH)
+     → signatur (CRITICAL) → Recovery Pattern (POSITIVE). w = måned. */
+  var ALERTS = [
+    { w: 3, sev: 'info', ico: 'variance', meta: 'Marts · WATCH', title: 'Driver-glidning · Anerkendelse', body: 'Anerkendelse glider hos 3 af 14 i Teknik. Enkeltstående driver, under mønster-tærskel. Overvåges.' },
+    { w: 5, sev: 'warning', ico: 'split', meta: 'Maj · HIGH', title: 'Karasek-komponenter i spil', body: 'Arbejdsbelastning stiger samtidig med at oplevet indflydelse falder i Teknik. To af tre betingelser i Karasek Demand-Control (1979) er opfyldt.' },
+    { w: 7, sev: 'danger', ico: 'alarm', meta: 'Juli · CRITICAL', title: 'Silent Disengagement-signatur', body: '6 af 14 i Teknik: lav anerkendelse + begrænset udvikling + faldende fastholdelse, mens samlet trivsel fremstår uændret. Edmondson + Gallup exit-pattern. Varsel: 8-12 uger.' },
+    { w: 7.4, sev: 'info', ico: 'comment', meta: 'Juli · WATCH', title: 'Hidden Engagement Drop', body: 'Samlet score stabil, men underliggende drivere er faldet markant. En klassisk måling ville melde "alt fint".' },
+    { w: 8, sev: 'reco', ico: 'spark', meta: 'August · PLAN', title: 'Interventionsplan klar', body: '3-sporet plan genereret ud fra mønstrets drivere: strukturelt, ledelsesadfærd, målepunkter. Åbn assistenten for detaljer.' },
+    { w: 11, sev: 'positive', ico: 'check', meta: 'November · POSITIVE', title: 'Recovery Pattern', body: 'Risk-band forbedring i to på hinanden følgende målinger. Anerkendelse +9, indflydelse +6 siden august. Vedvarende.' }
+  ];
+
+  var VIEW_MAP = ['heat', 'heat', 'heat', 'likert', 'heat', 'heat', 'konsens', 'likert', 'heat', 'quad', 'konsens', 'heat'];
+  var FOCUS_MAP = ['kpi', 'none', 'alerts', 'views', 'alerts', 'none', 'alerts', 'chat', 'chat', 'views', 'alerts', 'kpi'];
+  /* Typing-vinduer: [start, botbesked-tidspunkt] — månedsskala */
+  /* Sandbox-håndaflevering: deres afdeling bliver historiens hovedperson.
+     Datanøgler (W.quad) omdøbes, så alle opslag forbliver konsistente. */
+  var DEPT_STORY = 'Teknik';
+  if (HAND.deptname) {
+    DEPT_STORY = HAND.deptname;
+    W.forEach(function (w) {
+      if (w.quad && w.quad.Teknik) { w.quad[DEPT_STORY] = w.quad.Teknik; if (DEPT_STORY !== 'Teknik') delete w.quad.Teknik; }
+    });
+    DEPTS[0] = DEPT_STORY;
+    ALERTS.forEach(function (a) {
+      if (a.meta) a.meta = a.meta.split('Teknik').join(DEPT_STORY);
+      if (a.title) a.title = a.title.split('Teknik').join(DEPT_STORY);
+      if (a.body) a.body = a.body.split('Teknik').join(DEPT_STORY);
+    });
+  }
+
+  var TYPING_WINDOWS = [[7.35, 7.65], [8.15, 8.5], [8.95, 9.3], [10.6, 10.9]];
+
+  /* ============ HELPERS ============ */
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /* Platformens score-bands: Kritisk 0-29, Kræver opmærksomhed 30-49,
+     Overvej et initiativ 50-69, Ser godt ud 70-84, Fantastisk 85-100 */
+  function bandColor(score) {
+    if (score >= 85) return { bg: '#ecfdf5', fg: '#047857', bar: '#16a34a', label: 'Fantastisk' };
+    if (score >= 70) return { bg: '#f0fdf4', fg: '#15803d', bar: '#22c55e', label: 'Ser godt ud' };
+    if (score >= 50) return { bg: '#fffbeb', fg: '#b45309', bar: '#eab308', label: 'Overvej et initiativ' };
+    if (score >= 30) return { bg: '#fff7ed', fg: '#c2410c', bar: '#f97316', label: 'Kræver opmærksomhed' };
+    return { bg: '#fef2f2', fg: '#b91c1c', bar: '#ef4444', label: 'Kritisk' };
+  }
+  var LIKERT_COLORS = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e'];
+  var LIKERT_LABELS = ['Meget ofte', 'Ofte', 'Nogle gange', 'Sjældent', 'Aldrig'];
+  var KONSENS_BUCKETS = ['30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
+  var KONSENS_MIDS = [35, 45, 55, 65, 75, 85, 95];
+
+  function sampleWeek(wf) {
+    wf = clamp(wf, 1, 12);
+    var i = clamp(Math.floor(wf - 1), 0, 10);
+    var f = clamp(wf - 1 - i, 0, 1);
+    var a = W[i], b = W[i + 1];
+    var snap = {
+      cs: lerp(a.cs, b.cs, f), eng: lerp(a.eng, b.eng, f), rr: lerp(a.rr, b.rr, f),
+      dims: a.dims.map(function (v, k) { return lerp(v, b.dims[k], f); }),
+      heat: a.heat.map(function (row, r) { return row.map(function (v, c) { return lerp(v, b.heat[r][c], f); }); }),
+      likert: a.likert.map(function (v, k) { return lerp(v, b.likert[k], f); }),
+      lscore: lerp(a.lscore, b.lscore, f),
+      konsens: a.konsens.map(function (v, k) { return lerp(v, b.konsens[k], f); }),
+      quad: {}
+    };
+    DEPTS.forEach(function (d) {
+      snap.quad[d] = [lerp(a.quad[d][0], b.quad[d][0], f), lerp(a.quad[d][1], b.quad[d][1], f)];
+    });
+    return snap;
+  }
+
+  /* ============ BOARD FACTORY ============ */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+
+  function buildBoardDOM(scope) {
+    var dimsEl = scope.querySelector('.js-dims');
+    if (dimsEl && !dimsEl.children.length) {
+      DIM_NAMES.forEach(function (name) {
+        var d = document.createElement('div');
+        d.className = 'dim';
+        d.innerHTML = '<div class="dim-name">' + name + '</div>' +
+          '<div class="dim-score-row"><span class="dim-score">–</span><span class="dim-arrow flat">→</span></div>' +
+          '<div class="dim-bar"><div class="dim-bar-fill" style="width: 70%"></div></div>';
+        dimsEl.appendChild(d);
+      });
+    }
+    var heatEl = scope.querySelector('.js-heat');
+    if (heatEl && !heatEl.children.length) {
+      heatEl.appendChild(el('div', 'heat-corner', ''));
+      DIM_SHORT.forEach(function (n) { heatEl.appendChild(el('div', 'heat-h', n)); });
+      DEPTS.forEach(function (dept) {
+        heatEl.appendChild(el('div', 'heat-r', dept));
+        for (var c = 0; c < 5; c++) heatEl.appendChild(el('div', 'heat-c', '–'));
+      });
+    }
+    var lbar = scope.querySelector('.js-likertbar');
+    if (lbar && !lbar.children.length) {
+      LIKERT_COLORS.forEach(function (col) {
+        var seg = el('span', '', '');
+        seg.style.backgroundColor = col;
+        lbar.appendChild(seg);
+      });
+    }
+    var llab = scope.querySelector('.js-likertlabels');
+    if (llab && !llab.children.length) {
+      LIKERT_LABELS.forEach(function (name, i) {
+        var d = el('div', 'likert-lab', '');
+        d.innerHTML = '<span class="dot" style="background:' + LIKERT_COLORS[i] + '"></span>' +
+          '<span class="nm">' + name + '</span><span class="ct">–</span>';
+        llab.appendChild(d);
+      });
+    }
+    var kbars = scope.querySelector('.js-konsens');
+    if (kbars && !kbars.children.length) {
+      for (var kb = 0; kb < 7; kb++) kbars.appendChild(el('div', 'konsens-bar', ''));
+    }
+    var kaxis = scope.querySelector('.js-konsensaxis');
+    if (kaxis && !kaxis.children.length) {
+      KONSENS_BUCKETS.forEach(function (b) { kaxis.appendChild(el('span', '', b)); });
+    }
+    var qd = scope.querySelector('.js-quaddots');
+    if (qd && !qd.children.length) {
+      DEPTS.forEach(function (dept) {
+        var dot = el('div', 'quad-dot', '');
+        dot.setAttribute('data-dept', dept);
+        var lbl = el('div', 'quad-dot-label', dept);
+        lbl.setAttribute('data-dept-label', dept);
+        qd.appendChild(dot); qd.appendChild(lbl);
+      });
+    }
+    var al = scope.querySelector('.js-alerts');
+    if (al && al.querySelectorAll('.alert').length === 0) {
+      ALERTS.forEach(function (a) {
+        var div = el('div', 'alert sev-' + a.sev, '');
+        div.setAttribute('data-alert-week', a.w);
+        div.innerHTML = '<div class="alert-ico">' + ICONS[a.ico] + '</div>' +
+          '<div class="alert-content"><div class="alert-meta">' + a.meta + '</div>' +
+          '<div class="alert-title">' + a.title + '</div>' +
+          '<div class="alert-body">' + a.body + '</div></div>';
+        al.insertBefore(div, al.firstChild);
+      });
+    }
+  }
+
+  function deltaBadge(elm, delta) {
+    var r = Math.round(delta);
+    var base = 'kpi-delta ';
+    if (r > 0) { elm.textContent = '↗ +' + r; elm.className = base + 'up'; }
+    else if (r < 0) { elm.textContent = '↘ ' + r; elm.className = base + 'down'; }
+    else { elm.textContent = '→ 0'; elm.className = base + 'flat'; }
+  }
+
+  /* ============ RENDER ============ */
+  function setText(scope, sel, val) {
+    var e = scope.querySelector(sel);
+    if (e) e.textContent = val;
+  }
+
+  function setView(scope, name) {
+    scope.querySelectorAll('.vtab').forEach(function (t) {
+      t.classList.toggle('is-active', t.getAttribute('data-view') === name);
+    });
+    scope.querySelectorAll('.view').forEach(function (v) {
+      v.classList.toggle('is-active', v.getAttribute('data-view') === name);
+    });
+  }
+
+  function renderBoard(scope, wf, opts) {
+    opts = opts || {};
+    var snap = sampleWeek(wf);
+    var prev = sampleWeek(Math.max(1, wf - 1));
+    var wRound = Math.round(wf);
+
+    setText(scope, '.js-cs', Math.round(snap.cs));
+    setText(scope, '.js-eng', Math.round(snap.eng));
+    setText(scope, '.js-rr', Math.round(snap.rr));
+    setText(scope, '.js-liveweek', MONTHS[clamp(wRound - 1, 0, 11)]);
+    var csD = scope.querySelector('.js-cs-delta'); if (csD) deltaBadge(csD, snap.cs - prev.cs);
+    var engD = scope.querySelector('.js-eng-delta'); if (engD) deltaBadge(engD, snap.eng - prev.eng);
+    var rrD = scope.querySelector('.js-rr-delta'); if (rrD) deltaBadge(rrD, snap.rr - prev.rr);
+
+    var sl = scope.querySelector('.js-sparkline');
+    var sf = scope.querySelector('.js-sparkfill');
+    if (sl) {
+      var pts = [];
+      var steps = 40;
+      for (var s = 0; s <= steps; s++) {
+        var t = 1 + (wf - 1) * (s / steps);
+        var v = sampleWeek(t).cs;
+        var x = ((t - 1) / 11) * 104;
+        var y = 30 - ((v - 62) / (82 - 62)) * 26 - 2;
+        pts.push([x.toFixed(1), clamp(y, 2, 28).toFixed(1)]);
+      }
+      var dAttr = 'M ' + pts.map(function (p) { return p[0] + ' ' + p[1]; }).join(' L ');
+      sl.setAttribute('d', dAttr);
+      if (sf) sf.setAttribute('d', dAttr + ' L ' + pts[pts.length - 1][0] + ' 30 L 0 30 Z');
+    }
+
+    var dimEls = scope.querySelectorAll('.dim');
+    snap.dims.forEach(function (v, i) {
+      var d = dimEls[i]; if (!d) return;
+      var scoreEl = d.querySelector('.dim-score');
+      var arrowEl = d.querySelector('.dim-arrow');
+      var fillEl = d.querySelector('.dim-bar-fill');
+      if (scoreEl) scoreEl.textContent = Math.round(v);
+      var dd = v - prev.dims[i];
+      if (arrowEl) {
+        if (dd > 0.4) { arrowEl.textContent = '↗'; arrowEl.className = 'dim-arrow up'; }
+        else if (dd < -0.4) { arrowEl.textContent = '↘'; arrowEl.className = 'dim-arrow down'; }
+        else { arrowEl.textContent = '→'; arrowEl.className = 'dim-arrow flat'; }
+      }
+      if (fillEl) {
+        fillEl.style.width = clamp(v, 0, 100) + '%';
+        fillEl.style.backgroundColor = bandColor(v).bar;
+      }
+      d.classList.toggle('is-hot', v < 68);
+    });
+
+    var cells = scope.querySelectorAll('.heat-c');
+    var ci = 0;
+    for (var r = 0; r < 4; r++) {
+      for (var c = 0; c < 5; c++) {
+        var cell = cells[ci++]; if (!cell) continue;
+        var val = snap.heat[r][c];
+        var band = bandColor(val);
+        cell.textContent = Math.round(val);
+        cell.style.backgroundColor = band.bg;
+        cell.style.color = band.fg;
+      }
+    }
+
+    // Ekstra KPI'er: undersøgelser + næste måling + svarprocent-bar + sparkline-band
+    setText(scope, '.js-surveys', wRound);
+    setText(scope, '.js-nextmonth', MONTHS[wRound % 12]);
+    var rrbar = scope.querySelector('.js-rrbar');
+    if (rrbar) {
+      rrbar.style.width = clamp(snap.rr, 0, 100) + '%';
+      rrbar.className = 'kpi-rrbar-fill js-rrbar' + (snap.rr >= 85 ? '' : (snap.rr >= 70 ? ' band-amber' : ' band-red'));
+    }
+    var sparkEl = scope.querySelector('.kpi-spark');
+    if (sparkEl) sparkEl.classList.toggle('band-amber', snap.cs < 70 + 3 && snap.cs < 73);
+
+    // Svarfordeling (Likert)
+    var lsum = snap.likert.reduce(function (s, v) { return s + v; }, 0) || 1;
+    var lsegs = scope.querySelectorAll('.js-likertbar span');
+    var llabs = scope.querySelectorAll('.js-likertlabels .ct');
+    snap.likert.forEach(function (v, i) {
+      var pct = (v / lsum) * 100;
+      var seg = lsegs[i];
+      if (seg) {
+        seg.style.flexGrow = Math.max(pct, 0.01);
+        seg.textContent = pct >= 9 ? Math.round(pct) + '%' : '';
+      }
+      var lab = llabs[i];
+      if (lab) lab.textContent = Math.round(v) + ' (' + Math.round(pct) + '%)';
+    });
+    var lscoreEl = scope.querySelector('.js-likertscore');
+    var lbadgeEl = scope.querySelector('.js-likertbadge');
+    var lband = bandColor(snap.lscore);
+    if (lscoreEl) {
+      lscoreEl.textContent = Math.round(snap.lscore);
+      lscoreEl.className = 'likert-score js-likertscore' + (snap.lscore >= 70 ? ' band-green' : (snap.lscore < 50 ? ' band-orange' : ''));
+    }
+    if (lbadgeEl) {
+      lbadgeEl.textContent = lband.label;
+      lbadgeEl.className = 'likert-badge js-likertbadge' + (snap.lscore >= 70 ? ' band-green' : (snap.lscore < 50 ? ' band-orange' : ''));
+    }
+    var hn = scope.querySelector('.js-histnote');
+    if (hn) {
+      if (wRound >= 7 && wRound <= 9) hn.innerHTML = '<strong>Betydelig variation.</strong> Oplevelsen af arbejdsbelastning er ikke ensartet på tværs af segmentet.';
+      else if (wRound >= 10) hn.textContent = 'Fordelingen samler sig igen om et lavere stressniveau.';
+      else if (wRound >= 4) hn.textContent = 'Svarene begynder at sprede sig mod de høje stress-frekvenser.';
+      else hn.textContent = 'Fordelingen samler sig pænt om et lavt stressniveau.';
+    }
+
+    // Kulturel overensstemmelse
+    var kbars2 = scope.querySelectorAll('.konsens-bar');
+    var kmax = Math.max.apply(null, snap.konsens.concat([1]));
+    var riskCount = 0;
+    snap.konsens.forEach(function (v, i) {
+      var bar = kbars2[i]; if (!bar) return;
+      bar.style.height = clamp((v / kmax) * 100, 2, 100) + '%';
+      bar.style.backgroundColor = bandColor(KONSENS_MIDS[i]).bar;
+      if (KONSENS_MIDS[i] < 50) riskCount += v;
+    });
+    riskCount = Math.round(riskCount);
+    var teknikAvg = snap.heat[0].reduce(function (s, v) { return s + v; }, 0) / 5;
+    setText(scope, '.js-kgns', Math.round(teknikAvg));
+    setText(scope, '.js-kmed', Math.round(teknikAvg) - 1);
+    var kwarn = scope.querySelector('.js-konsenswarn');
+    if (kwarn) {
+      kwarn.classList.toggle('is-on', riskCount >= 2);
+      kwarn.textContent = riskCount + ' (' + Math.round(riskCount / 14 * 100) + '%) medarbejdere i risikozoner';
+    }
+    var kbadge = scope.querySelector('.js-konsensbadge');
+    if (kbadge) {
+      if (riskCount >= 3) { kbadge.textContent = 'Overvej initiativ'; kbadge.className = 'likert-badge js-konsensbadge'; }
+      else if (riskCount >= 2) { kbadge.textContent = 'Moderat overensstemmelse'; kbadge.className = 'likert-badge js-konsensbadge'; }
+      else { kbadge.textContent = 'Høj overensstemmelse'; kbadge.className = 'likert-badge js-konsensbadge band-green'; }
+    }
+
+    DEPTS.forEach(function (dept) {
+      var dot = scope.querySelector('.quad-dot[data-dept="' + dept + '"]');
+      var lbl = scope.querySelector('.quad-dot-label[data-dept-label="' + dept + '"]');
+      if (!dot) return;
+      var q = snap.quad[dept];
+      var xPct = ((q[0] + 1) / 2) * 100;
+      var yPct = clamp(((q[1] - 50) / 35) * 100, 0, 100);
+      dot.style.left = xPct + '%';
+      dot.style.bottom = yPct + '%';
+      dot.classList.toggle('is-risk', dept === DEPT_STORY && q[0] < -0.3);
+      if (lbl) { lbl.style.left = xPct + '%'; lbl.style.bottom = yPct + '%'; }
+    });
+    var trail = scope.querySelector('.js-quadtrail polyline');
+    if (trail) {
+      var tp = [];
+      var plot = scope.querySelector('.quad-plot');
+      if (plot) {
+        var pw = plot.clientWidth || 300, ph = plot.clientHeight || 150;
+        for (var tw = 1; tw <= wf; tw += 0.5) {
+          var qq = sampleWeek(Math.min(tw, wf)).quad[DEPT_STORY];
+          var tx = ((qq[0] + 1) / 2) * pw;
+          var ty = ph - clamp(((qq[1] - 50) / 35), 0, 1) * ph;
+          tp.push(tx.toFixed(1) + ',' + ty.toFixed(1));
+        }
+        trail.setAttribute('points', tp.join(' '));
+      }
+    }
+
+    var visibleCount = 0;
+    scope.querySelectorAll('.alert').forEach(function (a) {
+      var aw = parseFloat(a.getAttribute('data-alert-week'));
+      var show = wf >= aw - 0.15;
+      a.classList.toggle('is-in', show);
+      if (show) visibleCount++;
+    });
+    setText(scope, '.js-alertcount', visibleCount);
+    var empty = scope.querySelector('.js-alertsempty');
+    if (empty) empty.classList.toggle('is-gone', visibleCount > 0);
+
+    if (!opts.userView) {
+      var targetView = VIEW_MAP[clamp(wRound - 1, 0, 11)];
+      setView(scope, targetView);
+    }
+
+    renderChat(scope, wf, opts);
+  }
+
+  /* ============ ASSISTANT CHAT ============ */
+  function renderChat(scope, wf, opts) {
+    var panel = scope.querySelector('.js-fa-panel');
+    if (!panel) return;
+    var badge = scope.querySelector('.js-fa-badge');
+    var body = scope.querySelector('.js-fa-body');
+    var typing = scope.querySelector('.js-fa-typing');
+    var welcome = scope.querySelector('.js-fa-welcome');
+
+    var isOpen;
+    if (opts.exploreChat) {
+      isOpen = scope.__faOpen === true;
+    } else {
+      isOpen = wf >= 7.55 && wf <= 11.5;
+    }
+    panel.classList.toggle('is-open', isOpen);
+
+    var visible = 0;
+    scope.querySelectorAll('.fa-msg').forEach(function (m) {
+      var mw = parseFloat(m.getAttribute('data-chat-week'));
+      var show = wf >= mw;
+      m.classList.toggle('is-in', show);
+      if (show) visible++;
+    });
+    if (welcome) welcome.classList.toggle('is-gone', visible > 0);
+
+    // Notification badge: signatur flagget, panel endnu ikke åbent
+    if (badge) badge.classList.toggle('is-on', wf >= 7.15 && !isOpen && wf < 11.9);
+
+    // Typing-indikator før hver bot-besked
+    var showTyping = false;
+    TYPING_WINDOWS.forEach(function (w) {
+      if (wf >= w[0] && wf < w[1]) showTyping = true;
+    });
+    if (typing) typing.classList.toggle('is-on', isOpen && showTyping);
+
+    // Pin til bunden: panelet er stort nok til at selv den længste besked er
+    // fuldt synlig. I scroll-modet pinnes hver frame, så beskeder der stadig
+    // folder sig ud (max-height transition) også ender korrekt.
+    if (!body) return;
+    if (opts.exploreChat) {
+      var state = visible + (showTyping ? 'T' : '') + (isOpen ? 'O' : '');
+      if (scope.__faState !== state) {
+        scope.__faState = state;
+        requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
+      }
+      return;
+    }
+    if (isOpen) {
+      body.style.scrollBehavior = 'auto';
+      body.scrollTop = body.scrollHeight;
+    }
+  }
+
+  /* ============ STORY BEATS ============ */
+  if (HAND.deptname) {
+    STORY.forEach(function (s) {
+      s.t = s.t.split('Teknik').join(DEPT_STORY);
+      s.l = s.l.split('Teknik').join(DEPT_STORY);
+      s.d = s.d.split('Teknik').join(DEPT_STORY);
+    });
+    // Markup-tekster (chat, view-titler, konsens): sikker tekst-node sweep
+    var sweepRoots = document.querySelectorAll('.appwin');
+    sweepRoots.forEach(function (root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      var node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.indexOf('Teknik') !== -1) {
+          node.nodeValue = node.nodeValue.split('Teknik').join(DEPT_STORY);
+        }
+      }
+    });
+    // Assistenten citerer deres egen beskrivelse med en driver-vinkling
+    if (HAND.deptdesc) {
+      var driverLine = 'Det giver mig et godt udgangspunkt for at vægte driverne rigtigt.';
+      var dl = HAND.deptdesc.toLowerCase();
+      if (/kunde|support|service|telefon|borger/.test(dl)) driverLine = 'Den type arbejde slider typisk på oplevet kontrol og arbejdspres, så dem følger jeg tættest hos jer.';
+      else if (/udvikl|software|teknik|ingeni|it\b|kode/.test(dl)) driverLine = 'I den type roller er udviklingsmuligheder og anerkendelse de første drivere, der glider.';
+      else if (/salg|marked|kommerciel/.test(dl)) driverLine = 'I den type roller er anerkendelse og klare mål de første drivere, der glider.';
+      else if (/produktion|lager|logistik|drift|montage/.test(dl)) driverLine = 'Dér er arbejdsmiljø og oplevet indflydelse typisk de første signaler.';
+      var firstMsg = document.querySelector('.fa-msg.bot');
+      if (firstMsg) {
+        var quote = document.createElement('div');
+        quote.style.marginTop = '8px';
+        quote.textContent = 'I beskrev selv ' + DEPT_STORY + ' sådan her: "' + HAND.deptdesc + '". ' + driverLine;
+        firstMsg.appendChild(quote);
+      }
+    }
+  }
+
+  var storyWrap = document.getElementById('storyBeats');
+  if (storyWrap) {
+    STORY.forEach(function (s, i) {
+      var beat = el('div', 'sbeat', '');
+      beat.setAttribute('data-week', i + 1);
+      var dataText = s.d.replace('__RESP__', respondents);
+      beat.innerHTML = '<h3>' + s.t + '</h3>' +
+        '<p class="leder"><strong>Lederen ser:</strong> ' + s.l + '</p>' +
+        '<div class="data ' + s.cls + '">' + dataText + '</div>';
+      storyWrap.appendChild(beat);
+    });
+  }
+
+  /* ============ SCROLL ENGINE ============ */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scrolly = document.getElementById('scrolly');
+  var stage = document.getElementById('stage');
+  var board = document.getElementById('board');
+  var intro = document.getElementById('intro');
+  var dashMain = document.getElementById('dashMain');
+  var railFill = document.getElementById('railFill');
+  var weekNum = document.getElementById('weekNum');
+
+  var appwinMain = dashMain ? dashMain.closest('.appwin') : document;
+  buildBoardDOM(appwinMain);
+
+  var INTRO_END = 0.15;
+  var WEEKS_END = 0.92;
+  var targetP = 0, curP = 0, lastRenderedWeek = -1;
+
+  function onScroll() {
+    if (!scrolly) return;
+    var rect = scrolly.getBoundingClientRect();
+    var total = scrolly.offsetHeight - window.innerHeight;
+    targetP = clamp(-rect.top / Math.max(total, 1), 0, 1);
+  }
+
+  function tick() {
+    curP += (targetP - curP) * 0.11;
+    if (Math.abs(targetP - curP) < 0.0004) curP = targetP;
+    try {
+      applyProgress(curP);
+    } catch (e) {
+      // Motoren må aldrig dø af en enkelt frame-fejl. Log og fortsæt.
+      if (!window.__tickErr) window.__tickErr = String(e && e.stack || e);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function applyProgress(p) {
+    if (intro) {
+      var beats = intro.querySelectorAll('.beat');
+      var seg = INTRO_END / 4;
+      beats.forEach(function (b, i) {
+        var start = i * seg, end = start + seg;
+        var op = 0;
+        if (p >= start && p < end) {
+          var lp = (p - start) / seg;
+          // Beat 0 er synlig fra første pixel, ellers møder man en tom skærm
+          op = (i === 0 || lp >= 0.25) ? (lp > 0.78 ? (1 - lp) / 0.22 : 1) : lp / 0.25;
+        }
+        b.style.opacity = clamp(op, 0, 1);
+        b.style.transform = 'translateY(' + (14 * (1 - clamp(op, 0, 1))) + 'px)';
+      });
+      var cue = intro.querySelector('.scroll-cue');
+      if (cue) cue.style.opacity = p > 0.02 ? 0 : '';
+      intro.style.display = p >= INTRO_END ? 'none' : '';
+    }
+
+    var boardOn = p >= INTRO_END * 0.86;
+    if (stage) stage.classList.toggle('is-light', boardOn);
+    if (board) board.classList.toggle('is-on', boardOn);
+
+    if (p >= INTRO_END) {
+      var wp = clamp((p - INTRO_END) / (WEEKS_END - INTRO_END), 0, 1);
+      var wf = 1 + wp * 11;
+      var wRound = Math.round(wf);
+
+      if (weekNum) weekNum.textContent = MONTHS[clamp(wRound - 1, 0, 11)];
+      if (railFill) railFill.style.height = (wp * 100) + '%';
+      if (stage) stage.classList.toggle('is-alarm', wf > 6.7 && wf < 8.4);
+
+      if (storyWrap) {
+        storyWrap.querySelectorAll('.sbeat').forEach(function (b) {
+          var bw = parseInt(b.getAttribute('data-week'), 10);
+          b.classList.toggle('is-live', bw === wRound);
+        });
+      }
+
+      var focus = FOCUS_MAP[clamp(wRound - 1, 0, 11)];
+      if (dashMain) dashMain.setAttribute('data-focus', focus);
+      if (appwinMain && appwinMain.classList) appwinMain.classList.toggle('is-chatfocus', focus === 'chat');
+
+      if (Math.abs(wf - lastRenderedWeek) > 0.02) {
+        renderBoard(appwinMain, wf, {});
+        lastRenderedWeek = wf;
+      }
+      updateGuide(wf, boardOn);
+      pillWanted = wf >= 7.2;
+      if (window.__cqMilestone) window.__cqMilestone(wf);
+    } else {
+      updateGuide(0, false);
+      pillWanted = false;
+    }
+    syncPill();
+  }
+
+  /* ============ PERSISTENT BOOK-PILL ============ */
+  var bookPill = document.getElementById('bookPill');
+  var pillWanted = false, ctaInView = false;
+  function syncPill() {
+    if (bookPill) bookPill.classList.toggle('is-on', pillWanted && !ctaInView);
+  }
+  var ctaSection = document.querySelector('.cta');
+  if (ctaSection && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      ctaInView = entries[0].isIntersecting;
+      syncPill();
+    }, { threshold: 0.2 }).observe(ctaSection);
+  }
+
+  /* ============ GUIDE CHIP ============ */
+  /* Peger blikket derhen hvor månedens pointe sidder, i takt med scrollet. */
+  var GUIDE_STEPS = [
+    { from: 1.0,  to: 2.5,  sel: '.kpis .kpi',      place: 'below', text: 'Start her: baseline etableret, alt ser roligt ud' },
+    { from: 2.5,  to: 3.5,  sel: '.alerts',         place: 'left',  text: 'Første signal: en enkelt driver glider' },
+    { from: 3.5,  to: 4.5,  sel: '.views',          place: 'above', text: 'Scoren retter sig, men spredningen i svarene vokser' },
+    { from: 4.5,  to: 5.5,  sel: '.alerts',         place: 'left',  text: 'Kombination: to af tre Karasek-betingelser opfyldt' },
+    { from: 5.5,  to: 6.5,  sel: '.kpis .kpi',      place: 'below', text: 'Totalscoren ser stadig normal ud. Mønstret består' },
+    { from: 6.5,  to: 7.1,  sel: '.alerts',         place: 'left',  text: 'Signaturen: 6 af 14 i mønster. CRITICAL' },
+    { from: 7.1,  to: 7.55, sel: '.js-konsenswarn', place: 'above', text: 'Og her: 3 medarbejdere i risikozoner' },
+    { from: 7.55, to: 8.35, sel: '.js-fa-panel',    place: 'left',  text: 'Assistenten åbner. Læs rådgivningen her' },
+    { from: 9.55, to: 10.5, sel: '.views',          place: 'above', text: 'Første vending: segmentet flytter sig' },
+    { from: 10.5, to: 11.5, sel: '.alerts',         place: 'left',  text: 'Recovery Pattern: anden måling i træk' },
+    { from: 11.5, to: 12.3, sel: '.kpis .kpi',      place: 'below', text: 'Ingen exits. Undgået omkostning: 300-600.000 kr' }
+  ];
+  var guideChip = null, guideText = null, lastGuideIdx = -1;
+  function updateGuide(wf, boardOn) {
+    if (!board) return;
+    if (!guideChip) {
+      guideChip = document.createElement('div');
+      guideChip.className = 'guide-chip';
+      guideChip.innerHTML = '<span class="guide-dot"></span><span class="guide-txt"></span>';
+      board.appendChild(guideChip);
+      guideText = guideChip.querySelector('.guide-txt');
+    }
+    var step = null, idx = -1;
+    if (boardOn && wf > 0) {
+      for (var i = 0; i < GUIDE_STEPS.length; i++) {
+        if (wf >= GUIDE_STEPS[i].from && wf < GUIDE_STEPS[i].to) { step = GUIDE_STEPS[i]; idx = i; break; }
+      }
+    }
+    if (!step) { guideChip.classList.remove('is-on'); lastGuideIdx = -1; return; }
+    var target = appwinMain.querySelector(step.sel);
+    if (!target || !target.offsetParent) { guideChip.classList.remove('is-on'); return; }
+    if (idx !== lastGuideIdx) { guideText.textContent = step.text; lastGuideIdx = idx; }
+    var br = board.getBoundingClientRect();
+    var tr = target.getBoundingClientRect();
+    var cw = guideChip.offsetWidth, ch = guideChip.offsetHeight;
+    var left, top;
+    if (step.place === 'left') { left = tr.left - br.left - cw - 14; top = tr.top - br.top + 10; }
+    else if (step.place === 'above') { left = tr.left - br.left + 8; top = tr.top - br.top - ch - 12; }
+    else { left = tr.left - br.left + 8; top = tr.bottom - br.top + 12; }
+    left = clamp(left, 8, br.width - cw - 8);
+    top = clamp(top, 8, br.height - ch - 8);
+    guideChip.style.left = left + 'px';
+    guideChip.style.top = top + 'px';
+    guideChip.classList.add('is-on');
+  }
+
+  if (!reduced && scrolly) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    tick();
+
+    /* Nudge 1: lille peek-scroll efter 2,6 sek, hvis brugeren ikke selv
+       er kommet i gang. Viser mekanikken i stedet for at forklare den. */
+    setTimeout(function () {
+      if (window.scrollY < 30 && !document.hidden) {
+        window.scrollTo({ top: 190, behavior: 'smooth' });
+        setTimeout(function () {
+          if (window.scrollY <= 230) window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 950);
+      }
+    }, 2600);
+
+    /* Nudge 2: "Scroll videre"-pill når man går i stå inde i historien */
+    var nudgeEl = document.getElementById('scrollNudge');
+    var lastMoveTs = Date.now(), lastSeenY = window.scrollY;
+    setInterval(function () {
+      var y = window.scrollY;
+      if (Math.abs(y - lastSeenY) > 4) { lastSeenY = y; lastMoveTs = Date.now(); }
+      if (nudgeEl) {
+        var inStory = curP > 0.02 && curP < WEEKS_END - 0.015;
+        nudgeEl.classList.toggle('is-on', inStory && Date.now() - lastMoveTs > 4000);
+      }
+    }, 600);
+  } else {
+    if (board) board.classList.add('is-on');
+    if (stage) stage.classList.add('is-light');
+    renderBoard(appwinMain, 12, {});
+    if (weekNum) weekNum.textContent = MONTHS[11];
+    pillWanted = true;
+    syncPill();
+  }
+
+  /* ============ EXPLORE MODE ============ */
+  var exploreWrap = document.getElementById('exploreBoard');
+  if (exploreWrap && dashMain) {
+    var appwin = dashMain.closest('.appwin');
+    var clone = appwin.cloneNode(true);
+    var cloneApp = clone.querySelector('.app');
+    if (cloneApp) { cloneApp.id = ''; cloneApp.setAttribute('data-focus', 'none'); }
+    exploreWrap.appendChild(clone);
+    buildBoardDOM(clone);
+
+    var scrub = document.getElementById('scrub');
+    var scrubWeek = document.querySelector('.js-scrubweek');
+    var userView = false;
+
+    function renderExplore(wf) {
+      renderBoard(clone, wf, { userView: userView, exploreChat: true });
+      if (scrubWeek) scrubWeek.textContent = MONTHS[clamp(Math.round(wf) - 1, 0, 11)];
+      if (scrub) scrub.style.setProperty('--fill', (((wf - 1) / 11) * 100) + '%');
+    }
+
+    if (scrub) {
+      scrub.addEventListener('input', function () {
+        renderExplore(parseFloat(scrub.value));
+      });
+    }
+
+    clone.querySelectorAll('.vtab').forEach(function (t) {
+      t.addEventListener('click', function () {
+        userView = true;
+        setView(clone, t.getAttribute('data-view'));
+      });
+    });
+
+    // Assistenten kan åbnes/lukkes manuelt i explore-mode
+    var faLauncher = clone.querySelector('.js-fa-launcher');
+    if (faLauncher) {
+      faLauncher.addEventListener('click', function () {
+        clone.__faOpen = !clone.__faOpen;
+        renderExplore(scrub ? parseFloat(scrub.value) : 12);
+      });
+    }
+
+    requestAnimationFrame(function () { renderExplore(12); });
+
+    var rT;
+    window.addEventListener('resize', function () {
+      clearTimeout(rT);
+      rT = setTimeout(function () {
+        renderExplore(scrub ? parseFloat(scrub.value) : 12);
+        lastRenderedWeek = -1;
+      }, 150);
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+  /* ============ TRACKING (privat demo) ============
+     Cookieless med vilje: persistence 'memory', ingen session recording,
+     respekterer Do-Not-Track. Ingen cookies = intet banner-krav.
+     Formål: vide hvilke leads der har set demoen, hvor langt de kom,
+     og fyre hot-visitor alert når engagementet er højt. */
+  var POSTHOG_KEY = 'phc_nVqUSWi2SGrBjEuz9ARLVZTiWfhNTZ6iHSGaBnooZsnK';
+  var POSTHOG_HOST = 'https://eu.i.posthog.com';
+  var HOT_ENDPOINT = 'https://ytiboqiihekaerznainv.supabase.co/functions/v1/hot-visitor-notify';
+  var HOT_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
+  var HOT_THRESHOLD = 50;
+  var COOLDOWN_MS = 24 * 60 * 60 * 1000;
+
+  var params = new URLSearchParams(location.search);
+  function clean(s) {
+    if (!s || /[{}]/.test(String(s))) return null;
+    return String(s).replace(/[<>"'&]/g, '').slice(0, 60);
+  }
+  var leadProps = {
+    demo_company: clean(params.get('c')) || 'ukendt',
+    demo_lead: clean(params.get('n')) || 'ukendt',
+    demo_page: 'aar'
+  };
+
+  /* Apollo/outbound attribution: samme mekanisme som hovedsitet.
+     ?em= (rå eller base64-encodet email) identificerer leadet i PostHog,
+     UTM'er følger med som props, og emailen strippes fra adresselinjen. */
+  function maybeDecode(s) {
+    if (!s) return s;
+    if (s.indexOf('@') !== -1) return s;
+    try {
+      var d = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+      if (d.indexOf('@') !== -1) return d;
+    } catch (e) {}
+    return s;
+  }
+  var attr = { email: null, utms: {} };
+  (function () {
+    var stored = null;
+    try { stored = JSON.parse(sessionStorage.getItem('cq_aar_attr') || 'null'); } catch (e) {}
+    var raw = params.get('em') || params.get('utm_email');
+    if (raw) {
+      var email = maybeDecode(raw);
+      if (email && email.indexOf('@') > 0) attr.email = email.toLowerCase().trim().slice(0, 120);
+    } else if (stored && stored.email) {
+      attr.email = stored.email;
+    }
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
+      var v = params.get(k) || (stored && stored.utms && stored.utms[k]);
+      if (v) attr.utms[k] = clean(v);
+    });
+    if (attr.email || Object.keys(attr.utms).length) {
+      try { sessionStorage.setItem('cq_aar_attr', JSON.stringify(attr)); } catch (e) {}
+    }
+    if (raw && window.history && window.history.replaceState) {
+      try {
+        var url = new URL(location.href);
+        url.searchParams.delete('em');
+        url.searchParams.delete('utm_email');
+        history.replaceState({}, '', url.toString());
+      } catch (e) {}
+    }
+  })();
+
+  /* PostHog official snippet, stub + async loader (samme som index.html) */
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+  window.posthog.init(POSTHOG_KEY, {
+    api_host: POSTHOG_HOST,
+    persistence: 'memory',
+    person_profiles: 'identified_only',
+    capture_pageview: false,
+    disable_session_recording: true,
+    respect_dnt: true,
+    loaded: function (ph) {
+      try {
+        ph.register(leadProps);
+        if (Object.keys(attr.utms).length) ph.register(attr.utms);
+        if (attr.email) {
+          ph.identify(attr.email, Object.assign({ email: attr.email }, attr.utms, leadProps));
+        }
+        ph.capture('$pageview');
+      } catch (e) {}
+    }
+  });
+
+  /* Intent-score: samme princip som hovedsitets hot-visitor system */
+  var WEIGHTS = {
+    demo_opened: 15,
+    aar_email_identified: 20,
+    demo_month_7: 10,
+    demo_advice_read: 10,
+    demo_payoff_viewed: 5,
+    demo_explore_used: 10,
+    demo_roi_used: 15,
+    demo_cta_click: 30
+  };
+  var score = 0, signals = [], fired = false;
+
+  function inCooldown() {
+    try {
+      var d = JSON.parse(localStorage.getItem('cq_aar_hot_until') || 'null');
+      return d && d.until > Date.now();
+    } catch (e) { return false; }
+  }
+  function markCooldown() {
+    try { localStorage.setItem('cq_aar_hot_until', JSON.stringify({ until: Date.now() + COOLDOWN_MS })); } catch (e) {}
+  }
+  function maybeFire() {
+    if (fired || score < HOT_THRESHOLD || inCooldown()) return;
+    fired = true;
+    markCooldown();
+    var distinctId = 'demo-visitor';
+    try {
+      if (window.posthog && typeof window.posthog.get_distinct_id === 'function') distinctId = window.posthog.get_distinct_id();
+    } catch (e) {}
+    var payload = {
+      distinct_id: distinctId,
+      intent_score: score,
+      signals: signals.slice(),
+      page_url: (location.href || '').slice(0, 500),
+      referrer: (document.referrer || '').slice(0, 500) || null,
+      user_agent: (navigator.userAgent || '').slice(0, 300),
+      posthog_session_url: null
+    };
+    try {
+      fetch(HOT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + HOT_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+    try {
+      if (window.posthog && window.posthog.capture) {
+        window.posthog.capture('hot_visitor_threshold_crossed', { intent_score: score, signal_count: signals.length });
+      }
+    } catch (e) {}
+  }
+
+  var seen = {};
+  function track(name, props) {
+    if (seen[name]) return;
+    seen[name] = true;
+    try {
+      if (window.posthog && window.posthog.capture) window.posthog.capture(name, props || {});
+    } catch (e) {}
+    if (WEIGHTS[name]) {
+      score += WEIGHTS[name];
+      signals.push(name + ' (+' + WEIGHTS[name] + ')');
+      maybeFire();
+    }
+  }
+  window.__cqTrack = track;
+
+  track('demo_opened', leadProps);
+  if (attr.email) {
+    track('aar_email_identified', {
+      utm_source: attr.utms.utm_source || null,
+      utm_campaign: attr.utms.utm_campaign || null,
+      utm_medium: attr.utms.utm_medium || null,
+      page: location.pathname
+    });
+  }
+
+  /* Måneds-milepæle, kaldes fra scroll-motoren */
+  var MILESTONES = [3, 7, 10, 12];
+  window.__cqMilestone = function (wf) {
+    for (var i = 0; i < MILESTONES.length; i++) {
+      if (wf >= MILESTONES[i]) track('demo_month_' + MILESTONES[i]);
+    }
+    if (wf >= 9.3) track('demo_advice_read');
+  };
+
+  /* Sektions-visninger */
+  function onSee(sel, name) {
+    var el = document.querySelector(sel);
+    if (!el || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { track(name); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(el);
+  }
+  onSee('.payoff', 'demo_payoff_viewed');
+  onSee('.roi', 'demo_roi_viewed');
+  onSee('.cta', 'demo_cta_viewed');
+
+  /* Explore-slider */
+  var scrub = document.getElementById('scrub');
+  if (scrub) scrub.addEventListener('input', function () { track('demo_explore_used'); }, { once: true });
+
+  /* CTA-klik */
+  document.querySelectorAll('.js-cta-mail, .js-cta-pilot').forEach(function (el) {
+    el.addEventListener('click', function () {
+      track('demo_cta_click', { cta: el.id || el.className });
+    });
+  });
+})();
+</script>
+</body>
+</html>

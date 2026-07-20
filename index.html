@@ -20481,6 +20481,10 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="tlh-vignette"></div>
 </div>
 <div class="tlh-nudge" id="cqtlNudge" aria-hidden="true">Scroll videre</div>
+<div class="sbx-overlay" id="sbxOverlay">
+  <button type="button" class="sbx-overlay-close" id="sbxOverlayClose">Luk og gå tilbage ✕</button>
+  <iframe id="sbxOverlayFrame" title="Jeres 12 måneder med culture intelligence"></iframe>
+</div>
 <script>
 (function() {
   const E = [
@@ -20764,7 +20768,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Sådan føles skiftet fra trivselsmåling til culture intelligence.
         </h2>
         <p class="sandbox-sub body-text">
-            Tag en runde i vores sandbox. Byg en kulturmåling som CEO, besvar den fra medarbejderens side, læs AI-analysen som leder.
+            Fortæl assistenten lidt om jer, og se et helt måleår udfolde sig med jeres virksomhed og jeres afdeling i hovedrollen.
         </p>
         <div class="sandbox-disclaimer">
             <span class="sandbox-disclaimer-dot"></span>
@@ -21012,7 +21016,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="sandbox-cta-row">
                                 <button type="button" id="sbPdfBtn" class="sandbox-btn sandbox-btn-secondary">Download jeres startpakke (PDF)</button>
                                 <a id="sbMailBtn" class="sandbox-btn sandbox-btn-secondary" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin →</a>
-                                <button type="button" id="sbExploreBtn" class="sandbox-btn sandbox-btn-primary">Udforsk platformen →</button>
+                                <a id="sbYearBtn" class="sandbox-btn sandbox-btn-primary" href="/aar" target="_blank" rel="noopener">Se jeres 12 måneder udfolde sig →</a>
+                                <button type="button" id="sbExploreBtn" class="sandbox-btn sandbox-btn-secondary">Udforsk platformen →</button>
                                 <a href="https://live.culturequest.io/signup" target="_blank" rel="noopener noreferrer" class="sandbox-btn sandbox-btn-primary sandbox-btn-large">Start gratis prøveperiode →</a>
                             </div>
                             <button type="button" id="sbShareBtn" class="sandbox-share">Kopiér link til ledergruppen</button>
@@ -21027,7 +21032,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="sbx-scrub-label" id="sbxScrubLabel">December</span>
                         <input type="range" id="sbxScrub" class="sbx-scrub" min="1" max="12" step="0.05" value="12" aria-label="Vælg måned">
                         <button type="button" class="sandbox-btn sandbox-btn-secondary" id="sbxBackBtn">← Tilbage til analysen</button>
-                        <span class="sbx-explore-hint">Træk i måneden og se et helt måleår udfolde sig. Fanerne kan klikkes, og assistenten nederst til højre kan åbnes.</span>
+                        <div class="sbx-tasks" id="sbxTasks" aria-label="Prøv selv">
+                            <span class="sbx-task" data-task="juli">Find signaturen i juli</span>
+                            <span class="sbx-task" data-task="chat">Læs assistentens plan</span>
+                            <span class="sbx-task" data-task="segment">Se segmenterne</span>
+                        </div>
+                        <span class="sbx-explore-hint">Modelleret eksempel-år for én afdeling (Teknik, 14 medarbejdere). I den rigtige platform er det jeres egne tal, måned for måned.</span>
+                        <div class="sbx-tasks-done" id="sbxTasksDone">
+                            Det var runde ét. Vil du se det med jeres egne tal? <a id="sbxDoneMail" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin →</a>
+                        </div>
                     </div>
                     <div id="sbxWin">
 <div class="appwin">
@@ -21039,7 +21052,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div class="app" id="dashMain" data-focus="none">
           <!-- Sidebar (platform 1:1) -->
-          <nav class="psb" aria-hidden="true">
+          <div class="psb" role="navigation" aria-hidden="true">
             <div class="psb-logo">
               <div class="psb-logo-mark js-avatar">DV</div>
               <div class="psb-logo-name js-company">Demovirksomhed</div>
@@ -21091,7 +21104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="psb-user-mail js-leadmail">amalie@firma.dk</div>
               </div>
             </div>
-          </nav>
+          </div>
 
           <!-- Main content -->
           <main class="pmain">
@@ -35242,9 +35255,52 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .sbx-explore-hint {
   font-family: 'Inter', sans-serif; font-size: 12px; color: #8a8a8e; width: 100%;
 }
+.sbx-tasks { display: flex; gap: 8px; flex-wrap: wrap; }
+.sbx-task {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  color: #6b6b70; background: #f4f4f6; border: 1px solid #ebebeb;
+  border-radius: 999px; padding: 6px 12px 6px 26px; position: relative;
+  transition: all 0.3s ease;
+}
+.sbx-task::before {
+  content: ""; position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+  width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #c6c6cc;
+  transition: all 0.3s ease;
+}
+.sbx-task.is-done { color: #15803d; background: #f0fdf4; border-color: rgba(34, 197, 94, 0.35); }
+.sbx-task.is-done::before {
+  border-color: #22c55e; background: #22c55e;
+  content: "✓"; color: #fff; font-size: 8px; line-height: 11px; text-align: center;
+}
+.sbx-tasks-done {
+  display: none; width: 100%;
+  font-family: 'Inter', sans-serif; font-size: 13px; color: #171717;
+  padding: 8px 0 0;
+}
+.sbx-tasks-done.is-on { display: block; animation: stageIn 0.35s ease-out; }
+.sbx-tasks-done a { color: #383da0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 880px) {
   .sandbox-stage .appwin { height: 560px; }
 }
+
+/* === Måleårs-overlay: /aar indlejret, brugeren forbliver på forsiden === */
+.sbx-overlay {
+  position: fixed; inset: 0; z-index: 9990;
+  background: #f5efe2; display: none;
+}
+.sbx-overlay.is-on { display: block; animation: stageIn 0.3s ease-out; }
+.sbx-overlay iframe { width: 100%; height: 100%; border: 0; display: block; }
+.sbx-overlay-close {
+  position: fixed; top: 14px; right: 14px; z-index: 9995;
+  display: none; align-items: center; gap: 7px;
+  background: #1e1b4b; color: #f5efe2;
+  border: 1px solid rgba(245, 239, 226, 0.25); border-radius: 999px;
+  font-family: 'Inter Tight', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 9px 16px; cursor: pointer;
+  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.3);
+}
+.sbx-overlay.is-on .sbx-overlay-close { display: inline-flex; }
+body.sbx-lock { overflow: hidden; }
 </style>
 
 <script>
@@ -35286,6 +35342,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         sizeNum: null,        // numeric for math
         values: [],           // array of value labels
         purpose: null,        // string label
+        deptname: null,       // afdeling tættest på brugeren
+        deptdesc: null,       // hvad laver afdelingen (fritekst)
         completed: false
     };
 
@@ -35320,6 +35378,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
                 { label: '51–100', num: 75 },
                 { label: '101–250', num: 175 },
                 { label: '250+', num: 400 }
+            ]
+        },
+        {
+            id: 'deptname',
+            type: 'text',
+            placeholder: 'Fx Kundeservice',
+            messages: [
+                'Lad os sætte jeres organisation op. Hvilken afdeling eller hvilket team er du tættest på i hverdagen?'
+            ]
+        },
+        {
+            id: 'deptdesc',
+            type: 'text',
+            placeholder: 'Fx supporterer kunder og håndterer onboarding',
+            messages: [
+                'Og med en linje: hvad laver {deptname}? Jo mere konkret, jo bedre kan jeg tilpasse jeres måleår.'
             ]
         },
         {
@@ -35395,7 +35469,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     }
 
     function obInterpolate(str) {
-        return str.replace('{company}', obState.company || '');
+        return str.replace('{company}', obState.company || '').replace('{deptname}', obState.deptname || 'afdelingen');
     }
 
     async function obAsk(idx) {
@@ -35565,6 +35639,72 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         }
     }
 
+    // Fælles håndaflevering til /aar: payload i localStorage + personaliseret URL
+    function sbWriteHandoff() {
+        try {
+            localStorage.setItem('cq_sb_handoff', JSON.stringify({
+                company: obState.company || null,
+                sizeNum: obState.sizeNum || null,
+                email: obState.email || null,
+                deptname: obState.deptname || null,
+                deptdesc: obState.deptdesc || null,
+                purpose: obState.purpose || null,
+                ts: Date.now()
+            }));
+        } catch (e) {}
+    }
+    function sbYearUrl(campaign) {
+        const yp = new URLSearchParams();
+        if (obState.company) yp.set('c', obState.company);
+        if (obState.sizeNum) yp.set('m', obState.sizeNum);
+        if (obState.email) yp.set('em', obState.email);
+        yp.set('utm_source', 'sandbox');
+        yp.set('utm_medium', 'site');
+        yp.set('utm_campaign', campaign || 'sandbox-handoff');
+        return '/aar?' + yp.toString();
+    }
+
+    // Måleåret åbner som overlay: brugeren forbliver på forsiden
+    const sbxOverlay = document.getElementById('sbxOverlay');
+    const sbxOverlayFrame = document.getElementById('sbxOverlayFrame');
+    const sbxOverlayClose = document.getElementById('sbxOverlayClose');
+    function sbOpenYear(campaign) {
+        sbWriteHandoff();
+        if (!sbxOverlay || !sbxOverlayFrame) {
+            window.location.href = sbYearUrl(campaign);
+            return;
+        }
+        sbxOverlayFrame.src = sbYearUrl(campaign) + '&embed=1&v=' + Date.now();
+        sbxOverlay.classList.add('is-on');
+        document.body.classList.add('sbx-lock');
+        if (window.cqTrack) window.cqTrack.event('sandbox_year_handoff', { mode: 'overlay', campaign: campaign || 'sandbox-handoff' });
+    }
+    function sbCloseYear() {
+        if (!sbxOverlay) return;
+        sbxOverlay.classList.remove('is-on');
+        document.body.classList.remove('sbx-lock');
+        if (sbxOverlayFrame) sbxOverlayFrame.src = 'about:blank';
+        const sandboxEl = document.querySelector('.sandbox');
+        if (sandboxEl) sandboxEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (sbxOverlayClose) sbxOverlayClose.addEventListener('click', sbCloseYear);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sbxOverlay && sbxOverlay.classList.contains('is-on')) sbCloseYear();
+    });
+    window.addEventListener('message', (e) => {
+        if (e.origin !== window.location.origin) return;
+        const d = e.data;
+        if (!d || d.type !== 'cq-sandbox-stage') return;
+        sbCloseYear();
+        obState.completed = true;
+        applyOnboardingToSandbox();
+        if (d.stage === 4) {
+            const btn = document.getElementById('sbExploreBtn');
+            if (btn) { btn.click(); return; }
+        }
+        showStage([1, 3].includes(d.stage) ? d.stage : 3);
+    });
+
     async function obFinish() {
         obProgress.textContent = 'Færdig';
 
@@ -35582,28 +35722,32 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obShowTyping();
         await obDelay(900);
         obHideTyping();
-        obAppendBot(`Tak ${obState.company}! Jeg har tilpasset demoen til jer. <strong>Lad os bygge din kulturmåling →</strong>`);
+        const deptTxt = obState.deptname ? ` og det, du fortalte om ${obState.deptname},` : '';
+        obAppendBot(`Tak ${obState.company}! Ud fra jeres svar${deptTxt} har jeg sat et helt måleår op. <strong>Lad os se, hvordan de næste 12 måneder kunne se ud hos jer →</strong>`);
 
-        // Add a "Let's go" button
+        // Primær: direkte ind i måleåret. Sekundær: byg selv en måling først.
         await obDelay(500);
         obInputArea.innerHTML = '';
         const startWrap = document.createElement('div');
         startWrap.className = 'sandbox-onboard-chips-confirm';
         startWrap.style.justifyContent = 'flex-start';
+        startWrap.style.gap = '10px';
+        startWrap.style.flexWrap = 'wrap';
         startWrap.innerHTML = `
-            <button type="button" class="sandbox-onboard-confirm">
-                Byg jeres kulturmåling
+            <button type="button" class="sandbox-onboard-confirm" id="obYearGo">
+                Se jeres 12 måneder
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
         `;
         obInputArea.appendChild(startWrap);
-        startWrap.querySelector('button').addEventListener('click', () => {
+        startWrap.querySelector('#obYearGo').addEventListener('click', () => {
             obState.completed = true;
             applyOnboardingToSandbox();
-            showStage(1);
+            sbOpenYear('chat-handoff');
         });
+
     }
 
     function applyOnboardingToSandbox() {
@@ -35743,6 +35887,26 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         const resultCtaP = document.querySelector('.sandbox-result-cta p');
         if (resultCtaP && obState.company) {
             resultCtaP.textContent = `Det er en simulation. I den rigtige platform er det ${obState.company}'s egne medarbejdere, og signalerne kommer fra reelle data, uge for uge.`;
+        }
+
+        // Håndaflevering: scroll-året på /aar med deres egne data
+        const yearBtn = document.getElementById('sbYearBtn');
+        if (yearBtn) {
+            const yp = new URLSearchParams();
+            if (obState.company) yp.set('c', obState.company);
+            if (obState.sizeNum) yp.set('m', obState.sizeNum);
+            if (obState.email) yp.set('em', obState.email);
+            yp.set('utm_source', 'sandbox');
+            yp.set('utm_medium', 'site');
+            yp.set('utm_campaign', 'sandbox-handoff');
+            yearBtn.setAttribute('href', '/aar?' + yp.toString());
+            if (!yearBtn.__handoffBound) {
+                yearBtn.__handoffBound = true;
+                yearBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    sbOpenYear('sandbox-handoff');
+                });
+            }
         }
 
         // CTA-trappe: personaliseret mail til Benjamin
@@ -35954,6 +36118,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obState.sizeNum = null;
         obState.values = [];
         obState.purpose = null;
+        obState.deptname = null;
+        obState.deptdesc = null;
         obState.completed = false;
         obCurrentIdx = 0;
         if (obThread) obThread.innerHTML = '';
@@ -36194,14 +36360,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         obState.completed = true;
         applyOnboardingToSandbox();
         // Marker chatten som brugt, så onboardingen ikke starter forfra ovenpå
-        obAppendBot('En kollega har delt denne opsætning med dig. Analysen er klar nedenfor, og du kan justere målingen undervejs.');
+        obAppendBot('Opsætningen er indlæst. Du kan justere målingen og udforske platformen nedenfor.');
         if (window.cqTrack) window.cqTrack.event('sandbox_share_opened', { company_provided: !!obState.company });
-        setTimeout(() => showStage(3), 600);
+        const wantedStage = parseInt(q.get('stage'), 10);
+        const goStage = [1, 3, 4].includes(wantedStage) ? wantedStage : 3;
+        setTimeout(() => {
+            if (goStage === 4) {
+                const btn = document.getElementById('sbExploreBtn');
+                if (btn) { btn.click(); return; }
+            }
+            showStage(goStage);
+        }, 600);
     })();
 
     // Bro til trin 4 (Udforsk platformen): eksponér stage-skift + state
     window.__sbShowStage = (n) => showStage(n);
-    window.__sbGetState = () => ({ company: obState.company, sizeNum: obState.sizeNum, email: obState.email });
+    window.__sbGetState = () => ({ company: obState.company, sizeNum: obState.sizeNum, email: obState.email, deptname: obState.deptname, deptdesc: obState.deptdesc, purpose: obState.purpose });
 })();
 </script>
 
@@ -36688,9 +36862,26 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   var userView = null;
   var built = false;
 
+  /* Mikro-opgaver: guider udforskningen og kvitterer, naar pointerne er set */
+  var tasksDone = {};
+  function doneTask(name) {
+    if (tasksDone[name]) return;
+    tasksDone[name] = true;
+    var chipEl = document.querySelector('.sbx-task[data-task="' + name + '"]');
+    if (chipEl) chipEl.classList.add('is-done');
+    if (window.cqTrack) window.cqTrack.event('sandbox_explore_task', { task: name });
+    if (tasksDone.juli && tasksDone.chat && tasksDone.segment) {
+      var doneRow = document.getElementById('sbxTasksDone');
+      if (doneRow) doneRow.classList.add('is-on');
+      if (window.cqTrack) window.cqTrack.event('sandbox_explore_completed', {});
+    }
+  }
+
   function render(wf) {
     renderBoard(win, wf, { userView: userView, exploreChat: true });
     if (scrubLabel) scrubLabel.textContent = MONTHS[Math.max(0, Math.min(11, Math.round(wf) - 1))];
+    if (wf >= 6.5 && wf < 7.6) doneTask('juli');
+    if (win.__faOpen && wf >= 7.6) doneTask('chat');
   }
 
   function fillAll(sel, val) {
@@ -36707,6 +36898,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         t.addEventListener('click', function () {
           userView = t.getAttribute('data-view');
           setView(win, userView);
+          if (userView === 'quad') doneTask('segment');
           render(scrub ? parseFloat(scrub.value) : 12);
         });
       });
@@ -36739,6 +36931,14 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     fillAll('.js-leadmail', state.email || 'demo@' + company.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 14) + '.dk');
     var title = win.querySelector('.pmain-title');
     if (title) title.textContent = first ? 'Hej, ' + first : 'Hej';
+
+    // Personaliseret book-link i opgave-kvitteringen
+    var doneMail = document.getElementById('sbxDoneMail');
+    if (doneMail) {
+      var subj = state.company ? 'Vis os vores egne tal · ' + state.company : 'Vis os vores egne tal';
+      var body = 'Hej Benjamin\n\nJeg har udforsket platformen i jeres sandbox' + (state.company ? ' for ' + state.company : '') + '. Lad os tage de 20 minutter.\n\nForeslå et par tidspunkter, der passer dig.';
+      doneMail.setAttribute('href', 'mailto:bvb@culturequest.io?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body));
+    }
 
     win.__faOpen = false;
     userView = null;
