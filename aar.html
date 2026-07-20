@@ -2219,7 +2219,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       var yPct = clamp(((q[1] - 50) / 35) * 100, 0, 100);
       dot.style.left = xPct + '%';
       dot.style.bottom = yPct + '%';
-      dot.classList.toggle('is-risk', dept === 'Teknik' && q[0] < -0.3);
+      dot.classList.toggle('is-risk', dept === DEPT_STORY && q[0] < -0.3);
       if (lbl) { lbl.style.left = xPct + '%'; lbl.style.bottom = yPct + '%'; }
     });
     var trail = scope.querySelector('.js-quadtrail polyline');
@@ -2229,7 +2229,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       if (plot) {
         var pw = plot.clientWidth || 300, ph = plot.clientHeight || 150;
         for (var tw = 1; tw <= wf; tw += 0.5) {
-          var qq = sampleWeek(Math.min(tw, wf)).quad['Teknik'];
+          var qq = sampleWeek(Math.min(tw, wf)).quad[DEPT_STORY];
           var tx = ((qq[0] + 1) / 2) * pw;
           var ty = ph - clamp(((qq[1] - 50) / 35), 0, 1) * ph;
           tp.push(tx.toFixed(1) + ',' + ty.toFixed(1));
@@ -2387,7 +2387,12 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   function tick() {
     curP += (targetP - curP) * 0.11;
     if (Math.abs(targetP - curP) < 0.0004) curP = targetP;
-    applyProgress(curP);
+    try {
+      applyProgress(curP);
+    } catch (e) {
+      // Motoren må aldrig dø af en enkelt frame-fejl. Log og fortsæt.
+      if (!window.__tickErr) window.__tickErr = String(e && e.stack || e);
+    }
     requestAnimationFrame(tick);
   }
 
