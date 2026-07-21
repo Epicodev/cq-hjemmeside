@@ -12,6 +12,7 @@
 //
 // ENV VARS:
 //   RESEND_API_KEY, FROM_EMAIL, ALERT_EMAILS (all shared with lead-notify)
+//   CRM_API_URL, CRM_WRITE_KEY (auto-opret/berig deal ved hot demo-besøg)
 
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
@@ -21,6 +22,52 @@ const ALERT_EMAILS = (Deno.env.get("ALERT_EMAILS") || "bvb@culturequest.io")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+// Dashboard CRM-API: opretter/beriger en deal når et personaliseret demo-link
+// besøges. Best-effort — fejler aldrig selve alerten.
+const CRM_API_URL = Deno.env.get("CRM_API_URL");
+const CRM_WRITE_KEY = Deno.env.get("CRM_WRITE_KEY");
+
+// Personaliserede demo-links bærer ?c=<firma>&n=<navn> og UTM'er. distinct_id
+// er leadets email (posthog.identify(email) på demo-siden). Vi parser page_url
+// og upserter en prospect i pipelinen, så varme demo-besøg ikke går tabt.
+async function upsertCrmDeal(p: HotVisitorPayload): Promise<void> {
+    if (!CRM_API_URL || !CRM_WRITE_KEY) return;
+    let company: string | null = null;
+    let name: string | null = null;
+    let campaign: string | null = p.utm_campaign ?? null;
+    let page = "demo";
+    try {
+        const u = new URL(p.page_url || "");
+        company = u.searchParams.get("c");
+        name = u.searchParams.get("n");
+        campaign = campaign || u.searchParams.get("utm_campaign");
+        page = u.pathname.replace(/^\//, "").replace(/\.html$/, "") || "demo";
+    } catch {
+        return; // ingen brugbar URL → drop (anonym)
+    }
+    // Uden firma kan vi ikke dedupe/oprette meningsfuldt.
+    if (!company || /ukendt|\{/.test(company)) return;
+    const email = p.distinct_id && p.distinct_id.includes("@") ? p.distinct_id : null;
+    try {
+        await fetch(CRM_API_URL, {
+            method: "POST",
+            headers: { "x-sync-key": CRM_WRITE_KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ops: [{
+                    kind: "hot_visitor",
+                    company,
+                    contact_name: name,
+                    contact_email: email,
+                    intent_score: p.intent_score,
+                    page,
+                    campaign,
+                }],
+            }),
+        });
+    } catch {
+        // best-effort — alerten er allerede sendt
+    }
+}
 
 interface IntentSignal {
     event: string;
@@ -178,6 +225,9 @@ serve(async (req) => {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
     }
+
+    // Best-effort: opret/berig deal i pipelinen (blokerer ikke alerten).
+    await upsertCrmDeal(payload);
 
     return new Response(JSON.stringify({ ok: true }), {
         status: 200,
