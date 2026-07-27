@@ -2441,7 +2441,7 @@ body{
               </div>
               <div class="side-user">
                 <div class="av">JL</div>
-                <div><div class="nm">Jonas Lind</div><div class="em">jl@klifo.dk</div></div>
+                <div><div class="nm">Jonas Lind</div><div class="em" id="ldrMail">jl@demo.dk</div></div>
               </div>
             </aside>
             <div class="inset">
@@ -2810,6 +2810,11 @@ body{
     document.getElementById('introTitle').textContent = 'Oplev culturequest, ' + company;
     document.getElementById('outroTitle').textContent = 'Det her kunne være ' + company;
   }
+  var CO = company || 'Demo A/S';
+  if(company){
+    var slug = company.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,20);
+    if(slug) document.getElementById('ldrMail').textContent = 'jl@'+slug+'.dk';
+  }
   if(name){
     document.getElementById('dashGreeting').textContent = 'Hej, ' + name;
     document.getElementById('userName').textContent = name;
@@ -2824,14 +2829,14 @@ body{
       title:'I kan ikke se en opsigelse i et gennemsnit',
       text:'<span class="ln">De fleste virksomheder opdager mistrivsel i exitsamtalen. Der er beslutningen truffet for længst: energien forsvandt i foråret, opsigelsen kom i september, og sidste trivselsrapport sagde 3,9 ud af 5.</span>'
         +'<span class="ln">Culturequest er bygget på én idé: kulturdata skal forudsige, ikke referere. Forskningen viser at 75% af frivillige opsigelser kan forebygges. Det kræver bare, at nogen ser signalet, mens der stadig er noget at gøre.</span>'
-        +'<span class="ln">De næste minutter følger I hele kæden med KLIFOs øjne: opsætning, månedlige målinger, signalet der dukker op i kurven, handlingen, og til sidst beviset for at det virkede.</span>'
+        +'<span class="ln">De næste minutter følger I hele kæden: opsætning, månedlige målinger, signalet der dukker op i kurven, handlingen, og til sidst beviset for at det virkede.</span>'
         +'<span class="ln"><b>Se kulturen, før den koster dig en medarbejder.</b> Lad mig først vise dig, hvor nemt det er at komme i gang.</span>' },
     { scene:7, nav:'', crumb:'Kom godt i gang', anchor:'#onbBtns', pos:'right', press:'.onbx-btns .b.cq',
       title:'I er i gang på en formiddag',
       text:'Opsætningen er to trin: jeres konto og jeres virksomhed. Ingen konsulenter, ingen IT-projekt. Herfra er platformen jeres.<span class="val"><b>For jer:</b> I måler allerede den første uge, ikke om tre måneder.</span>' },
     { scene:8, nav:'', crumb:'Organisation', anchor:'#importBtn', pos:'below', press:'#importBtn',
       title:'Hele organisationen ind på minutter',
-      text:'Importér medarbejdere fra CSV med afdelinger og teams. Strukturen her er det der senere gør analysen skarp: I kan se KLIFO på afdelingsniveau, ikke kun som ét gennemsnit.<span class="val"><b>For jer:</b> Svar på HVOR i organisationen det knirker, ikke bare at noget gør.</span>' },
+      text:'Importér medarbejdere fra CSV med afdelinger og teams. Strukturen her er det der senere gør analysen skarp: I kan se '+CO+' på afdelingsniveau, ikke kun som ét gennemsnit.<span class="val"><b>For jer:</b> Svar på HVOR i organisationen det knirker, ikke bare at noget gør.</span>' },
     { scene:9, nav:'undersogelser', crumb:'Kulturundersøgelser / Opret', chapter:true, hold:12000,
       title:'Spørgerammen er ikke et spørgeskema',
       text:'<span class="ln">Kontoen er klar, organisationen er inde. Næste stop er jeres første måling, men før vi bygger den, skal du kende platformens vigtigste hemmelighed:</span>'
@@ -2848,7 +2853,7 @@ body{
       text:'Ét klik på Komplet kulturmåling, og hele den validerede spørgeramme ligger klar: 10 kategorier, 35 spørgsmål. Vælg til og fra, tag en brancheskabelon, eller byg selv. Ingen skal opfinde trivselsspørgsmål fra bunden.<span class="val"><b>For jer:</b> Valideret spørgeramme fra dag ét, uden konsulentregning.</span>' },
     { scene:15, nav:'undersogelser', crumb:'Kulturundersøgelser / Opret', anchor:'#tmplList', pos:'right', press:'#tplHealth',
       title:'Jeres branche ligger her allerede',
-      text:'17 brancheskabeloner er kurateret på forhånd, spørgsmål for spørgsmål. KLIFO ville få Sundhed & Life Sciences: klinisk hygiejne, infektionsforebyggelse, biologisk eksponering og løft, lagt oven på den lovpligtige APV-standard. Ingen starter forfra.<span class="val"><b>For jer:</b> Spørgsmål der rammer jeres hverdag, så medarbejderne kan mærke, det handler om dem.</span>' },
+      text:'17 brancheskabeloner er kurateret på forhånd, spørgsmål for spørgsmål. '+CO+' ville få Sundhed & Life Sciences: klinisk hygiejne, infektionsforebyggelse, biologisk eksponering og løft, lagt oven på den lovpligtige APV-standard. Ingen starter forfra.<span class="val"><b>For jer:</b> Spørgsmål der rammer jeres hverdag, så medarbejderne kan mærke, det handler om dem.</span>' },
     { scene:10, nav:'undersogelser', crumb:'Kulturundersøgelser / Planlæg', anchor:'#recurCard', pos:'right', press:'#recurCard .swx',
       title:'Sæt målingen på autopilot: hver måned',
       text:'Vælg månedlig gentagelse én gang, og platformen udsender, påminder og lukker selv den 1. i hver måned. Det er dét, der gør data levende: I får en kurve i stedet for et øjebliksbillede. Og kurven er hele hemmeligheden bag det, I ser om lidt.<span class="val"><b>For jer:</b> Målingen driver sig selv. Ingen huskelister, ingen døde skemaer i en mappe.</span>' },
@@ -2913,7 +2918,7 @@ body{
       text:'Forside med jeres navn på, og derefter resultaterne spørgsmål for spørgsmål med svarfordelinger, AI-indsigter og sammenligninger på tværs af afdelinger. Klar som PDF til ledelsen og bestyrelsen.<span class="val"><b>For jer:</b> Fra lukket måling til delbar rapport på under et minut.</span>' },
     { scene:13, nav:'undersogelser', crumb:'Kulturundersøgelser', chapter:true, hold:9000,
       title:'Tre måneder senere',
-      text:'<span class="ln">Indsatsen i Drift startede i september: kapacitetsgennemgang, fast 1:1-rytme, synlig anerkendelse. Og fordi målingen kører hver måned, kunne KLIFO se effekten undervejs: 43 i oktober, 49 i november. Kurven vendte.</span>'
+      text:'<span class="ln">Indsatsen i Drift startede i september: kapacitetsgennemgang, fast 1:1-rytme, synlig anerkendelse. Og fordi målingen kører hver måned, kunne I se effekten undervejs: 43 i oktober, 49 i november. Kurven vendte.</span>'
         +'<span class="ln">Nu lander december-målingen med svaret på det eneste spørgsmål, der betyder noget: holdt det?</span>' },
     { scene:14, nav:'analyse', crumb:'Analyse', anchor:'#cmpGrid', pos:'below', countup:true,
       title:'Loopet lukker: effekten er målbar',
@@ -3110,6 +3115,14 @@ body{
       tip.classList.add('show');
       safetyClamp();
     }, instant?180:620);
+  }
+
+  /* tooltip aendrer stoerrelse (webfont-load, indhold): klamp igen automatisk */
+  if(window.ResizeObserver){
+    new ResizeObserver(function(){ if(tip.classList.contains('show')) safetyClamp(); }).observe(tip);
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ placeTip(STEPS[cur], true); });
   }
 
   /* sikkerhedsnet: efter-juster tooltip mod de FAKTISKE viewport-kanter, naar den er fuldt layoutet */
