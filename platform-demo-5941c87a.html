@@ -941,7 +941,7 @@ body{
 .mgate .deco{position:absolute;right:-90px;top:-90px;width:260px;height:260px;border:32px solid rgba(255,255,255,.08);border-radius:70px;transform:rotate(18deg);pointer-events:none}
 @media (max-width:700px){
   body{padding:0}
-  .topbar{padding:10px 12px;gap:10px}
+  
   .seg-wrap{display:none}
   .tb-title .k{display:none}
   .frame{width:1280px;max-width:none;border-radius:0}
@@ -951,6 +951,80 @@ body{
   .tip.chap,.tip.chap.hero{width:auto;padding:22px 22px}
   .tip.chap.hero h5{font-size:20px}
   .chatfab{display:none}
+}
+
+/* ===== MOBIL-FORTÆLLING: fuldskærms swipe-kort (kun ≤700px) ===== */
+.mstory{display:none}
+@media (max-width:700px){
+  .toolbar,.frame,.footer-note,.mgate{display:none !important}
+  body{padding:0;background:#fff}
+  .mstory{display:block;height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+  .ms-prog{position:fixed;top:0;left:0;height:3px;background:var(--cq);z-index:50;width:0;transition:width .15s linear}
+  .ms-card{min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;justify-content:center;padding:34px 26px 46px;position:relative;background:#fff}
+  .ms-card.dark{background:linear-gradient(165deg,#2c2a8f 0%,#4f46e5 55%,#6366f1 100%);color:#fff}
+  .ms-kick{display:inline-flex;align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--cq);background:#eef0fe;border-radius:99px;padding:5px 12px;margin-bottom:14px}
+  .ms-card.dark .ms-kick{color:#fff;background:rgba(255,255,255,.16)}
+  .ms-card h2{font-size:25px;font-weight:800;letter-spacing:-.02em;line-height:1.22}
+  .ms-card p{font-size:14.5px;line-height:1.62;color:#3f3f46;margin-top:11px}
+  .ms-card.dark p{color:#e2e4ff}
+  .ms-val{margin-top:14px;padding:11px 14px;background:#eef0fe;border-left:3px solid var(--cq);border-radius:0 10px 10px 0;font-size:13px;line-height:1.55;color:#3730a3}
+  .ms-val b{color:#312e9e}
+  .ms-vis{margin-top:22px;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1)}
+  .ms-card.on .ms-vis{opacity:1;transform:none}
+  .ms-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:#a1a1aa}
+  .ms-card.dark .ms-hint{color:#c7cbff}
+  .ms-wm{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;margin-bottom:22px}
+  .ms-wm .o{width:17px;height:17px;border-radius:50%;border:4px solid currentColor;display:inline-block}
+  .ms-b1{display:block;width:100%;background:#fff;color:#3f3ccf;border:none;border-radius:11px;padding:15px;font:inherit;font-size:15px;font-weight:700;margin-top:24px;text-align:center;text-decoration:none}
+  .ms-b2{display:block;width:100%;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:11px;padding:13px;font:inherit;font-size:14px;font-weight:600;margin-top:10px;text-align:center}
+  .ms-deco{position:absolute;right:-80px;top:-80px;width:230px;height:230px;border:28px solid rgba(255,255,255,.08);border-radius:64px;transform:rotate(18deg);pointer-events:none}
+  /* mini-widgets */
+  .ms-panel{border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 10px 30px -14px rgba(0,0,0,.14);padding:16px}
+  .ms-krow{display:flex;gap:12px;align-items:center}
+  .ms-ring{width:104px;height:104px;border-radius:50%;flex-shrink:0;background:conic-gradient(#10b981 0 259deg,#f1f1ef 259deg 360deg);display:flex;align-items:center;justify-content:center;position:relative}
+  .ms-ring::before{content:'';position:absolute;inset:9px;border-radius:50%;background:#fff}
+  .ms-ring b{position:relative;font-size:29px;font-weight:800}
+  .ms-kv{flex:1}
+  .ms-kv .l{font-size:11.5px;color:var(--muted-fg)}
+  .ms-kv .v{font-size:19px;font-weight:800}
+  .ms-kv .bar{height:7px;border-radius:99px;background:var(--muted);overflow:hidden;margin:5px 0 10px}
+  .ms-kv .bar i{display:block;height:100%;width:0;border-radius:99px;background:#10b981;transition:width 1s cubic-bezier(.22,1,.36,1) .3s}
+  .ms-card.on .ms-kv .bar i{width:87%}
+  .ms-heat{display:grid;grid-template-columns:86px repeat(3,1fr);gap:6px;font-size:12px;align-items:center}
+  .ms-heat .h{color:var(--muted-fg);font-size:10.5px;text-align:center}
+  .ms-heat .rl{font-size:11.5px;color:var(--foreground);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ms-cell{text-align:center;border-radius:8px;padding:11px 0;font-weight:700}
+  .ms-cg{background:#e8f6ee;color:#15803d}.ms-cy{background:#fdf3cf;color:#a16207}.ms-cr{background:#fddfd2;color:#b91c1c}
+  .ms-chip{display:inline-flex;font-size:11.5px;font-weight:700;color:#b45309;background:#fffbeb;border-radius:8px;padding:5px 11px;margin-top:12px}
+  .ms-b{border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.55;max-width:88%;margin-top:10px}
+  .ms-b.u{background:var(--primary);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+  .ms-b.a{background:#f4f4f5;border-bottom-left-radius:4px}
+  .ms-b.a .abar{display:flex;align-items:center;gap:7px;font-size:11px;margin-top:7px}
+  .ms-b.a .abar .n{width:66px;color:var(--muted-fg)}
+  .ms-b.a .abar .t{flex:1;height:6px;border-radius:99px;background:#e4e4e7;overflow:hidden}
+  .ms-b.a .abar .t i{display:block;height:100%;border-radius:99px}
+  .ms-goal{margin-top:10px;background:#eef0fe;border-left:3px solid var(--cq);border-radius:0 9px 9px 0;padding:10px 12px;font-size:12.5px;line-height:1.5;color:#3730a3}
+  .ms-phone{width:230px;margin:0 auto;border:1.5px solid var(--border);border-radius:26px;padding:18px 14px 22px;background:#f8fafc;box-shadow:0 14px 34px -16px rgba(0,0,0,.2)}
+  .ms-phone .q{font-size:13px;font-weight:600;line-height:1.4}
+  .ms-lik{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+  .ms-lik span{border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;font-size:12.5px;background:#fff}
+  .ms-lik span.sel{border-color:var(--cq);background:#eef0fe;font-weight:700;color:#3730a3}
+  .ms-svg{width:100%;height:auto;display:block}
+  .ms-cover{border-radius:14px;background:linear-gradient(135deg,#312e9e,#4f46e5);color:#fff;padding:22px 20px 34px;position:relative;overflow:hidden;box-shadow:0 14px 34px -16px rgba(49,46,158,.5)}
+  .ms-cover .wm2{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+  .ms-cover .wm2 .o{width:13px;height:13px;border-radius:50%;border:3.5px solid #fff;display:inline-block}
+  .ms-cover h3{font-size:21px;font-weight:800;margin-top:26px;letter-spacing:-.01em}
+  .ms-cover .co{font-size:12.5px;color:#dfe1ff;margin-top:5px}
+  .ms-cover .deco2{position:absolute;right:-46px;bottom:-70px;width:170px;height:170px;border:22px solid rgba(255,255,255,.09);border-radius:44px;transform:rotate(18deg)}
+  .ms-dl{display:inline-flex;align-items:center;gap:7px;margin-top:14px;border:1px solid var(--border);border-radius:9px;background:#fff;padding:9px 14px;font-size:12.5px;font-weight:700}
+  .ms-tr{display:flex;align-items:center;gap:0;margin-top:6px}
+  .ms-tr .d{width:26px;height:26px;border-radius:50%;border:2px solid rgba(115,115,115,.3);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:var(--muted-fg);background:#fff;flex-shrink:0}
+  .ms-tr .d.done{border-color:var(--cq);background:var(--cq);color:#fff}
+  .ms-tr .d.cur{border-color:var(--cq);color:var(--cq)}
+  .ms-tr i{flex:1;height:2px;background:rgba(115,115,115,.25);display:block}
+  .ms-tr i.done{background:var(--cq)}
+  .ms-mile{display:flex;gap:10px;margin-top:10px;font-size:12.5px;line-height:1.5;align-items:flex-start}
+  .ms-mile .mo{flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:.05em;color:var(--cq);background:#eef0fe;border-radius:6px;padding:3px 8px;margin-top:1px}
 }
 </style>
 </head>
@@ -2816,6 +2890,198 @@ body{
   </div>
 </div>
 
+<div class="ms-prog" id="msProg"></div>
+<div class="mstory" id="mstory">
+
+  <section class="ms-card dark on">
+    <div class="ms-deco"></div>
+    <div class="ms-wm"><span class="o"></span> culturequest</div>
+    <h2 id="msTitle">I kan ikke se en opsigelse i et gennemsnit</h2>
+    <p>De fleste virksomheder opdager mistrivsel i exitsamtalen. Der er beslutningen truffet for længst.</p>
+    <p>Culturequest er bygget på én idé: kulturdata skal forudsige, ikke referere. Forskningen viser at 75% af frivillige opsigelser kan forebygges.</p>
+    <p><b style="color:#fff">Her er rejsen på 2 minutter.</b> Hele demoen venter på din computer.</p>
+    <button class="ms-b1" id="msCopy1">Kopiér link til computeren</button>
+    <div class="ms-hint">Swipe op for at starte ↑</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 1 · Kom i gang</span>
+    <h2>I gang på en formiddag</h2>
+    <p>Konto, organisation og første måling samme dag. 17 brancheskabeloner ligger klar, og målingen sættes på månedlig autopilot.</p>
+    <div class="ms-vis">
+      <div class="ms-panel">
+        <div class="ms-tr"><span class="d done">✓</span><i class="done"></i><span class="d done">✓</span><i class="done"></i><span class="d cur">3</span><i></i><span class="d">4</span></div>
+        <p style="margin-top:12px;font-size:12.5px;color:var(--muted-fg)">Opsætning → import → skabelon → autopilot: <b style="color:var(--foreground)">hver måned</b></p>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Ingen konsulenter, ingen IT-projekt. I måler allerede den første uge.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 2 · Medarbejderne</span>
+    <h2>Ét personligt link. Ingen login.</h2>
+    <p>Medarbejderne svarer på mobilen på under 10 minutter, med en anonymitets-garanti der står med deres egne øjne: segmenter under 5 svar vises aldrig.</p>
+    <div class="ms-vis">
+      <div class="ms-phone">
+        <div class="q">Hvor ofte har du kontrol over din arbejdsbelastning?</div>
+        <div class="ms-lik"><span>Sjældent</span><span class="sel">Nogle gange</span><span>Ofte</span></div>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Ærlige svar og svarprocenter over 85. Data I tør handle på.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 3 · Jeres data</span>
+    <h2>Baseline på plads</h2>
+    <p>To uger senere har 87% svaret, og dashboardet lever. På overfladen ser det fint ud: kulturscore 72.</p>
+    <div class="ms-vis">
+      <div class="ms-panel ms-krow">
+        <div class="ms-ring"><b data-msc="72">0</b></div>
+        <div class="ms-kv">
+          <div class="l">Svarprocent</div><div class="v"><span data-msc="87">0</span>%</div>
+          <div class="bar"><i></i></div>
+          <div class="l">108 af 124 har svaret · 10 kategorier</div>
+        </div>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Ét levende overblik, ledelsen selv kan åbne. Men gennemsnit skjuler problemer …</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 3 · Jeres data</span>
+    <h2>Problemet har en adresse</h2>
+    <p>Heatmappet krydser dimensioner med afdelinger. Drift ligger på 47 i Sundhed, trukket ned af stress på 41, mens resten er gul og grøn.</p>
+    <div class="ms-vis">
+      <div class="ms-panel ms-heat">
+        <span></span><span class="h">Sundhed</span><span class="h">Tillid</span><span class="h">Samlet</span>
+        <span class="rl">Administration</span><span class="ms-cell ms-cy">66</span><span class="ms-cell ms-cg">76</span><span class="ms-cell ms-cg">74</span>
+        <span class="rl"><b>Drift</b></span><span class="ms-cell ms-cr">47</span><span class="ms-cell ms-cy">66</span><span class="ms-cell ms-cy">61</span>
+        <span class="rl">Udvikling</span><span class="ms-cell ms-cy">68</span><span class="ms-cell ms-cg">80</span><span class="ms-cell ms-cg">75</span>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Indsatsen lander præcis der, hvor den tjener sig hjem. Ingen spredehagl.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 4 · Signal og handling</span>
+    <h2>Kurven taler, før nogen siger op</h2>
+    <p>August og september lander af sig selv. Sundhed i Drift: 47, 44, 42, og projektionen fortsætter ned. Motoren ser accelerationen, ikke bare niveauet.</p>
+    <div class="ms-vis">
+      <div class="ms-panel">
+        <svg class="ms-svg" viewBox="0 0 340 120" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="msg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".18"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>
+          <path d="M14 44 C80 50 150 56 200 59 L200 112 L14 112 Z" fill="url(#msg1)"/>
+          <path d="M14 44 C80 50 150 56 200 59" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M200 59 C250 62 300 66 330 68" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="5 4"/>
+          <path d="M200 59 L330 63 L330 84 Z" fill="rgba(129,140,248,.12)"/>
+          <g font-size="11" font-weight="700" fill="#171717"><text x="8" y="34">47</text><text x="100" y="42">44</text><text x="190" y="49">42</text></g>
+          <g font-size="9.5" fill="#a3a3a3"><text x="8" y="117">jul</text><text x="100" y="117">aug</text><text x="192" y="117">sep</text><text x="300" y="117">nov</text></g>
+        </svg>
+        <span class="ms-chip">Overvej et initiativ</span>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Signalet fanges måneder før det bliver til sygefravær eller en opsigelse.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 4 · Signal og handling</span>
+    <h2>Assistenten flager det selv</h2>
+    <p>AI-assistenten kender jeres tal og siger til, når det haster.</p>
+    <div class="ms-vis">
+      <div class="ms-b u">Hvad skal jeg være opmærksom på?</div>
+      <div class="ms-b a">Én ting kan ikke vente: <b>Drift</b>. Stress er faldet tre målinger i træk, og kombinationen matcher burnout-mønsteret. Jeg kategoriserer risikoen som <b>forhøjet</b>.
+        <div class="abar"><span class="n">Juli</span><div class="t"><i style="width:41%;background:#f59e0b"></i></div><b>41</b></div>
+        <div class="abar"><span class="n">August</span><div class="t"><i style="width:38%;background:#f97316"></i></div><b>38</b></div>
+        <div class="abar"><span class="n">September</span><div class="t"><i style="width:36%;background:#ef4444"></i></div><b>36</b></div>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> En analytiker der holder øje døgnet rundt, med jeres egne data som grundlag.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 4 · Signal og handling</span>
+    <h2>Sparring, der ender i måltal</h2>
+    <p>Kom med en indvending, og assistenten tilpasser planen i stedet for at gentage den.</p>
+    <div class="ms-vis">
+      <div class="ms-b u">Jonas har ikke tid til 1:1 hver 14. dag. Hvad så?</div>
+      <div class="ms-b a">Så skruer vi ned for formatet, ikke for rytmen: 20 minutter, samme tre spørgsmål hver gang.
+        <div class="ms-goal"><b>Delmål · oktober:</b> Kontrol-spørgsmålet fra 36 til 45. Vender kurven ikke, flager jeg igen.</div>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Kulturarbejdet bliver til tal, I kan tjekke næste måned.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 4 · Signal og handling</span>
+    <h2>Rapporten skriver sig selv</h2>
+    <p>Vælg omfang og sprog, slå AI-indsigter til, og få en bestyrelsesklar PDF med jeres navn på.</p>
+    <div class="ms-vis">
+      <div class="ms-cover">
+        <div class="deco2"></div>
+        <div class="wm2"><span class="o"></span> culturequest</div>
+        <h3>Kulturmåling · September 2026</h3>
+        <div class="co" id="msRepCo">Demo A/S</div>
+      </div>
+      <span class="ms-dl">⬇ Download PDF</span>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Ingen weekend i PowerPoint.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 5 · Beviset</span>
+    <h2>December: kurven vendte</h2>
+    <p>Indsatsen startede i september. Oktober og november målte effekten undervejs, og december lander med svaret: Drifts score gik fra 59 til 72.</p>
+    <div class="ms-vis">
+      <div class="ms-panel ms-krow">
+        <div class="ms-ring"><b data-msc="72">0</b></div>
+        <div class="ms-kv">
+          <svg class="ms-svg" viewBox="0 0 200 84" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 30 C40 36 60 42 84 44 C110 46 118 38 138 30 C158 23 176 17 192 12" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="84" cy="44" r="4" fill="#ef4444"/><circle cx="192" cy="12" r="4.5" fill="#10b981"/>
+          </svg>
+          <div class="l" style="margin-top:6px">Signal · handling · bevis</div>
+        </div>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Sort på hvidt-bevis for at indsatsen virkede. ROI på kulturarbejdet.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Del 6 · Jeres år</span>
+    <h2 id="msYrTitle">Jeres første 12 måneder</h2>
+    <p>12 målinger, 0 manuelle udsendelser, og en kurve ingen årlig trivselsrapport kan give jer.</p>
+    <div class="ms-vis">
+      <div class="ms-mile"><span class="mo">MD 1</span><span>Baseline: første heatmap viser hvor I står.</span></div>
+      <div class="ms-mile"><span class="mo">MD 3</span><span>🚩 Tidlig varsling fanger det første signal.</span></div>
+      <div class="ms-mile"><span class="mo">MD 4</span><span>Indsats sat ind. Effekten måles måneden efter.</span></div>
+      <div class="ms-mile"><span class="mo">MD 8</span><span>Lovpligtig APV klaret i samme system.</span></div>
+      <div class="ms-mile"><span class="mo">MD 12</span><span>Årsrapport til bestyrelsen: dokumenteret fremgang.</span></div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Kulturarbejdet går fra årlig pligt til løbende, dokumenteret fremgang.</div>
+  </section>
+
+  <section class="ms-card">
+    <span class="ms-kick">Bonus</span>
+    <h2>APV med i prisen</h2>
+    <p>Den lovpligtige APV er et selvstændigt forløb på samme motor: seks faser, handleplaner med AI-forslag og dokumentation klar til Arbejdstilsynet.</p>
+    <div class="ms-vis">
+      <div class="ms-panel">
+        <div class="ms-tr"><span class="d done">✓</span><i class="done"></i><span class="d done">✓</span><i class="done"></i><span class="d cur">3</span><i></i><span class="d">4</span><i></i><span class="d">5</span><i></i><span class="d">6</span></div>
+        <p style="margin-top:12px;font-size:12.5px;color:var(--muted-fg)">Forberedelse → opbygning → <b style="color:var(--foreground)">dataindsamling</b> → efterbehandling → handleplaner → afsluttet</p>
+      </div>
+    </div>
+    <div class="ms-val"><b>For jer:</b> Ikke et ekstra system. Samme login, samme data, samme assistent.</div>
+  </section>
+
+  <section class="ms-card dark">
+    <div class="ms-deco"></div>
+    <div class="ms-wm"><span class="o"></span> culturequest</div>
+    <h2 id="msCtaTitle">Det her kunne være jer</h2>
+    <p>Se hele den guidede demo på en stor skærm: 33 trin gennem platformen, med jeres navn på.</p>
+    <button class="ms-b1" id="msCopy2">Kopiér link til computeren</button>
+    <a class="ms-b2" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin</a>
+  </section>
+</div>
 <div class="mgate" id="mgate">
   <div class="deco"></div>
   <div class="wm"><span class="o"></span> culturequest</div>
@@ -2838,6 +3104,10 @@ body{
     document.getElementById('orgName').textContent = company;
     document.getElementById('yr12Title').textContent = company + 's første 12 måneder';
     document.getElementById('ldrOrg').textContent = company;
+    var msT=document.getElementById('msTitle'); /* manifest-titlen beholdes generisk */
+    var msR=document.getElementById('msRepCo'); if(msR) msR.textContent=company;
+    var msY=document.getElementById('msYrTitle'); if(msY) msY.textContent=company+'s første 12 måneder';
+    var msC=document.getElementById('msCtaTitle'); if(msC) msC.textContent='Det her kunne være '+company;
     var mg=document.getElementById('mgateTxt');
     if(mg) mg.textContent='Den guidede produktdemo viser hele platformen for '+company+' i fuld bredde. Åbn linket på din computer, så tager rejsen 4 minutter.';
     document.getElementById('repCompany').textContent = company;
@@ -2980,11 +3250,51 @@ body{
   ];
 
   function isMobile(){ return window.matchMedia && window.matchMedia('(max-width:700px)').matches; }
-  /* mobil-gate */
+  /* mobil: story-udgaven koerer i stedet for gate */
+  (function(){
+    var st=document.getElementById('mstory');
+    if(!st || !isMobile()) return;
+    function copyBtn(id){
+      var b=document.getElementById(id);
+      if(!b) return;
+      b.addEventListener('click',function(){
+        var done=function(){ b.textContent='Link kopieret ✓'; setTimeout(function(){ b.textContent='Kopiér link til computeren'; },2500); };
+        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href).then(done,done); } else { done(); }
+      });
+    }
+    copyBtn('msCopy1'); copyBtn('msCopy2');
+    /* kort-animationer + taellere naar kortet er i view */
+    function count(el){
+      var to=parseInt(el.getAttribute('data-msc'),10), t0=null;
+      function tick(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/1100); el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(tick); }
+      requestAnimationFrame(tick);
+    }
+    if(window.IntersectionObserver){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting && !e.target.classList.contains('on')){
+            e.target.classList.add('on');
+            e.target.querySelectorAll('[data-msc]').forEach(count);
+          }
+        });
+      },{root:st,threshold:.5});
+      st.querySelectorAll('.ms-card').forEach(function(c){ io.observe(c); });
+    } else {
+      st.querySelectorAll('.ms-card').forEach(function(c){ c.classList.add('on'); c.querySelectorAll('[data-msc]').forEach(count); });
+    }
+    /* fremdriftsbjaelke */
+    var pr=document.getElementById('msProg');
+    st.addEventListener('scroll',function(){
+      var p=st.scrollTop/(st.scrollHeight-st.clientHeight);
+      pr.style.width=(p*100)+'%';
+    },{passive:true});
+  })();
+
+  /* mobil-gate (bruges ikke laengere - story overtager) */
   (function(){
     var g=document.getElementById('mgate');
     if(!g) return;
-    if(isMobile()) g.classList.add('vis');
+    if(false) g.classList.add('vis');
     document.getElementById('mgateGo').addEventListener('click',function(){ g.classList.remove('vis'); });
     document.getElementById('mgateCopy').addEventListener('click',function(){
       var b=this;
