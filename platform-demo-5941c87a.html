@@ -2915,7 +2915,7 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
           <li><b>✓</b> En assistent der svarer på jeres egne data</li>
           <li><b>✓</b> Lovpligtig APV og handlingsplaner, samme system</li>
         </ul>
-        <a class="cta" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin →</a>
+        <a class="cta" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal" onclick="try{window.__cqTrack&&window.__cqTrack('demo_cta_click',{where:'desktop_book'})}catch(e){}">Book 20 min med Benjamin →</a>
         <button class="again" id="againBtn">Se demoen igen</button>
       </div>
     </div>
@@ -3111,7 +3111,7 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
     <h2 id="msCtaTitle">Det her kunne være jer</h2>
     <p>Se hele den guidede demo på en stor skærm: 33 trin gennem platformen, med jeres navn på.</p>
     <button class="ms-b1" id="msCopy2">Kopiér link til computeren</button>
-    <a class="ms-b2" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal">Book 20 min med Benjamin</a>
+    <a class="ms-b2" href="mailto:bvb@culturequest.io?subject=Vis%20os%20vores%20egne%20tal" onclick="try{window.__cqTrack&&window.__cqTrack('demo_cta_click',{where:'mobil_book'})}catch(e){}">Book 20 min med Benjamin</a>
     <a class="ms-b3" id="msFull" href="?view=full">Åbn den fulde demo alligevel</a>
   </section>
 </div>
@@ -3133,6 +3133,60 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
   function clean(s){ if(!s || /[{}<>"']/.test(String(s))) return null; return String(s).slice(0,60); }
   var company = clean(params.get('c'));
   var name = clean(params.get('n'));
+
+  /* ============================================================
+     TRACKING — cookieless PostHog + hot-visitor (samme motor som demo-x).
+     Ser hvem/hvor mange der åbner linket, hvor langt de kom, og fyrer
+     hot-visitor-alarm (→ CRM-deal) ved højt engagement. Respekterer DNT.
+     ============================================================ */
+  (function(){
+    var POSTHOG_KEY='phc_nVqUSWi2SGrBjEuz9ARLVZTiWfhNTZ6iHSGaBnooZsnK';
+    var POSTHOG_HOST='https://eu.i.posthog.com';
+    var HOT_ENDPOINT='https://ytiboqiihekaerznainv.supabase.co/functions/v1/hot-visitor-notify';
+    var HOT_KEY='sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
+    var HOT_THRESHOLD=50, COOLDOWN_MS=24*60*60*1000;
+
+    var leadProps={ demo_company: company||'ukendt', demo_lead: name||'ukendt', demo_page:'platform-demo' };
+
+    /* ?em= (rå eller base64) identificerer personen; strippes fra adresselinjen */
+    function maybeDecode(s){ if(!s) return s; if(s.indexOf('@')!==-1) return s; try{ var d=atob(s.replace(/-/g,'+').replace(/_/g,'/')); if(d.indexOf('@')!==-1) return d; }catch(e){} return s; }
+    var attr={ email:null, utms:{} };
+    (function(){
+      var stored=null; try{ stored=JSON.parse(sessionStorage.getItem('cq_pdemo_attr')||'null'); }catch(e){}
+      var raw=params.get('em')||params.get('utm_email');
+      if(raw){ var em=maybeDecode(raw); if(em&&em.indexOf('@')>0) attr.email=em.toLowerCase().trim().slice(0,120); }
+      else if(stored&&stored.email){ attr.email=stored.email; }
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k){ var v=params.get(k)||(stored&&stored.utms&&stored.utms[k]); if(v) attr.utms[k]=clean(v); });
+      if(attr.email||Object.keys(attr.utms).length){ try{ sessionStorage.setItem('cq_pdemo_attr',JSON.stringify(attr)); }catch(e){} }
+      if(raw&&window.history&&window.history.replaceState){ try{ var u=new URL(location.href); u.searchParams.delete('em'); u.searchParams.delete('utm_email'); history.replaceState({},'',u.toString()); }catch(e){} }
+    })();
+
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister getFeatureFlag isFeatureEnabled onFeatureFlags identify setPersonProperties group reset opt_in_capturing opt_out_capturing debug get_distinct_id".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    window.posthog.init(POSTHOG_KEY,{ api_host:POSTHOG_HOST, persistence:'memory', person_profiles:'identified_only', capture_pageview:false, disable_session_recording:true, respect_dnt:true,
+      loaded:function(ph){ try{ ph.register(leadProps); if(Object.keys(attr.utms).length) ph.register(attr.utms); if(attr.email){ ph.identify(attr.email, Object.assign({email:attr.email}, attr.utms, leadProps)); } ph.capture('$pageview'); }catch(e){} } });
+
+    var WEIGHTS={ demo_opened:15, apollo_link_visited:20, demo_analyse_viewed:10, demo_signal_viewed:10, demo_chat_viewed:10, demo_payoff_viewed:15, demo_year_viewed:5, demo_cta_click:30 };
+    var score=0, signals=[], fired=false;
+    function inCooldown(){ try{ var d=JSON.parse(localStorage.getItem('cq_pdemo_hot_until')||'null'); return d&&d.until>Date.now(); }catch(e){ return false; } }
+    function markCooldown(){ try{ localStorage.setItem('cq_pdemo_hot_until',JSON.stringify({until:Date.now()+COOLDOWN_MS})); }catch(e){} }
+    function maybeFire(){
+      if(fired||score<HOT_THRESHOLD||inCooldown()) return;
+      fired=true; markCooldown();
+      var distinctId='pdemo-visitor';
+      try{ if(window.posthog&&typeof window.posthog.get_distinct_id==='function') distinctId=window.posthog.get_distinct_id(); }catch(e){}
+      var payload={ distinct_id: attr.email||distinctId, intent_score:score, signals:signals.slice(), page_url:(location.href||'').slice(0,500), referrer:(document.referrer||'').slice(0,500)||null, user_agent:(navigator.userAgent||'').slice(0,300), posthog_session_url:null };
+      try{ fetch(HOT_ENDPOINT,{ method:'POST', headers:{'Authorization':'Bearer '+HOT_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload), keepalive:true }).catch(function(){}); }catch(e){}
+      try{ if(window.posthog&&window.posthog.capture) window.posthog.capture('hot_visitor_threshold_crossed',{intent_score:score,signal_count:signals.length}); }catch(e){}
+    }
+    var seen={};
+    window.__cqTrack=function(nme,props){
+      if(seen[nme]) return; seen[nme]=true;
+      try{ if(window.posthog&&window.posthog.capture) window.posthog.capture(nme,props||{}); }catch(e){}
+      if(WEIGHTS[nme]){ score+=WEIGHTS[nme]; signals.push(nme+' (+'+WEIGHTS[nme]+')'); maybeFire(); }
+    };
+    window.__cqTrack('demo_opened');
+  })();
+  function trk(n,p){ try{ if(window.__cqTrack) window.__cqTrack(n,p); }catch(e){} }
   if(company){
     document.getElementById('orgName').textContent = company;
     document.getElementById('yr12Title').textContent = company + 's første 12 måneder';
@@ -3300,6 +3354,8 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
       });
     }
     copyBtn('msCopy1'); copyBtn('msCopy2');
+    document.getElementById('msCopy1').addEventListener('click',function(){ trk('demo_cta_click',{where:'mobil_intro_copy'}); });
+    document.getElementById('msCopy2').addEventListener('click',function(){ trk('demo_cta_click',{where:'mobil_slut_copy'}); });
     var mf=document.getElementById('msFull');
     if(mf){ var q=new URLSearchParams(location.search); q.set('view','full'); mf.href=location.pathname+'?'+q.toString(); }
     /* kort-animationer + taellere naar kortet er i view */
@@ -3314,6 +3370,13 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
           if(e.isIntersecting && !e.target.classList.contains('on')){
             e.target.classList.add('on');
             e.target.querySelectorAll('[data-msc]').forEach(count);
+            var cards=Array.prototype.slice.call(st.querySelectorAll('.ms-card'));
+            var idx=cards.indexOf(e.target);
+            if(idx===4) trk('demo_analyse_viewed');
+            else if(idx===5) trk('demo_signal_viewed');
+            else if(idx===6) trk('demo_chat_viewed');
+            else if(idx===9) trk('demo_payoff_viewed');
+            else if(idx>=cards.length-1) trk('demo_year_viewed');
           }
         });
       },{root:st,threshold:.5});
@@ -3629,7 +3692,14 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
   }
   var placeToken=0, revealTimer=null;
 
-  function go(i){ if(i>=STEPS.length){ finish(); return; } cur=Math.max(0,i); render(!playing); if(playing) armAuto(); }
+  function go(i){ if(i>=STEPS.length){ finish(); return; } cur=Math.max(0,i); render(!playing); if(playing) armAuto();
+    var sc=STEPS[cur]&&STEPS[cur].scene;
+    if(sc===1) trk('demo_analyse_viewed');
+    else if(sc===16) trk('demo_signal_viewed');
+    else if(sc===3) trk('demo_chat_viewed');
+    else if(sc===17) trk('demo_year_viewed');
+    else if(sc===14) trk('demo_payoff_viewed');
+  }
   /* klik hvor som helst (dæmpning eller spotlight) = næste trin */
   for(var dk in dims){ dims[dk].addEventListener('click',function(){ stopPlay(); go(cur+1); }); }
   spot.addEventListener('click',function(){ stopPlay(); go(cur+1); });
