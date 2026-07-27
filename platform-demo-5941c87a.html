@@ -3121,16 +3121,20 @@ body{
   if(window.ResizeObserver){
     new ResizeObserver(function(){ if(tip.classList.contains('show')) safetyClamp(); }).observe(tip);
   }
+  /* kontinuerlig vagt: fanger ALLE sene layout-skift (fonte, app-hoejde, billeder) */
+  setInterval(function(){ if(tip.classList.contains('show')) safetyClamp(); }, 250);
   if(document.fonts && document.fonts.ready){
     document.fonts.ready.then(function(){ placeTip(STEPS[cur], true); });
   }
 
   /* sikkerhedsnet: efter-juster tooltip mod de FAKTISKE viewport-kanter, naar den er fuldt layoutet */
+  var frameEl=document.querySelector('.frame');
   function safetyClamp(){
     var wr=wrap.getBoundingClientRect();
-    var bLim=Math.min(window.innerHeight-10, wr.bottom-8);
+    var fr=frameEl?frameEl.getBoundingClientRect():wr;
+    var bLim=Math.min(window.innerHeight-10, wr.bottom-8, fr.bottom-8);
     var tLim=Math.max(10, wr.top+6);
-    var rLim=Math.min(window.innerWidth-8, wr.right-6);
+    var rLim=Math.min(window.innerWidth-8, wr.right-6, fr.right-6);
     var lLim=Math.max(8, wr.left+6);
     var r=tip.getBoundingClientRect();
     var t=parseFloat(tip.style.top)||0;
