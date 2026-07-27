@@ -927,6 +927,31 @@ body{
 #chatWrap .msg.tU{animation:matIn .4s ease both .15s}
 #chatWrap .msg.typing{animation:typeIn 1.25s ease both .5s}
 #chatWrap .msg.tA{animation:matIn .45s ease both .05s}
+
+/* ===== mobil: gate + bund-sheet tilstand ===== */
+.mgate{position:fixed;inset:0;z-index:300;background:linear-gradient(165deg,#2c2a8f 0%,#4f46e5 55%,#6366f1 100%);display:none;flex-direction:column;justify-content:center;padding:34px 28px;color:#fff}
+.mgate.vis{display:flex}
+.mgate .wm{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;margin-bottom:26px}
+.mgate .wm .o{width:18px;height:18px;border-radius:50%;border:4.5px solid #fff;display:inline-block}
+.mgate h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.mgate p{font-size:14.5px;line-height:1.6;color:#e2e4ff;margin-top:12px}
+.mgate .btns{margin-top:28px;display:flex;flex-direction:column;gap:11px}
+.mgate .b1{background:#fff;color:#3f3ccf;border:none;border-radius:11px;padding:15px;font:inherit;font-size:15px;font-weight:700}
+.mgate .b2{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:11px;padding:14px;font:inherit;font-size:14.5px;font-weight:600}
+.mgate .deco{position:absolute;right:-90px;top:-90px;width:260px;height:260px;border:32px solid rgba(255,255,255,.08);border-radius:70px;transform:rotate(18deg);pointer-events:none}
+@media (max-width:700px){
+  body{padding:0}
+  .topbar{padding:10px 12px;gap:10px}
+  .seg-wrap{display:none}
+  .tb-title .k{display:none}
+  .frame{width:1280px;max-width:none;border-radius:0}
+  html,body{overflow-x:auto}
+  .tip{position:fixed !important;left:10px !important;right:10px;bottom:12px;top:auto !important;width:auto;max-height:44vh;overflow-y:auto;z-index:120;box-shadow:0 -14px 50px -12px rgba(0,0,0,.5)}
+  .tip .caret{display:none !important}
+  .tip.chap,.tip.chap.hero{width:auto;padding:22px 22px}
+  .tip.chap.hero h5{font-size:20px}
+  .chatfab{display:none}
+}
 </style>
 </head>
 <body>
@@ -2791,6 +2816,16 @@ body{
   </div>
 </div>
 
+<div class="mgate" id="mgate">
+  <div class="deco"></div>
+  <div class="wm"><span class="o"></span> culturequest</div>
+  <h2>Demoen er bygget til en stor skærm</h2>
+  <p id="mgateTxt">Den guidede produktdemo viser hele platformen i fuld bredde. Åbn linket på din computer, så tager rejsen 4 minutter.</p>
+  <div class="btns">
+    <button class="b1" id="mgateCopy">Kopiér link til computeren</button>
+    <button class="b2" id="mgateGo">Se demoen alligevel</button>
+  </div>
+</div>
 <div class="footer-note">Fortrolig demo · alle data er simulerede · deles kun via direkte link</div>
 
 <script>
@@ -2803,6 +2838,8 @@ body{
     document.getElementById('orgName').textContent = company;
     document.getElementById('yr12Title').textContent = company + 's første 12 måneder';
     document.getElementById('ldrOrg').textContent = company;
+    var mg=document.getElementById('mgateTxt');
+    if(mg) mg.textContent='Den guidede produktdemo viser hele platformen for '+company+' i fuld bredde. Åbn linket på din computer, så tager rejsen 4 minutter.';
     document.getElementById('repCompany').textContent = company;
     document.getElementById('onbCompany').textContent = company;
     document.getElementById('mailCompany').textContent = company;
@@ -2942,6 +2979,20 @@ body{
       text:'APV-krav bliver til konkrete handleplaner med ansvarlige og status, og AI foreslår dem ud fra data og kommentarer. Det udkast assistenten tilbød tidligere? Det er den her slags, der kommer ud af det.<span class="val"><b>For jer:</b> Krav bliver til handling med ansvarlige og deadlines, klar til tilsyn.</span>' }
   ];
 
+  function isMobile(){ return window.matchMedia && window.matchMedia('(max-width:700px)').matches; }
+  /* mobil-gate */
+  (function(){
+    var g=document.getElementById('mgate');
+    if(!g) return;
+    if(isMobile()) g.classList.add('vis');
+    document.getElementById('mgateGo').addEventListener('click',function(){ g.classList.remove('vis'); });
+    document.getElementById('mgateCopy').addEventListener('click',function(){
+      var b=this;
+      var done=function(){ b.textContent='Link kopieret ✓'; setTimeout(function(){ b.textContent='Kopiér link til computeren'; },2500); };
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href).then(done,done); } else { done(); }
+    });
+  })();
+
   var cur=0, playing=false, timer=null, segTimer=null, fxTimer=null;
   var AUTOPLAY_MS=6000;
   var scenes=document.querySelectorAll('.scene');
@@ -2989,6 +3040,13 @@ body{
       tip.classList.add('chap');
       tip.classList.toggle('hero', !!step.hero);
       setDim(wrap.offsetWidth/2, wrap.offsetHeight/2, 0, 0);
+      if(isMobile()){
+        tip.style.left=''; tip.style.top='';
+        clearTimeout(fxTimer);
+        tip.classList.remove('show');
+        fxTimer=setTimeout(function(){ tip.classList.add('show'); }, instant?60:260);
+        return;
+      }
       /* centrér kortet i den SYNLIGE del af viewporten, aldrig udenfor */
       var wr=wrap.getBoundingClientRect();
       var cvT=Math.max(8,-wr.top+12), cvB=Math.min(window.innerHeight-wr.top, wr.height)-12;
@@ -3005,7 +3063,9 @@ body{
     tip.classList.remove('chap'); tip.classList.remove('hero');
     var anchor=document.querySelector(step.anchor);
     if(!anchor){ tip.classList.remove('show'); spot.style.display='none'; curx.style.display='none'; hideDim(); return; }
-    if(anchor.scrollIntoView){ anchor.scrollIntoView({block:'nearest'}); }
+    if(isMobile()){
+      anchor.scrollIntoView({block:'center', inline:'center'});
+    } else if(anchor.scrollIntoView){ anchor.scrollIntoView({block:'nearest'}); }
     var mr=wrap.getBoundingClientRect();
     var ar=anchor.getBoundingClientRect();
     /* samtale-trin: svaret er ikke skrevet endnu, vent og prøv igen */
@@ -3036,6 +3096,24 @@ body{
     curx.style.display='block';
     curx.style.left=(ar.left-mr.left+ar.width*0.55)+'px';
     curx.style.top=(ar.top-mr.top+ar.height*0.62)+'px';
+    /* mobil: bund-sheet, ingen koordinat-matematik */
+    if(isMobile()){
+      tip.style.left=''; tip.style.top='';
+      caret.style.cssText=''; caret.style.display='none';
+      clearTimeout(fxTimer);
+      tip.classList.remove('show');
+      curx.classList.remove('click');
+      fxTimer=setTimeout(function(){
+        if(!instant) curx.classList.add('click');
+        if(step.press){
+          var pel2=document.querySelector(step.press);
+          if(pel2){ pel2.classList.remove('pressfx'); void pel2.offsetWidth; pel2.classList.add('pressfx'); }
+        }
+        if(step.countup) runCountUp();
+        tip.classList.add('show');
+      }, instant?180:560);
+      return;
+    }
     /* tooltip-position */
     var tw=320, th=tip.offsetHeight||170, left, top;
     var arL=ar.left-mr.left, arT=ar.top-mr.top, arR=ar.right-mr.left, arB=ar.bottom-mr.top;
@@ -3130,6 +3208,7 @@ body{
   /* sikkerhedsnet: efter-juster tooltip mod de FAKTISKE viewport-kanter, naar den er fuldt layoutet */
   var frameEl=document.querySelector('.frame');
   function safetyClamp(){
+    if(isMobile()) return;
     var wr=wrap.getBoundingClientRect();
     var fr=frameEl?frameEl.getBoundingClientRect():wr;
     var bLim=Math.min(window.innerHeight-10, wr.bottom-8, fr.bottom-8);
