@@ -64,7 +64,7 @@ body{
 /* ============================================================
    APP-SHELL — AppShell/AppSidebar/AppHeader (shadcn inset)
    ============================================================ */
-.app{display:flex;min-height:820px;background:var(--sidebar);position:relative;overflow:hidden}
+.app{display:flex;min-height:820px;background:var(--sidebar);position:relative}
 .side{width:248px;flex-shrink:0;padding:16px 12px 14px;display:flex;flex-direction:column;font-size:13.5px}
 .side-logo{display:flex;align-items:center;gap:10px;padding:4px 10px 16px}
 .side-logo .mark{width:32px;height:32px;border-radius:8px;background:var(--cq);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
@@ -427,15 +427,22 @@ body{
 /* "klik"-pop på det element cursoren rammer */
 .pressfx{animation:pressPop .55s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pressPop{0%{transform:scale(1)}35%{transform:scale(.93)}100%{transform:scale(1)}}
-/* kapitel-kort: fuld dæmpning + centreret fortælle-kort */
-.tip.chap{width:470px;padding:24px 26px}
-.tip.chap h5{font-size:19px;margin-bottom:9px}
-.tip.chap p{font-size:13px;line-height:1.6;color:#d4d4d4}
+/* kapitel-kort: eget udtryk (brand-gradient) så overgange aldrig forveksles med trin-tooltips */
+.tip.chap{width:470px;padding:26px 28px;background:linear-gradient(160deg,#332f9f 0%,#4f46e5 62%,#6366f1 100%);box-shadow:0 34px 80px -20px rgba(49,46,158,.6);overflow:hidden}
+.tip.chap > *{position:relative;z-index:1}
+.tip.chap::after{content:'';position:absolute;right:-90px;bottom:-110px;width:240px;height:240px;border:30px solid rgba(255,255,255,.08);border-radius:64px;transform:rotate(18deg);pointer-events:none;z-index:0}
+.tip.chap .badge-t{display:inline-flex;background:rgba(255,255,255,.18);color:#fff;border-radius:99px;padding:5px 13px;font-size:10px;letter-spacing:.11em;margin-bottom:12px}
+.tip.chap h5{font-size:21px;margin-bottom:10px;letter-spacing:-.01em}
+.tip.chap p{font-size:13px;line-height:1.62;color:#e4e7ff}
+.tip.chap p b,.tip.chap .ln b{color:#fff}
 .tip.chap .idx{margin:10px 0 12px;display:flex;flex-direction:column;gap:7px}
-.tip.chap .idx div{font-size:12.5px;line-height:1.5;color:#d4d4d4;padding-left:10px;border-left:2px solid var(--cq)}
+.tip.chap .idx div{font-size:12.5px;line-height:1.5;color:#e4e7ff;padding-left:10px;border-left:2px solid rgba(255,255,255,.55)}
 .tip.chap .idx b{color:#fff;font-weight:600}
-.tip.chap.hero{width:560px;padding:30px 34px}
-.tip.chap.hero h5{font-size:23px;letter-spacing:-.02em;margin-bottom:12px}
+.tip.chap .back{color:#c9cdff}
+.tip.chap .next{background:#fff;color:#3f3ccf}
+.tip.chap .next:hover{background:#eef0ff}
+.tip.chap.hero{width:560px;padding:32px 36px}
+.tip.chap.hero h5{font-size:24px;letter-spacing:-.02em;margin-bottom:12px}
 .tip.chap.hero p{font-size:13.5px}
 /* staged reveal: linjer og indeks-rækker glider ind én ad gangen */
 .tip .ln{display:block;margin-bottom:11px;opacity:0}
@@ -471,9 +478,19 @@ body{
 .tip .val b{color:#fff;font-weight:700}
 /* 12-måneders årskurve med milepæle */
 .yrsvg{width:100%;height:auto;display:block}
-.yrsvg .line{fill:none;stroke:var(--cq);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1500;stroke-dashoffset:1500;animation:yrdraw 2.4s ease-out forwards .4s}
+.yrsvg .line{fill:none;stroke:var(--cq);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1500;stroke-dashoffset:1500;animation:yrdraw 2.4s ease-out forwards .4s}
 @keyframes yrdraw{to{stroke-dashoffset:0}}
 .yrsvg .dot{opacity:0;animation:lnIn .4s ease both}
+@keyframes fadeOp{from{opacity:0}to{opacity:1}}
+.yrsvg .ff{opacity:0;animation:fadeOp .9s ease forwards}
+/* live-graf-tooltippen (Projekteret · Forventet interval) */
+.cht-tip{position:absolute;width:252px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 46px -14px rgba(0,0,0,.22);padding:15px 17px;opacity:0;animation:lnIn .5s ease both}
+.cht-tip .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13.5px;font-weight:700}
+.cht-tip .pill{font-size:11px;font-weight:600;color:#4f46e5;background:#eef0fe;border-radius:99px;padding:3px 10px}
+.cht-tip .row{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--foreground);margin-top:10px}
+.cht-tip .big{font-size:17px;font-weight:800;color:#52525b}
+.cht-tip .iv{font-weight:700}
+.cht-tip .note{font-size:11.5px;color:var(--muted-fg);margin-top:9px;line-height:1.5}
 .yr-miles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
 .yrm{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:#fff;opacity:0;animation:lnIn .5s ease both}
 .yrm .mo{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--cq);background:rgba(99,102,241,.1);border-radius:5px;padding:2px 7px;margin-bottom:6px}
@@ -639,6 +656,43 @@ body{
 .chatpanel .tabsb i{display:block;font-style:normal;font-size:15px;margin-bottom:2px}
 .chatpanel .tabsb .dot{position:relative}
 .chatpanel .tabsb .dot::after{content:'';position:absolute;top:-1px;margin-left:3px;width:7px;height:7px;border-radius:50%;background:#ef4444}
+/* chat: AI-assistent samtalevisning med spor-chips (1:1 fra live) */
+.chatpanel .chd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--muted)}
+.chatpanel .chd .bk{font-size:14px;color:var(--muted-fg)}
+.chatpanel .chd .t{font-size:15.5px;font-weight:700;flex:1}
+.chatpanel .chd .ic{color:var(--muted-fg);font-size:13px;margin-left:8px}
+.chatpanel .cbody{flex:1;display:flex;flex-direction:column;padding:14px;min-height:340px}
+.cbubble{background:#f4f4f5;border-radius:14px;padding:12px 15px;font-size:13.5px;max-width:85%;align-self:flex-start}
+.cbubble b{display:block;font-weight:700;margin-bottom:3px}
+.chip-stack{margin-top:auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.cchip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:9px 16px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.06);white-space:nowrap}
+.cchip.hl{background:#f4f4f5}
+/* rapport-viewer (modal med forside + resultatside, 1:1 fra live) */
+.pill-blue{display:inline-flex;font-size:11.5px;font-weight:600;color:#2563eb;background:#eff6ff;border-radius:8px;padding:4px 12px}
+.rep-ok{color:#10b981;font-size:13px;margin-left:6px}
+.rv-wrap{position:absolute;inset:0;background:rgba(90,90,95,.55);display:flex;align-items:flex-start;justify-content:center;padding:26px 40px}
+.rv-modal{background:#fff;border-radius:14px;box-shadow:0 40px 90px -30px rgba(0,0,0,.5);width:100%;max-width:1150px;overflow:hidden;display:flex;flex-direction:column}
+.rv-hd{display:flex;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid var(--muted)}
+.rv-hd .t{font-size:15px;font-weight:700}
+.rv-hd .s{font-size:12px;color:var(--muted-fg);margin-top:1px}
+.rv-hd .dl{margin-left:auto;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:9px;background:#fff;padding:8px 14px;font-size:13px;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.rv-body{background:#ececee;padding:22px 28px;display:flex;flex-direction:column;gap:18px;overflow:hidden}
+.rv-cover{border-radius:10px;background:linear-gradient(135deg,#312e9e 0%,#4038c8 55%,#4f46e5 100%);color:#fff;padding:34px 40px 60px;position:relative;overflow:hidden;box-shadow:0 8px 24px -10px rgba(0,0,0,.35)}
+.rv-cover .wm{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+.rv-cover .wm .o{width:20px;height:20px;border-radius:50%;border:5px solid #fff;display:inline-block}
+.rv-cover h2{font-size:40px;font-weight:800;letter-spacing:-.02em;margin-top:74px}
+.rv-cover .co{font-size:16px;margin-top:10px;color:#e2e4ff}
+.rv-cover .deco{position:absolute;right:-60px;bottom:-120px;width:340px;height:340px;border:50px solid rgba(255,255,255,.07);border-radius:80px;transform:rotate(18deg)}
+.rv-slide{background:#fff;border-radius:10px;border-left:5px solid #ec4899;padding:22px 30px 26px;box-shadow:0 6px 18px -10px rgba(0,0,0,.2)}
+.rv-slide .mt{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted-fg);margin-bottom:14px}
+.rv-slide h3{font-size:24px;font-weight:800;color:#1e293b;letter-spacing:-.01em;margin-bottom:18px}
+.rv-qgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px}
+.rv-q .qt{font-size:12.5px;line-height:1.5;margin-bottom:8px;display:flex;justify-content:space-between;gap:14px}
+.rv-q .sc{font-size:17px;font-weight:800;color:#f59e0b;flex-shrink:0}
+.rv-q .segs{display:flex;gap:4px}
+.rv-q .segs i{height:7px;border-radius:99px;display:block}
+.rv-q .lbls{display:flex;gap:4px;font-size:9.5px;color:var(--muted-fg);margin-top:4px}
+.rv-foot{display:flex;justify-content:space-between;font-size:10.5px;color:#b9b9c0;margin-top:20px}
 /* TemplateListView (branchespecifikke skabeloner) */
 .tpl-back{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .tpl-back .ba{width:32px;height:32px;border-radius:8px;border:none;background:none;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer}
@@ -806,6 +860,73 @@ body{
 
 /* fullpage-medarbejder: emp-frame fylder hele fladen */
 .scene.fullpage .emp-frame{border:none;border-radius:0;flex:1;min-height:0}
+
+/* ===== levende trin: alt materialiserer sig blidt og forskudt (kun opacity/blur, geometri urort) ===== */
+@keyframes matIn{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:none}}
+@keyframes growH{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.ff{opacity:0;animation:fadeOp .9s ease forwards}
+.scene.active > *{animation:matIn .42s ease both}
+.scene.active > *:nth-child(2){animation-delay:.06s}
+.scene.active > *:nth-child(3){animation-delay:.12s}
+.scene.active > *:nth-child(4){animation-delay:.18s}
+.scene.active > *:nth-child(5){animation-delay:.24s}
+.scene.active > *:nth-child(6){animation-delay:.30s}
+.scene.active .kpi-grid > .card,.scene.active .dim5 > .d5,.scene.active .ana2-top > .card,.scene.active .ana2-mid > .card,.scene.active .dash-grid > .card,.scene.active #svyList .svt-row,.scene.active #repList .svt-row,.scene.active .gi-grid > .gi-card,.scene.active .ldr-kpis > .card,.scene.active .sdt-kpis > .sdt-k,.scene.active .csx-content > .catprev,.scene.active .csx-side .pickc,.scene.active .csx-side .tplc,.scene.active .chat-scroll > .msg,.scene.active .emp-center > *,.scene.active .chip-stack > .cchip,.scene.active .plan{animation:matIn .42s ease both}
+.scene.active .kpi-grid > .card:nth-child(1),.scene.active .dim5 > .d5:nth-child(1),.scene.active .ana2-top > .card:nth-child(1),.scene.active .ana2-mid > .card:nth-child(1),.scene.active .dash-grid > .card:nth-child(1),.scene.active #svyList .svt-row:nth-child(1),.scene.active #repList .svt-row:nth-child(1),.scene.active .gi-grid > .gi-card:nth-child(1),.scene.active .ldr-kpis > .card:nth-child(1),.scene.active .sdt-kpis > .sdt-k:nth-child(1),.scene.active .csx-content > .catprev:nth-child(1),.scene.active .csx-side .pickc:nth-child(1),.scene.active .csx-side .tplc:nth-child(1),.scene.active .chat-scroll > .msg:nth-child(1),.scene.active .emp-center > *:nth-child(1),.scene.active .chip-stack > .cchip:nth-child(1),.scene.active .plan:nth-child(1){animation-delay:0.08s}
+.scene.active .kpi-grid > .card:nth-child(2),.scene.active .dim5 > .d5:nth-child(2),.scene.active .ana2-top > .card:nth-child(2),.scene.active .ana2-mid > .card:nth-child(2),.scene.active .dash-grid > .card:nth-child(2),.scene.active #svyList .svt-row:nth-child(2),.scene.active #repList .svt-row:nth-child(2),.scene.active .gi-grid > .gi-card:nth-child(2),.scene.active .ldr-kpis > .card:nth-child(2),.scene.active .sdt-kpis > .sdt-k:nth-child(2),.scene.active .csx-content > .catprev:nth-child(2),.scene.active .csx-side .pickc:nth-child(2),.scene.active .csx-side .tplc:nth-child(2),.scene.active .chat-scroll > .msg:nth-child(2),.scene.active .emp-center > *:nth-child(2),.scene.active .chip-stack > .cchip:nth-child(2),.scene.active .plan:nth-child(2){animation-delay:0.15s}
+.scene.active .kpi-grid > .card:nth-child(3),.scene.active .dim5 > .d5:nth-child(3),.scene.active .ana2-top > .card:nth-child(3),.scene.active .ana2-mid > .card:nth-child(3),.scene.active .dash-grid > .card:nth-child(3),.scene.active #svyList .svt-row:nth-child(3),.scene.active #repList .svt-row:nth-child(3),.scene.active .gi-grid > .gi-card:nth-child(3),.scene.active .ldr-kpis > .card:nth-child(3),.scene.active .sdt-kpis > .sdt-k:nth-child(3),.scene.active .csx-content > .catprev:nth-child(3),.scene.active .csx-side .pickc:nth-child(3),.scene.active .csx-side .tplc:nth-child(3),.scene.active .chat-scroll > .msg:nth-child(3),.scene.active .emp-center > *:nth-child(3),.scene.active .chip-stack > .cchip:nth-child(3),.scene.active .plan:nth-child(3){animation-delay:0.21s}
+.scene.active .kpi-grid > .card:nth-child(4),.scene.active .dim5 > .d5:nth-child(4),.scene.active .ana2-top > .card:nth-child(4),.scene.active .ana2-mid > .card:nth-child(4),.scene.active .dash-grid > .card:nth-child(4),.scene.active #svyList .svt-row:nth-child(4),.scene.active #repList .svt-row:nth-child(4),.scene.active .gi-grid > .gi-card:nth-child(4),.scene.active .ldr-kpis > .card:nth-child(4),.scene.active .sdt-kpis > .sdt-k:nth-child(4),.scene.active .csx-content > .catprev:nth-child(4),.scene.active .csx-side .pickc:nth-child(4),.scene.active .csx-side .tplc:nth-child(4),.scene.active .chat-scroll > .msg:nth-child(4),.scene.active .emp-center > *:nth-child(4),.scene.active .chip-stack > .cchip:nth-child(4),.scene.active .plan:nth-child(4){animation-delay:0.28s}
+.scene.active .kpi-grid > .card:nth-child(5),.scene.active .dim5 > .d5:nth-child(5),.scene.active .ana2-top > .card:nth-child(5),.scene.active .ana2-mid > .card:nth-child(5),.scene.active .dash-grid > .card:nth-child(5),.scene.active #svyList .svt-row:nth-child(5),.scene.active #repList .svt-row:nth-child(5),.scene.active .gi-grid > .gi-card:nth-child(5),.scene.active .ldr-kpis > .card:nth-child(5),.scene.active .sdt-kpis > .sdt-k:nth-child(5),.scene.active .csx-content > .catprev:nth-child(5),.scene.active .csx-side .pickc:nth-child(5),.scene.active .csx-side .tplc:nth-child(5),.scene.active .chat-scroll > .msg:nth-child(5),.scene.active .emp-center > *:nth-child(5),.scene.active .chip-stack > .cchip:nth-child(5),.scene.active .plan:nth-child(5){animation-delay:0.34s}
+.scene.active .kpi-grid > .card:nth-child(6),.scene.active .dim5 > .d5:nth-child(6),.scene.active .ana2-top > .card:nth-child(6),.scene.active .ana2-mid > .card:nth-child(6),.scene.active .dash-grid > .card:nth-child(6),.scene.active #svyList .svt-row:nth-child(6),.scene.active #repList .svt-row:nth-child(6),.scene.active .gi-grid > .gi-card:nth-child(6),.scene.active .ldr-kpis > .card:nth-child(6),.scene.active .sdt-kpis > .sdt-k:nth-child(6),.scene.active .csx-content > .catprev:nth-child(6),.scene.active .csx-side .pickc:nth-child(6),.scene.active .csx-side .tplc:nth-child(6),.scene.active .chat-scroll > .msg:nth-child(6),.scene.active .emp-center > *:nth-child(6),.scene.active .chip-stack > .cchip:nth-child(6),.scene.active .plan:nth-child(6){animation-delay:0.41s}
+.scene.active .kpi-grid > .card:nth-child(7),.scene.active .dim5 > .d5:nth-child(7),.scene.active .ana2-top > .card:nth-child(7),.scene.active .ana2-mid > .card:nth-child(7),.scene.active .dash-grid > .card:nth-child(7),.scene.active #svyList .svt-row:nth-child(7),.scene.active #repList .svt-row:nth-child(7),.scene.active .gi-grid > .gi-card:nth-child(7),.scene.active .ldr-kpis > .card:nth-child(7),.scene.active .sdt-kpis > .sdt-k:nth-child(7),.scene.active .csx-content > .catprev:nth-child(7),.scene.active .csx-side .pickc:nth-child(7),.scene.active .csx-side .tplc:nth-child(7),.scene.active .chat-scroll > .msg:nth-child(7),.scene.active .emp-center > *:nth-child(7),.scene.active .chip-stack > .cchip:nth-child(7),.scene.active .plan:nth-child(7){animation-delay:0.47s}
+
+/* trend-linjer tegner sig selv */
+.tline{stroke-dasharray:1400;stroke-dashoffset:1400;animation:yrdraw 1.5s ease-out forwards .15s}
+.scene.active .spark polyline{stroke-dasharray:220;stroke-dashoffset:220;animation:yrdraw 1.1s ease-out forwards .35s}
+/* bjaelker vokser frem */
+.scene.active .dbk-row .bar i,.scene.active .dimrow .bar i,.scene.active .mini-bar > i,.scene.active .svt-row .bar i{transform-origin:left;animation:growH .7s cubic-bezier(.22,1,.36,1) both .35s}
+/* histogram-soejler vokser op */
+.scene.active .ovr-hist .ob i{transform-origin:bottom;animation:growV .55s cubic-bezier(.22,1,.36,1) both}
+.scene.active .ovr-hist .ob:nth-child(1) i{animation-delay:.30s}
+.scene.active .ovr-hist .ob:nth-child(2) i{animation-delay:.36s}
+.scene.active .ovr-hist .ob:nth-child(3) i{animation-delay:.42s}
+.scene.active .ovr-hist .ob:nth-child(4) i{animation-delay:.48s}
+.scene.active .ovr-hist .ob:nth-child(5) i{animation-delay:.54s}
+.scene.active .ovr-hist .ob:nth-child(6) i{animation-delay:.60s}
+.scene.active .ovr-hist .ob:nth-child(7) i{animation-delay:.66s}
+/* heatmap-raekker ruller ind oppefra */
+.scene.active .hm2 tr{animation:matIn .4s ease both}
+.scene.active .hm2 tr:nth-child(2){animation-delay:.10s}
+.scene.active .hm2 tr:nth-child(3){animation-delay:.16s}
+.scene.active .hm2 tr:nth-child(4){animation-delay:.22s}
+.scene.active .hm2 tr:nth-child(5){animation-delay:.28s}
+.scene.active .hm2 tr:nth-child(6){animation-delay:.34s}
+.scene.active .hm2 tr:nth-child(7){animation-delay:.40s}
+.scene.active .hm2 tr:nth-child(8){animation-delay:.46s}
+/* pressfx skal altid vinde over materialiseringen */
+.pressfx{animation:pressPop .55s cubic-bezier(.34,1.56,.64,1) !important}
+
+/* ===== samtalen udspiller sig live: grupper + skrive-indikator ===== */
+#chatWrap .msg.typing{max-height:46px;overflow:hidden}
+#chatWrap .msg.typing span{display:inline-block;width:7px;height:7px;border-radius:50%;background:#b3b3ba;margin-right:5px;animation:tdot 1s infinite}
+#chatWrap .msg.typing span:nth-child(2){animation-delay:.15s}
+#chatWrap .msg.typing span:nth-child(3){animation-delay:.3s;margin-right:0}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+@keyframes typeIn{0%{opacity:0}12%{opacity:1}78%{opacity:1;max-height:46px}100%{opacity:0;max-height:0;padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0}}
+#chatWrap[data-reveal] .msg{display:none}
+#chatWrap[data-reveal="1"] .g1,
+#chatWrap[data-reveal="2"] .g1,#chatWrap[data-reveal="2"] .g2,
+#chatWrap[data-reveal="3"] .g1,#chatWrap[data-reveal="3"] .g2,#chatWrap[data-reveal="3"] .g3{display:block}
+#chatWrap[data-reveal="1u"] .g1{display:block}
+#chatWrap[data-reveal="1u"] .g1.tA{display:none}
+#chatWrap[data-reveal="2u"] .g1,#chatWrap[data-reveal="2u"] .g2{display:block}
+#chatWrap[data-reveal="2u"] .g2.tA{display:none}
+#chatWrap[data-reveal="3u"] .g1,#chatWrap[data-reveal="3u"] .g2,#chatWrap[data-reveal="3u"] .g3{display:block}
+#chatWrap[data-reveal="3u"] .g3.tA{display:none}
+#chatWrap .msg.t0{animation:matIn .4s ease both .05s}
+#chatWrap .msg.tU{animation:matIn .4s ease both .15s}
+#chatWrap .msg.typing{animation:typeIn 1.25s ease both .5s}
+#chatWrap .msg.tA{animation:matIn .45s ease both .05s}
 </style>
 </head>
 <body>
@@ -908,7 +1029,7 @@ body{
             <div class="card">
               <div class="card-h"><span class="card-title">Kultur score</span><span class="arrow-link">↗</span></div>
               <div class="card-c">
-                <div class="kpi-value"><b>72</b><span class="suf">/100</span><span class="trend-badge up">▲ +4</span></div>
+                <div class="kpi-value"><b data-cfrom="0" data-cto="72">72</b><span class="suf">/100</span><span class="trend-badge up">▲ +4</span></div>
                 <div class="kpi-desc">Høj konfidens · 10 kategorier</div>
                 <svg class="spark" width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,18 20,19 40,16 60,14 80,12 100,10 120,7" fill="none" stroke="#10b981" stroke-width="2"/></svg>
               </div>
@@ -916,7 +1037,7 @@ body{
             <div class="card">
               <div class="card-h"><span class="card-title">Engagement-score</span><span class="arrow-link">↗</span></div>
               <div class="card-c">
-                <div class="kpi-value"><b>68</b><span class="suf">/100</span><span class="trend-badge up">▲ +2</span></div>
+                <div class="kpi-value"><b data-cfrom="0" data-cto="68">68</b><span class="suf">/100</span><span class="trend-badge up">▲ +2</span></div>
                 <div class="kpi-desc">61% engagerede medarbejdere</div>
                 <svg class="spark" width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,16 20,17 40,15 60,16 80,13 100,12 120,10" fill="none" stroke="#10b981" stroke-width="2"/></svg>
               </div>
@@ -924,7 +1045,7 @@ body{
             <div class="card">
               <div class="card-h"><span class="card-title">Svarprocent</span><span class="arrow-link">↗</span></div>
               <div class="card-c">
-                <div class="kpi-value"><b>87</b><span class="suf">%</span></div>
+                <div class="kpi-value"><b data-cfrom="0" data-cto="87">87</b><span class="suf">%</span></div>
                 <div class="kpi-desc">108 af 124 har svaret</div>
                 <div class="mini-bar"><i style="width:87%"></i></div>
               </div>
@@ -932,14 +1053,14 @@ body{
             <div class="card">
               <div class="card-h"><span class="card-title">Undersøgelser<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
               <div class="card-c">
-                <div class="kpi-value"><b>6</b></div>
+                <div class="kpi-value"><b data-cfrom="0" data-cto="6">6</b></div>
                 <div class="kpi-desc">Næste undersøgelse 1. aug. 2026</div>
               </div>
             </div>
             <div class="card">
               <div class="card-h"><span class="card-title">Organisation<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
               <div class="card-c">
-                <div class="kpi-value"><b>124</b><span class="suf">Medarbejdere</span></div>
+                <div class="kpi-value"><b data-cfrom="0" data-cto="124">124</b><span class="suf">Medarbejdere</span></div>
                 <div class="kpi-desc">6 afdelinger · 14 teams</div>
               </div>
             </div>
@@ -1047,7 +1168,7 @@ body{
               </div>
               <div class="card-c">
                 <div class="ring2wrap">
-                  <div class="ring2"><div class="n"><b>72</b><span>100</span></div></div>
+                  <div class="ring2"><div class="n"><b data-cfrom="0" data-cto="72">72</b><span>100</span></div></div>
                   <span class="ring-chip">Fortsæt den gode udvikling</span>
                 </div>
                 <div class="ring-stats">
@@ -1071,17 +1192,26 @@ body{
               </div>
               <div class="card-c">
                 <svg viewBox="0 0 900 250" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
-                  <g stroke="#f0f0f0" stroke-width="1">
+                  <defs>
+                    <linearGradient id="gm1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity=".17"/>
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="gp1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#818cf8" stop-opacity=".09"/>
+                      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs><g stroke="#ececf1" stroke-width="1" stroke-dasharray="2 5">
                     <line x1="46" y1="20" x2="880" y2="20"/><line x1="46" y1="72" x2="880" y2="72"/>
                     <line x1="46" y1="124" x2="880" y2="124"/><line x1="46" y1="176" x2="880" y2="176"/><line x1="46" y1="228" x2="880" y2="228"/>
                   </g>
                   <g font-size="11" fill="#a3a3a3"><text x="38" y="24" text-anchor="end">100</text><text x="38" y="76" text-anchor="end">75</text><text x="38" y="128" text-anchor="end">50</text><text x="38" y="180" text-anchor="end">25</text><text x="38" y="232" text-anchor="end">0</text></g>
-                  <path d="M60 121 L215 119 L370 108 L520 78" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M60 121 L215 119 L370 108 L520 78 L520 228 L60 228 Z" fill="rgba(99,102,241,.10)"/>
-                  <path d="M520 78 L640 74 L760 70 L880 64" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="6 5"/>
-                  <path d="M520 78 L640 74 L760 70 L880 64 L880 228 L520 228 Z" fill="rgba(129,140,248,.07)"/>
-                  <circle cx="520" cy="78" r="4.5" fill="#6366f1"/>
-                  <g font-size="11" fill="#a3a3a3"><text x="60" y="246">apr. 2026</text><text x="290" y="246">maj 2026</text><text x="500" y="246">jul. 2026</text><text x="700" y="246">sep. 2026</text><text x="845" y="246">dec. 2026</text></g>
+                  <path d="M60 120 C200 119 320 116 440 104 C540 94 610 84 675 78 L675 228 L60 228 Z" class="ff" style="animation-delay:.8s" fill="url(#gm1)"/>
+                  <path d="M675 78 C745 76 815 74 880 72 L880 228 L675 228 Z" class="ff" style="animation-delay:1.5s" fill="url(#gp1)"/>
+                  <path d="M675 78 L880 60 L880 84 Z" class="ff" style="animation-delay:1.7s" fill="rgba(129,140,248,.09)"/>
+                  <path d="M60 120 C200 119 320 116 440 104 C540 94 610 84 675 78" class="tline" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M675 78 C745 76 815 74 880 72" class="ff" style="animation-delay:1.4s" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 4"/>
+                  <g font-size="11" fill="#a3a3a3"><text x="60" y="246">apr. 2026</text><text x="255" y="246">maj 2026</text><text x="460" y="246">jun. 2026</text><text x="665" y="246">jul. 2026</text><text x="838" y="246">sep. 2026</text></g>
                 </svg>
               </div>
             </div>
@@ -1091,23 +1221,23 @@ body{
           <div class="dim5" id="dimGrid">
             <div class="d5" style="border-left-color:#10b981">
               <div class="top"><span class="ic5" style="background:#ecfdf5;color:#059669">♥</span><span class="t">Sundhed</span><span class="ok">✓</span></div>
-              <div class="sc">62 <span>/100</span></div>
+              <div class="sc"><span data-cfrom="0" data-cto="62">62</span> <span>/100</span></div>
             </div>
             <div class="d5" style="border-left-color:#3b82f6">
               <div class="top"><span class="ic5" style="background:#eff6ff;color:#2563eb">🛡</span><span class="t">Tillid og tryghed</span><span class="ok">✓</span></div>
-              <div class="sc">73 <span>/100</span></div>
+              <div class="sc"><span data-cfrom="0" data-cto="73">73</span> <span>/100</span></div>
             </div>
             <div class="d5" style="border-left-color:#f97316">
               <div class="top"><span class="ic5" style="background:#fff7ed;color:#ea580c">👥</span><span class="t">Tilhørsforhold og inklusion</span><span class="ok">✓</span></div>
-              <div class="sc">71 <span>/100</span></div>
+              <div class="sc"><span data-cfrom="0" data-cto="71">71</span> <span>/100</span></div>
             </div>
             <div class="d5" style="border-left-color:#8b5cf6">
               <div class="top"><span class="ic5" style="background:#f5f3ff;color:#7c3aed">◎</span><span class="t">Formål og udvikling</span><span class="ok">✓</span></div>
-              <div class="sc">76 <span>/100</span></div>
+              <div class="sc"><span data-cfrom="0" data-cto="76">76</span> <span>/100</span></div>
             </div>
             <div class="d5" style="border-left-color:#14b8a6">
               <div class="top"><span class="ic5" style="background:#f0fdfa;color:#0d9488">🏢</span><span class="t">Arbejdsmiljø</span><span class="ok">✓</span></div>
-              <div class="sc">71 <span>/100</span></div>
+              <div class="sc"><span data-cfrom="0" data-cto="71">71</span> <span>/100</span></div>
             </div>
           </div>
 
@@ -1272,15 +1402,18 @@ body{
               <div class="newchat">+ Ny chat</div>
               <div class="chat-search">⌕&nbsp; Søg i samtaler…</div>
               <div class="thread active">Flagget: Stress i Drift<span class="s">i dag</span></div>
-              <div class="thread">Forberedelse til ledermøde<span class="s">i går</span></div>
-              <div class="thread">Juni vs juli sammenligning<span class="s">sidste måned</span></div>
-              <div class="thread">Onboarding af nye ledere<span class="s">sidste måned</span></div>
+              <div class="thread">Coaching: svær samtale med teamlead<span class="s">i går</span></div>
+              <div class="thread">Forbered MUS med ny medarbejder<span class="s">i går</span></div>
+              <div class="thread">Hvorfor falder svarprocenten i Salg?<span class="s">sidste uge</span></div>
+              <div class="thread">Udkast: bestyrelses-slide om kultur<span class="s">sidste uge</span></div>
+              <div class="thread">APV: hvad mangler før deadline?<span class="s">sidste måned</span></div>
             </div>
             <div class="chat-main">
               <div class="chat-scroll">
-                <div class="msg ai" id="aiGreeting">Hej Mette! Jeg er din Culturequest-assistent. Hvad kan jeg hjælpe dig med i dag?</div>
-                <div class="msg user">Hvad skal jeg være opmærksom på efter september-målingen?</div>
-                <div class="msg ai" id="aiFlag">
+                <div class="msg ai g1 t0" id="aiGreeting">Hej Mette! Jeg er din Culturequest-assistent. Hvad kan jeg hjælpe dig med i dag?</div>
+                <div class="msg user g1 tU">Hvad skal jeg være opmærksom på efter september-målingen?</div>
+                <div class="msg ai typing g1"><span></span><span></span><span></span></div>
+                <div class="msg ai g1 tA" id="aiFlag">
                   Én ting kan ikke vente: <strong>Drift</strong>.<br><br>
                   Det er ikke niveauet alene, det er kombinationen og bevægelsen: stress-scoren er faldet tre målinger i træk, oplevet kontrol falder med, og anerkendelse er begyndt at følge efter. Det mønster matcher burnout-kombinationen i forskningen (høj belastning + lav kontrol), og bevægelsen accelererer. Jeg vil kategorisere risikoen som <strong>forhøjet</strong>, mod moderat i august.
                   <div class="chartbox">
@@ -1291,8 +1424,9 @@ body{
                   </div>
                   Konfidens: høj (31 svar i Drift). Mønstret er koncentreret hos medarbejdere med 2-5 års anciennitet.
                 </div>
-                <div class="msg user">Hvad kan vi konkret gøre ved det?</div>
-                <div class="msg ai" id="aiActions">
+                <div class="msg user g2 tU">Hvad kan vi konkret gøre ved det?</div>
+                <div class="msg ai typing g2"><span></span><span></span><span></span></div>
+                <div class="msg ai g2 tA" id="aiActions">
                   Tre ting, i den rækkefølge de flytter mest:
                   <div class="ai-steps">
                     <div><b>1. Kapacitetsgennemgang i Drift.</b> Find 2-3 projekter der kan udsættes, og meld det ud til hele teamet. Kommentarerne peger på uklare prioriteter som den konkrete friktion.</div>
@@ -1302,6 +1436,15 @@ body{
                   <div class="rec">
                     <b>Næste skridt</b>
                     Skal jeg oprette et udkast til en handleplan og et punkt til jeres ledermøde på torsdag?
+                  </div>
+                </div>
+                <div class="msg user g3 tU">Ærligt talt har Jonas ikke tid til 1:1 hver 14. dag. Hvad gør vi så?</div>
+                <div class="msg ai typing g3"><span></span><span></span><span></span></div>
+                <div class="msg ai g3 tA" id="aiSparring">
+                  Fair indvending. Så skruer vi ned for formatet, ikke for rytmen: 20 minutter, samme tre spørgsmål hver gang (hvad presser mest lige nu, hvad kan udskydes, hvad skal jeg fjerne?). Det er oplevet kontrol, der skal flyttes, og den flyttes af forudsigelighed, ikke af mødelængde.
+                  <div class="rec">
+                    <b>Delmål · jeg følger op efter oktober-målingen</b>
+                    Kontrol-spørgsmålet fra 36 til minimum 45, og deltagelse i Drift over 85%. Vender kurven ikke, flager jeg det igen med nye forslag.
                   </div>
                 </div>
               </div>
@@ -1868,43 +2011,101 @@ body{
           </div>
         </section>
 
-        <!-- ===== SCENE 13: RAPPORTER ===== -->
+        <!-- ===== SCENE 13: KULTURUNDERSØGELSER · RAPPORTER-TAB (1:1 fra live) ===== -->
         <section class="scene" data-scene="13">
           <div class="page-head">
             <div>
-              <div class="page-h1">Rapporter</div>
-              <div class="page-sub">Genererede rapporter, klar til ledelse og bestyrelse</div>
-            </div>
-            <button class="btn btn-primary">+ Generér rapport</button>
-          </div>
-          <div class="tabs" style="margin-top:16px"><span class="tab">Oversigt</span><span class="tab active">Rapporter</span></div>
-          <div id="repList">
-            <div class="rep-card" id="repMain">
-              <span style="color:var(--emerald-600)">✓</span>
-              <span class="rep-name">Kulturmåling Juli · Ledelsesrapport <span class="rep-flag">DA</span></span>
-              <span class="rep-meta">Kulturmåling Juli · 1.–15. jul. 2026 · Genereret af Mette Kjær</span>
-              <span class="rep-scope">Hele organisationen</span>
-              <span class="rep-dl">⬇ Download PDF</span>
-            </div>
-            <div class="rep-card">
-              <span style="color:var(--emerald-600)">✓</span>
-              <span class="rep-name">Juli · Drift dybdeanalyse <span class="rep-flag">DA</span></span>
-              <span class="rep-meta">Kulturmåling Juli · Fokus: stress & arbejdsbelastning</span>
-              <span class="rep-scope">Afdeling</span>
-              <span class="rep-dl">⬇ Download PDF</span>
-            </div>
-            <div class="rep-card pending">
-              <span style="color:var(--amber-500)">⟳</span>
-              <span class="rep-name">Juli · Bestyrelsesresumé <span class="rep-flag">DA</span></span>
-              <span class="rep-meta">Genereres…</span>
-              <span class="rep-scope">Hele organisationen</span>
-              <span class="rep-dl" style="color:var(--muted-fg)">Afventende</span>
+              <div class="page-h1">Kulturundersøgelser</div>
+              <div class="page-sub">Administrer dine undersøgelser og generer rapporter.</div>
             </div>
           </div>
-          <div class="card" style="margin-top:18px">
-            <div class="card-h"><span class="card-title lg">Rapportens indhold</span></div>
-            <div class="card-c" style="font-size:13px;color:var(--muted-fg);line-height:1.7">
-              Forside med nøgletal · Sammenfatning & anbefalinger (redigerbar) · Kategori-scores med trend · Spørgsmåls-highlights · Sammenligning med forrige måling · Alle afsnit kan redigeres før download.
+          <div class="tabs" style="margin-top:12px"><span class="tab">Overblik</span><span class="tab active">Rapporter</span></div>
+          <div class="svy-toolbar" id="repToolbar" style="margin-top:14px;display:flex;align-items:center;gap:12px">
+            <div class="search-box" style="min-width:300px">⌕&nbsp; Søg rapporter...</div>
+            <span class="filt-btn">⚌</span>
+            <span style="font-size:13px;color:var(--muted-fg)">☐&nbsp; Vælg alle</span>
+            <span style="font-size:13.5px"><b>3</b> rapporter</span>
+            <button class="btn btn-primary" id="genRepBtn" style="margin-left:auto;background:var(--cq);border-color:var(--cq)">Generér rapport</button>
+          </div>
+          <div id="repList" style="margin-top:8px">
+            <div class="svt-head" style="grid-template-columns:2.2fr 1.6fr 1.2fr 1fr 70px">
+              <span>Rapport ⇅</span><span>Undersøgelse ⇅</span><span>Oprettet af ⇅</span><span>Afdeling / Hold ⇅</span><span></span>
+            </div>
+            <div class="svt-row" id="repMain" style="grid-template-columns:2.2fr 1.6fr 1.2fr 1fr 70px;border-left-color:#10b981">
+              <div><div class="nm">Kulturmåling September · Ledelsesrapport <span class="rep-flag">DA</span><span class="rep-ok">✓</span></div></div>
+              <div class="per"><b>Kulturmåling · September</b><span>1. sep. 2026 – 15. sep. 2026</span></div>
+              <div class="per"><b>Mette Kjær</b><span>16. sep. 2026</span></div>
+              <div><span class="pill-blue">Alle</span></div>
+              <div style="display:flex;gap:12px;justify-content:flex-end;color:var(--muted-fg)"><span>⬇</span><span style="color:#ef4444">🗑</span></div>
+            </div>
+            <div class="svt-row" style="grid-template-columns:2.2fr 1.6fr 1.2fr 1fr 70px;border-left-color:#10b981">
+              <div><div class="nm">September · Drift dybdeanalyse <span class="rep-flag">DA</span><span class="rep-ok">✓</span></div></div>
+              <div class="per"><b>Kulturmåling · September</b><span>1. sep. 2026 – 15. sep. 2026</span></div>
+              <div class="per"><b>Mette Kjær</b><span>16. sep. 2026</span></div>
+              <div><span class="pill-blue">Drift</span></div>
+              <div style="display:flex;gap:12px;justify-content:flex-end;color:var(--muted-fg)"><span>⬇</span><span style="color:#ef4444">🗑</span></div>
+            </div>
+            <div class="svt-row" style="grid-template-columns:2.2fr 1.6fr 1.2fr 1fr 70px;border-left-color:#10b981">
+              <div><div class="nm">Kulturmåling Juli · Ledelsesrapport <span class="rep-flag">DA</span><span class="rep-ok">✓</span></div></div>
+              <div class="per"><b>Kulturmåling · Juli</b><span>1. jul. 2026 – 15. jul. 2026</span></div>
+              <div class="per"><b>Mette Kjær</b><span>16. jul. 2026</span></div>
+              <div><span class="pill-blue">Alle</span></div>
+              <div style="display:flex;gap:12px;justify-content:flex-end;color:var(--muted-fg)"><span>⬇</span><span style="color:#ef4444">🗑</span></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted-fg);padding:10px 4px">
+              <span>Viser 1–3 af 3</span>
+              <span style="display:flex;gap:16px;align-items:center">Rapporter per side <span class="chip" style="padding:4px 10px"><b>10</b> <span class="car">▾</span></span> Side 1 af 1 &nbsp; « &nbsp; ‹ &nbsp; › &nbsp; »</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== SCENE 20: RAPPORT-VIEWER (forside + resultatside, 1:1 fra live) ===== -->
+        <section class="scene" data-scene="20">
+          <div class="rv-wrap">
+            <div class="rv-modal" id="repView">
+              <div class="rv-hd">
+                <div>
+                  <div class="t">Kulturmåling September · Ledelsesrapport</div>
+                  <div class="s">Kulturmåling · September</div>
+                </div>
+                <span class="dl" id="repDl">⬇ Download PDF</span>
+                <span style="color:var(--muted-fg);margin-left:6px">✕</span>
+              </div>
+              <div class="rv-body">
+                <div class="rv-cover">
+                  <div class="deco"></div>
+                  <div class="wm"><span class="o"></span> culturequest</div>
+                  <h2>Kulturmåling · September 2026</h2>
+                  <div class="co" id="repCompany">Demo A/S</div>
+                </div>
+                <div class="rv-slide">
+                  <div class="mt"><span>Sundhed · Stress og arbejdsbelastning</span><span>Kulturmåling · September</span></div>
+                  <h3>Resultater</h3>
+                  <div class="rv-qgrid">
+                    <div class="rv-q">
+                      <div class="qt"><span>Hvor ofte har du kontrol over din arbejdsbelastning?</span><span class="sc" style="color:#ef4444">36</span></div>
+                      <div class="segs"><i style="width:34%;background:#ef4444"></i><i style="width:31%;background:#f59e0b"></i><i style="width:21%;background:#facc15"></i><i style="width:14%;background:#22c55e"></i></div>
+                      <div class="lbls"><span style="width:34%">10/29 (34%)</span><span style="width:31%">9/29 (31%)</span><span style="width:21%">6/29 (21%)</span><span>4/29 (14%)</span></div>
+                    </div>
+                    <div class="rv-q">
+                      <div class="qt"><span>Hvor ofte føler du dig stresset i løbet af din arbejdsdag?</span><span class="sc" style="color:#ef4444">38</span></div>
+                      <div class="segs"><i style="width:31%;background:#ef4444"></i><i style="width:28%;background:#f59e0b"></i><i style="width:24%;background:#facc15"></i><i style="width:17%;background:#22c55e"></i></div>
+                      <div class="lbls"><span style="width:31%">9/29 (31%)</span><span style="width:28%">8/29 (28%)</span><span style="width:24%">7/29 (24%)</span><span>5/29 (17%)</span></div>
+                    </div>
+                    <div class="rv-q">
+                      <div class="qt"><span>Hvor ofte kan du nå dine opgaver inden for din normale arbejdstid?</span><span class="sc" style="color:#f59e0b">44</span></div>
+                      <div class="segs"><i style="width:24%;background:#ef4444"></i><i style="width:28%;background:#f59e0b"></i><i style="width:31%;background:#facc15"></i><i style="width:17%;background:#22c55e"></i></div>
+                      <div class="lbls"><span style="width:24%">7/29 (24%)</span><span style="width:28%">8/29 (28%)</span><span style="width:31%">9/29 (31%)</span><span>5/29 (17%)</span></div>
+                    </div>
+                    <div class="rv-q">
+                      <div class="qt"><span>Hvor ofte oplever du, at prioriteterne er klare i dit team?</span><span class="sc" style="color:#f59e0b">41</span></div>
+                      <div class="segs"><i style="width:28%;background:#ef4444"></i><i style="width:31%;background:#f59e0b"></i><i style="width:24%;background:#facc15"></i><i style="width:17%;background:#22c55e"></i></div>
+                      <div class="lbls"><span style="width:28%">8/29 (28%)</span><span style="width:31%">9/29 (31%)</span><span style="width:24%">7/29 (24%)</span><span>5/29 (17%)</span></div>
+                    </div>
+                  </div>
+                  <div class="rv-foot"><span>Powered by Culturequest</span><span>4 / 12</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1958,17 +2159,26 @@ body{
               </div>
               <div class="card-c">
                 <svg viewBox="0 0 900 250" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
-                  <g stroke="#f0f0f0" stroke-width="1">
+                  <defs>
+                    <linearGradient id="gm14" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity=".17"/>
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="gp14" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#818cf8" stop-opacity=".09"/>
+                      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs><g stroke="#ececf1" stroke-width="1" stroke-dasharray="2 5">
                     <line x1="46" y1="20" x2="880" y2="20"/><line x1="46" y1="72" x2="880" y2="72"/>
                     <line x1="46" y1="124" x2="880" y2="124"/><line x1="46" y1="176" x2="880" y2="176"/><line x1="46" y1="228" x2="880" y2="228"/>
                   </g>
                   <g font-size="11" fill="#a3a3a3"><text x="38" y="24" text-anchor="end">100</text><text x="38" y="76" text-anchor="end">75</text><text x="38" y="128" text-anchor="end">50</text><text x="38" y="180" text-anchor="end">25</text><text x="38" y="232" text-anchor="end">0</text></g>
-                  <path d="M80 130 L240 136 L400 141 L560 128 L720 114 L860 101" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M80 130 L240 136 L400 141 L560 128 L720 114 L860 101 L860 228 L80 228 Z" fill="rgba(99,102,241,.10)"/>
-                  <circle cx="400" cy="141" r="4.5" fill="#6366f1"/>
-                  <circle cx="860" cy="101" r="5.5" fill="#10b981"/>
-                  <g font-size="12" font-weight="700" fill="#171717"><text x="392" y="158">42</text><text x="852" y="90">61</text></g>
-                  <g font-size="11" fill="#a3a3a3"><text x="72" y="246">jul. 2026</text><text x="392" y="246">sep. 2026</text><text x="552" y="246">okt. 2026</text><text x="712" y="246">nov. 2026</text><text x="832" y="246">dec. 2026</text></g>
+                  <path d="M60 130 C160 135 250 140 340 141 C420 142 430 133 480 126 C540 118 560 118 620 114 C680 110 710 106 760 101 L760 228 L60 228 Z" class="ff" style="animation-delay:.8s" fill="url(#gm14)"/>
+                  <path d="M760 101 C800 100 845 98 880 97 L880 228 L760 228 Z" class="ff" style="animation-delay:1.5s" fill="url(#gp14)"/>
+                  <path d="M760 101 L880 89 L880 105 Z" class="ff" style="animation-delay:1.7s" fill="rgba(129,140,248,.09)"/>
+                  <path d="M60 130 C160 135 250 140 340 141 C420 142 430 133 480 126 C540 118 560 118 620 114 C680 110 710 106 760 101" class="tline" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M760 101 C800 100 845 98 880 97" class="ff" style="animation-delay:1.4s" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 4"/>
+                  <g font-size="11" fill="#a3a3a3"><text x="60" y="246">jul. 2026</text><text x="330" y="246">sep. 2026</text><text x="610" y="246">nov. 2026</text><text x="750" y="246">dec. 2026</text><text x="852" y="246">jan. 2027</text></g>
                 </svg>
               </div>
             </div>
@@ -2047,20 +2257,26 @@ body{
               </div>
               <div class="card-c">
                 <svg viewBox="0 0 900 250" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
-                  <g stroke="#f0f0f0" stroke-width="1">
+                  <defs>
+                    <linearGradient id="gm16" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity=".17"/>
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="gp16" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#818cf8" stop-opacity=".09"/>
+                      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs><g stroke="#ececf1" stroke-width="1" stroke-dasharray="2 5">
                     <line x1="46" y1="20" x2="880" y2="20"/><line x1="46" y1="72" x2="880" y2="72"/>
                     <line x1="46" y1="124" x2="880" y2="124"/><line x1="46" y1="176" x2="880" y2="176"/><line x1="46" y1="228" x2="880" y2="228"/>
                   </g>
                   <g font-size="11" fill="#a3a3a3"><text x="38" y="24" text-anchor="end">100</text><text x="38" y="76" text-anchor="end">75</text><text x="38" y="128" text-anchor="end">50</text><text x="38" y="180" text-anchor="end">25</text><text x="38" y="232" text-anchor="end">0</text></g>
-                  <path d="M120 130 L340 136 L560 141" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M120 130 L340 136 L560 141 L560 228 L120 228 Z" fill="rgba(99,102,241,.10)"/>
-                  <path d="M560 141 L720 147 L880 152" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="6 5"/>
-                  <circle cx="120" cy="130" r="4.5" fill="#6366f1"/>
-                  <circle cx="340" cy="136" r="4.5" fill="#6366f1"/>
-                  <circle cx="560" cy="141" r="5.5" fill="#6366f1"/>
-                  <g font-size="12" font-weight="700" fill="#171717"><text x="112" y="115">47</text><text x="332" y="121">44</text><text x="552" y="126">42</text></g>
-                  <g font-size="12" font-weight="700" fill="#a3a3a3"><text x="872" y="140">39</text></g>
-                  <g font-size="11" fill="#a3a3a3"><text x="108" y="246">jul. 2026</text><text x="326" y="246">aug. 2026</text><text x="546" y="246">sep. 2026</text><text x="850" y="246">nov. 2026</text></g>
+                  <path d="M60 130 C220 134 400 139 540 141 L540 228 L60 228 Z" class="ff" style="animation-delay:.8s" fill="url(#gm16)"/>
+                  <path d="M540 141 C660 144 780 146 880 147 L880 228 L540 228 Z" class="ff" style="animation-delay:1.5s" fill="url(#gp16)"/>
+                  <path d="M540 141 L880 139 L880 160 Z" class="ff" style="animation-delay:1.7s" fill="rgba(129,140,248,.09)"/>
+                  <path d="M60 130 C220 134 400 139 540 141" class="tline" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M540 141 C660 144 780 146 880 147" class="ff" style="animation-delay:1.4s" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 4"/>
+                  <g font-size="11" fill="#a3a3a3"><text x="60" y="246">jul. 2026</text><text x="290" y="246">aug. 2026</text><text x="530" y="246">sep. 2026</text><text x="700" y="246">okt. 2026</text><text x="838" y="246">nov. 2026</text></g>
                 </svg>
               </div>
             </div>
@@ -2105,11 +2321,11 @@ body{
           <div class="sdt-kpis" id="liveWrap">
             <div class="sdt-k">
               <div class="kt"><span class="ic" style="background:#eef2ff;color:#4f46e5">👥</span>Besvarelser</div>
-              <b>67</b><div class="sub">Samlede besvarelser</div>
+              <b data-cfrom="0" data-cto="67">67</b><div class="sub">Samlede besvarelser</div>
             </div>
             <div class="sdt-k">
               <div class="kt"><span class="ic" style="background:#eff6ff;color:#2563eb">👁</span>Visninger</div>
-              <b>89</b><div class="sub">Undersøgelse åbnet</div>
+              <b data-cfrom="0" data-cto="89">89</b><div class="sub">Undersøgelse åbnet</div>
             </div>
             <div class="sdt-k">
               <div class="kt"><span class="ic" style="background:#ecfdf5;color:#059669">📈</span>Svarprocent</div>
@@ -2250,35 +2466,35 @@ body{
                   <div class="card">
                     <div class="card-h"><span class="card-title">Kultur score<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
                     <div class="card-c">
-                      <div class="kpi-value"><b>61</b><span class="suf">/100</span></div>
+                      <div class="kpi-value"><b data-cfrom="0" data-cto="61">61</b><span class="suf">/100</span></div>
                       <div class="kpi-desc">Faldet 2 point siden juni</div>
                     </div>
                   </div>
                   <div class="card">
                     <div class="card-h"><span class="card-title">Engagement-score<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
                     <div class="card-c">
-                      <div class="kpi-value"><b>58</b><span class="suf">/100</span></div>
+                      <div class="kpi-value"><b data-cfrom="0" data-cto="58">58</b><span class="suf">/100</span></div>
                       <div class="kpi-desc">Seneste måling: juli</div>
                     </div>
                   </div>
                   <div class="card">
                     <div class="card-h"><span class="card-title">Svarprocent<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
                     <div class="card-c">
-                      <div class="kpi-value"><b>92</b><span class="suf">%</span></div>
+                      <div class="kpi-value"><b data-cfrom="0" data-cto="92">92</b><span class="suf">%</span></div>
                       <div class="mini-bar"><i style="width:92%"></i></div>
                     </div>
                   </div>
                   <div class="card">
                     <div class="card-h"><span class="card-title">Undersøgelser<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
                     <div class="card-c">
-                      <div class="kpi-value"><b>3</b></div>
+                      <div class="kpi-value"><b data-cfrom="0" data-cto="3">3</b></div>
                       <div class="kpi-desc">Næste undersøgelse 1. aug. 2026</div>
                     </div>
                   </div>
                   <div class="card" id="ldrScope">
                     <div class="card-h"><span class="card-title">Organisation<span class="ci">i</span></span><span class="arrow-link">↗</span></div>
                     <div class="card-c">
-                      <div class="kpi-value"><b>24</b><span class="suf">Medarbejdere</span></div>
+                      <div class="kpi-value"><b data-cfrom="0" data-cto="24">24</b><span class="suf">Medarbejdere</span></div>
                       <div class="kpi-desc">1 afdeling · 2 teams</div>
                     </div>
                   </div>
@@ -2324,27 +2540,21 @@ body{
                 </div>
                 <!-- assistentens chat-widget, åben (1:1 fra live) -->
                 <div class="chatpanel" id="ldrChat">
-                  <div class="hd">
-                    <span class="x">✕</span>
-                    <h4>Hej, Jonas</h4>
-                    <p>Hvordan kan jeg hjælpe dig i dag?</p>
+                  <div class="chd">
+                    <span class="bk">‹</span>
+                    <span class="t">AI-assistent</span>
+                    <span class="ic">✎</span><span class="ic">⤢</span><span class="ic">✕</span>
                   </div>
-                  <div class="startc" id="ldrChatStart">
-                    <div><div class="t">Start en chat</div><div class="d">Spørg assistenten om hvad som helst om dine data</div></div>
-                    <span class="go">→</span>
-                  </div>
-                  <div class="tipc">
-                    <div class="img"></div>
-                    <div class="b">
-                      <span class="tag">Tip</span><span class="dt">June 2026</span>
-                      <div class="t">Tip: skræddersy din AI med virksomhedskontekst</div>
-                      <div class="d">Tilføj en virksomheds-, afdelings- og teambeskrivelse og få markant skarpere AI-indsigter.</div>
+                  <div class="cbody">
+                    <div class="cbubble"><b>Hej Jonas</b>Hvordan kan jeg hjælpe dig i dag?</div>
+                    <div class="chip-stack">
+                      <span class="cchip">Brug for hjælp til platformen</span>
+                      <span class="cchip">Dyk ned i kulturundersøgelser</span>
+                      <span class="cchip hl" id="chipCoach">Professionel coaching og vejledning</span>
+                      <span class="cchip">APV-målinger og -processer</span>
+                      <span class="cchip">Forstå mine tendenser og analyser</span>
+                      <span class="cchip">Noget andet</span>
                     </div>
-                  </div>
-                  <div class="tabsb">
-                    <span class="on"><i>⌂</i>Hjem</span>
-                    <span><i>💬</i>Chats</span>
-                    <span class="dot"><i>📣</i>Nyheder</span>
                   </div>
                 </div>
               </div>
@@ -2352,33 +2562,65 @@ body{
           </div>
         </section>
 
-        <!-- ===== SCENE 17: JERES FØRSTE 12 MÅNEDER (årskurve + milepæle) ===== -->
+        <!-- ===== SCENE 17: JERES FØRSTE 12 MÅNEDER (ægte Kulturscore-trend-komponent, animeret) ===== -->
         <section class="scene" data-scene="17">
           <div class="page-head">
             <div>
               <div class="page-h1" id="yr12Title">Jeres første 12 måneder</div>
               <div class="page-sub">Sådan ser et helt år på platformen ud, måling for måling</div>
             </div>
-            <div class="filterbar"><span class="chip"><span>Periode:</span> <b>Sidste 12 måneder</b> <span class="car">▾</span></span></div>
+            <div class="filterbar">
+              <span class="ci">i</span>
+              <span class="chip"><b>Seneste score</b> <span class="car">▾</span></span>
+              <span class="chip"><b>Alle</b> <span class="car">▾</span></span>
+            </div>
           </div>
           <div class="card" style="margin-top:16px" id="yrCard">
-            <div class="card-h"><span class="card-title lg">Kulturscore · hele organisationen</span><span class="badge aktiv">12 målinger · autopilot</span></div>
+            <div class="card-h" style="display:block">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <span class="card-title lg">Kulturscore-trend<span class="ci">i</span></span>
+                <div class="trend-leg">
+                  <span><span class="solid"></span>Målt</span>
+                  <span><span class="dash"></span>Projekteret</span>
+                  <span class="chip" style="padding:5px 10px"><b>Samlet Kultur score</b> <span class="car">▾</span></span>
+                </div>
+              </div>
+              <div class="card-sub">Følg, hvordan kulturscorer ændrer sig over tid</div>
+            </div>
             <div class="card-c">
-              <svg class="yrsvg" viewBox="0 0 1040 245" xmlns="http://www.w3.org/2000/svg">
-                <line x1="30" y1="60" x2="1009" y2="60" stroke="#f0f0f0" stroke-width="1"/>
-                <line x1="30" y1="120" x2="1009" y2="120" stroke="#f0f0f0" stroke-width="1"/>
-                <line x1="30" y1="180" x2="1009" y2="180" stroke="#f0f0f0" stroke-width="1"/>
-                <polyline class="line" points="30,152 119,160 208,174 297,188 386,160 475,131 564,109 653,95 742,80 831,66 920,59 1009,37"/>
-                <circle class="dot" cx="30" cy="152" r="5" fill="#6366f1" style="animation-delay:.5s"/>
-                <circle class="dot" cx="297" cy="188" r="6" fill="#ef4444" style="animation-delay:1.2s"/>
-                <text class="dot" x="283" y="172" font-size="15" style="animation-delay:1.35s">🚩</text>
-                <circle class="dot" cx="1009" cy="37" r="6" fill="#10b981" style="animation-delay:2.9s"/>
-                <text x="30" y="235" font-size="11" fill="#a3a3a3" text-anchor="middle">md 1</text>
-                <text x="297" y="235" font-size="11" fill="#a3a3a3" text-anchor="middle">md 4</text>
-                <text x="564" y="235" font-size="11" fill="#a3a3a3" text-anchor="middle">md 7</text>
-                <text x="831" y="235" font-size="11" fill="#a3a3a3" text-anchor="middle">md 10</text>
-                <text x="1009" y="235" font-size="11" fill="#a3a3a3" text-anchor="middle">md 12</text>
-              </svg>
+              <div style="position:relative">
+                <svg class="yrsvg" viewBox="0 0 1040 260" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="gmY" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity=".17"/>
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="gpY" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#818cf8" stop-opacity=".09"/>
+                      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <g stroke="#ececf1" stroke-width="1" stroke-dasharray="2 5">
+                    <line x1="46" y1="20" x2="1020" y2="20"/><line x1="46" y1="72" x2="1020" y2="72"/>
+                    <line x1="46" y1="124" x2="1020" y2="124"/><line x1="46" y1="176" x2="1020" y2="176"/><line x1="46" y1="228" x2="1020" y2="228"/>
+                  </g>
+                  <g font-size="11" fill="#a3a3a3"><text x="38" y="24" text-anchor="end">100</text><text x="38" y="76" text-anchor="end">75</text><text x="38" y="128" text-anchor="end">50</text><text x="38" y="180" text-anchor="end">25</text><text x="38" y="232" text-anchor="end">0</text></g>
+                  <polygon class="ff" style="animation-delay:1.5s" points="60,99 135,101 211,105 286,107 362,99 437,91 513,85 588,80 664,76 739,72 815,70 890,64 890,228 60,228" fill="url(#gmY)"/>
+                  <polygon class="ff" style="animation-delay:2.2s" points="890,64 955,62 1020,60 1020,228 890,228" fill="url(#gpY)"/>
+                  <polygon class="ff" style="animation-delay:2.4s" points="890,64 1020,49 1020,72" fill="rgba(129,140,248,.09)"/>
+                  <polyline class="line" points="60,99 135,101 211,105 286,107 362,99 437,91 513,85 588,80 664,76 739,72 815,70 890,64" fill="none" stroke-linejoin="round"/>
+                  <path class="ff" style="animation-delay:2.2s" d="M890 64 L955 62 L1020 60" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 4"/>
+                  <line class="dot" style="animation-delay:3s" x1="955" y1="20" x2="955" y2="228" stroke="#e4e4e7" stroke-width="1"/>
+                  <circle class="dot" style="animation-delay:3s" cx="955" cy="62" r="5.5" fill="#fff" stroke="#6366f1" stroke-width="2.5"/>
+                  <g font-size="11" fill="#a3a3a3"><text x="60" y="250">sep. 2026</text><text x="270" y="250">dec. 2026</text><text x="495" y="250">mar. 2027</text><text x="722" y="250">jun. 2027</text><text x="866" y="250">aug. 2027</text></g>
+                </svg>
+                <div class="cht-tip" style="right:120px;top:20px;animation-delay:3.2s">
+                  <div class="hd">sep. 2027 <span class="pill">Projekteret</span></div>
+                  <div class="row"><span>Kultur score</span><span class="big">~80</span></div>
+                  <div class="row" style="font-size:12px"><span>Forventet interval</span><span class="iv">74–86</span></div>
+                  <div class="note">Estimeret ved trendanalyse. Kør en undersøgelse for at få faktiske data.</div>
+                </div>
+              </div>
               <div class="yr-miles">
                 <div class="yrm" style="animation-delay:.6s"><span class="mo">Måned 1</span><div class="tx">Baseline på plads: første heatmap viser hvor I står, afdeling for afdeling.</div></div>
                 <div class="yrm" style="animation-delay:1.2s"><span class="mo">Måned 3</span><div class="tx">🚩 Tidlig varsling fanger det første signal, længe før det kan mærkes i fravær.</div></div>
@@ -2561,6 +2803,7 @@ body{
     document.getElementById('orgName').textContent = company;
     document.getElementById('yr12Title').textContent = company + 's første 12 måneder';
     document.getElementById('ldrOrg').textContent = company;
+    document.getElementById('repCompany').textContent = company;
     document.getElementById('onbCompany').textContent = company;
     document.getElementById('mailCompany').textContent = company;
     document.getElementById('empMsg').textContent = 'Del dine tanker og hjælp ' + company + ' med at forstå, hvordan du har det på arbejdet.';
@@ -2618,7 +2861,7 @@ body{
     { scene:12, nav:'', crumb:'Medarbejderens visning', anchor:'#qCard', pos:'below', press:'.lik.sel',
       title:'Ét spørgsmål ad gangen, plads til egne ord',
       text:'Korte spørgsmål på mobilen, med mulighed for at uddybe i en kommentar. Det er de kommentarer der senere viser sig at være guld.<span class="val"><b>For jer:</b> Både tal og ord. Kommentarerne bliver jeres vigtigste forklaring, når noget skal ændres.</span>' },
-    { scene:18, nav:'undersogelser', crumb:'Kulturundersøgelser / Kulturmåling · Juli', anchor:'#svyResume', pos:'right', hold:10000,
+    { scene:18, nav:'undersogelser', crumb:'Kulturundersøgelser / Kulturmåling · Juli', anchor:'#svyResume', pos:'right', hold:10000, countup:true,
       title:'Følg med, mens den kører',
       text:'Klik ind på den enkelte måling, mens den er åben: besvarelser, visninger og svartid opdateres live, og AI-resuméet skriver sig selv undervejs, med indbygget forsigtighed så længe data er ufuldstændige. Det peger allerede på Drift.<span class="val"><b>For jer:</b> I venter ikke to uger i blinde. I ser retningen og kan give deltagelsen et skub, mens målingen stadig er åben.</span>' },
     { scene:0, nav:'dashboard', crumb:'Dashboard', chapter:true, hold:9000,
@@ -2626,13 +2869,13 @@ body{
       text:'<span class="ln">Det var opsætningen og medarbejdernes side af sagen. Nu er vi der, hvor værdien bor: jeres data.</span>'
         +'<span class="ln">Målingen lukkede efter to uger med 87% svar, og motoren har regnet på kombinationer og bevægelser samme dag. Ingen konsulenter, ingen ventetid, ingen PowerPoint.</span>'
         +'<span class="ln">Det I ser nu, er juli-målingen: jeres første datapunkt. Lad mig vise dig, hvad platformen gør ved den.</span>' },
-    { scene:0, nav:'dashboard', crumb:'Dashboard', anchor:'#kpiGrid', pos:'below',
+    { scene:0, nav:'dashboard', crumb:'Dashboard', anchor:'#kpiGrid', pos:'below', countup:true,
       title:'Juli: baseline på plads',
       text:'Dashboardet lever: kulturscore 72, engagement, svarprocent. På overfladen ser det fint ud. Men dashboardet er kun forsiden: det sjove sker inde på Analyse. Kom med.<span class="val"><b>For jer:</b> Ét levende overblik, ledelsen selv kan åbne. HR slipper for at være rapportfabrik.</span>' },
     { scene:0, nav:'dashboard', crumb:'Dashboard', anchor:'#trendCard', pos:'left',
       title:'I ser fremad, ikke bagud',
       text:'Den stiplede linje er projektionen: hvor kulturen er på vej hen, med konfidensinterval. Det er forskellen på at reagere og at forebygge.<span class="val"><b>For jer:</b> I ser hvor kulturen er på vej hen, ikke kun hvor den har været.</span>' },
-    { scene:1, nav:'analyse', crumb:'Analyse', anchor:'#dimBreak', pos:'right',
+    { scene:1, nav:'analyse', crumb:'Analyse', anchor:'#dimBreak', pos:'right', countup:true,
       title:'Analyse: her bor det sjove',
       text:'Kulturen foldes ud i 5 dimensioner med 10 underliggende kategorier, hver med sin score. Og se under Sundhed: stress ligger på 54, faldet 6 point. Gennemsnittet på 72 havde aldrig fortalt jer det.<span class="val"><b>For jer:</b> I ser HVAD der driver kulturen, ikke bare om den er okay.</span>' },
     { scene:1, nav:'analyse', crumb:'Analyse', anchor:'#heatCard', pos:'below', press:'#hmDrift',
@@ -2644,24 +2887,30 @@ body{
     { scene:2, nav:'kommentarer', crumb:'Kommentarer', anchor:'#sumCard', pos:'below',
       title:'47 kommentarer, læst på 20 sekunder',
       text:'AI opsummerer de anonyme kommentarer i nøgletemaer. Tallene sagde Drift, kommentarerne siger hvorfor: uklare prioriteter og hasteopgaver fra siden.<span class="val"><b>For jer:</b> Forklaringen serveret på 20 sekunder, uden at nogen læser 47 kommentarer manuelt.</span>' },
-    { scene:19, nav:'', crumb:'Dashboard', anchor:'#ldrScope', pos:'below',
+    { scene:19, nav:'', crumb:'Dashboard', anchor:'#ldrScope', pos:'below', countup:true,
       title:'Og hvad ser en leder? Kun sit eget.',
       text:'Din driftschef Jonas logger ind i præcis samme produkt, men rollerne afgrænser data automatisk: 24 medarbejdere, 1 afdeling, egne målinger, egne tal. Ikke Salg, ikke Administration, ingen enkeltpersoner. Og anonymitetsgrænsen gælder også her.<span class="val"><b>For jer:</b> Lederne får ejerskab for deres egne tal, og HR slipper for at være gatekeeper og rapport-fordeler.</span>' },
-    { scene:19, nav:'', crumb:'Dashboard', anchor:'#ldrChat', pos:'left', press:'#ldrChatStart', hold:9000,
-      title:'Lederen kan chatte med sine egne målinger',
-      text:'Nede i hjørnet sidder assistenten, altid. Jonas kan spørge om hvad som helst i sine egne data: hvorfor scorer mit team lavt på stress, hvad skal jeg gøre først? Svarene bygger kun på det, hans rolle har adgang til.<span class="val"><b>For jer:</b> Hver leder får sin egen analytiker, uden at HR skal oversætte rapporter for dem.</span>' },
+    { scene:19, nav:'', crumb:'Dashboard', anchor:'#ldrChat', pos:'left', press:'#chipCoach', hold:9000,
+      title:'Assistenten har spor: fra data-dyk til ledercoaching',
+      text:'Chatten i hjørnet starter med at spørge, hvad Jonas har brug for: dyk i kulturundersøgelser, APV, tendenser og analyser, eller professionel coaching og vejledning. Vælger han coaching-sporet, er AI’en trænet til netop dét formål og svarer med afsæt i hans egne teamdata.<span class="val"><b>For jer:</b> Hver leder får både analytiker og sparringspartner, altid med jeres egne tal som grundlag.</span>' },
     { scene:16, nav:'analyse', crumb:'Analyse', anchor:'#tlCard', pos:'below', hold:9000,
       title:'August og september lander af sig selv',
       text:'Autopiloten måler videre. Sæt filteret på Drift, og kurven taler selv: Sundhed er gået 47, 44, 42 over tre målinger, og projektionen fortsætter ned. Selv status-chippen siger det: Overvej et initiativ. Det er tidlig varsling i praksis, mens det stadig er billigt at vende.<span class="val"><b>For jer:</b> Signalet fanges måneder før det bliver til sygefravær eller en opsigelse.</span>' },
-    { scene:3, nav:'assistent', crumb:'Assistent', anchor:'#aiFlag', pos:'left', hold:9000,
+    { scene:3, nav:'assistent', crumb:'Assistent', anchor:'#aiFlag', pos:'left', hold:11000, reveal:1, wait:2100,
       title:'Assistenten flager det, før nogen spørger',
       text:'Her er mediatoren i hverdagen: assistenten har set kombinationen (stress op, kontrol ned, anerkendelse på vej ned) og forklarer flaget i klart sprog, med kurve og konfidens. Ingen sort boks, intet detektivarbejde i regneark.<span class="val"><b>For jer:</b> Som at have en analytiker, der holder øje døgnet rundt og siger til, når det haster.</span>' },
-    { scene:3, nav:'assistent', crumb:'Assistent', anchor:'#aiActions', pos:'left', hold:9000,
+    { scene:3, nav:'assistent', crumb:'Assistent', anchor:'#aiActions', pos:'left', hold:11000, reveal:2, wait:2100,
       title:'Fra flag til konkret handling',
       text:'Tre prioriterede tiltag, forankret i jeres egne tal og kommentarer: kapacitetsgennemgang, 1:1-rytme, synlig anerkendelse. Og assistenten tilbyder selv at skrive udkastet. Det er forskellen på at få indsigt og at få noget gjort.<span class="val"><b>For jer:</b> Fra bekymring til plan på ét minut, forankret i jeres egne data.</span>' },
-    { scene:13, nav:'undersogelser', crumb:'Kulturundersøgelser / Rapporter', anchor:'#repMain', pos:'below', press:'#repMain .rep-dl',
+    { scene:3, nav:'assistent', crumb:'Assistent', anchor:'#aiSparring', pos:'left', hold:12000, reveal:3, wait:2100,
+      title:'Ægte sparring, ikke bare svar',
+      text:'Kom med en indvending, og assistenten tilpasser planen i stedet for at gentage den. Og læg mærke til afslutningen: den sætter måltal på næste måling og følger selv op. I hverdagen bruges chatten til alt fra MUS-forberedelse og svære samtaler til bestyrelses-slides og faldende svarprocenter, se tråd-listen til venstre.<span class="val"><b>For jer:</b> Sparring der ender i målbare delmål. Kulturarbejdet bliver til tal, I kan tjekke næste måned.</span>' },
+    { scene:13, nav:'undersogelser', crumb:'Kulturundersøgelser / Rapporter', anchor:'#repList', pos:'below', press:'#genRepBtn',
       title:'Rapporten skriver sig selv',
-      text:'Ledelsesrapport, afdelingsanalyse og bestyrelsesresumé genereres af platformen, på dansk, redigerbare og klar som PDF. Ledelsen fik flaget, forklaringen og planen i samme uge som målingen lukkede.<span class="val"><b>For jer:</b> Bestyrelsesklar dokumentation, uden en eneste weekend i PowerPoint.</span>' },
+      text:'Under Rapporter samler alt sig: vælg undersøgelse, omfang (hele organisationen, afdeling eller team), AI-indsigter og anbefalinger til eller fra, dansk eller engelsk. Ét klik på Generér rapport, så bygger den sig selv.<span class="val"><b>For jer:</b> Bestyrelsesklar dokumentation, uden en eneste weekend i PowerPoint.</span>' },
+    { scene:20, nav:'undersogelser', crumb:'Kulturundersøgelser / Rapporter', anchor:'#repView', pos:'below', dock:'tr', press:'#repDl', hold:9000,
+      title:'Og sådan ser den ud',
+      text:'Forside med jeres navn på, og derefter resultaterne spørgsmål for spørgsmål med svarfordelinger, AI-indsigter og sammenligninger på tværs af afdelinger. Klar som PDF til ledelsen og bestyrelsen.<span class="val"><b>For jer:</b> Fra lukket måling til delbar rapport på under et minut.</span>' },
     { scene:13, nav:'undersogelser', crumb:'Kulturundersøgelser', chapter:true, hold:9000,
       title:'Tre måneder senere',
       text:'<span class="ln">Indsatsen i Drift startede i september: kapacitetsgennemgang, fast 1:1-rytme, synlig anerkendelse. Og fordi målingen kører hver måned, kunne KLIFO se effekten undervejs: 43 i oktober, 49 i november. Kurven vendte.</span>'
@@ -2737,7 +2986,7 @@ body{
       setDim(wrap.offsetWidth/2, wrap.offsetHeight/2, 0, 0);
       /* centrér kortet i den SYNLIGE del af viewporten, aldrig udenfor */
       var wr=wrap.getBoundingClientRect();
-      var cvT=Math.max(8,-wr.top+12), cvB=(window.innerHeight-wr.top)-12;
+      var cvT=Math.max(8,-wr.top+12), cvB=Math.min(window.innerHeight-wr.top, wr.height)-12;
       var cw=step.hero?560:470, ch=tip.offsetHeight||260;
       var ctop=cvT+Math.max(10,((cvB-cvT)-ch)/2-20);
       if(ctop+ch>cvB) ctop=Math.max(cvT,cvB-ch-8);
@@ -2745,7 +2994,7 @@ body{
       tip.style.top=ctop+'px';
       clearTimeout(fxTimer);
       tip.classList.remove('show');
-      fxTimer=setTimeout(function(){ tip.classList.add('show'); }, instant?60:260);
+      fxTimer=setTimeout(function(){ tip.classList.add('show'); safetyClamp(); }, instant?60:260);
       return;
     }
     tip.classList.remove('chap'); tip.classList.remove('hero');
@@ -2754,9 +3003,19 @@ body{
     if(anchor.scrollIntoView){ anchor.scrollIntoView({block:'nearest'}); }
     var mr=wrap.getBoundingClientRect();
     var ar=anchor.getBoundingClientRect();
+    /* samtale-trin: svaret er ikke skrevet endnu, vent og prøv igen */
+    if(step.wait && ar.width===0){
+      clearTimeout(fxTimer);
+      tip.classList.remove('show');
+      spot.style.display='none';
+      curx.classList.remove('click');
+      setDim(wrap.offsetWidth/2, wrap.offsetHeight/2, 0, 0);
+      fxTimer=setTimeout(function(){ placeTip(step, true); }, step.wait);
+      return;
+    }
     /* synligt udsnit af app'en i viewport-koordinater (relativt til wrap) */
     var visT=Math.max(6,-mr.top+10);
-    var visB=(window.innerHeight-mr.top)-12;
+    var visB=Math.min(window.innerHeight-mr.top, mr.height)-12;
     /* spotlight glider hen til elementet og arver dets hjørneradius */
     var rad=getComputedStyle(anchor).borderRadius;
     if(!rad||rad==='0px') rad='12px';
@@ -2775,7 +3034,10 @@ body{
     /* tooltip-position */
     var tw=320, th=tip.offsetHeight||170, left, top;
     var arL=ar.left-mr.left, arT=ar.top-mr.top, arR=ar.right-mr.left, arB=ar.bottom-mr.top;
-    if(step.pos==='left'){
+    if(step.dock){
+      left = step.dock.indexOf('l')>-1 ? arL+14 : arR-tw-14;
+      top  = step.dock.indexOf('t')>-1 ? arT+14 : arB-th-14;
+    } else if(step.pos==='left'){
       left=arL-tw-18; top=arT+10;
       if(left<6){ left=Math.min(arL, mr.width-tw-12); top=arB+14; }
     } else if(step.pos==='right'){
@@ -2788,12 +3050,37 @@ body{
     }
     if(top+th>wrap.offsetHeight-4){ top=Math.max(6, wrap.offsetHeight-th-8); }
     /* clamp til det synlige viewport: tooltip'en må aldrig ligge udenfor skærmen */
-    top=Math.min(Math.max(top,visT), Math.max(visT, visB-th));
-    left=Math.max(6,Math.min(left, mr.width-tw-8)); top=Math.max(6,top);
+    function clampL(l){ return Math.max(6,Math.min(l, mr.width-tw-8)); }
+    function clampT(t){ return Math.max(6,Math.min(Math.max(t,visT), Math.max(visT, visB-th))); }
+    top=clampT(top); left=clampL(left);
+    /* overlap-minimering: daekker tooltip'en det highlightede element, provoves alternative sider */
+    function ovl(l,t){
+      var ix=Math.max(0,Math.min(l+tw,arR)-Math.max(l,arL));
+      var iy=Math.max(0,Math.min(t+th,arB)-Math.max(t,arT));
+      return ix*iy/(tw*th);
+    }
+    if(!step.dock && ovl(left,top)>.18){
+      var cands=[
+        [clampL(arR+18), clampT(arT)],
+        [clampL(arL-tw-18), clampT(arT)],
+        [clampL(arL+20), clampT(arB+14)],
+        [clampL(arL+20), clampT(arT-th-14)],
+        [clampL(arR-tw), clampT(arB+14)],
+        [clampL(arR-tw), clampT(arT-th-14)]
+      ];
+      var bestL=left, bestT=top, bestO=ovl(left,top);
+      for(var ci=0;ci<cands.length;ci++){
+        var o=ovl(cands[ci][0],cands[ci][1]);
+        if(o<bestO-0.02){ bestO=o; bestL=cands[ci][0]; bestT=cands[ci][1]; }
+      }
+      left=bestL; top=bestT;
+    }
     tip.style.left=left+'px';
     tip.style.top=top+'px';
     /* caret peger fra tooltip mod elementet */
     caret.style.cssText='';
+    if(step.dock){ caret.style.display='none'; }
+    else
     if(top>=arB-4){
       caret.style.top='-6px';
       caret.style.left=Math.min(Math.max(arL+ar.width/2-left-6,14),tw-26)+'px';
@@ -2821,7 +3108,25 @@ body{
       }
       if(step.countup) runCountUp();
       tip.classList.add('show');
+      safetyClamp();
     }, instant?180:620);
+  }
+
+  /* sikkerhedsnet: efter-juster tooltip mod de FAKTISKE viewport-kanter, naar den er fuldt layoutet */
+  function safetyClamp(){
+    var wr=wrap.getBoundingClientRect();
+    var bLim=Math.min(window.innerHeight-10, wr.bottom-8);
+    var tLim=Math.max(10, wr.top+6);
+    var rLim=Math.min(window.innerWidth-8, wr.right-6);
+    var lLim=Math.max(8, wr.left+6);
+    var r=tip.getBoundingClientRect();
+    var t=parseFloat(tip.style.top)||0;
+    if(r.bottom>bLim){ t-=(r.bottom-bLim); tip.style.top=t+'px'; r=tip.getBoundingClientRect(); }
+    if(r.top<tLim){ t+=(tLim-r.top); tip.style.top=t+'px'; }
+    var l=parseFloat(tip.style.left)||0;
+    var r2=tip.getBoundingClientRect();
+    if(r2.right>rLim){ l-=(r2.right-rLim); tip.style.left=l+'px'; r2=tip.getBoundingClientRect(); }
+    if(r2.left<lLim){ l+=(lLim-r2.left); tip.style.left=l+'px'; }
   }
 
   /* tal der tæller op for øjnene af én (Q4-finalen) */
@@ -2846,7 +3151,7 @@ body{
   var appRoot=document.getElementById('appRoot');
   var FULLPAGE=[7,9,10,11,12,15,19];
   /* rejse-navigation: hvilken del af demoen er vi i? */
-  var ACTS=[[0,'Intro'],[1,'Del 1 · Kom i gang'],[8,'Del 2 · Medarbejderne'],[10,'Del 3 · Jeres data'],[20,'Del 4 · Signal og handling'],[24,'Del 5 · Beviset'],[26,'Del 6 · Jeres år'],[28,'Bonus · APV']];
+  var ACTS=[[0,'Intro'],[1,'Del 1 · Kom i gang'],[8,'Del 2 · Medarbejderne'],[10,'Del 3 · Jeres data'],[20,'Del 4 · Signal og handling'],[26,'Del 5 · Beviset'],[28,'Del 6 · Jeres år'],[30,'Bonus · APV']];
   function actFor(i){ var a=ACTS[0][1]; for(var k=0;k<ACTS.length;k++){ if(i>=ACTS[k][0]) a=ACTS[k][1]; } return a; }
   function render(instant){
     var st=STEPS[cur];
@@ -2860,14 +3165,24 @@ body{
       if(i===cur && !playing) s.querySelector('i').style.width='100%';
     });
     document.getElementById('stepCount').textContent=actFor(cur)+' · trin '+(cur+1)+' af '+STEPS.length;
-    document.getElementById('tipBadge').textContent=actFor(cur)+' · trin '+(cur+1)+' af '+STEPS.length;
+    document.getElementById('tipBadge').textContent=st.chapter?('✦ '+actFor(cur)):(actFor(cur)+' · trin '+(cur+1)+' af '+STEPS.length);
     document.getElementById('tipTitle').textContent=st.title;
     document.getElementById('tipText').innerHTML=st.text;
     document.getElementById('tipBack').style.visibility=cur===0?'hidden':'visible';
     document.getElementById('tipNext').textContent=cur===STEPS.length-1?'Afslut →':'Næste →';
     outro.classList.remove('show');
-    requestAnimationFrame(function(){ requestAnimationFrame(function(){ placeTip(st, instant); }); });
+    var cwrap=document.getElementById('chatWrap');
+    clearTimeout(revealTimer);
+    if(cwrap && st.reveal){
+      cwrap.setAttribute('data-reveal', st.reveal+'u');
+      revealTimer=setTimeout(function(){ cwrap.setAttribute('data-reveal', String(st.reveal)); }, 1750);
+      var sc=cwrap.querySelector('.chat-scroll');
+      if(sc){ requestAnimationFrame(function(){ sc.scrollTop=sc.scrollHeight; }); setTimeout(function(){ sc.scrollTop=sc.scrollHeight; },900); setTimeout(function(){ sc.scrollTop=sc.scrollHeight; },1950); }
+    }
+    var tk=++placeToken;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ if(tk===placeToken) placeTip(st, instant); }); });
   }
+  var placeToken=0, revealTimer=null;
 
   function go(i){ if(i>=STEPS.length){ finish(); return; } cur=Math.max(0,i); render(!playing); if(playing) armAuto(); }
   /* klik hvor som helst (dæmpning eller spotlight) = næste trin */
