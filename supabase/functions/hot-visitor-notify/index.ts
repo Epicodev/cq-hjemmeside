@@ -86,6 +86,9 @@ interface HotVisitorPayload {
     utm_source?: string | null;
     utm_medium?: string | null;
     utm_campaign?: string | null;
+    // "demo_opened" = warm åbning (under hot-tærskel): opret CRM-deal + opgave,
+    // men SEND IKKE alarmmail (ellers 14 mails/dag). Udeladt = hot visitor.
+    signal_type?: string;
 }
 
 function escapeHtml(s: unknown): string {
@@ -212,21 +215,27 @@ serve(async (req) => {
         });
     }
 
-    try {
-        await sendEmail({
-            from: `culturequest hot-visitor <${FROM_EMAIL}>`,
-            to: ALERT_EMAILS,
-            subject: `🔥 Hot visitor (intent ${payload.intent_score}) på ${(payload.page_url || "").replace(/^https?:\/\/[^/]+/, "")}`,
-            html: buildHotVisitorEmail(payload),
-        });
-    } catch (e) {
-        return new Response(JSON.stringify({ ok: false, error: (e as Error).message }), {
-            status: 500,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+    // Warm demo-åbning: kun CRM (deal + opgave), INGEN alarmmail. Hot visitor:
+    // alarmmail + CRM som før.
+    const warmOpen = payload.signal_type === "demo_opened";
+
+    if (!warmOpen) {
+        try {
+            await sendEmail({
+                from: `culturequest hot-visitor <${FROM_EMAIL}>`,
+                to: ALERT_EMAILS,
+                subject: `🔥 Hot visitor (intent ${payload.intent_score}) på ${(payload.page_url || "").replace(/^https?:\/\/[^/]+/, "")}`,
+                html: buildHotVisitorEmail(payload),
+            });
+        } catch (e) {
+            return new Response(JSON.stringify({ ok: false, error: (e as Error).message }), {
+                status: 500,
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+        }
     }
 
-    // Best-effort: opret/berig deal i pipelinen (blokerer ikke alerten).
+    // Best-effort: opret/berig deal + opfølgnings-opgave i pipelinen.
     await upsertCrmDeal(payload);
 
     return new Response(JSON.stringify({ ok: true }), {

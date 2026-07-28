@@ -3178,6 +3178,22 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
       try{ fetch(HOT_ENDPOINT,{ method:'POST', headers:{'Authorization':'Bearer '+HOT_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload), keepalive:true }).catch(function(){}); }catch(e){}
       try{ if(window.posthog&&window.posthog.capture) window.posthog.capture('hot_visitor_threshold_crossed',{intent_score:score,signal_count:signals.length}); }catch(e){}
     }
+    /* Warm-open: opret/berig lead i CRM ved åbning (uden alarmmail). Kun
+       personaliserede links (?c=firma) — generel version droppes af edge-fn.
+       Egen 24t-cooldown, uafhængig af hot-fyringen. */
+    var warmSent=false;
+    function warmInCooldown(){ try{ var d=JSON.parse(localStorage.getItem('cq_pdemo_warm_until')||'null'); return d&&d.until>Date.now(); }catch(e){ return false; } }
+    function fireWarmOpen(){
+      if(warmSent||fired) return;
+      if(!company||company==='ukendt') return;
+      if(warmInCooldown()){ warmSent=true; return; }
+      warmSent=true;
+      try{ localStorage.setItem('cq_pdemo_warm_until',JSON.stringify({until:Date.now()+COOLDOWN_MS})); }catch(e){}
+      var distinctId=attr.email||'pdemo-visitor';
+      try{ if(window.posthog&&typeof window.posthog.get_distinct_id==='function'){ var did=window.posthog.get_distinct_id(); if(did&&did.indexOf('@')!==-1) distinctId=did; } }catch(e){}
+      var payload={ distinct_id:distinctId, intent_score:score, signal_type:'demo_opened', signals:signals.slice(), page_url:(location.href||'').slice(0,500), referrer:(document.referrer||'').slice(0,500)||null, user_agent:(navigator.userAgent||'').slice(0,300), posthog_session_url:null };
+      try{ fetch(HOT_ENDPOINT,{ method:'POST', headers:{'Authorization':'Bearer '+HOT_KEY,'Content-Type':'application/json'}, body:JSON.stringify(payload), keepalive:true }).catch(function(){}); }catch(e){}
+    }
     var seen={};
     window.__cqTrack=function(nme,props){
       if(seen[nme]) return; seen[nme]=true;
@@ -3185,6 +3201,7 @@ document.write('<style>'+(v==='mobile'?'.mstory{display:block}.toolbar,.frame,.f
       if(WEIGHTS[nme]){ score+=WEIGHTS[nme]; signals.push(nme+' (+'+WEIGHTS[nme]+')'); maybeFire(); }
     };
     window.__cqTrack('demo_opened');
+    setTimeout(fireWarmOpen, 2000);
   })();
   function trk(n,p){ try{ if(window.__cqTrack) window.__cqTrack(n,p); }catch(e){} }
   if(company){

@@ -193,10 +193,20 @@ app.use((_req, res, next) => {
     next();
 });
 
+// Lokal udvikling: aldrig cache på localhost, så demo/site-iterationer altid er friske.
+function isLocalhost(req) {
+    return req.hostname === 'localhost' || req.hostname === '127.0.0.1';
+}
+app.use((req, res, next) => {
+    if (isLocalhost(req)) res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    next();
+});
+
 app.use(express.static(ROOT, {
     index: false,
     extensions: ['html'],
     setHeaders(res, filePath) {
+        if (res.getHeader('Cache-Control') === 'no-store, no-cache, must-revalidate') return;
         if (filePath.endsWith('.html')) {
             res.setHeader('Cache-Control', 'public, max-age=300, must-revalidate');
         } else if (/\.(webp|avif|jpe?g|png|svg|ico|woff2?)$/i.test(filePath)) {
@@ -218,7 +228,7 @@ app.use((req, res, next) => {
     const html = ROUTE_HTML[route] || ROUTE_HTML['/'];
     if (!html) return res.sendFile(indexHtmlPath);
     res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-    res.setHeader('Cache-Control', 'public, max-age=300, must-revalidate');
+    if (!isLocalhost(req)) res.setHeader('Cache-Control', 'public, max-age=300, must-revalidate');
     res.send(html);
 });
 

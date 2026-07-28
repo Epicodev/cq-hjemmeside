@@ -2604,6 +2604,51 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     } catch (e) {}
   }
 
+  /* Warm demo-åbning: opret/berig lead i CRM med det samme (uden alarmmail),
+     så en åbner der ikke når hot-tærsklen alligevel havner i pipelinen med en
+     opfølgnings-opgave. Kun personaliserede links (?c=firma) — den generelle
+     version har intet firma og droppes af edge-funktionen. Én gang pr. besøgende
+     pr. 24t (deler ikke cooldown med hot-fyringen). */
+  var warmSent = false;
+  function warmInCooldown() {
+    try {
+      var d = JSON.parse(localStorage.getItem('cq_demo_warm_until') || 'null');
+      return d && d.until > Date.now();
+    } catch (e) { return false; }
+  }
+  function fireWarmOpen() {
+    if (warmSent || fired) return;
+    if (!leadProps.demo_company || leadProps.demo_company === 'ukendt') return;
+    if (warmInCooldown()) { warmSent = true; return; }
+    warmSent = true;
+    try { localStorage.setItem('cq_demo_warm_until', JSON.stringify({ until: Date.now() + COOLDOWN_MS })); } catch (e) {}
+    var distinctId = attr.email || 'demo-visitor';
+    try {
+      if (window.posthog && typeof window.posthog.get_distinct_id === 'function') {
+        var did = window.posthog.get_distinct_id();
+        if (did && did.indexOf('@') !== -1) distinctId = did;
+      }
+    } catch (e) {}
+    var payload = {
+      distinct_id: distinctId,
+      intent_score: score,
+      signal_type: 'demo_opened',
+      signals: signals.slice(),
+      page_url: (location.href || '').slice(0, 500),
+      referrer: (document.referrer || '').slice(0, 500) || null,
+      user_agent: (navigator.userAgent || '').slice(0, 300),
+      posthog_session_url: null
+    };
+    try {
+      fetch(HOT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + HOT_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   var seen = {};
   function track(name, props) {
     if (seen[name]) return;
@@ -2628,6 +2673,10 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       page: location.pathname
     });
   }
+  /* Send warm-open til CRM ~2s efter load, så posthog.identify(email) er nået
+     at sætte distinct_id og de første signaler er talt med. maybeFire() tager
+     over hvis leadet krydser hot-tærsklen senere. */
+  setTimeout(fireWarmOpen, 2000);
 
   /* Måneds-milepæle, kaldes fra scroll-motoren */
   var MILESTONES = [3, 7, 10, 12];
