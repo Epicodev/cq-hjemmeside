@@ -219,6 +219,24 @@ app.use(express.static(ROOT, {
     },
 }));
 
+// English site: /en and alle /en/* SPA-ruter serverer den engelske shell.
+// (express.static ovenfor har index:false, så /en faldt tidligere igennem
+// til den DANSKE fallback — det var derfor EN-versionen "ikke virkede".)
+// Statiske filer under /en (fx /en/llms.txt) er allerede serveret af
+// express.static, inden vi når hertil.
+const EN_INDEX = path.join(ROOT, 'en', 'index.html');
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    let p = '';
+    try { p = decodeURI(req.path || ''); } catch (e) { return next(); }
+    if (p === '/en' || p === '/en/' || p.startsWith('/en/')) {
+        res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+        res.setHeader('Cache-Control', 'public, max-age=300, must-revalidate');
+        return res.sendFile(EN_INDEX);
+    }
+    next();
+});
+
 // SPA fallback: serve route-specific HTML variant with correct title/canonical.
 // Falls back to homepage variant for unknown paths (404-as-home behaviour is
 // preserved from previous version, just with correct meta tags).
