@@ -209,6 +209,48 @@
   }
   .slide-dark .footnote { color: rgba(245,239,226,0.45); }
 
+  /* ===== Levende titel-slide: signalfelt ===== */
+  .signal-field {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+  }
+  .slide > *:not(.signal-field) { position: relative; }
+
+  /* ===== Entré-animationer pr. slide ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    .slide.is-active > *:not(.signal-field) {
+      animation: rise .7s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    .slide.is-active > *:nth-child(2) { animation-delay: .08s; }
+    .slide.is-active > *:nth-child(3) { animation-delay: .18s; }
+    .slide.is-active > *:nth-child(4) { animation-delay: .3s; }
+    .slide.is-active > *:nth-child(5) { animation-delay: .42s; }
+    .slide.is-active .grid > .card,
+    .slide.is-active .signals > .signal {
+      animation: rise .7s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    .slide.is-active .grid > :nth-child(1), .slide.is-active .signals > :nth-child(1) { animation-delay: .3s; }
+    .slide.is-active .grid > :nth-child(2), .slide.is-active .signals > :nth-child(2) { animation-delay: .42s; }
+    .slide.is-active .grid > :nth-child(3), .slide.is-active .signals > :nth-child(3) { animation-delay: .54s; }
+    .slide.is-active .grid > :nth-child(4) { animation-delay: .66s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .divider-num { animation: numGlow 6s ease-in-out infinite; }
+    @keyframes numGlow {
+      0%, 100% { -webkit-text-stroke-color: rgba(241,215,140,0.4); }
+      50% { -webkit-text-stroke-color: rgba(241,215,140,0.75); }
+    }
+    .signal.hot { animation: hotGlow 2.8s ease-in-out infinite; }
+    @keyframes hotGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+      50% { box-shadow: 0 0 34px 2px rgba(239,68,68,0.22); }
+    }
+  }
+
   /* ===== Mobile ===== */
   @media (max-width: 760px) {
     .grid-3, .grid-2 { grid-template-columns: 1fr; }
@@ -226,6 +268,7 @@
 
   <!-- ============ SEKTION 1 · ÅBNING ============ -->
   <section class="slide slide-dark" data-section="Åbning">
+    <canvas class="signal-field" id="signalField" aria-hidden="true"></canvas>
     <p class="kicker">culturequest · pitch</p>
     <h1>Kulturen taler.<br><em>Længe før opsigelsen.</em></h1>
     <p class="lead">Culture intelligence til danske virksomheder med 50–2.000 medarbejdere. Digital APV, 1:1 &amp; MUS og kontinuerlig pulsmåling — i én platform.</p>
@@ -467,6 +510,7 @@
     progress.style.width = ((current + 1) / slides.length * 100) + '%';
     counter.textContent = (current + 1) + ' / ' + slides.length;
     document.body.classList.toggle('on-dark', slides[current].classList.contains('slide-dark'));
+    fieldRun(current === 0);
     ovBody.querySelectorAll('button').forEach(function (b) {
       b.classList.toggle('is-current', +b.getAttribute('data-index') === current);
     });
@@ -519,6 +563,98 @@
     if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
     touchX = null;
   }, { passive: true });
+
+  // ===== Signalfelt: levende puls-kurver på titel-slidet =====
+  // Fire team-signaler driver stille afsted; ét slår ud og sender et varsel
+  // (ping) — motivet fra pitchen tegnet som ambient baggrund.
+  var fieldCanvas = document.getElementById('signalField');
+  var fieldCtx = fieldCanvas.getContext('2d');
+  var fieldRaf = null;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TRACES = [
+    { yF: .26, amp: 22, freq: .0045, speed: .00030, w: 1.4, color: 'rgba(163,160,243,0.40)' },
+    { yF: .44, amp: 34, freq: .0032, speed: .00019, w: 2.0, color: 'rgba(99,102,241,0.62)' },
+    { yF: .62, amp: 18, freq: .0060, speed: .00042, w: 1.4, color: 'rgba(241,215,140,0.42)' },
+    { yF: .80, amp: 28, freq: .0038, speed: .00024, w: 2.0, color: 'rgba(194,106,76,0.60)', alert: true }
+  ];
+
+  var fieldW = 0, fieldH = 0;
+  function fieldSize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var r = fieldCanvas.parentElement.getBoundingClientRect();
+    fieldW = r.width; fieldH = r.height;
+    fieldCanvas.width = fieldW * dpr;
+    fieldCanvas.height = fieldH * dpr;
+    fieldCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function traceY(tr, x, t, h) {
+    return h * tr.yF
+      + Math.sin(x * tr.freq + t * tr.speed) * tr.amp
+      + Math.sin(x * tr.freq * 2.7 + t * tr.speed * 1.6) * tr.amp * 0.35;
+  }
+
+  function fieldDraw(t) {
+    var w = fieldW, h = fieldH;
+    if (!w || !h) { fieldSize(); w = fieldW; h = fieldH; }
+    fieldCtx.clearRect(0, 0, w, h);
+
+    // Faint dot grid
+    fieldCtx.fillStyle = 'rgba(245,239,226,0.05)';
+    for (var gx = 40; gx < w; gx += 72) {
+      for (var gy = 40; gy < h; gy += 72) {
+        fieldCtx.fillRect(gx, gy, 1.5, 1.5);
+      }
+    }
+
+    TRACES.forEach(function (tr) {
+      fieldCtx.beginPath();
+      for (var x = 0; x <= w; x += 6) {
+        var y = traceY(tr, x, t, h);
+        if (x === 0) fieldCtx.moveTo(x, y); else fieldCtx.lineTo(x, y);
+      }
+      fieldCtx.strokeStyle = tr.color;
+      fieldCtx.lineWidth = tr.w;
+      fieldCtx.stroke();
+
+      // "Nu"-punkt på hver kurve
+      var px = w * 0.74;
+      var py = traceY(tr, px, t, h);
+      fieldCtx.beginPath();
+      fieldCtx.arc(px, py, tr.alert ? 4 : 2.5, 0, Math.PI * 2);
+      fieldCtx.fillStyle = tr.alert ? 'rgba(245,158,11,0.95)' : tr.color;
+      fieldCtx.fill();
+
+      // Varsels-ping på alert-kurven: ekspanderende ringe hvert 2.6 s
+      if (tr.alert) {
+        var cycle = (t % 2600) / 2600;
+        for (var k = 0; k < 2; k++) {
+          var p = (cycle + k * 0.5) % 1;
+          fieldCtx.beginPath();
+          fieldCtx.arc(px, py, 6 + p * 52, 0, Math.PI * 2);
+          fieldCtx.strokeStyle = 'rgba(245,158,11,' + (0.5 * (1 - p)) + ')';
+          fieldCtx.lineWidth = 1.5;
+          fieldCtx.stroke();
+        }
+      }
+    });
+  }
+
+  function fieldLoop(now) {
+    fieldDraw(now);
+    fieldRaf = requestAnimationFrame(fieldLoop);
+  }
+
+  function fieldRun(on) {
+    if (fieldRaf) { cancelAnimationFrame(fieldRaf); fieldRaf = null; }
+    if (!on) return;
+    fieldSize();
+    if (document.hidden || reduceMotion) { fieldDraw(1200); return; }
+    fieldRaf = requestAnimationFrame(fieldLoop);
+  }
+
+  document.addEventListener('visibilitychange', function () { fieldRun(current === 0); });
+  window.addEventListener('resize', function () { fieldRun(current === 0); });
 
   // Deep-link via hash (#7)
   var hash = parseInt(location.hash.slice(1), 10);
