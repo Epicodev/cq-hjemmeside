@@ -253,6 +253,43 @@
   .no-embed .demo-scale { display: none; }
   .no-embed .demo-fallback { display: block; }
 
+  /* ===== Levende titel-slide: foto-hero som på forsiden ===== */
+  .hero-stage {
+    position: absolute; inset: 0; background-size: cover; background-position: 58% center;
+    opacity: 0; transition: opacity 1.4s cubic-bezier(.4, 0, .2, 1);
+  }
+  .hero-stage.is-active { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-stage { transform: scale(1.05); animation: heroKenburns 20s ease-in-out infinite alternate; }
+    @keyframes heroKenburns { 0% { transform: scale(1.04); } 100% { transform: scale(1.11); } }
+  }
+  .hero-gradient {
+    background:
+      linear-gradient(90deg, rgba(30,27,75,0.96) 0%, rgba(30,27,75,0.86) 30%, rgba(30,27,75,0.45) 55%, rgba(30,27,75,0.18) 72%, rgba(30,27,75,0.55) 100%),
+      linear-gradient(180deg, rgba(30,27,75,0.35) 0%, transparent 30%, transparent 62%, rgba(30,27,75,0.75) 100%);
+  }
+  .slide-hero .signal-field { opacity: .45; }
+  .hero-quote {
+    position: absolute; right: clamp(24px, 6vw, 90px); top: clamp(60px, 12vh, 130px);
+    max-width: 300px; text-align: right;
+    opacity: 0; transform: translateY(10px); transition: opacity 1s ease, transform 1s ease;
+  }
+  .hero-quote.is-active { opacity: 1; transform: translateY(0); }
+  .hero-quote p {
+    font-family: 'Fraunces', Georgia, serif; font-style: italic;
+    font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; color: var(--cream);
+    text-shadow: 0 2px 18px rgba(30,27,75,0.8); margin-bottom: 12px;
+  }
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: rgba(245,239,226,0.85);
+    background: rgba(30,27,75,0.65); border: 1px solid rgba(245,158,11,0.45);
+    border-radius: 999px; padding: 6px 14px; backdrop-filter: blur(4px);
+  }
+  .hero-chip b { color: var(--warning); font-weight: 500; }
+  @media (max-width: 900px) { .hero-quote { display: none; } }
+
   /* ===== Levende titel-slide: signalfelt ===== */
   .signal-field {
     position: absolute; inset: 0; width: 100%; height: 100%;
@@ -260,17 +297,19 @@
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
     mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
   }
-  .slide > *:not(.signal-field) { position: relative; }
+  .deco { position: absolute; inset: 0; pointer-events: none; }
+  .slide > *:not(.deco):not(.signal-field) { position: relative; }
 
   /* ===== Entré-animationer pr. slide ===== */
   @media (prefers-reduced-motion: no-preference) {
-    .slide.is-active > *:not(.signal-field) {
+    .slide.is-active > *:not(.deco):not(.signal-field) {
       animation: rise .7s cubic-bezier(.22, 1, .36, 1) both;
     }
-    .slide.is-active > *:nth-child(2) { animation-delay: .08s; }
-    .slide.is-active > *:nth-child(3) { animation-delay: .18s; }
-    .slide.is-active > *:nth-child(4) { animation-delay: .3s; }
-    .slide.is-active > *:nth-child(5) { animation-delay: .42s; }
+    .slide.is-active > .kicker { animation-delay: .08s; }
+    .slide.is-active > h1, .slide.is-active > h2, .slide.is-active > .demo-head { animation-delay: .18s; }
+    .slide.is-active > .lead, .slide.is-active > .grid, .slide.is-active > .signals,
+    .slide.is-active > .compare, .slide.is-active > .demo-frame, .slide.is-active > .cta-row { animation-delay: .3s; }
+    .slide.is-active > .footnote { animation-delay: .42s; }
     .slide.is-active .grid > .card,
     .slide.is-active .signals > .signal {
       animation: rise .7s cubic-bezier(.22, 1, .36, 1) both;
@@ -311,8 +350,21 @@
 <div class="deck" id="deck">
 
   <!-- ============ SEKTION 1 · ÅBNING ============ -->
-  <section class="slide slide-dark" data-section="Åbning">
+  <section class="slide slide-dark slide-hero" data-section="Åbning">
+    <div class="deco" aria-hidden="true">
+      <div class="hero-stage is-active" style="background-image:url('/assets/hero-fb-bg-1.jpeg')"></div>
+      <div class="hero-stage" style="background-image:url('/assets/hero-fb-bg-2.jpeg')"></div>
+      <div class="hero-stage" style="background-image:url('/assets/hero-fb-bg-3.jpeg')"></div>
+      <div class="hero-stage" style="background-image:url('/assets/hero-fb-bg-4.jpeg')"></div>
+    </div>
+    <div class="deco hero-gradient" aria-hidden="true"></div>
     <canvas class="signal-field" id="signalField" aria-hidden="true"></canvas>
+    <div class="deco" aria-hidden="true">
+      <div class="hero-quote is-active"><p>"Tre års arbejde. Ingen har set det."</p><span class="hero-chip"><b>14 dage</b> Ingen besked fra leder</span></div>
+      <div class="hero-quote"><p>"Sidste gang jeg sagde noget, blev jeg mødt med stilhed."</p><span class="hero-chip"><b>Slettet</b> Ikke sendt</span></div>
+      <div class="hero-quote"><p>"Tredje gang. Jeg gider ikke spørge igen."</p><span class="hero-chip"><b>Møde udskudt</b> 3. gang i træk</span></div>
+      <div class="hero-quote"><p>"Ingen ved hvor sent jeg arbejder. Jeg siger det heller ikke."</p><span class="hero-chip"><b>Søvn-underskud</b> -12t denne uge</span></div>
+    </div>
     <p class="kicker">culturequest · pitch</p>
     <h1>Kulturen taler.<br><em>Længe før opsigelsen.</em></h1>
     <p class="lead">Culture intelligence til danske virksomheder med 50–2.000 medarbejdere. Digital APV, 1:1 &amp; MUS og kontinuerlig pulsmåling — i én platform.</p>
@@ -593,6 +645,7 @@
     counter.textContent = (current + 1) + ' / ' + slides.length;
     document.body.classList.toggle('on-dark', slides[current].classList.contains('slide-dark'));
     fieldRun(current === 0);
+    heroRun(current === 0);
     demoActivate(slides[current]);
     ovBody.querySelectorAll('button').forEach(function (b) {
       b.classList.toggle('is-current', +b.getAttribute('data-index') === current);
@@ -761,7 +814,24 @@
     fieldRaf = requestAnimationFrame(fieldLoop);
   }
 
-  document.addEventListener('visibilitychange', function () { fieldRun(current === 0); });
+  // ===== Foto-hero: krydsfade mellem scenerne som på forsiden =====
+  var heroStages = document.querySelectorAll('.hero-stage');
+  var heroQuotes = document.querySelectorAll('.hero-quote');
+  var heroIdx = 0, heroTimer = null;
+  function heroShow(i) {
+    heroStages.forEach(function (el, k) { el.classList.toggle('is-active', k === i); });
+    heroQuotes.forEach(function (el, k) { el.classList.toggle('is-active', k === i); });
+  }
+  function heroRun(on) {
+    if (heroTimer) { clearInterval(heroTimer); heroTimer = null; }
+    if (!on || reduceMotion || document.hidden) return;
+    heroTimer = setInterval(function () {
+      heroIdx = (heroIdx + 1) % heroStages.length;
+      heroShow(heroIdx);
+    }, 6500);
+  }
+
+  document.addEventListener('visibilitychange', function () { fieldRun(current === 0); heroRun(current === 0); });
   window.addEventListener('resize', function () { fieldRun(current === 0); });
 
   // Deep-link via hash (#7)
