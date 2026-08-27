@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>culturequest · pitch</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="theme-color" content="#1e1b4b">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #1e1b4b;
+    --midnight-soft: #2a2760;
+    --cream: #f5efe2;
+    --cream-soft: #efe7d5;
+    --indigo: #6366f1;
+    --indigo-deep: #383da0;
+    --butter: #f1d78c;
+    --terracotta: #c26a4c;
+    --ink: #0f172a;
+    --ink-muted: #475569;
+    --ink-faint: #94a3b8;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --positive: #10b981;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--midnight);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body:not(.on-dark) { background: var(--cream); }
+
+  /* ===== Progress bar ===== */
+  .progress {
+    position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+    background: linear-gradient(90deg, var(--indigo), var(--indigo-deep));
+    z-index: 60; transition: width .35s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ===== Deck ===== */
+  .deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(24px, 6vw, 96px) clamp(20px, 8vw, 130px) clamp(80px, 12vh, 120px);
+    opacity: 0; visibility: hidden; transform: translateX(24px);
+    transition: opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1), visibility 0s .45s;
+    background: var(--cream);
+    overflow-y: auto;
+  }
+  .slide.is-active {
+    opacity: 1; visibility: visible; transform: translateX(0);
+    transition: opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1), visibility 0s;
+    z-index: 10;
+  }
+  .slide.is-before { transform: translateX(-24px); }
+  .slide.slide-dark { background: var(--midnight); color: var(--cream); }
+
+  /* ===== Typography ===== */
+  .kicker {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1.2vw, 13px);
+    letter-spacing: .18em; text-transform: uppercase; color: var(--indigo-deep);
+    margin-bottom: clamp(16px, 3vh, 28px);
+  }
+  .slide-dark .kicker { color: var(--butter); }
+  h1, h2 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 500; line-height: 1.06;
+    letter-spacing: -0.015em;
+  }
+  h1 { font-size: clamp(38px, 6.4vw, 88px); }
+  h2 { font-size: clamp(30px, 4.6vw, 60px); margin-bottom: clamp(20px, 4vh, 36px); }
+  h1 em, h2 em, .lead em { font-style: italic; color: var(--indigo-deep); }
+  .slide-dark h1 em, .slide-dark h2 em, .slide-dark .lead em { color: var(--butter); }
+  .lead {
+    font-size: clamp(16px, 1.9vw, 23px); line-height: 1.55; color: var(--ink-muted);
+    max-width: 30em; margin-top: clamp(16px, 3vh, 28px);
+  }
+  .slide-dark .lead { color: rgba(245, 239, 226, 0.78); }
+
+  /* ===== Section divider slides ===== */
+  .divider-num {
+    font-family: 'Fraunces', Georgia, serif; font-style: italic;
+    font-size: clamp(80px, 16vw, 220px); line-height: 1;
+    color: transparent; -webkit-text-stroke: 1.5px rgba(241, 215, 140, 0.55);
+    margin-bottom: clamp(8px, 2vh, 20px);
+  }
+
+  /* ===== Cards & grids ===== */
+  .grid { display: grid; gap: clamp(12px, 1.8vw, 22px); margin-top: clamp(20px, 4vh, 36px); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    background: #fff; border: 1px solid #e8e2d2; border-radius: 18px;
+    padding: clamp(18px, 2.4vw, 30px);
+  }
+  .slide-dark .card { background: var(--midnight-soft); border-color: rgba(245,239,226,0.12); }
+  .card h3 {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(15px, 1.6vw, 19px); margin-bottom: 8px;
+  }
+  .card p { font-size: clamp(13px, 1.35vw, 16px); line-height: 1.55; color: var(--ink-muted); }
+  .slide-dark .card p { color: rgba(245,239,226,0.72); }
+  .card .tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(10px, 1vw, 12px); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--indigo-deep); background: #eef0fc; border-radius: 999px;
+    padding: 4px 12px; margin-bottom: 14px;
+  }
+  .slide-dark .card .tag { color: var(--butter); background: rgba(241,215,140,0.12); }
+
+  .stat-num {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 500;
+    font-size: clamp(34px, 4.6vw, 62px); line-height: 1; color: var(--indigo-deep);
+    margin-bottom: 10px;
+  }
+  .slide-dark .stat-num { color: var(--butter); }
+  .stat-label { font-size: clamp(12px, 1.3vw, 15px); color: var(--ink-muted); line-height: 1.5; }
+  .slide-dark .stat-label { color: rgba(245,239,226,0.72); }
+
+  /* ===== Comparison table ===== */
+  .compare { width: 100%; border-collapse: collapse; margin-top: clamp(18px, 3.5vh, 30px); }
+  .compare th, .compare td {
+    text-align: left; padding: clamp(10px, 1.6vh, 18px) clamp(12px, 1.6vw, 22px);
+    font-size: clamp(13px, 1.4vw, 17px); line-height: 1.45;
+    border-bottom: 1px solid #e8e2d2; vertical-align: top;
+  }
+  .compare th {
+    font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    font-size: clamp(11px, 1.1vw, 13px); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-faint); border-bottom: 2px solid var(--midnight);
+  }
+  .compare td:last-child { color: var(--indigo-deep); font-weight: 600; }
+  .compare td:first-child { color: var(--ink-muted); }
+
+  /* ===== Signal timeline ===== */
+  .signals { display: flex; gap: clamp(10px, 1.6vw, 20px); margin-top: clamp(20px, 4vh, 36px); align-items: stretch; }
+  .signal {
+    flex: 1; border-radius: 16px; padding: clamp(14px, 2vw, 24px);
+    background: var(--midnight-soft); border: 1px solid rgba(245,239,226,0.12);
+  }
+  .signal .week {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 1vw, 12px);
+    letter-spacing: .12em; text-transform: uppercase; color: rgba(245,239,226,0.5);
+    margin-bottom: 10px;
+  }
+  .signal h3 { font-size: clamp(14px, 1.5vw, 18px); font-weight: 700; margin-bottom: 6px; }
+  .signal p { font-size: clamp(12px, 1.25vw, 15px); line-height: 1.5; color: rgba(245,239,226,0.7); }
+  .signal.hot { background: rgba(239,68,68,0.14); border-color: rgba(239,68,68,0.4); }
+  .signal.hot .week { color: #fca5a5; }
+
+  /* ===== Chrome (bottom bar) ===== */
+  .chrome {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 40px);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .08em;
+    color: var(--ink-faint); pointer-events: none;
+  }
+  .chrome .wordmark { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.01em; font-size: 14px; color: var(--ink-muted); }
+  .on-dark .chrome { color: rgba(245,239,226,0.45); }
+  .on-dark .chrome .wordmark { color: rgba(245,239,226,0.75); }
+  .chrome .hint span { opacity: .7; }
+  .chrome button {
+    pointer-events: auto; background: none; border: none; cursor: pointer;
+    font: inherit; color: inherit; padding: 4px 8px;
+  }
+  .chrome button:hover { color: var(--indigo); }
+
+  /* ===== Overview (M) ===== */
+  .overview {
+    position: fixed; inset: 0; z-index: 80; background: rgba(15, 14, 40, 0.96);
+    display: none; overflow-y: auto; padding: clamp(30px, 6vh, 70px) clamp(20px, 6vw, 90px);
+    color: var(--cream);
+  }
+  .overview.is-open { display: block; }
+  .overview h2 { color: var(--cream); font-size: clamp(24px, 3vw, 38px); margin-bottom: 28px; }
+  .ov-section { margin-bottom: 26px; }
+  .ov-section .ov-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--butter); margin-bottom: 10px;
+  }
+  .ov-list { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ov-list button {
+    background: rgba(245,239,226,0.06); border: 1px solid rgba(245,239,226,0.18);
+    color: var(--cream); border-radius: 12px; padding: 10px 16px; cursor: pointer;
+    font-family: 'Manrope', sans-serif; font-size: 14px; text-align: left;
+  }
+  .ov-list button:hover, .ov-list button.is-current { background: rgba(99,102,241,0.35); border-color: var(--indigo); }
+  .ov-list button .n { font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: .6; margin-right: 8px; }
+
+  /* ===== CTA ===== */
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: clamp(22px, 4vh, 36px); }
+  .btn {
+    display: inline-block; text-decoration: none; border-radius: 999px;
+    padding: 14px 28px; font-weight: 700; font-size: clamp(14px, 1.4vw, 16px);
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--indigo), var(--indigo-deep)); color: #fff; }
+  .btn-ghost { border: 1.5px solid rgba(245,239,226,0.4); color: var(--cream); }
+  .btn:hover { filter: brightness(1.1); }
+
+  .footnote {
+    margin-top: clamp(18px, 3vh, 28px); font-size: clamp(11px, 1.1vw, 13px);
+    color: var(--ink-faint); max-width: 44em; line-height: 1.5;
+  }
+  .slide-dark .footnote { color: rgba(245,239,226,0.45); }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 760px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .signals { flex-direction: column; }
+    .chrome .hint { display: none; }
+    .slide { justify-content: flex-start; padding-top: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ============ SEKTION 1 · ÅBNING ============ -->
+  <section class="slide slide-dark" data-section="Åbning">
+    <p class="kicker">culturequest · pitch</p>
+    <h1>Kulturen taler.<br><em>Længe før opsigelsen.</em></h1>
+    <p class="lead">Culture intelligence til danske virksomheder med 50–2.000 medarbejdere. Digital APV, 1:1 &amp; MUS og kontinuerlig pulsmåling — i én platform.</p>
+    <p class="footnote">Tryk på → for at komme videre · F for fuldskærm · M for oversigt</p>
+  </section>
+
+  <section class="slide" data-section="Åbning">
+    <p class="kicker">Hvem vi er</p>
+    <h2>En dansk platform, bygget til <em>danske arbejdspladser</em></h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="tag">Selskab</span>
+        <h3>culturequest ApS</h3>
+        <p>København. Stiftet af Benjamin Brandt (kultur &amp; præstation) og Benjamin Laudrup (lederskab, psykologi og coaching).</p>
+      </div>
+      <div class="card">
+        <span class="tag">Målgruppe</span>
+        <h3>50–2.000 ansatte</h3>
+        <p>Virksomheder der er for store til mavefornemmelse — og for små til et enterprise-budget.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Fundament</span>
+        <h3>GDPR &amp; EU-hosting</h3>
+        <p>Dansk forankret, EU-hostet og bygget med anonymitet som forudsætning — ikke som tilvalg.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEKTION 2 · PROBLEMET ============ -->
+  <section class="slide slide-dark" data-section="Problemet">
+    <div class="divider-num">01</div>
+    <h1>Problemet</h1>
+    <p class="lead">Den årlige trivselsmåling fortæller jer, hvor I <em>var</em>. Ikke hvor I er på vej hen.</p>
+  </section>
+
+  <section class="slide" data-section="Problemet">
+    <p class="kicker">Problemet · 1/3</p>
+    <h2>Trivselsmålingen er <em>en fotostat</em></h2>
+    <p class="lead">Trivselsmålinger viser virksomhedssnit. De fortæller ikke, at marketing-teamet smuldrer, mens R&amp;D blomstrer. Mønstrene findes på team-niveau — og de skifter på uger, ikke år.</p>
+    <div class="grid grid-3">
+      <div class="card"><div class="stat-num">1×</div><p class="stat-label">måling om året — resten af tiden flyver I i blinde</p></div>
+      <div class="card"><div class="stat-num">Snit</div><p class="stat-label">ét virksomhedstal skjuler forskellene mellem teams</p></div>
+      <div class="card"><div class="stat-num">Bagud</div><p class="stat-label">rapporten dokumenterer fortiden — den advarer ikke om fremtiden</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-section="Problemet">
+    <p class="kicker">Problemet · 2/3</p>
+    <h2>Hvad det koster, når en <em>god medarbejder</em> forsvinder</h2>
+    <div class="grid grid-3">
+      <div class="card"><div class="stat-num">50–200&nbsp;%</div><p class="stat-label">af årslønnen koster det at erstatte en medarbejder (SHRM og Center for American Progress)</p></div>
+      <div class="card"><div class="stat-num">0,4–1,5 mio. kr</div><p class="stat-label">typisk samlet regning for en mellemleder med 750.000 kr i årsløn — rekruttering, onboarding, produktivitetstab</p></div>
+      <div class="card"><div class="stat-num">+2–3</div><p class="stat-label">sneboldeffekten: når én forsvinder, følger der ofte flere med. Det er dér, den rigtige smerte sidder</p></div>
+    </div>
+  </section>
+
+  <section class="slide slide-dark" data-section="Problemet">
+    <p class="kicker">Problemet · 3/3</p>
+    <h2>Mønsteret viser sig <em>4–6 uger før</em></h2>
+    <p class="lead">Stress stiger, samtidig med at anerkendelse falder og psykologisk tryghed bliver passiv. Det signal-mønster dukker typisk op på team-niveau 4–6 uger før en opsigelse eller sygemelding.</p>
+    <div class="signals">
+      <div class="signal"><div class="week">Uge 1–2</div><h3>Stress-momentum stiger</h3><p>Arbejdsbelastnings-signalerne begynder at pege den forkerte vej.</p></div>
+      <div class="signal"><div class="week">Uge 3–4</div><h3>Anerkendelse falder</h3><p>Svar bliver kortere. Deltagelse glider. 1:1'erne bliver overfladiske.</p></div>
+      <div class="signal hot"><div class="week">Uge 5–6</div><h3>Opsigelse eller sygemelding</h3><p>Det, der kunne være fanget som et team-mønster, rammer nu bundlinjen.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ SEKTION 3 · LØSNINGEN ============ -->
+  <section class="slide slide-dark" data-section="Løsningen">
+    <div class="divider-num">02</div>
+    <h1>Løsningen</h1>
+    <p class="lead">Fra øjebliksbillede til <em>kontinuerlig culture intelligence</em> — tre værktøjer i én platform.</p>
+  </section>
+
+  <section class="slide" data-section="Løsningen">
+    <p class="kicker">Løsningen · 1/2</p>
+    <h2>Én platform. <em>Tre værktøjer.</em></h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="tag">Compliance</span>
+        <h3>Digital APV</h3>
+        <p>Opfylder Arbejdstilsynets krav: spørgeramme, anonyme svar, kategorianalyse, handlingsplan og dokumentation hvert 3. år.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Ledelse</span>
+        <h3>1:1 &amp; MUS med AI-coach</h3>
+        <p>Forberedelse, gennemførelse og opfølgning på 1:1'er og MUS-samtaler. Bygget til ledere — ikke til HR-arkivet.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Puls</span>
+        <h3>Kontinuerlig pulsmåling</h3>
+        <p>2–3 minutter ad gangen. Fanger retning og momentum på team-niveau — ikke bare en score.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-section="Løsningen">
+    <p class="kicker">Løsningen · 2/2</p>
+    <h2>Trivselsmåling vs. <em>culture intelligence</em></h2>
+    <table class="compare">
+      <tr><th>Dimension</th><th>Årlig trivselsmåling</th><th>culturequest</th></tr>
+      <tr><td>Tidshorisont</td><td>Dokumenterer hvor I var</td><td>Tidlige varsler om hvor I er på vej hen</td></tr>
+      <tr><td>Opløsning</td><td>Ét virksomhedssnit</td><td>Mønstre på team-niveau — hvor det sker</td></tr>
+      <tr><td>Output</td><td>En score og en rapport</td><td>Forklarlige signaler med konkrete handleplaner</td></tr>
+      <tr><td>Kadence</td><td>Én gang om året</td><td>Kontinuerligt — typisk 4–6 ugers forspring</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ SEKTION 4 · TILLID ============ -->
+  <section class="slide slide-dark" data-section="Tillid & data">
+    <div class="divider-num">03</div>
+    <h1>Tillid &amp; data</h1>
+    <p class="lead">Uden tillid svarer folk enten ikke — eller svarer strategisk. <em>Det ødelægger signalet.</em></p>
+  </section>
+
+  <section class="slide" data-section="Tillid & data">
+    <p class="kicker">Tillid &amp; data</p>
+    <h2>Aggregeret. Forklarligt. <em>Aldrig individuelt.</em></h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="tag">Anonymitet</span>
+        <h3>Tærskel før visning</h3>
+        <p>Resultater vises kun ved tilstrækkelig gruppestørrelse — minimum 5 svar, før team-niveau overhovedet er synligt. Ingen visning under tærsklen, nogensinde.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Metode</span>
+        <h3>Forklarlige indikatorer</h3>
+        <p>Tidlige varsler bygget på aggregerede team-signaler, der kan forklares og efterprøves. Ikke en sort boks, ikke individuel forudsigelse, ikke følelsesaflæsning.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Roller</span>
+        <h3>Lederens rum er lederens</h3>
+        <p>Noter og coaching-råd fra 1:1-værktøjet er kun synlige for lederen selv. HR ser anonymiserede mønstre på tværs — aldrig den enkelte samtale.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Compliance</span>
+        <h3>GDPR fra grunden</h3>
+        <p>EU-hostet og dansk forankret. Kulturdata forbliver aggregeret og ikke-individuel — det er en forudsætning i produktet, ikke en indstilling.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEKTION 5 · NÆSTE SKRIDT ============ -->
+  <section class="slide slide-dark" data-section="Næste skridt">
+    <div class="divider-num">04</div>
+    <h1>Næste skridt</h1>
+    <p class="lead">Se det selv — eller lad os køre et helt år <em>sammen</em>.</p>
+  </section>
+
+  <section class="slide" data-section="Næste skridt">
+    <p class="kicker">Næste skridt</p>
+    <h2>To veje ind</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="tag">5 minutter</span>
+        <h3>Klikbar demo</h3>
+        <p>Interaktiv produkt-tour uden tilmelding. Se platformen som leder, HR og medarbejder oplever den.</p>
+        <p style="margin-top:12px; font-weight:700; color: var(--indigo-deep);">culturequest.io/demo</p>
+      </div>
+      <div class="card">
+        <span class="tag">365 dage</span>
+        <h3>Pilotprojekt</h3>
+        <p>12 måneder, 4 måle-rul, ledelsessparring hver 3. måned og auto-rapport efter hvert rul. For udvalgte virksomheder — markant under listepris.</p>
+        <p style="margin-top:12px; font-weight:700; color: var(--indigo-deep);">culturequest.io/pilotprojekt</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-dark" data-section="Næste skridt">
+    <p class="kicker">Tak</p>
+    <h1>Skal vi se, hvad <em>jeres kultur</em> fortæller?</h1>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://www.culturequest.io/demo">Prøv den klikbare demo</a>
+      <a class="btn btn-ghost" href="mailto:hej@culturequest.io">hej@culturequest.io</a>
+    </div>
+    <p class="footnote">culturequest ApS · København · culturequest.io</p>
+  </section>
+
+</div>
+
+<!-- ===== Bottom chrome ===== -->
+<div class="chrome" id="chrome">
+  <span class="wordmark">culturequest</span>
+  <span class="hint"><span>←/→ navigér · F fuldskærm · </span><button id="menuBtn" type="button">M oversigt</button></span>
+  <span id="counter">1 / 1</span>
+</div>
+
+<!-- ===== Overview ===== -->
+<div class="overview" id="overview" role="dialog" aria-label="Slide-oversigt">
+  <h2>Oversigt</h2>
+  <div id="ovBody"></div>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var progress = document.getElementById('progress');
+  var counter = document.getElementById('counter');
+  var overview = document.getElementById('overview');
+  var ovBody = document.getElementById('ovBody');
+  var current = 0;
+
+  // Byg oversigten: sektioner med hop-knapper
+  var sections = [];
+  slides.forEach(function (s, i) {
+    var name = s.getAttribute('data-section');
+    var last = sections[sections.length - 1];
+    if (!last || last.name !== name) { last = { name: name, items: [] }; sections.push(last); }
+    var title = s.querySelector('h1, h2');
+    last.items.push({ index: i, title: title ? title.textContent.replace(/\s+/g, ' ').trim() : name });
+  });
+  sections.forEach(function (sec) {
+    var wrap = document.createElement('div');
+    wrap.className = 'ov-section';
+    var t = document.createElement('div');
+    t.className = 'ov-title';
+    t.textContent = sec.name;
+    wrap.appendChild(t);
+    var list = document.createElement('div');
+    list.className = 'ov-list';
+    sec.items.forEach(function (item) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = '<span class="n">' + (item.index + 1) + '</span>' + item.title;
+      b.addEventListener('click', function () { closeOverview(); go(item.index); });
+      b.setAttribute('data-index', item.index);
+      list.appendChild(b);
+    });
+    wrap.appendChild(list);
+    ovBody.appendChild(wrap);
+  });
+
+  function go(n) {
+    current = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, i) {
+      s.classList.toggle('is-active', i === current);
+      s.classList.toggle('is-before', i < current);
+    });
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    document.body.classList.toggle('on-dark', slides[current].classList.contains('slide-dark'));
+    ovBody.querySelectorAll('button').forEach(function (b) {
+      b.classList.toggle('is-current', +b.getAttribute('data-index') === current);
+    });
+    if (history.replaceState) history.replaceState(null, '', '#' + (current + 1));
+  }
+
+  function next() { go(current + 1); }
+  function prev() { go(current - 1); }
+  function toggleOverview() { overview.classList.toggle('is-open'); }
+  function closeOverview() { overview.classList.remove('is-open'); }
+  function toggleFullscreen() {
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(slides.length - 1); break;
+      case 'f': case 'F': toggleFullscreen(); break;
+      case 'm': case 'M': toggleOverview(); break;
+      case 'Escape': closeOverview(); break;
+      default:
+        // 1-5 hopper til sektion
+        if (e.key >= '1' && e.key <= String(sections.length)) {
+          var sec = sections[+e.key - 1];
+          if (sec) { closeOverview(); go(sec.items[0].index); }
+        }
+    }
+  });
+
+  document.getElementById('menuBtn').addEventListener('click', toggleOverview);
+
+  // Klik i højre/venstre tredjedel navigerer (uden at ramme links/knapper)
+  document.getElementById('deck').addEventListener('click', function (e) {
+    if (e.target.closest('a, button')) return;
+    var x = e.clientX / window.innerWidth;
+    if (x > 0.66) next(); else if (x < 0.2) prev();
+  });
+
+  // Touch-swipe
+  var touchX = null;
+  document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+    touchX = null;
+  }, { passive: true });
+
+  // Deep-link via hash (#7)
+  var hash = parseInt(location.hash.slice(1), 10);
+  go(isNaN(hash) ? 0 : hash - 1);
+})();
+</script>
+</body>
+</html>
