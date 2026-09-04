@@ -182,19 +182,21 @@
   var SUPABASE_URL = 'https://ytiboqiihekaerznainv.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
 
-  const BLANK = { step: 0, q1: null, q1txt: '', A: [null,null,null], gap: '', V: [null,null,null,null,null], own: null, one: '', qm: null, qmwhen: null, navn: '', firma: '', mail: '', size: null, afd: '', consent: false, hp: '', salary: 40000, sick: 8, churn: 12, sent: false, sending: false };
+  const BLANK = { step: 0, q1: null, q1txt: '', freq: null, A: [null,null,null,null], gap: '', V: [null,null,null,null,null], own: null, one: '', qm: null, qmwhen: null, navn: '', firma: '', mail: '', size: null, afd: '', consent: false, hp: '', salary: 40000, sick: 8, churn: 12, sent: false, sending: false };
   const S = JSON.parse(JSON.stringify(BLANK));
   const card = document.getElementById('card');
   const TOTAL = 6;
 
   const Q1 = [['own','Vi laver vores egne trivselsmålinger'],['vendor','Vi bruger en leverandør til det'],['hris','Vi gør det gennem vores HR-system'],['none','Vi laver ikke trivselsmålinger']];
   const Q1_PROMPT = { own: 'Hvordan gør I, spørgeskema, samtaler, noget tredje?', vendor: 'Hvem, hvis du vil sige det?', hris: 'Hvilket system?', none: 'Hvad gør I så i stedet, hvis noget?' };
+  const FREQ = [['cont','Løbende, måned eller kvartal'],['annual','En til to gange om året'],['rare','Sjældnere end det'],['dk','Det ved jeg faktisk ikke']];
   const A = [
     'Den måde, vi arbejder med trivsel på i dag, giver os det overblik, vi har brug for.',
     'Vi kan bruge de data, vi har, til at sige noget om, hvad der er på vej. Ikke kun om hvad der var.',
-    'Vi ved, hvor i organisationen det knirker, mens det knirker.'
+    'Vi ved, hvor i organisationen det knirker, mens det knirker.',
+    'Når vi har målt, bliver der fulgt op med konkrete handlinger.'
   ];
-  const A_SHORT = ['overblik', 'ser fremad', 'ser det i tide'];
+  const A_SHORT = ['overblik', 'ser fremad', 'ser det i tide', 'opfølgning'];
   const V = [
     'At kunne se tidligt, hvilke teams eller områder der er ved at tabe folk, før opsigelserne kommer.',
     'At kunne se, hvor belastningen bygger op i et team, før det bliver til sygemeldinger.',
@@ -264,10 +266,11 @@
       ${choices(Q1, 'q1')}
       ${S.q1 ? `<label class="f" style="margin-top:14px">${Q1_PROMPT[S.q1]} <span style="color:var(--ink-3)">(valgfrit)</span>
         <input type="text" data-txt="q1txt" value="${esc(S.q1txt)}"></label>` : ''}
-      ${nav(!!S.q1)}`,
+      ${S.q1 && S.q1 !== 'none' ? `<p class="hint" style="margin:18px 0 10px">Hvor ofte måler I?</p>${choices(FREQ, 'freq')}` : ''}
+      ${nav(!!S.q1 && (S.q1 === 'none' || !!S.freq))}`,
     () => `${progress(2)}<p class="eyebrow">Hånden på hjertet</p>
       <h2 class="q serif">Hvor <em>enig</em> er du?</h2>
-      <p class="hint">Tre udsagn om det, I har nu. Ikke hvad der står i strategien, men hvad der sker.</p>
+      <p class="hint">Fire udsagn om det, I har nu. Ikke hvad der står i strategien, men hvad der sker.</p>
       ${scaleBlock(A, 'A', ['Helt uenig', 'Helt enig'])}${nav(S.A.every(x => x))}`,
     () => `${progress(3)}<p class="eyebrow">I dag</p>
       <h2 class="q serif">Hvor er det største <em>hul</em> i måden, I arbejder med det på?</h2>
@@ -352,10 +355,11 @@
   function buildPayload() {
     const a = avg(S.A), v = avg(S.V);
     return {
-      form: 'indsigt', form_version: '2026-09',
+      form: 'indsigt', form_version: '2026-09b',
       token: TOKEN, channel: SOURCE,
       q_today: S.q1, q_today_text: S.q1txt.trim() || null,
-      a_overview: S.A[0], a_forward: S.A[1], a_intime: S.A[2],
+      q_frequency: S.q1 === 'none' ? null : S.freq,
+      a_overview: S.A[0], a_forward: S.A[1], a_intime: S.A[2], a_followup: S.A[3],
       gap_text: S.gap.trim() || null,
       v_attrition: S.V[0], v_load: S.V[1], v_local: S.V[2], v_research: S.V[3], v_leaders: S.V[4],
       ownership: S.own,
