@@ -91,6 +91,9 @@
   .hint{color:var(--ink-2);margin:0 0 24px;max-width:46ch}
   .intro p{margin:0 0 14px;color:var(--ink-2);max-width:52ch}
   .intro p.lead{color:var(--ink);font-size:17px}
+  .intro-video{position:relative;margin:18px 0 20px}
+  .intro-video video{width:100%;display:block;border-radius:12px;background:#000;aspect-ratio:1042/628}
+  .intro-video-chip{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);color:var(--ink);font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;pointer-events:none}
   .sig{margin-top:18px;color:var(--ink-3);font-size:14px}
 
   .choices{display:grid;gap:10px}
@@ -247,6 +250,12 @@
         <p class="lead">Jeg er en af to iværksættere bag culturequest, og jeg er ved at finde ud af, hvordan danske virksomheder egentlig arbejder med trivsel.. og hvad de ville ønske, de kunne se, som de ikke kan i dag.</p>
         <p>Seks spørgsmål, tre minutter. Til sidst får du to ting med hjem: jeres egen vurdering holdt op mod de andre, og hvad det koster jer, når det knirker. Regnet på jeres egne tal, ikke vores.</p>
         <p><b style="color:var(--ink);font-weight:600">Ingen salgstale bagefter.</b> Vil du høre, hvad vi bygger, spørger du selv.</p>
+        <div class="intro-video">
+          <video controls preload="none" playsinline poster="assets/indsigt-benjamin-poster.jpg">
+            <source src="assets/indsigt-benjamin.mp4" type="video/mp4">
+          </video>
+          <span class="intro-video-chip">1 minut</span>
+        </div>
         <p class="sig">Benjamin, medstifter af culturequest</p>
       </div>${nav(true, 'Okay, tre minutter', false)}`,
     () => `${progress(1)}<p class="eyebrow">I dag</p>
