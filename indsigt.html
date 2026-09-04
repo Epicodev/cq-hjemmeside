@@ -202,7 +202,7 @@
   const V_SHORT = ['se frafald tidligt', 'se belastning tidligt', 'præcist + lokalt', 'koblet til forskning', 'medansvar hos ledere'];
   const OWN = [['hr','Et HR-projekt'],['leaders','Noget lederne selv prioriterer'],['both','Begge dele, men i praksis HR'],['dk','Det ved jeg faktisk ikke']];
   const SIZE = [['50','50–100',75],['100','100–250',175],['250','250–500',375],['500','500–2.000',1250],['2000','Over 2.000',2500]];
-  const QM = [['yes','Ja, lad os prøve det','Så ringer jeg onsdag'],['maybe','Måske senere','Du vælger hvornår'],['no','Nej tak','Så hører du ikke fra mig']];
+  const QM = [['yes','Ja, lad os prøve det','Så hører du fra mig'],['maybe','Måske senere','Du vælger hvornår'],['no','Nej tak','Så hører du ikke fra mig']];
   const QMW = [['3m','Om 3 måneder'],['6m','Om 6 måneder'],['12m','Om et år']];
 
   const label = (list, v) => { const f = list.find(x => x[0] === v); return f ? f[1] : null; };
@@ -251,7 +251,7 @@
       </div>${nav(true, 'Okay, tre minutter', false)}`,
     () => `${progress(1)}<p class="eyebrow">I dag</p>
       <h2 class="q serif">Hvordan arbejder I med <em>trivsel</em> i dag?</h2>
-      <p class="hint">Der er ikke et rigtigt svar. Det sidste er et helt ærligt et.</p>
+      <p class="hint">Der er ikke et rigtigt svar. Den sidste mulighed er lige så ærlig som de tre andre.</p>
       ${choices(Q1, 'q1')}
       ${S.q1 ? `<label class="f" style="margin-top:14px">${Q1_PROMPT[S.q1]} <span style="color:var(--ink-3)">(valgfrit)</span>
         <input type="text" data-txt="q1txt" value="${esc(S.q1txt)}"></label>` : ''}
@@ -268,7 +268,7 @@
       ${nav(S.gap.trim().length > 3)}`,
     () => `${progress(4)}<p class="eyebrow">Hvis I kunne</p>
       <h2 class="q serif">Hvor <em>værdifuldt</em> ville det være for jer?</h2>
-      <p class="hint">Fem ting, der er muligt i dag hos nogen. Ikke om I har det, men om det ville betyde noget.</p>
+      <p class="hint">Fem ting, der kan lade sig gøre i dag. Spørgsmålet er ikke om I har dem, men hvor meget de ville betyde hos jer.</p>
       ${scaleBlock(V, 'V', ['Slet ikke', 'Meget'])}${nav(S.V.every(x => x))}`,
     () => `${progress(5)}<p class="eyebrow">Ejerskab</p>
       <h2 class="q serif">Hos jer er trivsel først og fremmest…</h2>
@@ -282,13 +282,13 @@
       ${nav(S.one.trim().length > 3)}`,
     () => `<p class="eyebrow">Og så det, du selv spurgte om</p>
       <h2 class="q serif">Kunne I være friske på at prøve <em>en måling</em> hos jer, som kontrast til det I gør i dag?</h2>
-      <div class="pilot"><b>Ærligt, hvad det kræver, og hvad I får:</b> I sender ét link ud, medarbejderne bruger cirka otte minutter, og inden ti dage har I en fuld analyse af kulturen, som den ser ud nu: hvor jeres teams knirker, og hvad det peger på i sygefravær og opsigelser, regnet på jeres tal. Aggregeret, på teamniveau, aldrig på enkeltpersoner. Første måling koster ikke noget.<br><br><b>Det eneste vi beder om til gengæld:</b> en halv times ærlig feedback på oplevelsen bagefter. Det er sådan, vi bliver bedre.</div>
+      <div class="pilot"><b>Sådan foregår det:</b> I sender ét link ud, og medarbejderne bruger 3-5 minutter på at svare. Inden ti dage har I en fuld analyse af kulturen, som den ser ud nu: hvor jeres teams knirker, og hvad det peger på i sygefravær og opsigelser, regnet på jeres egne tal. Alt er aggregeret på teamniveau, aldrig på enkeltpersoner. Første måling koster ikke noget.<br><br><b>Det eneste vi beder om til gengæld:</b> en halv times ærlig feedback på oplevelsen bagefter. Det er sådan, vi bliver bedre.</div>
       ${choices(QM, 'qm')}
       ${S.qm === 'maybe' ? `<p class="hint" style="margin:18px 0 10px">Hvornår må jeg skrive?</p>${choices(QMW, 'qmwhen')}` : ''}
       ${nav(!!S.qm && (S.qm !== 'maybe' || !!S.qmwhen))}`,
     () => `
       <h2 class="q serif">Hvem skal jeg <em>takke</em>?</h2>
-      <p class="hint">Størrelsen bruger jeg til at regne jeres tal ud og sammenligne jer med de rigtige.</p>
+      <p class="hint">Størrelsen bruger jeg til at regne jeres tal ud og sammenligne jer med virksomheder på jeres egen størrelse.</p>
       <div class="row"><label class="f">Fornavn<input type="text" data-txt="navn" value="${esc(S.navn)}" autocomplete="given-name"></label>
         <label class="f">Virksomhed<input type="text" data-txt="firma" value="${esc(S.firma)}" autocomplete="organization"></label></div>
       <label class="f" style="margin-top:12px">Arbejdsmail<input type="email" data-txt="mail" value="${esc(S.mail)}" autocomplete="email"></label>
