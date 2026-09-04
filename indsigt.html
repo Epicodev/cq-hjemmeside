@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Fra den stol du sidder i · culturequest</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://ytiboqiihekaerznainv.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4eee1; --bg-2:#ece4d2; --panel:#fffdf8;
+    --line:#e2dbca; --line-2:#d0c7b2;
+    --ink:#1e1b4b; --ink-2:#57536b; --ink-3:#8a8598;
+    --accent:#4f46e5; --accent-ink:#ffffff; --accent-soft:rgba(79,70,229,.10);
+    --butter:#e7be5b;
+    --primary-500:#6366f1; --primary-600:#5a5ee0; --primary-700:#4f53cc; --primary-900:#383da0;
+    --good:#2f8f62; --warn:#b45309; --bad:#b8483b;
+    --shadow:0 1px 2px rgba(30,27,75,.05), 0 18px 44px -20px rgba(30,27,75,.22);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Fraunces",Georgia,serif;font-weight:500;font-optical-sizing:auto;}
+  .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;}
+  a{color:var(--accent)}
+  button{font:inherit;color:inherit}
+  ::selection{background:var(--butter);color:var(--ink)}
+
+  .top{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:15px 24px;border-bottom:1px solid var(--line);background:var(--bg);
+  }
+  .brand-logo{display:inline-flex;align-items:center;line-height:0}
+  .nav-logo-svg{height:26px;width:auto;display:block}
+  .tag{
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+    border:1px solid var(--line);border-radius:999px;padding:4px 11px;
+  }
+
+  .wrap{
+    display:grid;grid-template-columns:minmax(0,600px);justify-content:center;
+    padding:44px 24px 90px;max-width:648px;margin:0 auto;
+  }
+
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    box-shadow:var(--shadow);padding:38px 40px 32px;min-height:520px;
+    display:flex;flex-direction:column;
+  }
+  @media (max-width:520px){.card{padding:28px 22px}}
+  .progress{display:flex;align-items:center;gap:12px;margin-bottom:28px;color:var(--ink-3);font-size:13px}
+  .bar{flex:1;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);width:0%;transition:width .35s ease}
+  @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+  .eyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+  .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .scale .choice{justify-content:center;padding:14px 6px;font-weight:600}
+  .anchors{display:flex;justify-content:space-between;color:var(--ink-3);font-size:12px;margin-top:8px}
+  .anchors span{max-width:42%}
+  .anchors span:last-child{text-align:right}
+  .likert{display:grid;gap:14px}
+  .lk{display:grid;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+  .lk:first-child{border-top:0;padding-top:0}
+  .lk p{margin:0;color:var(--ink)}
+  .lk .scale .choice{padding:10px 4px;font-size:14px}
+  .lk .anchors{margin-top:2px;font-size:11.5px}
+  .est{border:1px solid var(--line);border-radius:12px;background:var(--bg-2);padding:16px 18px;margin-top:16px}
+  .est h4{margin:0 0 4px;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  .est .big{font-size:34px;line-height:1.1;margin:4px 0 2px;letter-spacing:-.01em;color:var(--ink)}
+  .est .big small{font-size:14px;color:var(--ink-3);margin-left:6px;font-family:"Manrope",sans-serif}
+  .est .line{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:6px 0;border-top:1px dashed var(--line);color:var(--ink-2)}
+  .est .line b{color:var(--ink);font-weight:600;white-space:nowrap}
+  .assump{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+  @media (max-width:520px){.assump{grid-template-columns:1fr}}
+  .assump label{display:grid;gap:4px;font-size:12px;color:var(--ink-3)}
+  .assump input{padding:8px 10px;font-size:14px}
+  .est .note{font-size:12.5px;color:var(--ink-3);margin:10px 0 0}
+  .gab{display:flex;align-items:center;gap:14px;margin-top:14px}
+  .gab .bar{height:6px;border-radius:3px}
+  .gab .bar i{background:var(--accent)}
+  .q{font-size:31px;line-height:1.16;text-wrap:balance;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}
+  .q em{font-style:italic;color:var(--accent)}
+  .hint{color:var(--ink-2);margin:0 0 24px;max-width:46ch}
+  .intro p{margin:0 0 14px;color:var(--ink-2);max-width:52ch}
+  .intro p.lead{color:var(--ink);font-size:17px}
+  .sig{margin-top:18px;color:var(--ink-3);font-size:14px}
+
+  .choices{display:grid;gap:10px}
+  .choice{
+    text-align:left;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;
+    transition:border-color .15s, background .15s;color:var(--ink);
+  }
+  .choice:hover{border-color:var(--line-2)}
+  .choice[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .choice small{color:var(--ink-3);font-size:12px}
+  .choice .k{font-size:12px;color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:520px){.row{grid-template-columns:1fr}}
+  label.f{display:grid;gap:6px;font-size:13px;color:var(--ink-2)}
+  input[type=text],input[type=email],select,textarea{
+    width:100%;background:var(--panel);border:1px solid var(--line-2);color:var(--ink);
+    border-radius:10px;padding:12px 14px;font:inherit;
+  }
+  textarea{min-height:96px;resize:vertical}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin-top:14px}
+  .consent input{margin-top:4px;accent-color:var(--accent)}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+  .err{margin-top:14px;font-size:13.5px;color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent);border:1px solid color-mix(in srgb,var(--bad) 30%,transparent);border-radius:10px;padding:10px 14px;display:none}
+  .err.show{display:block}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:26px;gap:12px}
+  .btn{border:1px solid var(--line-2);background:transparent;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:600}
+  .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .btn.primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ghost{color:var(--ink-3);border-color:transparent}
+  .btn.ghost:hover{color:var(--ink)}
+  .btn:focus-visible,.choice:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .pilot{border-left:2px solid var(--accent);padding:12px 16px;margin:0 0 20px;color:var(--ink-2);font-size:14px;background:var(--accent-soft);border-radius:0 8px 8px 0}
+  .pilot b{color:var(--ink);font-weight:600}
+
+  .num{font-size:84px;line-height:1;margin:6px 0 4px;letter-spacing:-.02em}
+  .num small{font-size:18px;color:var(--ink-3);font-family:"Manrope",sans-serif;margin-left:8px}
+  .next{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}
+  .next h4{margin:0 0 6px;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  .next p{margin:0 0 10px;color:var(--ink-2);max-width:50ch}
+  .demo{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:14px;background:var(--bg-2)}
+  .demo b{font-weight:600}
+  .demo .btn{white-space:nowrap;text-decoration:none;display:inline-block}
+  .demo small{display:block;color:var(--ink-3);font-size:12px}
+
+  .foot{max-width:648px;margin:0 auto;padding:0 24px 48px;color:var(--ink-3);font-size:12.5px}
+  .foot p{margin:6px 0}
+  .foot a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="brand-logo" href="/" aria-label="culturequest"><svg class="nav-logo-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1235.6 230.5" style="enable-background:new 0 0 1235.6 230.5;" xml:space="preserve"> <style type="text/css"> .cq-logo-mark{fill:url(#cqLogoGrad);} .cq-logo-text{fill:#0E0E0E;} </style> <linearGradient id="cqLogoGrad" gradientUnits="userSpaceOnUse" x1="185.7367" y1="32.9273" x2="34.625" y2="184.039"> <stop offset="0" style="stop-color:var(--primary-500)"/> <stop offset="0.2173" style="stop-color:#6164ED"/> <stop offset="0.4424" style="stop-color:var(--primary-600)"/> <stop offset="0.6711" style="stop-color:var(--primary-700)"/> <stop offset="0.901" style="stop-color:#4045AF"/> <stop offset="1" style="stop-color:var(--primary-900)"/> </linearGradient> <path class="cq-logo-mark" d="M121.9,0.1H76.6C35.3,0.1,1.7,33.6,1.7,74.9v45.3c0,41.3,33.5,74.8,74.8,74.8h120.1V74.9 C196.7,33.6,163.2,0.1,121.9,0.1z M52.6,108.3V86.7c0-19.8,16-35.8,35.8-35.8h21.7c19.8,0,35.8,16,35.8,35.8v82.9l-25.4-25.4H88.4 C68.6,144.2,52.6,128.1,52.6,108.3z"/> <g> <path class="cq-logo-text" d="M332.4,170.4c-1.5,2.4-3.4,4.5-5.7,6.3c-2.3,1.8-4.9,3.1-7.8,4.1c-2.9,1-6.2,1.4-9.7,1.4 c-6.9,0-12.7-1.8-17.2-5.3c-4.5-3.5-7.9-8.3-10.2-14.2c-2.3-5.9-3.4-12.4-3.4-19.5c0-7.2,1.1-13.8,3.4-19.7 c2.3-5.9,5.7-10.7,10.2-14.2c4.5-3.6,10.3-5.4,17.1-5.4c3.5,0,6.8,0.5,9.7,1.4c2.9,1,5.5,2.3,7.7,4c2.2,1.7,4.1,3.7,5.6,6 c1.5,2.3,2.7,4.8,3.3,7.6h16.4c-0.4-3.7-1.6-10-5.9-16.3c-3.5-5.2-7.5-8.2-9.6-9.6c-1-0.7-5.5-4-12.5-6.1 c-4.6-1.4-9.5-2.1-14.8-2.1c-9.5,0-17.9,2.3-25,6.8c-7.2,4.5-12.8,10.9-16.8,19c-4,8.2-6,17.7-6,28.6c0,10.7,2,20.1,6,28.2 c4,8.1,9.6,14.5,16.8,19c7.2,4.5,15.5,6.8,25,6.8c5.2,0,10.2-0.7,14.9-2.2c4.7-1.4,8.9-3.6,12.6-6.3c2.4-1.7,4.1-3.4,4.9-4.2 c0,0,2.8-2.7,4.7-5.6c4.3-6.2,5.5-13.9,5.9-16.5h-16.4C335.1,165.3,333.9,168,332.4,170.4z"/> <path class="cq-logo-text" d="M428.9,152.7c0,6.2-1.2,11.4-3.5,15.6c-2.3,4.2-5.5,7.4-9.5,9.6c-4,2.2-8.5,3.3-13.5,3.3 c-7.4,0-13.2-2.3-17.5-6.9c-4.3-4.6-6.4-11-6.4-19.3V90.4h-16.9v66.1c0,8.9,1.5,16.3,4.6,22.2c3.1,5.9,7.3,10.3,12.7,13.3 c5.4,2.9,11.7,4.4,18.8,4.4c7.8,0,14.6-2,20.6-6.1c4.5-3,8.2-7.7,11.2-13.9V195h16.3V90.4h-17V152.7z"/> <rect x="455.4" y="53.9" class="cq-logo-text" width="16.9" height="141.1"/> <path class="cq-logo-text" d="M514.8,64.8h-16.9v25.7h-16.3v14.4h16.3v64.8c0,8.4,2.5,14.9,7.4,19.5c4.9,4.6,11.9,6.9,20.9,6.9 c2.1,0,4.2-0.1,6.4-0.4c1.1-0.1,2.2-0.3,3.1-0.5v-14.9c-1.4,0.2-2.9,0.4-4.6,0.6c-1.7,0.2-3.1,0.3-4.2,0.3c-4.4,0-7.6-1-9.4-3.1 c-1.9-2.1-2.8-5.3-2.8-9.8v-63.5h21.5V90.4h-21.5V64.8z"/> <path class="cq-logo-text" d="M613,152.7c0,6.2-1.2,11.4-3.5,15.6c-2.3,4.2-5.5,7.4-9.5,9.6c-4,2.2-8.5,3.3-13.5,3.3 c-7.4,0-13.2-2.3-17.5-6.9c-4.3-4.6-6.4-11-6.4-19.3V90.4h-16.9v66.1c0,8.9,1.5,16.3,4.6,22.2c3.1,5.9,7.3,10.3,12.7,13.3 c5.4,2.9,11.7,4.4,18.8,4.4c7.8,0,14.6-2,20.6-6.1c4.5-3,8.2-7.7,11.2-13.9V195h16.3V90.4h-17V152.7z"/> <path class="cq-logo-text" d="M683.2,88.9c-6.3,0-11.8,1.6-16.6,4.8c-4.8,3.2-8.2,7.5-10.1,12.8h-0.9V90.4h-16.2V195h16.9v-65.3 c0-5,1.1-9.3,3.3-13c2.2-3.7,5.2-6.5,9-8.5c3.8-2,8.1-3,12.8-3c2.3,0,4.4,0.1,6.4,0.4c2,0.3,3.2,0.4,3.7,0.6v-17 c-0.9-0.1-2.1-0.1-3.8-0.2C686,88.9,684.6,88.9,683.2,88.9z"/> <path class="cq-logo-text" d="M772.6,101.3c-4.4-4.3-9.3-7.4-14.8-9.4c-5.5-2-11.2-3-17.1-3c-9.4,0-17.7,2.3-24.8,6.9 c-7.1,4.6-12.6,11-16.5,19.2c-3.9,8.2-5.8,17.6-5.8,28.3c0,10.7,2,20,5.9,28.1c3.9,8.1,9.5,14.4,16.9,18.9c7.3,4.5,16,6.8,26.1,6.8 c7.3,0,13.8-1.2,19.7-3.6c5.8-2.4,10.7-5.7,14.6-9.9c3.9-4.2,6.7-9.1,8.2-14.6l-16.4-3.6c-1.3,3.6-3.1,6.6-5.6,9.1 c-2.5,2.5-5.4,4.3-8.9,5.6c-3.4,1.3-7.3,1.9-11.6,1.9c-6.4,0-12.1-1.4-16.9-4.3c-4.8-2.8-8.6-7-11.2-12.4 c-2.4-4.9-3.6-10.7-3.9-17.3h76.1v-6.5c0-9.3-1.3-17.3-3.8-24C780.4,111,776.9,105.5,772.6,101.3z M724.5,108.4 c4.5-3,9.9-4.5,16.1-4.5c6.3,0,11.6,1.5,16,4.5c4.3,3,7.6,7.2,9.8,12.5c1.7,3.9,2.7,8.3,3.1,13.2h-58.9c0.3-4.8,1.5-9.3,3.5-13.5 C716.5,115.5,720,111.4,724.5,108.4z"/> <path class="cq-logo-text" d="M873.9,106.9h-1.5c-1.4-2.3-3.3-4.9-5.7-7.7c-2.4-2.8-5.7-5.2-9.7-7.2c-4-2.1-9.2-3.1-15.5-3.1 c-8.7,0-16.4,2.2-23.2,6.6c-6.7,4.4-12,10.7-15.7,18.8c-3.8,8.1-5.6,17.6-5.6,28.6c0,11.1,1.9,20.6,5.6,28.7 c3.8,8.1,9,14.4,15.7,18.8c6.7,4.5,14.4,6.7,23.2,6.7c6.2,0,11.3-1,15.3-3.1c4-2.1,7.2-4.5,9.7-7.3c2.5-2.8,4.4-5.5,5.9-7.9h1v51.6 h16.9v-140h-16.3V106.9z M870.3,163.3c-2.3,5.9-5.7,10.5-10.2,13.8c-4.5,3.3-9.9,5-16.2,5c-6.4,0-11.8-1.7-16.3-5.1 c-4.5-3.4-7.9-8.1-10.2-14c-2.3-5.9-3.5-12.7-3.5-20.2c0-7.5,1.2-14.2,3.5-20c2.3-5.8,5.7-10.4,10.1-13.8c4.5-3.3,9.9-5,16.3-5 c6.4,0,11.9,1.6,16.3,4.9c4.5,3.3,7.8,7.8,10.1,13.6c2.3,5.8,3.5,12.6,3.5,20.4S872.7,157.4,870.3,163.3z"/> <path class="cq-logo-text" d="M966.9,152.7c0,6.2-1.2,11.4-3.5,15.6c-2.3,4.2-5.5,7.4-9.5,9.6c-4,2.2-8.5,3.3-13.5,3.3 c-7.4,0-13.2-2.3-17.5-6.9c-4.3-4.6-6.4-11-6.4-19.3V90.4h-16.9v66.1c0,8.9,1.5,16.3,4.6,22.2c3.1,5.9,7.3,10.3,12.7,13.3 c5.4,2.9,11.7,4.4,18.8,4.4c7.8,0,14.6-2,20.6-6.1c4.5-3,8.2-7.7,11.2-13.9V195h16.3V90.4h-17V152.7z"/> <path class="cq-logo-text" d="M1072.3,101.3c-4.4-4.3-9.3-7.4-14.8-9.4c-5.5-2-11.2-3-17.1-3c-9.4,0-17.7,2.3-24.8,6.9 c-7.1,4.6-12.6,11-16.5,19.2c-3.9,8.2-5.8,17.6-5.8,28.3c0,10.7,2,20,5.9,28.1c3.9,8.1,9.5,14.4,16.9,18.9c7.3,4.5,16,6.8,26.1,6.8 c7.3,0,13.8-1.2,19.7-3.6c5.8-2.4,10.7-5.7,14.6-9.9c3.9-4.2,6.7-9.1,8.2-14.6l-16.4-3.6c-1.3,3.6-3.1,6.6-5.6,9.1 c-2.5,2.5-5.4,4.3-8.9,5.6c-3.4,1.3-7.3,1.9-11.6,1.9c-6.4,0-12.1-1.4-16.9-4.3c-4.8-2.8-8.6-7-11.2-12.4 c-2.4-4.9-3.6-10.7-3.9-17.3h76.1v-6.5c0-9.3-1.3-17.3-3.8-24C1080.1,111,1076.6,105.5,1072.3,101.3z M1024.2,108.4 c4.5-3,9.9-4.5,16.1-4.5c6.3,0,11.6,1.5,16,4.5c4.3,3,7.6,7.2,9.8,12.5c1.7,3.9,2.7,8.3,3.1,13.2h-58.9c0.3-4.8,1.5-9.3,3.5-13.5 C1016.2,115.5,1019.7,111.4,1024.2,108.4z"/> <path class="cq-logo-text" d="M1145.4,137.3l-16-3.8c-5.9-1.4-10.2-3.3-13.1-5.6c-2.8-2.3-4.3-5.5-4.3-9.4c0-4.4,2-8.1,6.1-11 c4.1-2.9,9.3-4.4,15.6-4.4c6.7,0,11.8,1.6,15.3,4.8c3.5,3.2,5.8,6.8,7,10.9l15.4-3.1c-1.3-5.3-3.5-10-6.7-14 c-3.2-4-7.4-7.2-12.5-9.5c-5.2-2.3-11.4-3.4-18.6-3.4c-7.5,0-14.1,1.3-19.9,3.9c-5.8,2.6-10.4,6.2-13.7,10.7c-3.3,4.6-5,9.9-5,15.9 c0,7.4,2.3,13.5,7,18.2c4.7,4.8,11.8,8.3,21.3,10.5l17.3,4.2c5.1,1.1,8.9,2.9,11.5,5.3c2.6,2.4,3.9,5.4,3.9,9.1 c0,4.4-2.2,8.1-6.5,11.2c-4.3,3.1-10.1,4.7-17.4,4.7c-6.5,0-11.8-1.4-16-4.2c-4.1-2.8-6.9-7.2-8.2-13l-16.1,3 c1.1,6.3,3.4,11.6,7.1,15.9c3.7,4.3,8.3,7.5,14,9.7c5.7,2.2,12.1,3.3,19.3,3.3c8.1,0,15.2-1.3,21.4-4c6.2-2.7,11-6.4,14.4-11.1 c3.5-4.7,5.2-10.2,5.2-16.4c0-7.3-2.3-13.2-6.9-17.9C1162,143.1,1154.9,139.6,1145.4,137.3z"/> <path class="cq-logo-text" d="M1235.6,104.8V90.4h-21.5V64.8h-16.9v25.7h-16.3v14.4h16.3v64.8c0,8.4,2.5,14.9,7.4,19.5 c4.9,4.6,11.9,6.9,20.9,6.9c2.1,0,4.2-0.1,6.4-0.4c1.1-0.1,2.1-0.3,3.1-0.5v-14.8c-1.4,0.2-2.9,0.3-4.5,0.5 c-1.7,0.2-3.1,0.3-4.2,0.3c-4.4,0-7.6-1-9.4-3.1c-1.8-2.1-2.8-5.3-2.8-9.8v-63.5H1235.6z"/> </g> </svg></a>
+  <span class="tag">en lille undersøgelse · 3 min</span>
+</div>
+
+<div class="wrap">
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<div class="foot">
+  <p>Dine svar behandles fortroligt og bruges kun til denne undersøgelse. Du kan altid bede om at blive slettet: skriv til <a href="mailto:bvb@culturequest.io">bvb@culturequest.io</a>. <a href="/privatlivspolitik">Privatlivspolitik</a>.</p>
+  <p>Formuleringerne holder sig inden for produktets claims: aggregerede signaler på teamniveau, ingen individforudsigelse. Omkostningsregnestykket er dine egne tal på offentlig metode (If's sygefraværsberegner: løn + 12,5 % feriepenge + 12 % pension + 20 % overhead; Work Institute via Randstad: ca. en tredjedel af årslønnen pr. opsigelse) — det er ikke en påstand om, hvad culturequest sparer.</p>
+</div>
+
+<script>
+(function () {
+  // ---- attribution: token (pr. prospect), kanal, UTM ----
+  var QP = new URLSearchParams(location.search);
+  var TOKEN = (QP.get('t') || '').slice(0, 120) || null;
+  var SOURCE = (function () {
+    var s = (QP.get('src') || '').toLowerCase();
+    if (s === 'mail' || s === 'linkedin' || s === 'organic') return s;
+    var u = (QP.get('utm_source') || '').toLowerCase();
+    if (u.indexOf('apollo') > -1 || u.indexOf('mail') > -1 || u.indexOf('email') > -1) return 'mail';
+    if (u.indexOf('linkedin') > -1) return 'linkedin';
+    return 'organic';
+  })();
+  var utm = function (k) { var v = QP.get(k); return v ? v.slice(0, 200) : null; };
+
+  var SUPABASE_URL = 'https://ytiboqiihekaerznainv.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
+
+  const BLANK = { step: 0, q1: null, q1txt: '', A: [null,null,null], gap: '', V: [null,null,null,null,null], own: null, one: '', qm: null, qmwhen: null, navn: '', firma: '', mail: '', size: null, afd: '', consent: false, hp: '', salary: 40000, sick: 8, churn: 12, sent: false, sending: false };
+  const S = JSON.parse(JSON.stringify(BLANK));
+  const card = document.getElementById('card');
+  const TOTAL = 6;
+
+  const Q1 = [['own','Vi laver vores egne trivselsmålinger'],['vendor','Vi bruger en leverandør til det'],['hris','Vi gør det gennem vores HR-system'],['none','Vi laver ikke trivselsmålinger']];
+  const Q1_PROMPT = { own: 'Hvordan — spørgeskema, samtaler, noget tredje?', vendor: 'Hvem, hvis du vil sige det?', hris: 'Hvilket system?', none: 'Hvad gør I så i stedet — hvis noget?' };
+  const A = [
+    'Den måde, vi arbejder med trivsel på i dag, giver os det overblik, vi har brug for.',
+    'Vi kan bruge de data, vi har, til at sige noget om, hvad der er på vej — ikke kun om hvad der var.',
+    'Vi ved, hvor i organisationen det knirker, mens det knirker.'
+  ];
+  const A_SHORT = ['overblik', 'ser fremad', 'ser det i tide'];
+  const V = [
+    'At kunne se tidligt, hvilke teams eller områder der er ved at tabe folk — før opsigelserne kommer.',
+    'At kunne se, hvor belastningen bygger op i et team, før det bliver til sygemeldinger.',
+    'At få peget præcist på, hvor i organisationen udfordringen sidder — og hvad lederen konkret kan gøre lokalt.',
+    'At mønstrene i svarene bliver koblet til, hvad forskningen siger virker — så det ikke bare er en score.',
+    'At systemet lægger et medansvar hos mellemlederne, så lederen selv får et værktøj til bedre ledelse — ikke kun HR.'
+  ];
+  const V_SHORT = ['se frafald tidligt', 'se belastning tidligt', 'præcist + lokalt', 'koblet til forskning', 'medansvar hos ledere'];
+  const OWN = [['hr','Et HR-projekt'],['leaders','Noget lederne selv prioriterer'],['both','Begge dele — men i praksis HR'],['dk','Det ved jeg faktisk ikke']];
+  const SIZE = [['50','50–100',75],['100','100–250',175],['250','250–500',375],['500','500–2.000',1250],['2000','Over 2.000',2500]];
+  const QM = [['yes','Ja, lad os prøve det','Så ringer jeg onsdag'],['maybe','Måske senere','Du vælger hvornår'],['no','Nej tak','Så hører du ikke fra mig']];
+  const QMW = [['3m','Om 3 måneder'],['6m','Om 6 måneder'],['12m','Om et år']];
+
+  const label = (list, v) => { const f = list.find(x => x[0] === v); return f ? f[1] : null; };
+  const kr = n => Math.round(n).toLocaleString('da-DK') + ' kr.';
+  const avg = arr => { const v = arr.filter(x => x); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null; };
+  const fmt1 = n => n.toFixed(1).replace('.', ',');
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  function choices(list, key) {
+    return `<div class="choices">${list.map(([v, t, s]) => `<button class="choice" type="button" data-k="${key}" data-v="${v}" aria-pressed="${S[key] === v}">
+        <span>${t}${typeof s === 'string' ? `<br><small>${s}</small>` : ''}</span>${S[key] === v ? '<span class="k">valgt</span>' : ''}</button>`).join('')}</div>`;
+  }
+  function scaleBlock(items, arrKey, anchors) {
+    return `<div class="likert">${items.map((t, i) => `
+      <div class="lk"><p>${t}</p>
+        <div class="scale">${[1,2,3,4,5].map(n => `<button class="choice" type="button" data-arr="${arrKey}" data-i="${i}" data-v="${n}" aria-pressed="${S[arrKey][i] === n}">${n}</button>`).join('')}</div>
+        ${i === 0 ? `<div class="anchors"><span>${anchors[0]}</span><span>${anchors[1]}</span></div>` : ''}
+      </div>`).join('')}</div>`;
+  }
+  function progress(n) {
+    const left = Math.max(1, Math.round(3 * (1 - (n - 1) / TOTAL)));
+    return `<div class="progress"><span class="mono">${n} af ${TOTAL}</span><div class="bar"><i style="width:${(n / TOTAL) * 100}%"></i></div><span>ca. ${left} min tilbage</span></div>`;
+  }
+  function nav(canNext, nextLabel = 'Videre', showBack = true, act = 'next') {
+    return `<div class="nav">${showBack ? '<button class="btn ghost" type="button" data-act="back">Tilbage</button>' : '<span></span>'}
+      <button class="btn primary" type="button" data-act="${act}" ${canNext ? '' : 'disabled'}>${nextLabel}</button></div>
+      <div class="err" id="err" role="alert"></div>`;
+  }
+  const sel = (key, list) => `<select data-sel="${key}"><option value="">Vælg…</option>${list.map(([v,t]) => `<option value="${v}" ${S[key]===v?'selected':''}>${t}</option>`).join('')}</select>`;
+  function estimate() {
+    const sz = SIZE.find(x => x[0] === S.size); const n = sz ? sz[2] : 0;
+    const daily = (S.salary * 12 / 220) * 1.45;
+    const sickCost = n * S.sick * daily;
+    const churnCost = n * (S.churn / 100) * (S.salary * 12) * 0.33;
+    return { n, daily, sickCost, churnCost, total: sickCost + churnCost };
+  }
+
+  const screens = [
+    () => `
+      <div class="intro">
+        <h1 class="q serif">Fra <em>den stol</em> du sidder i</h1>
+        <p class="lead">Jeg er en af to iværksættere bag culturequest, og jeg er ved at finde ud af, hvordan danske virksomheder egentlig arbejder med trivsel — og hvad de ville ønske, de kunne se, som de ikke kan i dag.</p>
+        <p>Seks spørgsmål, tre minutter. Til sidst får du to ting tilbage: jeres egen vurdering holdt op mod de andre, og hvad det koster jer, når det knirker — regnet på jeres tal, ikke vores.</p>
+        <p><b style="color:var(--ink);font-weight:600">Ingen salgstale bagefter.</b> Vil du høre, hvad vi bygger, spørger du selv.</p>
+        <p class="sig">— Benjamin, CSO &amp; medstifter</p>
+      </div>${nav(true, 'Okay, tre minutter', false)}`,
+    () => `${progress(1)}<p class="eyebrow">I dag</p>
+      <h2 class="q serif">Hvordan arbejder I med <em>trivsel</em> i dag?</h2>
+      <p class="hint">Der er ikke et rigtigt svar. Det sidste er et helt ærligt et.</p>
+      ${choices(Q1, 'q1')}
+      ${S.q1 ? `<label class="f" style="margin-top:14px">${Q1_PROMPT[S.q1]} <span style="color:var(--ink-3)">— valgfrit</span>
+        <input type="text" data-txt="q1txt" value="${esc(S.q1txt)}"></label>` : ''}
+      ${nav(!!S.q1)}`,
+    () => `${progress(2)}<p class="eyebrow">I dag — hånden på hjertet</p>
+      <h2 class="q serif">Hvor <em>enig</em> er du?</h2>
+      <p class="hint">Tre udsagn om det, I har nu. Ikke hvad der står i strategien, men hvad der sker.</p>
+      ${scaleBlock(A, 'A', ['Helt uenig', 'Helt enig'])}${nav(S.A.every(x => x))}`,
+    () => `${progress(3)}<p class="eyebrow">I dag</p>
+      <h2 class="q serif">Hvor er det største <em>hul</em> i måden, I arbejder med det på?</h2>
+      <p class="hint">Én linje. Det, der irriterer dig mest, når rapporten er læst, og hverdagen er tilbage.</p>
+      <label class="f"><span style="position:absolute;left:-9999px">Svar</span>
+        <textarea data-txt="gap" placeholder="fx “vi ser tallene én gang om året, og så er det for sent at gøre noget ved dem”">${esc(S.gap)}</textarea></label>
+      ${nav(S.gap.trim().length > 3)}`,
+    () => `${progress(4)}<p class="eyebrow">Hvis I kunne</p>
+      <h2 class="q serif">Hvor <em>værdifuldt</em> ville det være for jer?</h2>
+      <p class="hint">Fem ting, der er muligt i dag hos nogen. Ikke om I har det — om det ville betyde noget.</p>
+      ${scaleBlock(V, 'V', ['Slet ikke', 'Meget'])}${nav(S.V.every(x => x))}`,
+    () => `${progress(5)}<p class="eyebrow">Ejerskab</p>
+      <h2 class="q serif">Hos jer er trivsel først og fremmest…</h2>
+      <p class="hint">Det ærlige svar, ikke det rigtige.</p>
+      ${choices(OWN, 'own')}${nav(!!S.own)}`,
+    () => `${progress(6)}<p class="eyebrow">Det sidste</p>
+      <h2 class="q serif">Hvis du kunne se <em>én ting</em> om jeres teams, du ikke kan se i dag — hvad skulle det være?</h2>
+      <p class="hint">Det behøver ikke være realistisk. Det er det spørgsmål, vi bygger efter.</p>
+      <label class="f"><span style="position:absolute;left:-9999px">Svar</span>
+        <textarea data-txt="one" placeholder="fx “hvilke af vores 11 afdelinger der er ved at tabe folk, inden de siger op”">${esc(S.one)}</textarea></label>
+      ${nav(S.one.trim().length > 3)}`,
+    () => `<p class="eyebrow">Og så det, du selv spurgte om</p>
+      <h2 class="q serif">Kunne I være friske på at prøve <em>en måling</em> hos jer — som kontrast til det, I gør i dag?</h2>
+      <div class="pilot"><b>Ærligt, hvad det kræver, og hvad I får:</b> I sender ét link ud, medarbejderne bruger cirka otte minutter, og inden ti dage har I en fuld analyse af kulturen, som den ser ud nu — hvor jeres teams knirker, og hvad det peger på i sygefravær og opsigelser, regnet på jeres tal. Aggregeret, på teamniveau, aldrig på enkeltpersoner. Første måling koster ikke noget.<br><br><b>Det eneste vi beder om til gengæld:</b> en halv times ærlig feedback på oplevelsen bagefter. Det er sådan, vi bliver bedre.</div>
+      ${choices(QM, 'qm')}
+      ${S.qm === 'maybe' ? `<p class="hint" style="margin:18px 0 10px">Hvornår må jeg skrive?</p>${choices(QMW, 'qmwhen')}` : ''}
+      ${nav(!!S.qm && (S.qm !== 'maybe' || !!S.qmwhen))}`,
+    () => `
+      <h2 class="q serif">Hvem skal jeg <em>takke</em>?</h2>
+      <p class="hint">Størrelsen bruger jeg til at regne jeres tal ud og sammenligne jer med de rigtige.</p>
+      <div class="row"><label class="f">Fornavn<input type="text" data-txt="navn" value="${esc(S.navn)}" autocomplete="given-name"></label>
+        <label class="f">Virksomhed<input type="text" data-txt="firma" value="${esc(S.firma)}" autocomplete="organization"></label></div>
+      <label class="f" style="margin-top:12px">Arbejdsmail<input type="email" data-txt="mail" value="${esc(S.mail)}" autocomplete="email"></label>
+      <div class="row" style="margin-top:12px"><label class="f">Antal ansatte${sel('size', SIZE)}</label>
+        <label class="f">Afdelinger / lokationer<input type="text" inputmode="numeric" data-txt="afd" value="${esc(S.afd)}" placeholder="fx 11"></label></div>
+      <div class="hp" aria-hidden="true"><label>Lad dette felt stå tomt<input type="text" tabindex="-1" autocomplete="off" data-txt="hp" value="${esc(S.hp)}"></label></div>
+      <label class="consent"><input type="checkbox" data-chk="consent" ${S.consent ? 'checked' : ''}>
+        <span>culturequest må gemme mine svar og kontakte mig om denne undersøgelse${S.qm === 'yes' ? ' og den måling, jeg har sagt ja til' : ''}. Aldrig nyhedsbreve. Jeg kan bede om at blive slettet, når jeg vil.</span></label>
+      ${nav(contactOk(), S.sending ? 'Sender…' : 'Send', true, 'send')}`,
+    () => {
+      const a = avg(S.A), v = avg(S.V), e = estimate();
+      const lowA = S.A.indexOf(Math.min(...S.A)), hiV = S.V.indexOf(Math.max(...S.V));
+      const when = S.qmwhen ? label(QMW, S.qmwhen).toLowerCase() : '';
+      const nextP = S.qm === 'yes' ? `Jeg ringer onsdag mellem 9 og 10 — svar bare på mailen, hvis et andet tidspunkt passer bedre. Så aftaler vi, hvordan linket kommer ud hos jer.`
+        : S.qm === 'maybe' ? `Jeg skriver til dig ${when}. Ikke før. Det er noteret, så jeg ikke glemmer det — og så jeg ikke kommer for tidligt.`
+        : `Ingenting. Du hører fra mig én gang, når sammenligningen er klar, og så er det det. Tak for tre minutter.`;
+      const demoHref = '/aar?c=' + encodeURIComponent(S.firma.trim() || '') + (S.size ? '&m=' + (SIZE.find(x=>x[0]===S.size)||[])[2] : '') + '&utm_source=indsigt&utm_medium=survey';
+      return `
+      <p class="hint" style="margin:0">Tak, ${esc(S.navn.trim()) || 'du'}. Dit svar er registreret. Når vi er 40 svar, sender jeg dig sammenligningen — ellers hører du kun fra mig, hvis du selv har bedt om det.</p>
+      <div class="est">
+        <h4>Jeres egen vurdering</h4>
+        <div class="row" style="gap:20px">
+          <div><div class="big serif">${fmt1(a)}<small>af 5</small></div><p class="note" style="margin-top:2px">Det I har i dag giver overblik</p></div>
+          <div><div class="big serif">${fmt1(v)}<small>af 5</small></div><p class="note" style="margin-top:2px">Værdien af at kunne se det i tide</p></div>
+        </div>
+        <div class="gab"><div class="bar" style="flex:1"><i style="width:${(a/5)*100}%"></i></div><span class="mono" style="color:var(--ink-3);font-size:12px">i dag</span></div>
+        <div class="gab" style="margin-top:6px"><div class="bar" style="flex:1"><i style="width:${(v/5)*100}%;opacity:.55"></i></div><span class="mono" style="color:var(--ink-3);font-size:12px">værdi</span></div>
+        <p class="note">Afstanden mellem de to tal er jeres. Lavest i dag: “${A[lowA]}” — ${S.A[lowA]} af 5. Mest værd for jer: “${V[hiV]}”. Det er ikke vores dom. Det er din.</p>
+      </div>
+      <div class="est">
+        <h4>Hvad det koster, når det knirker — regnet på jeres tal</h4>
+        <div class="big serif">${kr(e.total)}<small>om året, cirka</small></div>
+        <div class="line"><span>Sygefravær · ${e.n} ansatte × ${S.sick} dage × ${kr(e.daily)} pr. dag</span><b>${kr(e.sickCost)}</b></div>
+        <div class="line"><span>Opsigelser · ${S.churn} % skifter × en tredjedel af en årsløn</span><b>${kr(e.churnCost)}</b></div>
+        <div class="assump">
+          <label>Gns. månedsløn<input type="text" inputmode="numeric" data-num="salary" value="${S.salary}"></label>
+          <label>Sygedage pr. medarbejder pr. år<input type="text" inputmode="numeric" data-num="sick" value="${S.sick}"></label>
+          <label>Andel der skifter job pr. år, %<input type="text" inputmode="numeric" data-num="churn" value="${S.churn}"></label>
+        </div>
+        <p class="note">Ret tallene, så de passer på jer. Det er <b style="color:var(--ink-2);font-weight:600">jeres</b> tal, ikke vores — og vi lover ikke at fjerne dem. Det, vi bygger, viser <em>hvor</em> det opstår, mens det opstår, så det er lederen i det team, der kan gøre noget. Ikke HR, ni måneder senere.</p>
+      </div>
+      <div class="demo"><div><b>Se det vi bygger, med ${esc(S.firma.trim()) || 'jeres'} navn på</b><small>To minutter. Ingen login, ingen opfølgning.</small></div><a class="btn" href="${demoHref}" target="_blank" rel="noopener">Åbn demoen</a></div>
+      <div class="next"><h4>Hvad der sker nu</h4><p>${nextP}</p></div>`;
+    }
+  ];
+  const RESULT = screens.length - 1;
+  function contactOk() { return !!(S.navn.trim() && S.firma.trim() && S.mail.includes('@') && S.mail.indexOf('.') > S.mail.indexOf('@') && S.size && S.consent); }
+  function render() { card.innerHTML = screens[S.step](); }
+
+  function showErr(msg) { const el = document.getElementById('err'); if (el) { el.textContent = msg; el.classList.add('show'); } }
+
+  function buildPayload() {
+    const a = avg(S.A), v = avg(S.V);
+    return {
+      form: 'indsigt', form_version: '2026-09',
+      token: TOKEN, channel: SOURCE,
+      q_today: S.q1, q_today_text: S.q1txt.trim() || null,
+      a_overview: S.A[0], a_forward: S.A[1], a_intime: S.A[2],
+      gap_text: S.gap.trim() || null,
+      v_attrition: S.V[0], v_load: S.V[1], v_local: S.V[2], v_research: S.V[3], v_leaders: S.V[4],
+      ownership: S.own,
+      one_thing_text: S.one.trim() || null,
+      pilot: S.qm, pilot_when: S.qmwhen,
+      navn: S.navn.trim() || null, firma: S.firma.trim() || null,
+      size_bucket: S.size, departments: S.afd.trim() || null,
+      insight_today_avg: a != null ? Math.round(a * 100) / 100 : null,
+      insight_value_avg: v != null ? Math.round(v * 100) / 100 : null,
+      insight_gap: (a != null && v != null) ? Math.round((v - a) * 100) / 100 : null,
+      cost_inputs: { salary: S.salary, sick: S.sick, churn: S.churn },
+      consent_at: new Date().toISOString()
+    };
+  }
+
+  async function submit(btn) {
+    if (!contactOk() || S.sending) return;
+    // honeypot: bot udfyldte skjult felt → lad som om det lykkedes, gem intet
+    if (S.hp) { S.step = RESULT; S.sent = true; render(); card.scrollIntoView({ block: 'start' }); return; }
+    S.sending = true; if (btn) { btn.disabled = true; btn.textContent = 'Sender…'; }
+    const lead = {
+      email: S.mail.trim().toLowerCase(),
+      source: 'indsigt',
+      page_url: (location.href || '').slice(0, 500),
+      referrer: (document.referrer || '').slice(0, 500) || null,
+      user_agent: (navigator.userAgent || '').slice(0, 500),
+      metadata: buildPayload(),
+      utm_source: utm('utm_source'), utm_medium: utm('utm_medium'),
+      utm_campaign: utm('utm_campaign'), utm_content: utm('utm_content'), utm_term: utm('utm_term')
+    };
+    try {
+      const res = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(lead)
+      });
+      if (!res.ok) throw new Error('http_' + res.status);
+      S.sent = true; S.step = RESULT; render(); card.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    } catch (err) {
+      S.sending = false;
+      render();
+      showErr('Beklager, dit svar kunne ikke sendes lige nu. Prøv igen om et øjeblik, eller skriv til bvb@culturequest.io.');
+    }
+  }
+
+  card.addEventListener('click', (e) => {
+    const sc = e.target.closest('[data-arr]');
+    if (sc) { S[sc.dataset.arr][+sc.dataset.i] = +sc.dataset.v; render(); return; }
+    const c = e.target.closest('.choice');
+    if (c && c.dataset.k) { const k = c.dataset.k, v = c.dataset.v; if (k === 'q1' && S.q1 !== v) S.q1txt = ''; S[k] = v; if (k === 'qm' && S.qm !== 'maybe') S.qmwhen = null; render(); return; }
+    const b = e.target.closest('[data-act]');
+    if (!b) return;
+    if (b.dataset.act === 'send') { submit(b); return; }
+    if (b.dataset.act === 'next' && !b.disabled) S.step = Math.min(S.step + 1, RESULT);
+    if (b.dataset.act === 'back') S.step = Math.max(S.step - 1, 0);
+    render();
+    card.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
+  card.addEventListener('input', (e) => {
+    const t = e.target;
+    if (t.dataset.txt !== undefined) { S[t.dataset.txt] = t.value; refreshNav(); }
+    if (t.dataset.chk !== undefined) { S[t.dataset.chk] = t.checked; refreshNav(); }
+    if (t.dataset.num !== undefined) { const v = parseFloat(String(t.value).replace(/[^\d.,]/g,'').replace(',','.')); if (!isNaN(v)) { S[t.dataset.num] = v; refreshEstimate(); } }
+  });
+  card.addEventListener('change', (e) => { const t = e.target; if (t.dataset.sel !== undefined) { S[t.dataset.sel] = t.value || null; refreshNav(); } });
+  function refreshEstimate() {
+    const e = estimate(); const box = card.querySelectorAll('.est')[1]; if (!box) return;
+    box.querySelector('.big').innerHTML = `${kr(e.total)}<small>om året, cirka</small>`;
+    const lines = box.querySelectorAll('.line');
+    lines[0].innerHTML = `<span>Sygefravær · ${e.n} ansatte × ${S.sick} dage × ${kr(e.daily)} pr. dag</span><b>${kr(e.sickCost)}</b>`;
+    lines[1].innerHTML = `<span>Opsigelser · ${S.churn} % skifter × en tredjedel af en årsløn</span><b>${kr(e.churnCost)}</b>`;
+  }
+  function refreshNav() {
+    const btn = card.querySelector('[data-act="next"],[data-act="send"]'); if (!btn) return;
+    let ok = true;
+    switch (S.step) { case 3: ok = S.gap.trim().length > 3; break; case 6: ok = S.one.trim().length > 3; break; case 8: ok = contactOk(); break; }
+    btn.disabled = !ok;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
