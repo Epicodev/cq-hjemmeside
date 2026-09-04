@@ -182,14 +182,14 @@
   var SUPABASE_URL = 'https://ytiboqiihekaerznainv.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_sqEedjkjXZecKLfH44jKbw_-DASbKTh';
 
-  const BLANK = { step: 0, q1: null, q1txt: '', freq: null, A: [null,null,null,null], gap: '', V: [null,null,null,null,null], own: null, one: '', qm: null, qmwhen: null, navn: '', firma: '', mail: '', size: null, afd: '', consent: false, hp: '', salary: 40000, sick: 8, churn: 12, sent: false, sending: false };
+  const BLANK = { step: 0, q1: null, q1txt: '', freq: null, a_txt: '', v_txt: '', own_txt: '', A: [null,null,null,null], gap: '', V: [null,null,null,null,null], own: null, one: '', qm: null, qmwhen: null, navn: '', firma: '', mail: '', size: null, afd: '', consent: false, hp: '', salary: 40000, sick: 8, churn: 12, sent: false, sending: false };
   const S = JSON.parse(JSON.stringify(BLANK));
   const card = document.getElementById('card');
   const TOTAL = 6;
 
   const Q1 = [['own','Vi laver vores egne trivselsmålinger'],['vendor','Vi bruger en leverandør til det'],['hris','Vi gør det gennem vores HR-system'],['none','Vi laver ikke trivselsmålinger']];
   const Q1_PROMPT = { own: 'Hvordan gør I, spørgeskema, samtaler, noget tredje?', vendor: 'Hvem, hvis du vil sige det?', hris: 'Hvilket system?', none: 'Hvad gør I så i stedet, hvis noget?' };
-  const FREQ = [['cont','Løbende, måned eller kvartal'],['annual','En til to gange om året'],['rare','Sjældnere end det'],['dk','Det ved jeg faktisk ikke']];
+  const FREQ = [['cont','Løbende, måned eller kvartal'],['annual','En til to gange om året'],['rare','Sjældnere end det'],['never','Vi får det faktisk ikke rigtig gjort'],['dk','Det ved jeg faktisk ikke']];
   const A = [
     'Den måde, vi arbejder med trivsel på i dag, giver os det overblik, vi har brug for.',
     'Vi kan bruge de data, vi har, til at sige noget om, hvad der er på vej. Ikke kun om hvad der var.',
@@ -271,7 +271,10 @@
     () => `${progress(2)}<p class="eyebrow">Hånden på hjertet</p>
       <h2 class="q serif">Hvor <em>enig</em> er du?</h2>
       <p class="hint">Fire udsagn om det, I har nu. Ikke hvad der står i strategien, men hvad der sker.</p>
-      ${scaleBlock(A, 'A', ['Helt uenig', 'Helt enig'])}${nav(S.A.every(x => x))}`,
+      ${scaleBlock(A, 'A', ['Helt uenig', 'Helt enig'])}
+      <label class="f" style="margin-top:16px">Vil du uddybe? <span style="color:var(--ink-3)">(valgfrit)</span>
+        <input type="text" data-txt="a_txt" value="${esc(S.a_txt)}"></label>
+      ${nav(S.A.every(x => x))}`,
     () => `${progress(3)}<p class="eyebrow">I dag</p>
       <h2 class="q serif">Hvor er det største <em>hul</em> i måden, I arbejder med det på?</h2>
       <p class="hint">Én linje. Det, der irriterer dig mest, når rapporten er læst, og hverdagen er tilbage.</p>
@@ -281,11 +284,17 @@
     () => `${progress(4)}<p class="eyebrow">Hvis I kunne</p>
       <h2 class="q serif">Hvor <em>værdifuldt</em> ville det være for jer?</h2>
       <p class="hint">Fem ting, der kan lade sig gøre i dag. Spørgsmålet er ikke om I har dem, men hvor meget de ville betyde hos jer.</p>
-      ${scaleBlock(V, 'V', ['Slet ikke', 'Meget'])}${nav(S.V.every(x => x))}`,
+      ${scaleBlock(V, 'V', ['Slet ikke', 'Meget'])}
+      <label class="f" style="margin-top:16px">Vil du uddybe? <span style="color:var(--ink-3)">(valgfrit)</span>
+        <input type="text" data-txt="v_txt" value="${esc(S.v_txt)}"></label>
+      ${nav(S.V.every(x => x))}`,
     () => `${progress(5)}<p class="eyebrow">Ejerskab</p>
       <h2 class="q serif">Hos jer er trivsel først og fremmest…</h2>
       <p class="hint">Det ærlige svar, ikke det rigtige.</p>
-      ${choices(OWN, 'own')}${nav(!!S.own)}`,
+      ${choices(OWN, 'own')}
+      <label class="f" style="margin-top:16px">Vil du uddybe? <span style="color:var(--ink-3)">(valgfrit)</span>
+        <input type="text" data-txt="own_txt" value="${esc(S.own_txt)}"></label>
+      ${nav(!!S.own)}`,
     () => `${progress(6)}<p class="eyebrow">Det sidste</p>
       <h2 class="q serif">Hvis du kunne se <em>én ting</em> om jeres teams, som du ikke kan se i dag, hvad skulle det være?</h2>
       <p class="hint">Det behøver ikke være realistisk. Det er det spørgsmål, vi bygger efter.</p>
@@ -355,14 +364,16 @@
   function buildPayload() {
     const a = avg(S.A), v = avg(S.V);
     return {
-      form: 'indsigt', form_version: '2026-09b',
+      form: 'indsigt', form_version: '2026-09c',
       token: TOKEN, channel: SOURCE,
       q_today: S.q1, q_today_text: S.q1txt.trim() || null,
       q_frequency: S.q1 === 'none' ? null : S.freq,
       a_overview: S.A[0], a_forward: S.A[1], a_intime: S.A[2], a_followup: S.A[3],
+      a_text: S.a_txt.trim() || null,
       gap_text: S.gap.trim() || null,
       v_attrition: S.V[0], v_load: S.V[1], v_local: S.V[2], v_research: S.V[3], v_leaders: S.V[4],
-      ownership: S.own,
+      v_text: S.v_txt.trim() || null,
+      ownership: S.own, ownership_text: S.own_txt.trim() || null,
       one_thing_text: S.one.trim() || null,
       pilot: S.qm, pilot_when: S.qmwhen,
       navn: S.navn.trim() || null, firma: S.firma.trim() || null,
