@@ -1555,10 +1555,15 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   function sanitize(s) {
     if (!s) return null;
     s = String(s);
-    // Uudfyldte flettefelter fra mail-værktøjer ({{company}}, %7B osv.)
+    // Mail-værktøjers klik-tracking kan dobbelt-/tripel-kode URL'en, så
+    // værdien ankommer som "Firma%2520Navn". Dekod til der ikke er mere.
+    for (var i = 0; i < 3 && /%[0-9A-Fa-f]{2}/.test(s); i++) {
+      try { s = decodeURIComponent(s); } catch (e) { break; }
+    }
+    // Uudfyldte flettefelter fra mail-værktøjer ({{company}} osv.)
     // må aldrig vises. Ligner værdien en template-variabel, ignoreres den.
     if (s.indexOf('{') !== -1 || s.indexOf('}') !== -1) return null;
-    s = s.replace(/<[^>]*>/g, '').replace(/[<>"'&]/g, '').trim();
+    s = s.replace(/<[^>]*>/g, '').replace(/[<>"'&]/g, '').replace(/\s+/g, ' ').trim();
     return s.length > 0 ? s.slice(0, 40) : null;
   }
   var params = new URLSearchParams(location.search);
@@ -1607,9 +1612,9 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     : '12 måneder · culturequest';
 
   /* ============ CTA-LINKS ============ */
-  // Sæt BOOKING_URL til et Calendly/booking-link, så peger alle CTA'er derhen
-  // i stedet for mail. Tom streng = personaliseret mailto.
-  var BOOKING_URL = '';
+  // Booking-link: alle CTA'er peger direkte ind i Benjamins kalender
+  // (Google appointment schedule). Tom streng = personaliseret mailto.
+  var BOOKING_URL = 'https://calendar.app.google/pNrz3d4Yp9hW2YjaA';
   var mailSubject = hasCompany ? 'Vis os vores egne tal · ' + company : 'Vis os vores egne tal';
   var mailBody = 'Hej Benjamin\n\nJeg har set demoen. Lad os tage de 20 minutter.\n\nForeslå et par tidspunkter, der passer dig.\n\n' + leadName;
   var ctaHref = BOOKING_URL || ('mailto:bvb@culturequest.io?subject=' + encodeURIComponent(mailSubject) + '&body=' + encodeURIComponent(mailBody));
@@ -2479,8 +2484,13 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 
   var params = new URLSearchParams(location.search);
   function clean(s) {
-    if (!s || /[{}]/.test(String(s))) return null;
-    return String(s).replace(/[<>"'&]/g, '').slice(0, 60);
+    if (!s) return null;
+    s = String(s);
+    for (var i = 0; i < 3 && /%[0-9A-Fa-f]{2}/.test(s); i++) {
+      try { s = decodeURIComponent(s); } catch (e) { break; }
+    }
+    if (/[{}]/.test(s)) return null;
+    return s.replace(/[<>"'&]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60) || null;
   }
   var leadProps = {
     demo_company: clean(params.get('c')) || 'ukendt',
@@ -2619,6 +2629,8 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   function fireWarmOpen() {
     if (warmSent || fired) return;
     if (!leadProps.demo_company || leadProps.demo_company === 'ukendt') return;
+    /* Ingen CRM-stoej fra egne test-klik: spring over paa localhost eller ?preview=1 */
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || params.get('preview') === '1') return;
     if (warmInCooldown()) { warmSent = true; return; }
     warmSent = true;
     try { localStorage.setItem('cq_demo_warm_until', JSON.stringify({ until: Date.now() + COOLDOWN_MS })); } catch (e) {}
