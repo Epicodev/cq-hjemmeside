@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
 <meta name="theme-color" content="#4f53cc">
 
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <title>Forudse opsigelser før de rammer bundlinjen | culturequest</title>
 <style>
   /* SEO archive: keep deployed body text in the DOM for crawlers, visually hidden.
@@ -537,10 +537,6 @@
   .btn-lime,
   .tl29-pulse::after,
   .bento-3 .bento-stat,
-  .sandbox-onboard-avatar,
-  .sandbox-onboard-msg-user,
-  .sandbox-onboard-send,
-  .sandbox-onboard-confirm,
   .sandbox-btn-primary,
   .sandbox-mini-signal[data-tip]:hover::after,
   .fc-tab.is-active,
@@ -8106,6 +8102,10 @@ nav.scrolled::before {
     transform: translateY(-1px);
 }
 
+/* Platform-knapper inde i app-vinduets toolbar (paper) */
+.sandbox-toolbar .sandbox-btn-primary { background: #4429d8 !important; }
+.sandbox-toolbar .sandbox-btn-primary:hover:not(:disabled) { background: #351fb0 !important; }
+
 .sandbox-btn-primary:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -9050,11 +9050,11 @@ nav.scrolled::before {
     display: flex;
     flex-direction: column;
     min-height: 580px;
-    background: #fcfcfd;
+    background: #faf9f5;
 }
 
 .sandbox-chrome-lock {
-    color: #29a35a;
+    color: #0b6b49;
     font-size: 11px;
     margin-right: 3px;
 }
@@ -9064,16 +9064,17 @@ nav.scrolled::before {
     display: flex;
     align-items: center;
     gap: 12px;
-    /* Platform 1:1: samme gradient-header som den rigtige assistent */
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    /* Platform 1:1 (paper): assistenten har ingen gradient */
+    background: #faf9f5;
+    border-bottom: 1px solid #e1dfd6;
 }
 
 .sandbox-onboard-avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #e5e1ff;
+    color: #4429d8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9087,15 +9088,8 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-avatar::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    right: -1px;
-    width: 9px;
-    height: 9px;
-    background: #10b981;
-    border: 2px solid white;
-    border-radius: 50%;
+    /* paper: ingen presence-prik */
+    content: none;
 }
 
 .sandbox-onboard-header-text {
@@ -9107,15 +9101,15 @@ nav.scrolled::before {
 .sandbox-onboard-name {
     font-family: 'Inter', sans-serif;
     font-size: 13.5px;
-    font-weight: 700;
-    color: #fff;
+    font-weight: 600;
+    color: #14131a;
     letter-spacing: -0.01em;
 }
 
 .sandbox-onboard-status {
     font-family: 'Inter', sans-serif;
     font-size: 11.5px;
-    color: rgba(255, 255, 255, 0.78);
+    color: #605d66;
 }
 
 .sandbox-onboard-progress-pill {
@@ -9123,8 +9117,8 @@ nav.scrolled::before {
     font-family: 'Inter Tight', sans-serif;
     font-size: 11px;
     font-weight: 600;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.18);
+    color: #605d66;
+    background: #e9e7df;
     padding: 5px 12px;
     border-radius: 999px;
     letter-spacing: 0.02em;
@@ -9157,10 +9151,12 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-msg-bot {
-    align-self: flex-start;
-    background: #f1f1f4;
-    color: #171717;
-    border-radius: 16px 16px 16px 5px;
+    align-self: stretch;
+    max-width: 92%;
+    background: transparent;
+    color: #14131a;
+    border-radius: 0;
+    padding: 2px 0;
 }
 
 .sandbox-onboard-msg-bot strong {
@@ -9169,16 +9165,16 @@ nav.scrolled::before {
 
 .sandbox-onboard-msg-user {
     align-self: flex-end;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: #4429d8;
     color: white;
-    border-radius: 16px 16px 5px 16px;
+    border-radius: 14px 14px 5px 14px;
 }
 
 .sandbox-onboard-typing {
     align-self: flex-start;
-    background: #f1f1f4;
-    border-radius: 16px 16px 16px 5px;
-    padding: 14px 18px;
+    background: transparent;
+    border-radius: 0;
+    padding: 8px 0;
     display: inline-flex;
     gap: 4px;
     animation: ob-msg-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -9188,7 +9184,7 @@ nav.scrolled::before {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #9ca3af;
+    background: #a5a2ac;
     animation: ob-typing 1.2s ease-in-out infinite;
 }
 
@@ -9202,9 +9198,9 @@ nav.scrolled::before {
 
 /* Input area */
 .sandbox-onboard-input-area {
-    padding: 16px 28px 22px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    background: white;
+    padding: 14px 28px 22px;
+    border-top: none;
+    background: transparent;
 }
 
 /* Text input */
@@ -9216,29 +9212,29 @@ nav.scrolled::before {
 
 .sandbox-onboard-text {
     flex: 1;
-    border: 1px solid #ebebeb;
-    border-radius: 999px;
-    padding: 11px 18px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #171717;
+    color: #14131a;
     background: #fff;
+    box-shadow: 0 1px 2px rgba(20, 19, 26, 0.04), 0 8px 24px -12px rgba(20, 19, 26, 0.1);
     outline: none;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    transition: box-shadow 0.15s ease;
 }
 
 .sandbox-onboard-text:focus {
-    border-color: #6366f1;
-    background: white;
+    box-shadow: 0 0 0 2px #5b4bf5, 0 8px 24px -12px rgba(20, 19, 26, 0.1);
 }
 
 .sandbox-onboard-send {
-    background: #6366f1;
+    background: #4429d8;
     color: white;
     border: none;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 11px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -9252,8 +9248,8 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-send:disabled {
-    background: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.3);
+    background: #e9e7df;
+    color: #a5a2ac;
     cursor: not-allowed;
 }
 
@@ -9265,9 +9261,9 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-chip {
-    background: white;
-    border: 1px solid #ebebeb;
-    color: #171717;
+    background: #fff;
+    border: 1px solid rgba(20, 19, 26, 0.22);
+    color: #14131a;
     padding: 9px 16px;
     border-radius: 999px;
     font-family: 'Inter', sans-serif;
@@ -9278,13 +9274,13 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-chip:hover {
-    border-color: #6366f1;
+    border-color: #5b4bf5;
 }
 
 .sandbox-onboard-chip.is-selected {
-    background: rgba(99, 102, 241, 0.1);
-    border-color: var(--brand, var(--primary-500));
-    color: var(--brand, var(--primary-500));
+    background: #e5e1ff;
+    border-color: transparent;
+    color: #4429d8;
     font-weight: 500;
 }
 
@@ -9295,11 +9291,11 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-confirm {
-    background: #6366f1;
+    background: #4429d8;
     color: white;
     border: none;
     padding: 9px 18px;
-    border-radius: 999px;
+    border-radius: 11px;
     font-family: 'Inter Tight', sans-serif;
     font-size: 13px;
     font-weight: 500;
@@ -9315,8 +9311,8 @@ nav.scrolled::before {
 }
 
 .sandbox-onboard-confirm:disabled {
-    background: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.3);
+    background: #e9e7df;
+    color: #a5a2ac;
     cursor: not-allowed;
 }
 
@@ -9326,7 +9322,7 @@ nav.scrolled::before {
     padding: 20px 22px;
     border: 1px solid rgba(0, 0, 0, 0.07);
     border-radius: 14px;
-    background: #fcfcfd;
+    background: #faf9f5;
 }
 .sandbox-advisor-label {
     font-family: 'Inter', sans-serif;
@@ -9365,7 +9361,7 @@ nav.scrolled::before {
     text-underline-offset: 3px;
     transition: color 0.2s ease;
 }
-.sandbox-share:hover { color: #6366f1; }
+.sandbox-share:hover { color: #4429d8; }
 
 @media (max-width: 880px) {
     .sandbox-onboard-thread { padding: 20px; max-height: 420px; }
@@ -21046,63 +21042,50 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="appwin">
         <div class="chrome">
           <div class="chrome-dots"><span></span><span></span><span></span></div>
-          <div class="chrome-url"><span class="lock">&#128274;</span>app.culturequest.io/dashboard</div>
+          <div class="chrome-url"><span class="lock">&#128274;</span>app.culturequest.io/home</div>
           <div style="width: 47px;"></div>
         </div>
 
+        <div class="ptop">
+          <div class="ptop-logo">
+            <div class="ptop-mark js-avatar">DV</div>
+            <div class="ptop-company js-company">Demovirksomhed</div>
+          </div>
+          <div class="ptop-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Søg efter personer, undersøgelser, sider osv.</span>
+            <span class="ptop-kbd">⌘K</span>
+          </div>
+          <button class="ptop-ai js-fa-launcher" type="button" aria-label="Åbn assistent">
+            <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+            <span>AI-assistent</span>
+            <span class="fa-badge js-fa-badge"></span>
+          </button>
+          <div class="ptop-avatar js-leadinitials">AV</div>
+          <span hidden class="js-leadname">Amalie Veggerby</span><span hidden class="js-leadmail">amalie@firma.dk</span>
+        </div>
+
         <div class="app" id="dashMain" data-focus="none">
-          <!-- Sidebar (platform 1:1) -->
+          <!-- Ikon-rail (platform 1:1: altid kollapset) -->
           <div class="psb" role="navigation" aria-hidden="true">
-            <div class="psb-logo">
-              <div class="psb-logo-mark js-avatar">DV</div>
-              <div class="psb-logo-name js-company">Demovirksomhed</div>
+            <div class="psb-item is-active" title="Startside">
+              <svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
             </div>
-            <div class="psb-group-label">Platform</div>
-            <div class="psb-item is-active">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-              <span>Dashboard</span>
+            <div class="psb-item" title="Medarbejdere">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>
-              <span>Analyse</span>
+            <div class="psb-item" title="Analyse">
+              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
             </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
-              <span>Assistent</span>
+            <div class="psb-item" title="Kulturundersøgelser">
+              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
             </div>
-            <div class="psb-group-label">Feedback</div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
-              <span>Kulturundersøgelser</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <span>Kommentarer</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M2 22h20"/><path d="M10 6h4M10 10h4M10 14h4"/></svg>
-              <span>APV</span>
-            </div>
-            <div class="psb-group-label">Generelt</div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 10h1M9 14h1M14 10h1M14 14h1"/></svg>
-              <span>Organisation</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              <span>Indstillinger</span>
+            <div class="psb-item" title="Arbejdspladsvurdering">
+              <svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
             </div>
             <div class="psb-spacer"></div>
-            <div class="psb-item psb-help">
+            <div class="psb-item psb-help" title="Hjælpecenter">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-              <span>Hjælpecenter</span>
-            </div>
-            <div class="psb-user">
-              <div class="psb-avatar js-leadinitials">AV</div>
-              <div class="psb-user-meta">
-                <div class="psb-user-name js-leadname">Amalie Veggerby</div>
-                <div class="psb-user-mail js-leadmail">amalie@firma.dk</div>
-              </div>
             </div>
           </div>
 
@@ -21111,7 +21094,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="pmain-head">
               <div>
                 <div class="pmain-title">Hej, <span class="js-leadfirst">Amalie</span></div>
-                <div class="pmain-sub">Få et overblik over din organisations kultur og engagement</div>
+                <div class="pmain-sub">Godmorgen. Vi er glade for at se dig.</div>
               </div>
               <div class="pmain-filter"><span class="live-dot"></span>Seneste måling · <b class="js-liveweek">Januar</b></div>
             </div>
@@ -21128,8 +21111,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/>
-                      <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                      <stop offset="0%" stop-color="#4429d8" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#4429d8" stop-opacity="0"/>
                     </linearGradient>
                   </defs>
                   <path class="spark-fill js-sparkfill" d=""></path>
@@ -21137,7 +21120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </svg>
               </div>
               <div class="kpi">
-                <div class="kpi-label">Engagement-score</div>
+                <div class="kpi-label">Engagement</div>
                 <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
                 <div class="kpi-row">
                   <span class="kpi-value js-eng">74</span>
@@ -21146,7 +21129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
               </div>
               <div class="kpi">
-                <div class="kpi-label">Svarprocent</div>
+                <div class="kpi-label">Deltagelse</div>
                 <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
                 <div class="kpi-row">
                   <span class="kpi-value js-rr">91</span>
@@ -21162,7 +21145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="kpi-note">Næste måling · <span class="js-nextmonth">Februar</span></div>
               </div>
-              <div class="kpi kpi-compact">
+              <div class="kpi kpi-compact kpi--midnight">
                 <div class="kpi-label">Organisation</div>
                 <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
                 <div class="kpi-row">
@@ -21235,21 +21218,17 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
 
               <div class="alerts">
-                <div class="alerts-head">Signaler <span class="alerts-count js-alertcount">0</span></div>
-                <div class="alerts-sub">Automatisk detektion på tværs af målinger</div>
+                <div class="alerts-head">Indikatorer <span class="alerts-count js-alertcount">0</span></div>
+                <div class="alerts-sub">Early warning · motoren vurderer dagligt</div>
                 <div class="alerts-list js-alerts">
-                  <div class="alerts-empty js-alertsempty">Ingen aktive signaler. Algoritmerne lytter.</div>
+                  <div class="alerts-empty js-alertsempty">Ingen åbne indikatorer. Alt ser stabilt ud.</div>
                 </div>
               </div>
             </div>
           </main>
         </div>
 
-        <!-- Floating assistant (platform 1:1) -->
-        <button class="fa-launcher js-fa-launcher" type="button" aria-label="Åbn assistent">
-          <svg viewBox="33 48 165 165" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"><path d="M60.1,128v-25.6c0-23.4,19-42.3,42.4-42.3H128c23.4,0,42.4,19,42.4,42.3v98l-30-30h-37.9C79,170.4,60.1,151.4,60.1,128z"/></svg>
-          <span class="fa-badge js-fa-badge"></span>
-        </button>
+        <!-- AI-assistent åbnes fra topbarens knap -->
         <div class="fa-panel js-fa-panel" role="dialog" aria-label="Assistent">
           <div class="fa-head">
             <div class="fa-head-ico">
@@ -21257,7 +21236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="fa-head-meta">
               <div class="fa-head-name">Assistent</div>
-              <div class="fa-head-status">Online · kender jeres data</div>
+              <div class="fa-head-status">Kender jeres data</div>
             </div>
           </div>
           <div class="fa-body js-fa-body">
@@ -21281,8 +21260,9 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
           </div>
           <div class="fa-composer">
             <div class="fa-input">Spørg assistenten…</div>
-            <button class="fa-send" type="button" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            <button class="fa-send" type="button" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
           </div>
+          <div class="fa-disclaimer">Culturequest AI kan lave fejl. Vi anbefaler at dobbelttjekke svarene.</div>
         </div>
       </div>
                     </div>
@@ -34624,10 +34604,40 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 
 
 <style id="sbxExploreCss">
-/* === Sandbox trin 4: Udforsk platformen (porteret fra demo-x, jul 2026) === */
+/* === Sandbox trin 4: Udforsk platformen (paper-design, okt 2026; kilde: platform-tokens-reference.css) === */
+/* Scoped platform-tokens: paper. Kort er hvide UDEN kant; grund = soft; ramme = canvas. */
+.appwin {
+  --p-bg: #faf9f5;            /* soft: indholdsgrund */
+  --p-card: #ffffff;          /* kort */
+  --p-fg: #14131a;            /* ink */
+  --p-muted-fg: #605d66;
+  --p-faint: #a5a2ac;
+  --p-border: #e1dfd6;        /* line: dekorative hårstreger */
+  --p-line-strong: rgba(20, 19, 26, 0.22);
+  --p-muted: #e9e7df;         /* surface-sunken: spor, wells, hover */
+  --p-sidebar: #f4f3ee;       /* canvas: shell-ramme (rail + topbar) */
+  --p-cq: #4429d8;            /* accent-text: arbejdshesten */
+  --p-mark: #5b4bf5;          /* accent: marks + focus */
+  --p-wash: #e5e1ff;          /* SELECTED, aldrig hover */
+  --p-radius: 11px;           /* controls */
+  --p-r-card: 14px;           /* kort (20px i appen, skaleret til mockup) */
+  --p-shadow: 0 1px 2px rgba(20, 19, 26, 0.04), 0 8px 24px -12px rgba(20, 19, 26, 0.1);
+  --p-emerald: #10855c;       /* pos-fill */
+  --p-emerald-bg: #d7f0e4;    /* pos-tint */
+  --p-emerald-fg: #0b6b49;    /* pos-text */
+  --p-red: #c9331f;           /* risk-fill */
+  --p-red-bg: #fde2dd;        /* risk-tint */
+  --p-red-fg: #97281b;        /* risk-text */
+  --p-amber: #e08a00;         /* att-fill: ALDRIG hvid tekst ovenpå */
+  --p-amber-bg: #fcebce;      /* att-tint */
+  --p-amber-fg: #8a5300;      /* att-text */
+  --p-indigo-bg: #e5e1ff;     /* wash */
+  --p-indigo-fg: #4429d8;
+  --p-midnight: #1e1b4b;
+}
 /* ============ BROWSER WINDOW ============ */
 .appwin {
-  background: var(--p-bg);
+  background: var(--p-sidebar);
   border-radius: 14px;
   box-shadow: 0 24px 70px rgba(30, 27, 75, 0.22), 0 4px 18px rgba(30, 27, 75, 0.10);
   overflow: hidden;
@@ -34637,7 +34647,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 }
 .chrome {
   display: flex; align-items: center; gap: 14px;
-  background: #f1f1f3; border-bottom: 1px solid #e3e3e6;
+  background: #efece5; border-bottom: 1px solid #e1dfd6;
   padding: 9px 14px; flex-shrink: 0;
 }
 .chrome-dots { display: flex; gap: 6px; }
@@ -34647,79 +34657,111 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .chrome-dots span:nth-child(3) { background: #29c73f; }
 .chrome-url {
   flex: 1; max-width: 420px; margin: 0 auto;
-  background: #fff; border: 1px solid #e3e3e6; border-radius: 7px;
-  font-family: 'Inter', sans-serif; font-size: 12px; color: #6b6b70;
+  background: #faf9f5; border: 1px solid #e1dfd6; border-radius: 7px;
+  font-family: 'Inter', sans-serif; font-size: 12px; color: #605d66;
   padding: 5px 12px; text-align: center;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.chrome-url .lock { color: #29a35a; margin-right: 5px; }
+.chrome-url .lock { color: #0b6b49; margin-right: 5px; }
 
-/* ============ APP (platform-skin, shadcn) ============ */
+/* ============ TOPBAR (shell: canvas) ============ */
+.ptop {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 14px 7px; flex-shrink: 0;
+  background: var(--p-sidebar);
+  font-family: 'Inter', sans-serif;
+}
+.ptop-logo { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ptop-mark {
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
+  background: linear-gradient(135deg, #6366f1, #4f53cc); /* produktets logomark-gradient (uændret i appen) */
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 11px;
+}
+.ptop-company { font-size: 13px; font-weight: 600; color: var(--p-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptop-search {
+  flex: 1; max-width: 300px; margin: 0 auto;
+  display: flex; align-items: center; gap: 7px;
+  height: 30px; border-radius: 9px; padding: 0 10px;
+  background: var(--p-muted); color: var(--p-muted-fg);
+  font-size: 11.5px; min-width: 0;
+}
+.ptop-search svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+.ptop-search span:first-of-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptop-kbd {
+  margin-left: auto; font-size: 10px; color: var(--p-faint);
+  border: 1px solid var(--p-border); border-radius: 5px; padding: 1px 5px;
+  font-family: 'Inter', sans-serif; flex-shrink: 0;
+}
+.ptop-ai {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 12px; border-radius: 9px; border: none;
+  background: transparent; color: var(--p-cq);
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.ptop-ai::before {
+  content: ""; position: absolute; inset: 0; border-radius: 9px; padding: 1px;
+  background: linear-gradient(135deg, #4429d8, #5b4bf5 45%, #a855f7);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.ptop-ai:hover { background: var(--p-wash); }
+.ptop-ai svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ptop-avatar {
+  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+  background: var(--p-wash); color: var(--p-cq);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+}
+
+/* ============ APP (shell: canvas-ramme, soft indholdspanel) ============ */
 .app {
   flex: 1; display: flex; min-height: 0;
   font-family: 'Inter', sans-serif; color: var(--p-fg);
-  background: var(--p-bg);
+  background: var(--p-sidebar);
 }
 
-/* Sidebar */
+/* Ikon-rail (platformen er altid kollapset) */
 .psb {
-  width: 196px; flex-shrink: 0;
-  background: var(--p-sidebar); border-right: 1px solid var(--p-border);
-  display: flex; flex-direction: column;
-  padding: 12px 10px;
-}
-.psb-logo {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 8px 14px;
-}
-.psb-logo-mark {
-  width: 26px; height: 26px; border-radius: 7px;
-  background: linear-gradient(135deg, #6366f1, #4f53cc);
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 12px;
-}
-.psb-logo-name { font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
-.psb-group-label {
-  font-size: 10.5px; font-weight: 500; color: var(--p-muted-fg);
-  padding: 10px 8px 4px; letter-spacing: 0.01em;
+  width: 54px; flex-shrink: 0;
+  background: transparent; border-right: none;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 6px 7px 12px;
 }
 .psb-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 7px 8px; border-radius: 7px;
-  font-size: 13px; font-weight: 500; color: #3f3f46;
-  cursor: default; margin-bottom: 1px;
-}
-.psb-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; opacity: 0.75; }
-.psb-item.is-active { background: #ededf0; color: var(--p-fg); font-weight: 600; }
-.psb-item.is-active svg { opacity: 1; }
-.psb-spacer { flex: 1; }
-.psb-user {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px; border-top: 1px solid var(--p-border); margin-top: 8px;
-}
-.psb-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--p-indigo-bg); color: var(--p-indigo-fg);
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600; flex-shrink: 0;
+  width: 38px; height: 38px; border-radius: 10px;
+  color: var(--p-fg); cursor: default; margin-bottom: 2px;
 }
-.psb-user-meta { min-width: 0; }
-.psb-user-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.psb-user-mail { font-size: 10.5px; color: var(--p-muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.psb-item svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.psb-item.is-active { background: var(--p-wash); color: var(--p-cq); }
+.psb-item.psb-help { color: var(--p-muted-fg); }
+.psb-spacer { flex: 1; }
 
-/* Main */
+/* Main: det soft indholdspanel på canvas */
 .pmain {
   flex: 1; min-width: 0; display: flex; flex-direction: column;
-  padding: 18px 22px; gap: 14px; overflow: hidden;
+  padding: 16px 20px; gap: 13px; overflow: hidden;
+  background: var(--p-bg);
+  border-radius: 14px;
+  margin: 2px 10px 10px 2px;
+  box-shadow: 0 1px 2px rgba(20, 19, 26, 0.04);
 }
 .pmain-head { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.pmain-title { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+.pmain-title {
+  font-family: 'Newsreader', Georgia, serif; font-weight: 400;
+  font-size: 27px; line-height: 1.12; letter-spacing: -0.015em;
+}
+.pmain-title span { font-style: italic; }
 .pmain-sub { font-size: 12.5px; color: var(--p-muted-fg); margin-top: 2px; }
 .pmain-filter {
   display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--p-border); border-radius: 8px;
-  font-size: 12.5px; font-weight: 500; color: #3f3f46;
-  padding: 6px 12px; background: #fff;
+  border: 1px solid var(--p-line-strong); border-radius: 9px;
+  font-size: 12.5px; font-weight: 500; color: var(--p-fg);
+  padding: 6px 12px; background: var(--p-card);
 }
 .pmain-filter .live-dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--p-emerald);
@@ -34728,10 +34770,11 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 .pmain-filter b { font-weight: 600; font-variant-numeric: tabular-nums; }
 
-/* KPI cards (shadcn card style) */
+/* KPI-kort (hvide, ingen kant, stille skygge) */
 .kpis { display: grid; grid-template-columns: 1.2fr 1fr 1fr 0.95fr 0.95fr; gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
 .kpi {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; position: relative;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
@@ -34746,7 +34789,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .kpi-arrow-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .kpi-row { display: flex; align-items: center; gap: 9px; }
 .kpi-value {
-  font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
+  font-size: 28px; font-weight: 400; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums; line-height: 1;
 }
 .kpi-suffix { font-size: 13px; color: var(--p-muted-fg); font-weight: 500; }
@@ -34760,16 +34803,25 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .kpi-delta.down { color: var(--p-red-fg); background: var(--p-red-bg); }
 .kpi-delta.flat { color: var(--p-muted-fg); background: var(--p-muted); }
 .kpi-spark { position: absolute; right: 14px; bottom: 12px; width: 90px; height: 30px; }
-.kpi-spark path { fill: none; stroke: var(--p-emerald); stroke-width: 2; stroke-linecap: round; transition: stroke 0.5s ease; }
-.kpi-spark.band-amber path { stroke: #eab308; }
-.kpi-spark .spark-fill { fill: url(#sparkGrad); stroke: none !important; opacity: 0.5; }
+.kpi-spark path { fill: none; stroke: var(--p-cq); stroke-width: 2; stroke-linecap: round; transition: stroke 0.5s ease; }
+.kpi-spark.band-amber path { stroke: var(--p-amber); }
+.kpi-spark .spark-fill { fill: url(#sparkGrad); stroke: none !important; opacity: 0.6; }
 
-/* Dimension cards */
+/* Organisation = midnight-kortet (platformens ene mørke kort) */
+.kpi--midnight { background: var(--p-midnight); }
+.kpi--midnight .kpi-label { color: rgba(255, 255, 255, 0.65); }
+.kpi--midnight .kpi-value { color: #fff; }
+.kpi--midnight .kpi-suffix { color: rgba(255, 255, 255, 0.6); }
+.kpi--midnight .kpi-note { color: rgba(255, 255, 255, 0.55); }
+.kpi--midnight .kpi-arrow-link { color: rgba(255, 255, 255, 0.5); }
+
+/* Dimensionskort */
 .dims { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
 .dim {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 10px 12px;
-  transition: opacity 0.55s ease, box-shadow 0.55s ease, border-color 0.6s ease;
+  transition: opacity 0.55s ease, box-shadow 0.6s ease;
 }
 .dim-name {
   font-size: 10.5px; font-weight: 500; color: var(--p-muted-fg);
@@ -34777,7 +34829,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 }
 .dim-score-row { display: flex; align-items: baseline; justify-content: space-between; }
 .dim-score {
-  font-size: 21px; font-weight: 600; letter-spacing: -0.02em;
+  font-size: 21px; font-weight: 400; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 .dim-arrow { font-size: 11px; font-weight: 600; }
@@ -34786,21 +34838,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .dim-arrow.flat { color: var(--p-muted-fg); }
 .dim-bar { height: 3px; border-radius: 3px; background: var(--p-muted); margin-top: 8px; overflow: hidden; }
 .dim-bar-fill { height: 100%; border-radius: 3px; background: var(--p-cq); transition: background-color 0.6s ease; }
-.dim.is-hot { border-color: rgba(239, 68, 68, 0.35); }
+.dim.is-hot { box-shadow: 0 0 0 1px rgba(201, 51, 31, 0.3), var(--p-shadow); }
 .dim.is-hot .dim-bar-fill { background: var(--p-red); }
 
-/* Main row: views + alerts */
+/* Main row: views + indikatorer */
 .mainrow { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; flex: 1; min-height: 0; }
 
 .views {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
-/* shadcn tabs */
+/* SegmentedControl (canvas-spor, hvid tommel) */
 .view-tabs {
   display: inline-flex; gap: 2px; margin-bottom: 12px;
-  background: var(--p-muted); border-radius: 8px; padding: 3px;
+  background: var(--p-sidebar); border-radius: 9px; padding: 3px;
   align-self: flex-start;
 }
 .vtab {
@@ -34809,7 +34862,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   padding: 5px 13px; border-radius: 6px; cursor: default;
   transition: all 0.3s ease;
 }
-.vtab.is-active { color: var(--p-fg); background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-weight: 600; }
+.vtab.is-active { color: var(--p-fg); background: var(--p-card); box-shadow: 0 1px 2px rgba(20, 19, 26, 0.08); font-weight: 600; }
 .explore-mode .vtab { cursor: pointer; }
 .explore-mode .vtab:hover { color: var(--p-fg); }
 
@@ -34839,28 +34892,28 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .heat-note, .hist-note, .quad-note { margin-top: 10px; font-size: 11px; color: var(--p-muted-fg); }
 .hist-note strong { color: var(--p-amber-fg); font-weight: 600; }
 
-/* Svarfordeling (Likert, platform 1:1) */
+/* Svarfordeling (Likert) */
 .likert { flex: 1; display: flex; flex-direction: column; }
 .likert-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .likert-score {
   min-width: 38px; height: 38px; border-radius: 9px;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
-  background: #fffbeb; color: #b45309;
+  background: var(--p-amber-bg); color: var(--p-amber-fg);
   transition: background-color 0.5s ease, color 0.5s ease;
 }
-.likert-score.band-green { background: #f0fdf4; color: #15803d; }
-.likert-score.band-orange { background: #fff7ed; color: #c2410c; }
+.likert-score.band-green { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.likert-score.band-orange { background: #f8d3a7; color: #694200; }
 .likert-q { flex: 1; font-size: 12.5px; font-weight: 600; color: var(--p-fg); line-height: 1.3; }
 .likert-seg { color: var(--p-muted-fg); font-weight: 500; }
 .likert-badge {
   font-size: 10.5px; font-weight: 600; white-space: nowrap;
   padding: 3px 10px; border-radius: 999px;
-  background: #fffbeb; color: #b45309;
+  background: var(--p-amber-bg); color: var(--p-amber-fg);
 }
-.likert-badge.band-green { background: #ecfdf5; color: #047857; }
-.likert-badge.band-orange { background: #fff7ed; color: #c2410c; }
-.likert-badge.band-red { background: #fef2f2; color: #b91c1c; }
+.likert-badge.band-green { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.likert-badge.band-orange { background: #f8d3a7; color: #694200; }
+.likert-badge.band-red { background: var(--p-red-bg); color: var(--p-red-fg); }
 .likert-bar {
   display: flex; height: 26px; border-radius: 999px; overflow: hidden;
   margin-bottom: 14px;
@@ -34877,12 +34930,12 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .likert-lab .nm { font-size: 10px; font-weight: 600; color: var(--p-fg); display: block; }
 .likert-lab .ct { font-size: 9.5px; color: var(--p-muted-fg); font-variant-numeric: tabular-nums; }
 
-/* Kulturel overensstemmelse (platform 1:1) */
+/* Kulturel overensstemmelse */
 .konsens { flex: 1; display: flex; flex-direction: column; }
 .konsens-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
 .konsens-title { font-size: 12.5px; font-weight: 600; color: var(--p-fg); }
 .konsens-stats {
-  display: flex; gap: 0; background: var(--p-muted); border-radius: 8px;
+  display: flex; gap: 0; background: var(--p-muted); border-radius: 9px;
   padding: 8px 4px; margin-bottom: 10px;
 }
 .konsens-stat { flex: 1; text-align: center; }
@@ -34910,17 +34963,17 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .kpi-rrbar { height: 6px; border-radius: 999px; background: var(--p-muted); margin-top: 9px; overflow: hidden; }
 .kpi-rrbar-fill {
   height: 100%; border-radius: 999px; width: 91%;
-  background: var(--p-emerald);
+  background: var(--p-cq);
   transition: width 0.4s ease, background-color 0.5s ease;
 }
-.kpi-rrbar-fill.band-amber { background: #eab308; }
+.kpi-rrbar-fill.band-amber { background: var(--p-amber); }
 .kpi-rrbar-fill.band-red { background: var(--p-red); }
 
 /* Quadrant */
 .quad { flex: 1; position: relative; min-height: 140px; }
 .quad-plot { position: absolute; inset: 16px 8px 24px 8px; border-left: 1px solid var(--p-border); border-bottom: 1px solid var(--p-border); }
-.quad-mid-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #f1f1f3; }
-.quad-mid-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #f1f1f3; }
+.quad-mid-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--p-muted); }
+.quad-mid-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--p-muted); }
 .quad-zone {
   position: absolute; font-size: 9px; font-weight: 500;
   letter-spacing: 0.04em; text-transform: uppercase; color: var(--p-muted-fg); opacity: 0.8;
@@ -34938,11 +34991,12 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   font-size: 10px; font-weight: 600; color: var(--p-fg); white-space: nowrap;
 }
 .quad-trail { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.quad-trail polyline { fill: none; stroke: rgba(239, 68, 68, 0.4); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.quad-trail polyline { fill: none; stroke: rgba(201, 51, 31, 0.4); stroke-width: 1.5; stroke-dasharray: 3 4; }
 
-/* Alerts (Signaler) */
+/* Indikatorer (early warning) */
 .alerts {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
@@ -34959,7 +35013,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 }
 .alerts-list { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 7px; }
 .alert {
-  border: 1px solid var(--p-border); border-radius: 9px; padding: 9px 11px;
+  border: 1px solid var(--p-border); border-radius: 10px; padding: 9px 11px;
   display: flex; gap: 9px; align-items: flex-start;
   opacity: 0; transform: translateX(14px); max-height: 0; overflow: hidden;
   padding-top: 0; padding-bottom: 0; margin: 0; border-width: 0;
@@ -34971,19 +35025,21 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   padding-top: 9px; padding-bottom: 9px; border-width: 1px;
 }
 .alert-ico {
-  width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
 }
 .alert-ico svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .alert-content { min-width: 0; }
 .alert-meta { font-size: 10px; font-weight: 500; color: var(--p-muted-fg); margin-bottom: 2px; font-variant-numeric: tabular-nums; }
 .alert-title { font-size: 12.5px; font-weight: 600; color: var(--p-fg); margin-bottom: 2px; }
-.alert-body { font-size: 11.5px; line-height: 1.45; color: #5c5c63; }
+.alert-body { font-size: 11.5px; line-height: 1.45; color: var(--p-muted-fg); }
 .alert.sev-warning .alert-ico { background: var(--p-amber-bg); color: var(--p-amber-fg); }
-.alert.sev-danger { border-color: rgba(239, 68, 68, 0.35); background: #fffafa; }
-.alert.sev-danger .alert-ico { background: var(--p-red-bg); color: var(--p-red-fg); }
-.alert.sev-info .alert-ico { background: var(--p-indigo-bg); color: var(--p-indigo-fg); }
-.alert.sev-reco { border-color: rgba(99, 102, 241, 0.4); background: #fbfbff; }
+.alert.sev-danger { border-color: transparent; background: var(--p-red-bg); }
+.alert.sev-danger.is-in { border-width: 0; padding-top: 10px; padding-bottom: 10px; }
+.alert.sev-danger .alert-ico { background: #f6c2b8; color: var(--p-red-fg); }
+.alert.sev-danger .alert-body { color: #4a2b26; }
+.alert.sev-info .alert-ico { background: var(--p-wash); color: var(--p-cq); }
+.alert.sev-reco { border-color: rgba(68, 41, 216, 0.3); background: #f6f4ff; }
 .alert.sev-reco .alert-ico { background: var(--p-cq); color: #fff; }
 .alert.sev-positive .alert-ico { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
 .alert.sev-danger.is-in { animation: alertShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.45s; }
@@ -35004,41 +35060,30 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .app[data-focus="dims"] .views, .app[data-focus="dims"] .alerts, .app[data-focus="dims"] .kpis { opacity: 0.35; }
 .app[data-focus="views"] .kpis, .app[data-focus="views"] .alerts, .app[data-focus="views"] .dims { opacity: 0.35; }
 .app[data-focus="alerts"] .kpis, .app[data-focus="alerts"] .views, .app[data-focus="alerts"] .dims { opacity: 0.35; }
-.app[data-focus="alerts"] .alerts { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
-.app[data-focus="views"] .views { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
+.app[data-focus="alerts"] .alerts { box-shadow: 0 0 0 2px var(--p-mark), 0 8px 28px rgba(91, 75, 245, 0.2); }
+.app[data-focus="views"] .views { box-shadow: 0 0 0 2px var(--p-mark), 0 8px 28px rgba(91, 75, 245, 0.2); }
 
-/* ============ FLOATING ASSISTANT (platform 1:1) ============ */
+/* ============ AI-ASSISTENT (panel, ingen gradient) ============ */
 .appwin { position: relative; }
-.fa-launcher {
-  position: absolute; right: 16px; bottom: 16px; z-index: 40;
-  width: 46px; height: 46px; border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
-}
-.fa-launcher:hover { transform: scale(1.06); }
-.fa-launcher svg { width: 22px; height: 22px; }
 .fa-badge {
-  position: absolute; top: -2px; right: -2px;
-  width: 13px; height: 13px; border-radius: 50%;
-  background: var(--p-red); border: 2px solid #fff;
+  position: absolute; top: -3px; right: -3px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--p-red); border: 2px solid var(--p-sidebar);
   opacity: 0; transform: scale(0);
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fa-badge.is-on { opacity: 1; transform: scale(1); animation: faBadgePulse 1.6s ease-in-out infinite; }
 @keyframes faBadgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
-  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 51, 31, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(201, 51, 31, 0); }
 }
 .fa-panel {
-  position: absolute; right: 16px; bottom: 74px; z-index: 39;
-  width: 384px; max-width: calc(100% - 32px);
-  height: 560px; max-height: calc(100% - 96px);
-  background: #fff; border: 1px solid var(--p-border); border-radius: 14px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.08);
+  position: absolute; right: 12px; bottom: 12px; top: 84px; z-index: 39;
+  width: 340px; max-width: calc(100% - 24px);
+  background: var(--p-bg); border: none; border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(20, 19, 26, 0.18), 0 4px 14px rgba(20, 19, 26, 0.08);
   display: flex; flex-direction: column; overflow: hidden;
-  opacity: 0; transform: translateY(14px) scale(0.96);
+  opacity: 0; transform: translateY(14px) scale(0.97);
   transform-origin: bottom right;
   pointer-events: none;
   transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -35047,62 +35092,59 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .fa-panel.is-open { opacity: 1; transform: none; pointer-events: auto; }
 .fa-head {
   display: flex; align-items: center; gap: 9px;
-  padding: 14px 14px 13px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6); flex-shrink: 0;
+  padding: 11px 14px;
+  background: transparent; border-bottom: 1px solid var(--p-border); flex-shrink: 0;
 }
 .fa-head-ico {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2); color: #fff;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: var(--p-wash); color: var(--p-cq);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.fa-head-ico svg { width: 15px; height: 15px; }
+.fa-head-ico svg { width: 14px; height: 14px; }
 .fa-head-meta { flex: 1; min-width: 0; }
-.fa-head-name { font-size: 13px; font-weight: 700; color: #fff; }
-.fa-head-status { font-size: 10.5px; color: rgba(255, 255, 255, 0.75); display: flex; align-items: center; gap: 5px; }
-.fa-head-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.fa-head-name { font-size: 13px; font-weight: 600; color: var(--p-fg); }
+.fa-head-status { font-size: 10.5px; color: var(--p-muted-fg); }
 .fa-body {
-  flex: 1; overflow-y: auto; padding: 14px 12px;
-  display: flex; flex-direction: column; gap: 8px;
-  background: #fcfcfd;
+  flex: 1; overflow-y: auto; padding: 14px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  background: transparent;
   scroll-behavior: smooth;
 }
 .fa-msg {
   flex-shrink: 0;
-  max-width: 86%; border-radius: 16px; padding: 10px 14px;
-  font-size: 13px; line-height: 1.55; white-space: pre-line;
+  max-width: 100%; border-radius: 0; padding: 0;
+  font-size: 12.5px; line-height: 1.55; white-space: pre-line;
   opacity: 0; transform: translateY(8px); max-height: 0; overflow: hidden;
-  padding-top: 0; padding-bottom: 0; margin: 0;
+  margin: 0;
   transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               max-height 0.45s ease, padding 0.45s ease;
 }
-.fa-msg.is-in {
-  opacity: 1; transform: none; max-height: 620px;
-  padding-top: 10px; padding-bottom: 10px;
-}
-.fa-msg.bot { align-self: flex-start; background: #f1f1f4; color: var(--p-fg); border-bottom-left-radius: 5px; }
+.fa-msg.is-in { opacity: 1; transform: none; max-height: 620px; }
+.fa-msg.bot { align-self: stretch; background: transparent; color: var(--p-fg); }
 .fa-msg.user {
   align-self: flex-end; color: #fff;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  border-bottom-right-radius: 5px;
+  background: var(--p-cq);
+  max-width: 85%; border-radius: 14px; border-bottom-right-radius: 5px;
+  padding: 0 13px;
 }
+.fa-msg.user.is-in { padding: 9px 13px; }
 .fa-msg.bot strong { font-weight: 600; }
 .fa-welcome {
   flex-shrink: 0;
-  align-self: flex-start; background: #f1f1f4; color: var(--p-fg);
-  border-radius: 16px; border-bottom-left-radius: 5px;
-  padding: 10px 14px; font-size: 13px; line-height: 1.55;
+  align-self: stretch; background: transparent; color: var(--p-fg);
+  padding: 0; font-size: 12.5px; line-height: 1.55;
   transition: opacity 0.3s ease;
 }
 .fa-welcome.is-gone { display: none; }
 .fa-typing {
   flex-shrink: 0;
-  align-self: flex-start; background: #f1f1f4; border-radius: 16px;
-  border-bottom-left-radius: 5px; padding: 11px 14px;
+  align-self: flex-start; background: transparent;
+  padding: 4px 0;
   display: none; gap: 4px; align-items: center;
 }
 .fa-typing.is-on { display: flex; }
 .fa-typing span {
-  width: 6px; height: 6px; border-radius: 50%; background: #9ca3af;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--p-faint);
   animation: faBounce 1.2s ease-in-out infinite;
 }
 .fa-typing span:nth-child(2) { animation-delay: 0.15s; }
@@ -35110,22 +35152,27 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 @keyframes faBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
 .fa-composer {
   display: flex; align-items: center; gap: 8px;
-  padding: 10px 12px; border-top: 1px solid var(--p-border);
-  background: #fff; flex-shrink: 0;
+  margin: 0 10px 6px; padding: 7px 8px 7px 12px;
+  border-top: none; border-radius: 12px;
+  background: var(--p-card); box-shadow: var(--p-shadow); flex-shrink: 0;
 }
 .fa-input {
-  flex: 1; border: 1px solid var(--p-border); border-radius: 999px;
-  padding: 8px 14px; font-family: 'Inter', sans-serif; font-size: 12px;
-  color: var(--p-muted-fg); background: #fff; pointer-events: none;
+  flex: 1; border: none; border-radius: 0;
+  padding: 2px 0; font-family: 'Inter', sans-serif; font-size: 12px;
+  color: var(--p-faint); background: transparent; pointer-events: none;
 }
 .fa-send {
-  width: 32px; height: 32px; border-radius: 50%; border: none;
-  background: var(--p-cq); color: #fff; opacity: 0.5;
+  width: 28px; height: 28px; border-radius: 8px; border: none;
+  background: var(--p-cq); color: #fff; opacity: 0.55;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.fa-send svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-send svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-disclaimer {
+  font-size: 9px; color: var(--p-faint); text-align: center;
+  padding: 0 14px 8px; flex-shrink: 0;
+}
 
-/* ---- Guide chip (fortæller-pegepind, flytter blikket måned for måned) ---- */
+/* ---- Guide chip (fortæller-pegepind, site-brand, uændret) ---- */
 .guide-chip {
   position: absolute; z-index: 42; left: 0; top: 0;
   display: flex; align-items: center; gap: 9px;
@@ -35156,30 +35203,25 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .app[data-focus="chat"] .kpis, .app[data-focus="chat"] .views,
 .app[data-focus="chat"] .alerts, .app[data-focus="chat"] .dims { opacity: 0.35; }
 .appwin.is-chatfocus .fa-panel {
-  box-shadow: 0 0 0 2px var(--p-cq), 0 22px 60px rgba(99, 102, 241, 0.28);
+  box-shadow: 0 0 0 2px var(--p-mark), 0 22px 60px rgba(91, 75, 245, 0.25);
 }
 
 @media (max-width: 900px) {
-  .fa-panel { width: calc(100% - 24px); right: 12px; bottom: 66px; height: 300px; }
-  .fa-launcher { right: 12px; bottom: 12px; width: 42px; height: 42px; }
+  .fa-panel { width: calc(100% - 24px); right: 12px; bottom: 12px; top: auto; height: 300px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fa-panel { opacity: 1; transform: none; pointer-events: auto; }
-  .fa-msg { opacity: 1; transform: none; max-height: none; padding: 9px 13px; }
+  .fa-msg { opacity: 1; transform: none; max-height: none; }
+  .fa-msg.user { padding: 9px 13px; }
   .fa-typing { display: none !important; }
 }
 
-
-/* Responsive (kurateret subset af demo-x, kun appwin-interne klasser) */
-@media (max-width: 1180px) {
-  .psb { width: 54px; padding: 12px 7px; }
-  .psb-logo-name, .psb-group-label, .psb-item span, .psb-user-meta { display: none; }
-  .psb-item { justify-content: center; padding: 9px 0; }
-  .psb-user { justify-content: center; border-top: none; }
-}
+/* Responsive (kurateret subset, kun appwin-interne klasser) */
 @media (max-width: 900px) {
   .psb { display: none; }
-  .pmain { padding: 12px 14px; gap: 10px; }
+  .ptop-search { display: none; }
+  .ptop-ai span { display: none; }
+  .pmain { padding: 12px 14px; gap: 10px; margin: 2px 8px 8px; }
   .pmain-sub { display: none; }
   .kpis { grid-template-columns: 1fr 1fr; }
   .kpi:nth-child(3) { display: none; }
@@ -35209,36 +35251,36 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
 .sbx-explore-bar .sandbox-btn { margin-left: auto; }
 .sbx-scrub-label {
   font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
-  color: #171717; min-width: 90px;
+  color: #14131a; min-width: 90px;
 }
-.sbx-scrub { flex: 1; min-width: 160px; max-width: 420px; accent-color: #6366f1; cursor: pointer; }
+.sbx-scrub { flex: 1; min-width: 160px; max-width: 420px; accent-color: #4429d8; cursor: pointer; }
 .sbx-explore-hint {
-  font-family: 'Inter', sans-serif; font-size: 12px; color: #8a8a8e; width: 100%;
+  font-family: 'Inter', sans-serif; font-size: 12px; color: #605d66; width: 100%;
 }
 .sbx-tasks { display: flex; gap: 8px; flex-wrap: wrap; }
 .sbx-task {
   font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
-  color: #6b6b70; background: #f4f4f6; border: 1px solid #ebebeb;
+  color: #605d66; background: #f4f2ec; border: 1px solid #e1dfd6;
   border-radius: 999px; padding: 6px 12px 6px 26px; position: relative;
   transition: all 0.3s ease;
 }
 .sbx-task::before {
   content: ""; position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
-  width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #c6c6cc;
+  width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #c9c2b2;
   transition: all 0.3s ease;
 }
-.sbx-task.is-done { color: #15803d; background: #f0fdf4; border-color: rgba(34, 197, 94, 0.35); }
+.sbx-task.is-done { color: #0b6b49; background: #d7f0e4; border-color: rgba(16, 133, 92, 0.35); }
 .sbx-task.is-done::before {
-  border-color: #22c55e; background: #22c55e;
+  border-color: #10855c; background: #10855c;
   content: "✓"; color: #fff; font-size: 8px; line-height: 11px; text-align: center;
 }
 .sbx-tasks-done {
   display: none; width: 100%;
-  font-family: 'Inter', sans-serif; font-size: 13px; color: #171717;
+  font-family: 'Inter', sans-serif; font-size: 13px; color: #14131a;
   padding: 8px 0 0;
 }
 .sbx-tasks-done.is-on { display: block; animation: stageIn 0.35s ease-out; }
-.sbx-tasks-done a { color: #383da0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.sbx-tasks-done a { color: #4429d8; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 880px) {
   .sandbox-stage .appwin { height: 560px; }
 }
@@ -35270,25 +35312,25 @@ body.sbx-lock { overflow: hidden; }
     // OBS: vi viser kun 2 spørgsmål pr. kategori som smagsprøve — fuld
     // spørgsmålsbank ligger i kundeløsningen.
     const categories = [
-        { id: 'stress', name: 'Stress og arbejdsbelastning', q: 11, color: 'var(--gray-400)', bg: 'rgba(148, 163, 184, 0.06)',
+        { id: 'stress', name: 'Stress og arbejdsbelastning', q: 11, color: '#0284c7', bg: 'rgba(2, 132, 199, 0.07)',
           questions: ['Hvor ofte føler du dig stresset?','Hvor ofte har du kontrol over din arbejdsbelastning?'] },
-        { id: 'fysisk', name: 'Fysisk sundhed', q: 10, color: 'var(--info-500)', bg: 'rgba(59, 130, 246, 0.06)',
+        { id: 'fysisk', name: 'Fysisk sundhed', q: 10, color: '#4429d8', bg: 'rgba(68, 41, 216, 0.06)',
           questions: ['Hvor ofte vågner du veludhvilet?','Tager du tilstrækkelige pauser i løbet af dagen?'] },
-        { id: 'tryghed', name: 'Psykologisk tryghed', q: 8, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
+        { id: 'tryghed', name: 'Psykologisk tryghed', q: 8, color: '#a855f7', bg: 'rgba(168, 85, 247, 0.07)',
           questions: ['Hvor tryg føler du dig ved at sige din mening i møder?','Tør du udtrykke uenighed?'] },
-        { id: 'team', name: 'Teamdynamikker og tillid', q: 16, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.06)',
+        { id: 'team', name: 'Teamdynamikker og tillid', q: 16, color: '#86198f', bg: 'rgba(134, 25, 143, 0.06)',
           questions: ['Stoler du på dine kolleger?','Bliver du hørt i teamet?'] },
-        { id: 'diversitet', name: 'Diversitet, lighed og inklusion', q: 8, color: '#f97316', bg: 'rgba(249, 115, 22, 0.06)',
+        { id: 'diversitet', name: 'Diversitet, lighed og inklusion', q: 8, color: '#8a8577', bg: 'rgba(138, 133, 119, 0.08)',
           questions: ['Føler du dig respekteret uanset baggrund?','Har alle lige muligheder?'] },
-        { id: 'social', name: 'Socialt fællesskab', q: 9, color: 'var(--warning-500)', bg: 'rgba(245, 158, 11, 0.06)',
+        { id: 'social', name: 'Socialt fællesskab', q: 9, color: '#0284c7', bg: 'rgba(2, 132, 199, 0.07)',
           questions: ['Har du kolleger du kan tale fortroligt med?','Føler du dig velkommen?'] },
-        { id: 'ledelse', name: 'Ledelse', q: 10, color: '#ec4899', bg: 'rgba(236, 72, 153, 0.06)',
+        { id: 'ledelse', name: 'Ledelse', q: 10, color: '#4429d8', bg: 'rgba(68, 41, 216, 0.06)',
           questions: ['I hvor høj grad føler du, at du kan stole på din leder?','Får du regelmæssig feedback?'] },
-        { id: 'motivation', name: 'Motivation og personlig udvikling', q: 14, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.06)',
+        { id: 'motivation', name: 'Motivation og personlig udvikling', q: 14, color: '#a855f7', bg: 'rgba(168, 85, 247, 0.07)',
           questions: ['Føler du, at dit arbejde er meningsfuldt?','Får du brugt dine styrker?'] },
-        { id: 'formal', name: 'Organisatorisk formål og klarhed', q: 12, color: 'var(--primary-500)', bg: 'rgba(99, 102, 241, 0.06)',
+        { id: 'formal', name: 'Organisatorisk formål og klarhed', q: 12, color: '#86198f', bg: 'rgba(134, 25, 143, 0.06)',
           questions: ['Forstår du virksomhedens retning?','Er prioriteringer klare?'] },
-        { id: 'arbejdsmiljo', name: 'Fysisk arbejdsmiljø', q: 16, color: '#10b981', bg: 'rgba(16, 185, 129, 0.06)',
+        { id: 'arbejdsmiljo', name: 'Fysisk arbejdsmiljø', q: 16, color: '#8a8577', bg: 'rgba(138, 133, 119, 0.08)',
           questions: ['Er dit arbejdsmiljø behageligt?','Har du de værktøjer du behøver?'] }
     ];
 
@@ -35617,7 +35659,6 @@ body.sbx-lock { overflow: hidden; }
         const yp = new URLSearchParams();
         if (obState.company) yp.set('c', obState.company);
         if (obState.sizeNum) yp.set('m', obState.sizeNum);
-        if (obState.email) yp.set('em', obState.email);
         yp.set('utm_source', 'sandbox');
         yp.set('utm_medium', 'site');
         yp.set('utm_campaign', campaign || 'sandbox-handoff');
@@ -36343,8 +36384,8 @@ body.sbx-lock { overflow: hidden; }
 // === Sandbox trin 4: Udforsk platformen (motor porteret fra demo-x) ===
 (function () {
   /* ============ DATA ============ */
-  var DIM_NAMES = ['Trivsel', 'Tillid & Tryghed', 'Tilhørsforhold', 'Formål & Udvikling', 'Arbejdsmiljø'];
-  var DIM_SHORT = ['Trivsel', 'Tillid', 'Tilhør', 'Formål', 'Arb.miljø'];
+  var DIM_NAMES = ['Sundhed', 'Tillid og tryghed', 'Tilhørsforhold og inklusion', 'Formål og udvikling', 'Arbejdsmiljø'];
+  var DIM_SHORT = ['Sundhed', 'Tillid', 'Tilhør', 'Formål', 'Arb.miljø'];
   var DEPTS = ['Teknik', 'Salg', 'Drift', 'Admin'];
   var MONTHS = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
 
@@ -36445,16 +36486,17 @@ body.sbx-lock { overflow: hidden; }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-  /* Platformens score-bands: Kritisk 0-29, Kræver opmærksomhed 30-49,
-     Overvej et initiativ 50-69, Ser godt ud 70-84, Fantastisk 85-100 */
+  /* Platformens score-bands (paper): Kritisk 0-29, Kræver opmærksomhed 30-49,
+     Overvej initiativ 50-69, Ser godt ud 70-84, Fremragende 85-100 */
   function bandColor(score) {
-    if (score >= 85) return { bg: '#ecfdf5', fg: '#047857', bar: '#16a34a', label: 'Fantastisk' };
-    if (score >= 70) return { bg: '#f0fdf4', fg: '#15803d', bar: '#22c55e', label: 'Ser godt ud' };
-    if (score >= 50) return { bg: '#fffbeb', fg: '#b45309', bar: '#eab308', label: 'Overvej et initiativ' };
-    if (score >= 30) return { bg: '#fff7ed', fg: '#c2410c', bar: '#f97316', label: 'Kræver opmærksomhed' };
-    return { bg: '#fef2f2', fg: '#b91c1c', bar: '#ef4444', label: 'Kritisk' };
+    if (score >= 85) return { bg: '#b4dac7', fg: '#015238', bar: '#10855c', label: 'Fremragende' };
+    if (score >= 70) return { bg: '#d7f0e4', fg: '#0b6b49', bar: '#10855c', label: 'Ser godt ud' };
+    if (score >= 50) return { bg: '#fcebce', fg: '#8a5300', bar: '#e08a00', label: 'Overvej initiativ' };
+    if (score >= 30) return { bg: '#fde2dd', fg: '#97281b', bar: '#c9331f', label: 'Kræver opmærksomhed' };
+    return { bg: '#f6c2b8', fg: '#781307', bar: '#97281b', label: 'Kritisk' };
   }
-  var LIKERT_COLORS = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e'];
+  var LIKERT_COLORS = ['#c9331f', '#e08a00', '#8a8577', '#479a77', '#10855c'];
+  var LIKERT_TEXT = ['#ffffff', '#14131a', '#ffffff', '#ffffff', '#ffffff'];
   var LIKERT_LABELS = ['Meget ofte', 'Ofte', 'Nogle gange', 'Sjældent', 'Aldrig'];
   var KONSENS_BUCKETS = ['30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
   var KONSENS_MIDS = [35, 45, 55, 65, 75, 85, 95];
@@ -36509,9 +36551,10 @@ body.sbx-lock { overflow: hidden; }
     }
     var lbar = scope.querySelector('.js-likertbar');
     if (lbar && !lbar.children.length) {
-      LIKERT_COLORS.forEach(function (col) {
+      LIKERT_COLORS.forEach(function (col, li) {
         var seg = el('span', '', '');
         seg.style.backgroundColor = col;
+        seg.style.color = LIKERT_TEXT[li];
         lbar.appendChild(seg);
       });
     }
@@ -36862,8 +36905,8 @@ body.sbx-lock { overflow: hidden; }
           render(scrub ? parseFloat(scrub.value) : 12);
         });
       });
-      // Assistent-launcher
-      var launcher = win.querySelector('.fa-launcher');
+      // Assistent-launcher (topbarens AI-knap)
+      var launcher = win.querySelector('.js-fa-launcher');
       if (launcher) launcher.addEventListener('click', function () {
         win.__faOpen = !win.__faOpen;
         render(scrub ? parseFloat(scrub.value) : 12);

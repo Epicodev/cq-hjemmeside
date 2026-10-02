@@ -39,25 +39,34 @@
   --rule: rgba(30, 27, 75, 0.14);
   --card-frame: #fdfaf3;
 
-  /* Platform tokens (fra web-client/src/index.css, shadcn) */
-  --p-bg: #ffffff;
-  --p-fg: #171717;
-  --p-muted-fg: #8a8a8e;
-  --p-border: #ebebeb;
-  --p-muted: #f7f7f7;
-  --p-sidebar: #fbfbfb;
-  --p-cq: #6366f1;
-  --p-radius: 10px;
-  --p-emerald: #10b981;
-  --p-emerald-bg: #ecfdf5;
-  --p-emerald-fg: #047857;
-  --p-red: #ef4444;
-  --p-red-bg: #fef2f2;
-  --p-red-fg: #b91c1c;
-  --p-amber-bg: #fffbeb;
-  --p-amber-fg: #b45309;
-  --p-indigo-bg: #eef2ff;
-  --p-indigo-fg: #4338ca;
+  /* Platform tokens (paper, kilde: platform-tokens-reference.css) */
+  --p-bg: #faf9f5;
+  --p-card: #ffffff;
+  --p-fg: #14131a;
+  --p-muted-fg: #605d66;
+  --p-faint: #a5a2ac;
+  --p-border: #e1dfd6;
+  --p-line-strong: rgba(20, 19, 26, 0.22);
+  --p-muted: #e9e7df;
+  --p-sidebar: #f4f3ee;
+  --p-cq: #4429d8;
+  --p-mark: #5b4bf5;
+  --p-wash: #e5e1ff;
+  --p-radius: 11px;
+  --p-r-card: 14px;
+  --p-shadow: 0 1px 2px rgba(20, 19, 26, 0.04), 0 8px 24px -12px rgba(20, 19, 26, 0.1);
+  --p-emerald: #10855c;
+  --p-emerald-bg: #d7f0e4;
+  --p-emerald-fg: #0b6b49;
+  --p-red: #c9331f;
+  --p-red-bg: #fde2dd;
+  --p-red-fg: #97281b;
+  --p-amber: #e08a00;
+  --p-amber-bg: #fcebce;
+  --p-amber-fg: #8a5300;
+  --p-indigo-bg: #e5e1ff;
+  --p-indigo-fg: #4429d8;
+  --p-midnight: #1e1b4b;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -240,7 +249,7 @@ body {
 
 /* ============ BROWSER WINDOW ============ */
 .appwin {
-  background: var(--p-bg);
+  background: var(--p-sidebar);
   border-radius: 14px;
   box-shadow: 0 24px 70px rgba(30, 27, 75, 0.22), 0 4px 18px rgba(30, 27, 75, 0.10);
   overflow: hidden;
@@ -250,7 +259,7 @@ body {
 }
 .chrome {
   display: flex; align-items: center; gap: 14px;
-  background: #f1f1f3; border-bottom: 1px solid #e3e3e6;
+  background: #efece5; border-bottom: 1px solid #e1dfd6;
   padding: 9px 14px; flex-shrink: 0;
 }
 .chrome-dots { display: flex; gap: 6px; }
@@ -260,79 +269,111 @@ body {
 .chrome-dots span:nth-child(3) { background: #29c73f; }
 .chrome-url {
   flex: 1; max-width: 420px; margin: 0 auto;
-  background: #fff; border: 1px solid #e3e3e6; border-radius: 7px;
-  font-family: 'Inter', sans-serif; font-size: 12px; color: #6b6b70;
+  background: #faf9f5; border: 1px solid #e1dfd6; border-radius: 7px;
+  font-family: 'Inter', sans-serif; font-size: 12px; color: #605d66;
   padding: 5px 12px; text-align: center;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.chrome-url .lock { color: #29a35a; margin-right: 5px; }
+.chrome-url .lock { color: #0b6b49; margin-right: 5px; }
 
 /* ============ APP (platform-skin, shadcn) ============ */
 .app {
   flex: 1; display: flex; min-height: 0;
   font-family: 'Inter', sans-serif; color: var(--p-fg);
-  background: var(--p-bg);
+  background: var(--p-sidebar);
 }
 
-/* Sidebar */
+/* Ikon-rail (platformen er altid kollapset) */
 .psb {
-  width: 196px; flex-shrink: 0;
-  background: var(--p-sidebar); border-right: 1px solid var(--p-border);
-  display: flex; flex-direction: column;
-  padding: 12px 10px;
-}
-.psb-logo {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 8px 14px;
-}
-.psb-logo-mark {
-  width: 26px; height: 26px; border-radius: 7px;
-  background: linear-gradient(135deg, #6366f1, #4f53cc);
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 12px;
-}
-.psb-logo-name { font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
-.psb-group-label {
-  font-size: 10.5px; font-weight: 500; color: var(--p-muted-fg);
-  padding: 10px 8px 4px; letter-spacing: 0.01em;
+  width: 54px; flex-shrink: 0;
+  background: transparent; border-right: none;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 6px 7px 12px;
 }
 .psb-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 7px 8px; border-radius: 7px;
-  font-size: 13px; font-weight: 500; color: #3f3f46;
-  cursor: default; margin-bottom: 1px;
-}
-.psb-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; opacity: 0.75; }
-.psb-item.is-active { background: #ededf0; color: var(--p-fg); font-weight: 600; }
-.psb-item.is-active svg { opacity: 1; }
-.psb-spacer { flex: 1; }
-.psb-user {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px; border-top: 1px solid var(--p-border); margin-top: 8px;
-}
-.psb-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--p-indigo-bg); color: var(--p-indigo-fg);
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600; flex-shrink: 0;
+  width: 38px; height: 38px; border-radius: 10px;
+  color: var(--p-fg); cursor: default; margin-bottom: 2px;
 }
-.psb-user-meta { min-width: 0; }
-.psb-user-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.psb-user-mail { font-size: 10.5px; color: var(--p-muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.psb-item svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.psb-item.is-active { background: var(--p-wash); color: var(--p-cq); }
+.psb-item.psb-help { color: var(--p-muted-fg); }
+.psb-spacer { flex: 1; }
+
+/* Topbar (shell: canvas) */
+.ptop {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 14px 7px; flex-shrink: 0;
+  background: var(--p-sidebar);
+  font-family: 'Inter', sans-serif;
+}
+.ptop-logo { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ptop-mark {
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
+  background: linear-gradient(135deg, #6366f1, #4f53cc);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 11px;
+}
+.ptop-company { font-size: 13px; font-weight: 600; color: var(--p-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptop-search {
+  flex: 1; max-width: 300px; margin: 0 auto;
+  display: flex; align-items: center; gap: 7px;
+  height: 30px; border-radius: 9px; padding: 0 10px;
+  background: var(--p-muted); color: var(--p-muted-fg);
+  font-size: 11.5px; min-width: 0;
+}
+.ptop-search svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+.ptop-search span:first-of-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptop-kbd {
+  margin-left: auto; font-size: 10px; color: var(--p-faint);
+  border: 1px solid var(--p-border); border-radius: 5px; padding: 1px 5px;
+  flex-shrink: 0;
+}
+.ptop-ai {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 12px; border-radius: 9px; border: none;
+  background: transparent; color: var(--p-cq);
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.ptop-ai::before {
+  content: ""; position: absolute; inset: 0; border-radius: 9px; padding: 1px;
+  background: linear-gradient(135deg, #4429d8, #5b4bf5 45%, #a855f7);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.ptop-ai:hover { background: var(--p-wash); }
+.ptop-ai svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ptop-avatar {
+  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+  background: var(--p-wash); color: var(--p-cq);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+}
 
 /* Main */
 .pmain {
   flex: 1; min-width: 0; display: flex; flex-direction: column;
-  padding: 18px 22px; gap: 14px; overflow: hidden;
+  padding: 16px 20px; gap: 13px; overflow: hidden;
+  background: var(--p-bg);
+  border-radius: 14px;
+  margin: 2px 10px 10px 2px;
+  box-shadow: 0 1px 2px rgba(20, 19, 26, 0.04);
 }
 .pmain-head { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.pmain-title { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+.pmain-title {
+  font-family: 'Newsreader', Georgia, serif; font-weight: 400;
+  font-size: 27px; line-height: 1.12; letter-spacing: -0.015em;
+}
+.pmain-title span { font-style: italic; }
 .pmain-sub { font-size: 12.5px; color: var(--p-muted-fg); margin-top: 2px; }
 .pmain-filter {
   display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--p-border); border-radius: 8px;
-  font-size: 12.5px; font-weight: 500; color: #3f3f46;
-  padding: 6px 12px; background: #fff;
+  border: 1px solid var(--p-line-strong); border-radius: 9px;
+  font-size: 12.5px; font-weight: 500; color: var(--p-fg);
+  padding: 6px 12px; background: var(--p-card);
 }
 .pmain-filter .live-dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--p-emerald);
@@ -344,7 +385,8 @@ body {
 /* KPI cards (shadcn card style) */
 .kpis { display: grid; grid-template-columns: 1.2fr 1fr 1fr 0.95fr 0.95fr; gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
 .kpi {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; position: relative;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
@@ -359,7 +401,7 @@ body {
 .kpi-arrow-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .kpi-row { display: flex; align-items: center; gap: 9px; }
 .kpi-value {
-  font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
+  font-size: 28px; font-weight: 400; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums; line-height: 1;
 }
 .kpi-suffix { font-size: 13px; color: var(--p-muted-fg); font-weight: 500; }
@@ -373,14 +415,22 @@ body {
 .kpi-delta.down { color: var(--p-red-fg); background: var(--p-red-bg); }
 .kpi-delta.flat { color: var(--p-muted-fg); background: var(--p-muted); }
 .kpi-spark { position: absolute; right: 14px; bottom: 12px; width: 90px; height: 30px; }
-.kpi-spark path { fill: none; stroke: var(--p-emerald); stroke-width: 2; stroke-linecap: round; transition: stroke 0.5s ease; }
-.kpi-spark.band-amber path { stroke: #eab308; }
-.kpi-spark .spark-fill { fill: url(#sparkGrad); stroke: none !important; opacity: 0.5; }
+.kpi-spark path { fill: none; stroke: var(--p-cq); stroke-width: 2; stroke-linecap: round; transition: stroke 0.5s ease; }
+.kpi-spark.band-amber path { stroke: var(--p-amber); }
+.kpi-spark .spark-fill { fill: url(#sparkGrad); stroke: none !important; opacity: 0.6; }
+/* Organisation = midnight-kortet */
+.kpi--midnight { background: var(--p-midnight); }
+.kpi--midnight .kpi-label { color: rgba(255, 255, 255, 0.65); }
+.kpi--midnight .kpi-value { color: #fff; }
+.kpi--midnight .kpi-suffix { color: rgba(255, 255, 255, 0.6); }
+.kpi--midnight .kpi-note { color: rgba(255, 255, 255, 0.55); }
+.kpi--midnight .kpi-arrow-link { color: rgba(255, 255, 255, 0.5); }
 
 /* Dimension cards */
 .dims { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex-shrink: 0; transition: opacity 0.55s ease; }
 .dim {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 10px 12px;
   transition: opacity 0.55s ease, box-shadow 0.55s ease, border-color 0.6s ease;
 }
@@ -390,7 +440,7 @@ body {
 }
 .dim-score-row { display: flex; align-items: baseline; justify-content: space-between; }
 .dim-score {
-  font-size: 21px; font-weight: 600; letter-spacing: -0.02em;
+  font-size: 21px; font-weight: 400; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 .dim-arrow { font-size: 11px; font-weight: 600; }
@@ -399,21 +449,22 @@ body {
 .dim-arrow.flat { color: var(--p-muted-fg); }
 .dim-bar { height: 3px; border-radius: 3px; background: var(--p-muted); margin-top: 8px; overflow: hidden; }
 .dim-bar-fill { height: 100%; border-radius: 3px; background: var(--p-cq); transition: background-color 0.6s ease; }
-.dim.is-hot { border-color: rgba(239, 68, 68, 0.35); }
+.dim.is-hot { box-shadow: 0 0 0 1px rgba(201, 51, 31, 0.3), var(--p-shadow); }
 .dim.is-hot .dim-bar-fill { background: var(--p-red); }
 
 /* Main row: views + alerts */
 .mainrow { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; flex: 1; min-height: 0; }
 
 .views {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
 /* shadcn tabs */
 .view-tabs {
   display: inline-flex; gap: 2px; margin-bottom: 12px;
-  background: var(--p-muted); border-radius: 8px; padding: 3px;
+  background: var(--p-sidebar); border-radius: 9px; padding: 3px;
   align-self: flex-start;
 }
 .vtab {
@@ -422,7 +473,7 @@ body {
   padding: 5px 13px; border-radius: 6px; cursor: default;
   transition: all 0.3s ease;
 }
-.vtab.is-active { color: var(--p-fg); background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-weight: 600; }
+.vtab.is-active { color: var(--p-fg); background: var(--p-card); box-shadow: 0 1px 2px rgba(20, 19, 26, 0.08); font-weight: 600; }
 .explore-mode .vtab { cursor: pointer; }
 .explore-mode .vtab:hover { color: var(--p-fg); }
 
@@ -459,21 +510,21 @@ body {
   min-width: 38px; height: 38px; border-radius: 9px;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
-  background: #fffbeb; color: #b45309;
+  background: var(--p-amber-bg); color: var(--p-amber-fg);
   transition: background-color 0.5s ease, color 0.5s ease;
 }
-.likert-score.band-green { background: #f0fdf4; color: #15803d; }
-.likert-score.band-orange { background: #fff7ed; color: #c2410c; }
+.likert-score.band-green { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.likert-score.band-orange { background: #f8d3a7; color: #694200; }
 .likert-q { flex: 1; font-size: 12.5px; font-weight: 600; color: var(--p-fg); line-height: 1.3; }
 .likert-seg { color: var(--p-muted-fg); font-weight: 500; }
 .likert-badge {
   font-size: 10.5px; font-weight: 600; white-space: nowrap;
   padding: 3px 10px; border-radius: 999px;
-  background: #fffbeb; color: #b45309;
+  background: var(--p-amber-bg); color: var(--p-amber-fg);
 }
-.likert-badge.band-green { background: #ecfdf5; color: #047857; }
-.likert-badge.band-orange { background: #fff7ed; color: #c2410c; }
-.likert-badge.band-red { background: #fef2f2; color: #b91c1c; }
+.likert-badge.band-green { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.likert-badge.band-orange { background: #f8d3a7; color: #694200; }
+.likert-badge.band-red { background: var(--p-red-bg); color: var(--p-red-fg); }
 .likert-bar {
   display: flex; height: 26px; border-radius: 999px; overflow: hidden;
   margin-bottom: 14px;
@@ -532,8 +583,8 @@ body {
 /* Quadrant */
 .quad { flex: 1; position: relative; min-height: 140px; }
 .quad-plot { position: absolute; inset: 16px 8px 24px 8px; border-left: 1px solid var(--p-border); border-bottom: 1px solid var(--p-border); }
-.quad-mid-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #f1f1f3; }
-.quad-mid-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #f1f1f3; }
+.quad-mid-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--p-muted); }
+.quad-mid-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--p-muted); }
 .quad-zone {
   position: absolute; font-size: 9px; font-weight: 500;
   letter-spacing: 0.04em; text-transform: uppercase; color: var(--p-muted-fg); opacity: 0.8;
@@ -551,11 +602,12 @@ body {
   font-size: 10px; font-weight: 600; color: var(--p-fg); white-space: nowrap;
 }
 .quad-trail { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.quad-trail polyline { fill: none; stroke: rgba(239, 68, 68, 0.4); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.quad-trail polyline { fill: none; stroke: rgba(201, 51, 31, 0.4); stroke-width: 1.5; stroke-dasharray: 3 4; }
 
 /* Alerts (Signaler) */
 .alerts {
-  background: var(--p-bg); border: 1px solid var(--p-border); border-radius: var(--p-radius);
+  background: var(--p-card); border: none; border-radius: var(--p-r-card);
+  box-shadow: var(--p-shadow);
   padding: 13px 15px; display: flex; flex-direction: column; min-height: 0;
   transition: opacity 0.55s ease, box-shadow 0.55s ease;
 }
@@ -584,19 +636,19 @@ body {
   padding-top: 9px; padding-bottom: 9px; border-width: 1px;
 }
 .alert-ico {
-  width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
 }
 .alert-ico svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .alert-content { min-width: 0; }
 .alert-meta { font-size: 10px; font-weight: 500; color: var(--p-muted-fg); margin-bottom: 2px; font-variant-numeric: tabular-nums; }
 .alert-title { font-size: 12.5px; font-weight: 600; color: var(--p-fg); margin-bottom: 2px; }
-.alert-body { font-size: 11.5px; line-height: 1.45; color: #5c5c63; }
+.alert-body { font-size: 11.5px; line-height: 1.45; color: var(--p-muted-fg); }
 .alert.sev-warning .alert-ico { background: var(--p-amber-bg); color: var(--p-amber-fg); }
-.alert.sev-danger { border-color: rgba(239, 68, 68, 0.35); background: #fffafa; }
+.alert.sev-danger { border-color: transparent; background: var(--p-red-bg); }
 .alert.sev-danger .alert-ico { background: var(--p-red-bg); color: var(--p-red-fg); }
 .alert.sev-info .alert-ico { background: var(--p-indigo-bg); color: var(--p-indigo-fg); }
-.alert.sev-reco { border-color: rgba(99, 102, 241, 0.4); background: #fbfbff; }
+.alert.sev-reco { border-color: rgba(68, 41, 216, 0.3); background: #f6f4ff; }
 .alert.sev-reco .alert-ico { background: var(--p-cq); color: #fff; }
 .alert.sev-positive .alert-ico { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
 .alert.sev-danger.is-in { animation: alertShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.45s; }
@@ -617,41 +669,30 @@ body {
 .app[data-focus="dims"] .views, .app[data-focus="dims"] .alerts, .app[data-focus="dims"] .kpis { opacity: 0.35; }
 .app[data-focus="views"] .kpis, .app[data-focus="views"] .alerts, .app[data-focus="views"] .dims { opacity: 0.35; }
 .app[data-focus="alerts"] .kpis, .app[data-focus="alerts"] .views, .app[data-focus="alerts"] .dims { opacity: 0.35; }
-.app[data-focus="alerts"] .alerts { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
-.app[data-focus="views"] .views { box-shadow: 0 0 0 2px var(--p-cq), 0 8px 28px rgba(99, 102, 241, 0.18); }
+.app[data-focus="alerts"] .alerts { box-shadow: 0 0 0 2px var(--p-mark), 0 8px 28px rgba(91, 75, 245, 0.2); }
+.app[data-focus="views"] .views { box-shadow: 0 0 0 2px var(--p-mark), 0 8px 28px rgba(91, 75, 245, 0.2); }
 
-/* ============ FLOATING ASSISTANT (platform 1:1) ============ */
+/* ============ AI-ASSISTENT (panel, ingen gradient) ============ */
 .appwin { position: relative; }
-.fa-launcher {
-  position: absolute; right: 16px; bottom: 16px; z-index: 40;
-  width: 46px; height: 46px; border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
-}
-.fa-launcher:hover { transform: scale(1.06); }
-.fa-launcher svg { width: 22px; height: 22px; }
 .fa-badge {
-  position: absolute; top: -2px; right: -2px;
-  width: 13px; height: 13px; border-radius: 50%;
-  background: var(--p-red); border: 2px solid #fff;
+  position: absolute; top: -3px; right: -3px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--p-red); border: 2px solid var(--p-sidebar);
   opacity: 0; transform: scale(0);
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fa-badge.is-on { opacity: 1; transform: scale(1); animation: faBadgePulse 1.6s ease-in-out infinite; }
 @keyframes faBadgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
-  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 51, 31, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(201, 51, 31, 0); }
 }
 .fa-panel {
-  position: absolute; right: 16px; bottom: 74px; z-index: 39;
-  width: 384px; max-width: calc(100% - 32px);
-  height: 560px; max-height: calc(100% - 96px);
-  background: #fff; border: 1px solid var(--p-border); border-radius: 14px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.08);
+  position: absolute; right: 16px; bottom: 16px; top: 100px; z-index: 39;
+  width: 340px; max-width: calc(100% - 32px);
+  background: var(--p-bg); border: none; border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(20, 19, 26, 0.18), 0 4px 14px rgba(20, 19, 26, 0.08);
   display: flex; flex-direction: column; overflow: hidden;
-  opacity: 0; transform: translateY(14px) scale(0.96);
+  opacity: 0; transform: translateY(14px) scale(0.97);
   transform-origin: bottom right;
   pointer-events: none;
   transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -660,62 +701,59 @@ body {
 .fa-panel.is-open { opacity: 1; transform: none; pointer-events: auto; }
 .fa-head {
   display: flex; align-items: center; gap: 9px;
-  padding: 14px 14px 13px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6); flex-shrink: 0;
+  padding: 11px 14px;
+  background: transparent; border-bottom: 1px solid var(--p-border); flex-shrink: 0;
 }
 .fa-head-ico {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2); color: #fff;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: var(--p-wash); color: var(--p-cq);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.fa-head-ico svg { width: 15px; height: 15px; }
+.fa-head-ico svg { width: 14px; height: 14px; }
 .fa-head-meta { flex: 1; min-width: 0; }
-.fa-head-name { font-size: 13px; font-weight: 700; color: #fff; }
-.fa-head-status { font-size: 10.5px; color: rgba(255, 255, 255, 0.75); display: flex; align-items: center; gap: 5px; }
-.fa-head-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.fa-head-name { font-size: 13px; font-weight: 600; color: var(--p-fg); }
+.fa-head-status { font-size: 10.5px; color: var(--p-muted-fg); }
 .fa-body {
-  flex: 1; overflow-y: auto; padding: 14px 12px;
-  display: flex; flex-direction: column; gap: 8px;
-  background: #fcfcfd;
+  flex: 1; overflow-y: auto; padding: 14px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  background: transparent;
   scroll-behavior: smooth;
 }
 .fa-msg {
   flex-shrink: 0;
-  max-width: 86%; border-radius: 16px; padding: 10px 14px;
-  font-size: 13px; line-height: 1.55; white-space: pre-line;
+  max-width: 100%; border-radius: 0; padding: 0;
+  font-size: 12.5px; line-height: 1.55; white-space: pre-line;
   opacity: 0; transform: translateY(8px); max-height: 0; overflow: hidden;
-  padding-top: 0; padding-bottom: 0; margin: 0;
+  margin: 0;
   transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               max-height 0.45s ease, padding 0.45s ease;
 }
-.fa-msg.is-in {
-  opacity: 1; transform: none; max-height: 620px;
-  padding-top: 10px; padding-bottom: 10px;
-}
-.fa-msg.bot { align-self: flex-start; background: #f1f1f4; color: var(--p-fg); border-bottom-left-radius: 5px; }
+.fa-msg.is-in { opacity: 1; transform: none; max-height: 620px; }
+.fa-msg.bot { align-self: stretch; background: transparent; color: var(--p-fg); }
 .fa-msg.user {
   align-self: flex-end; color: #fff;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  border-bottom-right-radius: 5px;
+  background: var(--p-cq);
+  max-width: 85%; border-radius: 14px; border-bottom-right-radius: 5px;
+  padding: 0 13px;
 }
+.fa-msg.user.is-in { padding: 9px 13px; }
 .fa-msg.bot strong { font-weight: 600; }
 .fa-welcome {
   flex-shrink: 0;
-  align-self: flex-start; background: #f1f1f4; color: var(--p-fg);
-  border-radius: 16px; border-bottom-left-radius: 5px;
-  padding: 10px 14px; font-size: 13px; line-height: 1.55;
+  align-self: stretch; background: transparent; color: var(--p-fg);
+  padding: 0; font-size: 12.5px; line-height: 1.55;
   transition: opacity 0.3s ease;
 }
 .fa-welcome.is-gone { display: none; }
 .fa-typing {
   flex-shrink: 0;
-  align-self: flex-start; background: #f1f1f4; border-radius: 16px;
-  border-bottom-left-radius: 5px; padding: 11px 14px;
+  align-self: flex-start; background: transparent;
+  padding: 4px 0;
   display: none; gap: 4px; align-items: center;
 }
 .fa-typing.is-on { display: flex; }
 .fa-typing span {
-  width: 6px; height: 6px; border-radius: 50%; background: #9ca3af;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--p-faint);
   animation: faBounce 1.2s ease-in-out infinite;
 }
 .fa-typing span:nth-child(2) { animation-delay: 0.15s; }
@@ -723,20 +761,347 @@ body {
 @keyframes faBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
 .fa-composer {
   display: flex; align-items: center; gap: 8px;
-  padding: 10px 12px; border-top: 1px solid var(--p-border);
-  background: #fff; flex-shrink: 0;
+  margin: 0 10px 6px; padding: 7px 8px 7px 12px;
+  border-top: none; border-radius: 12px;
+  background: var(--p-card); box-shadow: var(--p-shadow); flex-shrink: 0;
 }
 .fa-input {
-  flex: 1; border: 1px solid var(--p-border); border-radius: 999px;
-  padding: 8px 14px; font-family: 'Inter', sans-serif; font-size: 12px;
-  color: var(--p-muted-fg); background: #fff; pointer-events: none;
+  flex: 1; border: none; border-radius: 0;
+  padding: 2px 0; font-family: 'Inter', sans-serif; font-size: 12px;
+  color: var(--p-faint); background: transparent; pointer-events: none;
 }
 .fa-send {
-  width: 32px; height: 32px; border-radius: 50%; border: none;
-  background: var(--p-cq); color: #fff; opacity: 0.5;
+  width: 28px; height: 28px; border-radius: 8px; border: none;
+  background: var(--p-cq); color: #fff; opacity: 0.55;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.fa-send svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-send svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-disclaimer {
+  font-size: 9px; color: var(--p-faint); text-align: center;
+  padding: 0 14px 8px; flex-shrink: 0;
+}
+
+/* ============ PLATFORM 1:1-ANATOMI (okt 2026, kilde: web-client) ============ */
+/* Topbar: ikon-klynge (Indstillinger · Nyheder · Notifikationer) */
+.ptop-ico { position: relative; width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--p-fg); flex-shrink: 0; }
+.ptop-ico svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ptop-dot { position: absolute; top: 5px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--p-mark); box-shadow: 0 0 0 2px var(--p-sidebar); }
+.ptop-count { position: absolute; top: 1px; right: 0; min-width: 14px; height: 14px; padding: 0 3px; border-radius: 999px; background: var(--p-red-bg); color: var(--p-red-fg); font-size: 9px; font-weight: 600; font-style: normal; display: flex; align-items: center; justify-content: center; }
+
+/* Sidehoved: hilsen + periode-kontrol (SnapshotFilterBar) */
+.pmain-head { align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.pmain-ctrls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pseg { display: inline-flex; background: var(--p-sidebar); border-radius: 9px; padding: 3px; gap: 1px; }
+.pseg span { font-size: 11.5px; font-weight: 500; color: var(--p-muted-fg); padding: 4px 9px; border-radius: 6px; white-space: nowrap; }
+.pseg span.is-on { background: var(--p-card); color: var(--p-fg); box-shadow: 0 1px 2px rgba(20, 19, 26, 0.07); }
+.pscope { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px 0 12px; border-radius: 9px; border: 1px solid var(--p-line-strong); background: var(--p-card); font-size: 12px; font-weight: 500; color: var(--p-fg); white-space: nowrap; }
+.pscope svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* TrendPill */
+.tpill { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 500; line-height: 1; padding: 3px 7px 3px 6px; border-radius: 999px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tpill svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.tpill.up { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.tpill.down { background: var(--p-red-bg); color: var(--p-red-fg); }
+.tpill.flat { background: var(--p-muted); color: var(--p-muted-fg); }
+.tpill-sm { font-size: 10px; padding: 2px 5px 2px 4px; gap: 2px; }
+.tpill-sm svg { width: 10px; height: 10px; }
+
+/* PulseCard */
+.kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 0.9fr); gap: 12px; }
+.kpi { padding: 13px 15px 12px; display: flex; flex-direction: column; gap: 9px; }
+.kpi-head { display: flex; align-items: center; gap: 5px; padding-right: 26px; min-width: 0; }
+.kpi-title { font-size: 13px; font-weight: 600; color: var(--p-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi-info { display: inline-flex; flex-shrink: 0; }
+.kpi-info svg { width: 13px; height: 13px; stroke: var(--p-muted-fg); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.kpi .kpi-arrow-link { top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--p-fg); opacity: 1; }
+.kpi .kpi-arrow-link svg { width: 14px; height: 14px; stroke-width: 1.75; }
+.kpi-body { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; min-width: 0; }
+.kpi-num { display: flex; align-items: baseline; gap: 4px; }
+.kpi .kpi-value { font-size: 32px; font-weight: 400; letter-spacing: -0.03em; line-height: 1; }
+.kpi .kpi-suffix { font-size: 12px; }
+.kpi .kpi-spark { position: static; width: 48%; max-width: 112px; height: 32px; flex-shrink: 1; min-width: 0; }
+.kpi-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--p-muted-fg); min-height: 18px; min-width: 0; }
+.kpi-cmp { line-height: 1.25; }
+.kpi-meta { align-items: flex-start; }
+.kpi-meta .tpill { margin-top: -1px; }
+.kpi--midnight .kpi-title { color: rgba(255, 255, 255, 0.78); }
+.kpi--midnight .kpi-arrow-link { color: rgba(255, 255, 255, 0.55); }
+.kpi--midnight .kpi-meta { color: rgba(255, 255, 255, 0.6); }
+.kpi-org-ico svg { width: 30px; height: 30px; stroke: rgba(255, 255, 255, 0.4); fill: none; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; display: block; }
+
+/* KpiTile (dimensioner) */
+.dim { position: relative; padding: 11px 12px 11px; display: flex; flex-direction: column; gap: 8px; }
+.dim-top { display: flex; align-items: center; gap: 5px; padding-right: 16px; min-width: 0; }
+.dim-ico { display: inline-flex; flex-shrink: 0; }
+.dim-ico svg { width: 13px; height: 13px; stroke: var(--p-muted-fg); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; display: block; }
+.dim .dim-name { margin: 0; font-size: 10.5px; }
+.dim-conf { position: absolute; top: 10px; right: 10px; display: inline-flex; }
+.dim-conf svg { width: 12px; height: 12px; stroke: var(--p-emerald); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dim .dim-score-row { justify-content: flex-start; align-items: center; gap: 7px; }
+.dim .dim-score { font-size: 25px; line-height: 1; }
+.dim .dim-bar { display: none; }
+
+/* Analysekortet: titel + beskrivelse pr. visning, SegmentedControl til højre */
+.views-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px 14px; flex-wrap: wrap; margin-bottom: 11px; }
+.views-head { flex: 1 1 200px; min-width: 0; }
+.vh { display: none; }
+.views:not([data-active]) .vh[data-vh="heat"], .views[data-active="heat"] .vh[data-vh="heat"],
+.views[data-active="likert"] .vh[data-vh="likert"], .views[data-active="konsens"] .vh[data-vh="konsens"],
+.views[data-active="quad"] .vh[data-vh="quad"] { display: block; }
+.vh-title { font-size: 13px; font-weight: 600; color: var(--p-fg); }
+.vh-desc { font-size: 11px; color: var(--p-muted-fg); margin-top: 2px; }
+.views-top .view-tabs { margin-bottom: 0; }
+.view[data-view="heat"] > .heat-note { display: none; }
+
+/* Heatmap (HeatmapGrid): virksomhedsrække + I alt */
+.heat { grid-template-columns: 96px repeat(6, minmax(0, 1fr)); gap: 4px; }
+.heat-c { padding: 0; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 12px; font-weight: 500; }
+.heat-r { font-size: 11.5px; line-height: 1.2; }
+.heat-r-co, .heat-c-co { font-weight: 600; }
+.heat-h-total { color: var(--p-fg); font-weight: 600; }
+.heat-c-total { font-weight: 600; }
+
+/* IndicatorInstanceCard */
+.alert.is-in { max-height: 180px; }
+.alert .alert-ico { width: 30px; height: 30px; border-radius: 9px; }
+.alert-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 2px; }
+.alert .alert-title { margin-bottom: 0; line-height: 1.3; }
+.spill { flex-shrink: 0; font-size: 10px; font-weight: 500; line-height: 1.2; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.spill--risk { background: var(--p-red-bg); color: var(--p-red-fg); }
+.spill--att { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.spill--pos { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.alert.sev-danger .spill--risk { background: #ffffff; }
+.alert .alert-meta { font-size: 10.5px; margin: 0 0 4px; }
+.alert-chips { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 6px; }
+.achip { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.achip svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.achip.risk { color: var(--p-red-fg); }
+.achip.pos { color: var(--p-emerald-fg); }
+
+/* Assistent: header + tom tilstand som i appen */
+.fa-head { justify-content: space-between; height: 42px; padding: 0 8px 0 14px; gap: 8px; }
+.fa-head .fa-head-name { font-size: 13px; font-weight: 500; }
+.fa-head-actions { display: flex; gap: 2px; }
+.fa-hbtn { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--p-fg); }
+.fa-hbtn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.fa-welcome { margin: auto 0; text-align: center; padding: 10px 6px; }
+.fa-empty-title { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 21px; line-height: 1.2; letter-spacing: -0.01em; color: var(--p-fg); margin-bottom: 14px; }
+.fa-topics { display: flex; flex-direction: column; gap: 7px; max-width: 250px; margin: 0 auto; text-align: left; }
+.fa-topic { background: var(--p-card); border-radius: 12px; padding: 9px 13px; box-shadow: var(--p-shadow); }
+.fa-topic b { display: block; font-size: 12px; font-weight: 600; color: var(--p-fg); }
+.fa-topic span { display: block; font-size: 11px; color: var(--p-muted-fg); margin-top: 1px; }
+
+/* ============ PLATFORM-SIDER (okt 2026): Startside · Analyse › Kultur · Analyse › Indikatorer ============ */
+/* Shell-finpudsning efter DOM-kalibreringen */
+.ptop-tog { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; color: var(--p-muted-fg); flex-shrink: 0; }
+.ptop-tog svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ptop-search { border-radius: 999px; }
+.ptop-ai, .ptop-ai::before { border-radius: 999px; }
+.ptop-avatar { border-radius: 50%; }
+.pmain { padding: 0; gap: 0; container-type: inline-size; }
+
+/* Sider */
+.pp-stack { position: relative; flex: 1; min-height: 0; }
+.pp-pg { position: absolute; inset: 0; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity 0.45s ease; }
+.pp-pg.is-on { opacity: 1; pointer-events: auto; }
+.pp-in { position: relative; padding: 16px 20px 22px; display: flex; flex-direction: column; gap: 13px; transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1); }
+.is-explore .pp-pg { overflow-y: auto; }
+.is-explore .pp-in { transform: none !important; }
+.pp-sub { display: none; flex-direction: column; gap: 13px; }
+.pp-sub.is-on { display: flex; }
+
+/* Kort-grammatik (Card + CardHeader) */
+.pp-card { background: var(--p-card); border-radius: var(--p-r-card); box-shadow: var(--p-shadow); padding: 14px 16px; display: flex; flex-direction: column; gap: 11px; min-width: 0; }
+.pp-ch { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.pp-ct { font-size: 13px; font-weight: 600; color: var(--p-fg); display: flex; align-items: center; gap: 5px; }
+.pp-i { width: 13px; height: 13px; stroke: var(--p-muted-fg); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.pp-cd { font-size: 10.5px; color: var(--p-muted-fg); margin-top: 2px; }
+.pp-cl { font-size: 11.5px; font-weight: 500; color: var(--p-cq); white-space: nowrap; }
+.pp-pill { display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 500; line-height: 1.2; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.pp-pill.pos { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.pp-pill.att { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.pp-pill.risk { background: var(--p-red-bg); color: var(--p-red-fg); }
+.pp-pill.new { background: var(--p-wash); color: var(--p-cq); }
+.pp-pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pp-sel { display: inline-flex; align-items: center; gap: 5px; height: 27px; padding: 0 9px 0 11px; border-radius: 9px; border: 1px solid var(--p-line-strong); background: var(--p-card); font-size: 11.5px; font-weight: 500; color: var(--p-fg); white-space: nowrap; }
+.pp-sel svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pp-seg2 { display: inline-flex; background: var(--p-sidebar); border-radius: 9px; padding: 3px; }
+.pp-seg2 span { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 6px; color: var(--p-muted-fg); white-space: nowrap; }
+.pp-seg2 span.is-on { background: var(--p-card); color: var(--p-fg); box-shadow: 0 1px 2px rgba(20, 19, 26, 0.07); }
+
+/* Startside: Undersøgelser (3/5) + Nyheder (2/5) */
+.pp-hrow { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 12px; }
+.pp-list { list-style: none; margin: 0 -10px; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.pp-sv { display: flex; align-items: center; gap: 12px; padding: 7px 10px; border-radius: 11px; }
+.pp-sv-m, .pp-nw-m { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.pp-sv-n, .pp-nw-t { font-size: 12.5px; font-weight: 500; color: var(--p-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pp-sv-s { font-size: 10.5px; color: var(--p-muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pp-sv-a { width: 150px; flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+.pp-sv-u { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; color: var(--p-muted-fg); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.pp-sv-u svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pp-sv-bar { flex: 1; height: 5px; border-radius: 999px; background: var(--p-muted); overflow: hidden; }
+.pp-sv-bar i { display: block; height: 100%; border-radius: 999px; background: var(--p-cq); }
+.pp-sv-p { width: 30px; text-align: right; font-size: 10.5px; color: var(--p-fg); font-variant-numeric: tabular-nums; }
+.pp-sv-st { width: 66px; flex-shrink: 0; display: flex; }
+.pp-nw { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 11px; }
+.pp-nw-s { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--p-muted-fg); }
+.pp-tag { font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 999px; }
+.pp-tag.tip { background: #f3eafe; color: #6b3ba3; }
+.pp-tag.feat { background: #f3e5f4; color: #86198f; }
+.pp-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--p-mark); flex-shrink: 0; }
+
+/* Analyse: sidetitel, værktøjslinje, underline-faner */
+.pp-ph { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.pp-pt { font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 27px; line-height: 1.15; letter-spacing: -0.015em; color: var(--p-fg); }
+.pp-pd { font-size: 12px; color: var(--p-muted-fg); margin-top: 2px; }
+.pp-act { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.pp-pg-ana .pp-act-ind { display: none; }
+.pp-pg-ana[data-sub="ind"] .pp-act-kultur { display: none; }
+.pp-pg-ana[data-sub="ind"] .pp-act-ind { display: flex; }
+.pp-asof { display: inline-flex; align-items: center; gap: 5px; height: 27px; padding: 0 10px; border-radius: 9px; border: 1px solid var(--p-line-strong); background: var(--p-card); font-size: 11.5px; font-weight: 500; color: var(--p-fg); white-space: nowrap; }
+.pp-asof svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.pp-act .pseg span { font-size: 11px; padding: 3px 8px; }
+.pp-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--p-border); margin-top: -2px; }
+.pp-tab { font-size: 12.5px; font-weight: 500; color: var(--p-muted-fg); padding: 7px 11px 9px; border-bottom: 2.5px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.pp-tab.is-on { color: var(--p-fg); border-bottom-color: var(--p-fg); }
+.pp-tabs--sm .pp-tab { font-size: 12px; padding: 5px 10px 7px; }
+
+/* Analyse › Kultur */
+.pp-kr2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px; }
+.pp-kr3 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.pp-ring { position: relative; width: 150px; height: 150px; margin: 2px auto 0; }
+.pp-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.pp-ring circle { transition: stroke-dasharray 0.6s ease, stroke 0.5s ease; }
+.pp-ring-c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.pp-ring-n { font-size: 42px; font-weight: 400; letter-spacing: -0.03em; line-height: 1; color: var(--p-fg); font-variant-numeric: tabular-nums; }
+.pp-ring-hl { width: 24px; height: 1px; background: var(--p-border); margin: 6px 0 4px; }
+.pp-ring-of { font-size: 10.5px; color: var(--p-muted-fg); }
+.pp-ring-p { display: flex; justify-content: center; min-height: 20px; }
+.pp-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; background: var(--p-sidebar); border-radius: 11px; padding: 9px 6px; }
+.pp-stats div { text-align: center; }
+.pp-stats b { display: block; font-size: 14px; font-weight: 600; color: var(--p-fg); font-variant-numeric: tabular-nums; }
+.pp-stats span { font-size: 9.5px; color: var(--p-muted-fg); }
+.pp-leg { display: flex; align-items: center; gap: 12px; font-size: 10.5px; color: var(--p-muted-fg); flex-wrap: wrap; }
+.pp-leg i { display: inline-block; width: 16px; height: 0; border-top: 2px solid var(--p-cq); vertical-align: middle; margin-right: 5px; }
+.pp-leg i.dash { border-top-style: dashed; opacity: 0.7; }
+.pp-trend { width: 100%; height: auto; display: block; }
+.pp-trend text, .pp-al-svg text { font-family: 'Inter', sans-serif; fill: var(--p-muted-fg); }
+.pp-dbr-d { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
+.pp-dbr-d:first-child { margin-top: 0; }
+.pp-dbr-ic { width: 26px; height: 26px; border-radius: 8px; background: var(--p-muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pp-dbr-ic svg { width: 13px; height: 13px; stroke: var(--p-fg); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.pp-dbr-dn { font-size: 12px; font-weight: 600; color: var(--p-fg); }
+.pp-dbr-c { display: grid; grid-template-columns: minmax(0, 1fr) 26% 40px 26px; align-items: center; gap: 8px; padding: 4px 0 4px 34px; }
+.pp-dbr-cn { font-size: 11px; color: var(--p-muted-fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pp-dbr-bar { height: 6px; border-radius: 999px; background: var(--p-muted); overflow: hidden; }
+.pp-dbr-bar i { display: block; height: 100%; border-radius: 999px; background: var(--p-cq); transition: width 0.5s ease; }
+.pp-dbr-c .tpill { justify-self: start; }
+.pp-dbr-cs { font-size: 12.5px; font-weight: 700; text-align: right; color: var(--p-fg); font-variant-numeric: tabular-nums; }
+.pp-al-leg { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px; color: var(--p-muted-fg); }
+.pp-al-leg span { display: flex; align-items: center; gap: 6px; }
+.pp-al-leg i { display: inline-block; width: 14px; flex-shrink: 0; }
+.pp-al-leg i.l1 { height: 0; border-top: 2px solid var(--p-cq); }
+.pp-al-leg i.l2 { height: 9px; border-radius: 2px; background: rgba(68, 41, 216, 0.32); }
+.pp-al-leg i.l3 { height: 0; border-top: 2px dashed #8a8577; }
+.pp-al-plot { display: block; }
+.pp-al-y { display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; color: var(--p-muted-fg); writing-mode: vertical-rl; transform: rotate(180deg); padding: 4px 0 26px; white-space: nowrap; }
+.pp-al-svg { width: 100%; height: auto; display: block; }
+.pp-al-band { display: grid; grid-template-columns: 2fr 2fr 4.3fr; gap: 3px; margin: -4px 0 0 0; }
+.pp-al-band i { height: 4px; border-radius: 999px; }
+.pp-note { border-radius: 11px; padding: 9px 12px; font-size: 11px; font-weight: 600; line-height: 1.4; }
+.pp-note.att { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.pp-note.pos { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.pp-note.risk { background: var(--p-red-bg); color: var(--p-red-fg); }
+.pp-note-sub { display: block; font-weight: 400; margin-top: 3px; }
+.pp-hctl { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pp-heatc .heat { grid-template-columns: minmax(96px, 1.3fr) repeat(5, minmax(0, 1fr)) minmax(36px, 0.55fr); }
+.pp-heatc .heat-h { white-space: normal; line-height: 1.15; font-size: 9.5px; }
+.pp-heatc .heat-r { flex-direction: column; align-items: flex-start; justify-content: center; font-size: 11.5px; line-height: 1.2; }
+.pp-heatc .heat-r-co { font-weight: 600; }
+.hr-n { display: block; font-size: 9.5px; font-weight: 400; color: var(--p-muted-fg); }
+.heat-c.is-hidden { background: var(--p-muted) !important; color: var(--p-faint) !important; }
+.pp-hfoot { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: var(--p-muted-fg); }
+.pp-hfoot svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.75; }
+
+/* Analyse › Indikatorer */
+.pp-ik { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pp-ikc { flex-direction: row; justify-content: space-between; align-items: flex-start; padding: 13px 15px; gap: 10px; }
+.pp-ik-l { font-size: 11.5px; font-weight: 500; color: var(--p-muted-fg); white-space: nowrap; }
+.pp-ik-n { font-size: 30px; font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; margin-top: 4px; color: var(--p-fg); font-variant-numeric: tabular-nums; }
+.pp-ik-m { font-size: 10.5px; color: var(--p-muted-fg); margin-top: 4px; }
+.pp-ikp { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+.pp-ikp span { display: flex; justify-content: space-between; gap: 10px; font-size: 10px; font-weight: 500; line-height: 1.2; padding: 2px 7px; border-radius: 999px; white-space: nowrap; transition: opacity 0.3s ease; }
+.pp-ikp b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.pp-ikp .pos { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.pp-ikp .risk { background: var(--p-red-bg); color: var(--p-red-fg); }
+.pp-ikp .att { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.pp-ikp .z { opacity: 0.5; }
+.pp-ib { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.pp-icol { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.pp-icol-h { display: flex; align-items: center; gap: 6px; padding: 0 2px; font-size: 12px; font-weight: 500; color: var(--p-fg); }
+.pp-icol-h i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.pp-icol-h i.pos { background: var(--p-emerald); }
+.pp-icol-h i.risk { background: var(--p-red); }
+.pp-icol-h i.att { background: #af7100; }
+.pp-icol-h span { font-size: 10.5px; color: var(--p-muted-fg); font-variant-numeric: tabular-nums; }
+.pp-icol-e { border: 1px dashed var(--p-line-strong); border-radius: 11px; padding: 12px; text-align: center; font-size: 10.5px; color: var(--p-muted-fg); }
+.pp-icard { display: none; gap: 9px; background: var(--p-card); border: 1px solid var(--p-border); border-radius: 11px; padding: 10px; }
+.pp-icard.is-in { display: flex; animation: ppIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.pp-icard.is-high { background: var(--p-red-bg); border-color: transparent; }
+@keyframes ppIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.pp-ic-ico { width: 28px; height: 28px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.pp-ic-ico svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pp-ic-ico.pos { background: var(--p-emerald-bg); color: var(--p-emerald-fg); }
+.pp-ic-ico.att { background: var(--p-amber-bg); color: var(--p-amber-fg); }
+.pp-ic-ico.risk { background: #fbd0c8; color: var(--p-red-fg); }
+.pp-ic-b { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.pp-ic-t { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.pp-ic-n { font-size: 12px; font-weight: 600; color: var(--p-fg); line-height: 1.3; }
+.pp-ic-t .pp-pill { font-size: 9.5px; padding: 2px 7px; }
+.pp-icard.is-high .pp-pill.risk { background: #ffffff; }
+.pp-ic-s { font-size: 10px; color: var(--p-muted-fg); margin-top: 2px; }
+.pp-ic-c { font-size: 10.5px; color: var(--p-muted-fg); line-height: 1.4; margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pp-icard.is-high .pp-ic-c { color: #4a2b26; }
+.pp-ic-ch { display: flex; flex-wrap: wrap; gap: 3px 10px; margin-top: 5px; }
+.pp-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: var(--p-muted-fg); }
+.pp-chip b { display: inline-flex; align-items: center; gap: 2px; font-weight: 500; }
+.pp-chip b.down { color: var(--p-red-fg); }
+.pp-chip b.up { color: var(--p-emerald-fg); }
+.pp-chip svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Fortællingens fokus-dæmpning gælder kun det gamle board, ikke de rigtige sider */
+.app[data-focus] .pp-pg .kpis, .app[data-focus] .pp-pg .dims { opacity: 1; }
+
+/* Assistent = 3. kolonne, der klemmer indholdet (ingen overlay) */
+.app > .fa-panel { position: relative; inset: auto; width: auto; max-width: none; height: auto; max-height: none; flex: 0 0 0px; margin: 2px 0 10px 0; transform: none; opacity: 0; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 19, 26, 0.04); pointer-events: none; transition: flex-basis 0.5s cubic-bezier(0.22, 1, 0.36, 1), margin 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, box-shadow 0.4s ease; }
+.app > .fa-panel.is-open { pointer-events: auto; }
+.appwin.is-chatfocus .app > .fa-panel { box-shadow: 0 0 0 2px var(--p-mark), 0 10px 30px rgba(91, 75, 245, 0.16); }
+.app > .fa-panel .fa-head { height: 46px; }
+.app > .fa-panel.is-open { flex-basis: 336px; margin-right: 10px; opacity: 1; transform: none; }
+.app > .fa-panel > * { width: 336px; flex-shrink: 0; }
+.app > .fa-panel .fa-body { flex: 1; min-height: 0; }
+.fa-composer { flex-direction: column; align-items: stretch; gap: 7px; padding: 10px 10px 8px 12px; }
+.fa-crow { display: flex; align-items: center; gap: 8px; }
+.fa-csel { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; color: var(--p-muted-fg); white-space: nowrap; }
+.fa-csel svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-crow .fa-csel + .fa-csel { margin-left: auto; }
+.fa-composer .fa-send { border-radius: 50%; }
+.fa-empty-title { font-size: 25px; }
+.fa-topics { gap: 6px; max-width: 290px; }
+.fa-topic { border-radius: 14px; padding: 8px 13px; }
+
+/* Container-queries: når assistenten klemmer siden, folder gitrene sig som i appen */
+@container (max-width: 720px) {
+  .pp-kr2, .pp-kr3, .pp-hrow { grid-template-columns: minmax(0, 1fr); }
+  .pp-ib, .pp-ik { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pp-act .pseg { display: none; }
+  .pp-sv-a { width: 110px; }
+}
+@media (max-width: 900px) {
+  .app > .fa-panel.is-open { position: absolute; right: 12px; bottom: 12px; top: auto; left: auto; width: calc(100% - 24px); flex-basis: auto; height: 300px; margin: 0; z-index: 39; }
+  .app > .fa-panel > * { width: 100%; }
+}
 
 /* ---- Guide chip (fortæller-pegepind, flytter blikket måned for måned) ---- */
 .guide-chip {
@@ -769,11 +1134,11 @@ body {
 .app[data-focus="chat"] .kpis, .app[data-focus="chat"] .views,
 .app[data-focus="chat"] .alerts, .app[data-focus="chat"] .dims { opacity: 0.35; }
 .appwin.is-chatfocus .fa-panel {
-  box-shadow: 0 0 0 2px var(--p-cq), 0 22px 60px rgba(99, 102, 241, 0.28);
+  box-shadow: 0 0 0 2px var(--p-mark), 0 22px 60px rgba(91, 75, 245, 0.25);
 }
 
 @media (max-width: 900px) {
-  .fa-panel { width: calc(100% - 24px); right: 12px; bottom: 66px; height: 300px; }
+  .fa-panel { width: calc(100% - 24px); right: 12px; bottom: 12px; top: auto; height: 300px; }
   .fa-launcher { right: 12px; bottom: 12px; width: 42px; height: 42px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1096,7 +1461,7 @@ body {
   .pmain { padding: 12px 14px; gap: 10px; }
   .pmain-sub { display: none; }
   .kpis { grid-template-columns: 1fr 1fr; }
-  .kpi:nth-child(3) { display: none; }
+  /* 2x2 KPI-gitter på smalle skærme */
   .kpi-spark { display: none; }
   .kpi-value { font-size: 24px; }
   .dims { gap: 6px; }
@@ -1107,7 +1472,7 @@ body {
   .mainrow { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
   .views { min-height: 180px; }
   .alerts { max-height: 190px; }
-  .heat { grid-template-columns: 64px repeat(5, 1fr); gap: 3px; }
+  .heat { grid-template-columns: 72px repeat(6, minmax(0, 1fr)); gap: 3px; }
   .heat-c { padding: 7px 2px; font-size: 11px; border-radius: 5px; }
   .heat-h { font-size: 7.5px; }
   .heat-r { font-size: 10px; }
@@ -1115,6 +1480,24 @@ body {
   .explore { padding: 80px 16px 60px; }
   .explore-board .appwin { min-height: auto; }
   .chrome-url { font-size: 10px; }
+}
+
+/* Platform-sider på smalle skærme (okt 2026) */
+@media (max-width: 900px) {
+  .pmain { padding: 0; gap: 0; margin: 2px 8px 8px 8px; }
+  .pp-in { padding: 12px 12px 16px; gap: 10px; }
+  .pp-pt { font-size: 23px; }
+  .ptop { gap: 8px; padding: 8px 10px 6px; }
+  .ptop-company, .ptop-search > span, .ptop-kbd { display: none; }
+  .ptop-search { flex: 0 0 30px; max-width: 30px; padding: 0; justify-content: center; margin: 0 0 0 auto; }
+  .ptop-ico[title="Indstillinger"], .ptop-ico[title="Nyheder"] { display: none; }
+}
+@container (max-width: 520px) {
+  .dims { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pp-ik, .pp-ib { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pp-sv-a { width: 84px; }
+  .pp-sv-u { display: none; }
+  .pp-hctl .pp-seg2 { display: none; }
 }
 
 /* ============ REDUCED MOTION ============ */
@@ -1160,222 +1543,216 @@ body {
       <div class="appwin">
         <div class="chrome">
           <div class="chrome-dots"><span></span><span></span><span></span></div>
-          <div class="chrome-url"><span class="lock">&#128274;</span>app.culturequest.io/dashboard</div>
+          <div class="chrome-url"><span class="lock">&#128274;</span><span class="js-url">app.culturequest.io/home</span></div>
           <div style="width: 47px;"></div>
         </div>
 
+        <div class="ptop">
+          <div class="ptop-logo">
+            <div class="ptop-mark js-avatar">DV</div>
+            <div class="ptop-company js-company">Demovirksomhed</div>
+          </div>
+          <div class="ptop-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Søg efter personer, undersøgelser, sider osv.</span>
+            <span class="ptop-kbd">⌘K</span>
+          </div>
+          <button class="ptop-ai js-fa-launcher" type="button" aria-label="Åbn assistent">
+            <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+            <span>AI-assistent</span>
+            <span class="fa-badge js-fa-badge"></span>
+          </button>
+          <span class="ptop-ico" title="Indstillinger"><svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span class="ptop-ico" title="Nyheder"><svg viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><i class="ptop-dot"></i></span>
+          <span class="ptop-ico" title="Notifikationer"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i class="ptop-count">2</i></span>
+          <div class="ptop-avatar js-leadinitials">AV</div>
+          <span hidden class="js-leadname">Amalie Veggerby</span><span hidden class="js-leadmail">amalie@firma.dk</span>
+        </div>
+
         <div class="app" id="dashMain" data-focus="none">
-          <!-- Sidebar (platform 1:1) -->
-          <nav class="psb" aria-hidden="true">
-            <div class="psb-logo">
-              <div class="psb-logo-mark js-avatar">DV</div>
-              <div class="psb-logo-name js-company">Demovirksomhed</div>
+          <!-- Ikon-rail (platform 1:1: altid kollapset) -->
+          <div class="psb" role="navigation" aria-hidden="true">
+            <div class="psb-item is-active" data-nav="home" title="Startside">
+              <svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
             </div>
-            <div class="psb-group-label">Platform</div>
-            <div class="psb-item is-active">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-              <span>Dashboard</span>
+            <div class="psb-item" title="Medarbejdere">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>
-              <span>Analyse</span>
+            <div class="psb-item" data-nav="analyse" title="Analyse">
+              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
             </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
-              <span>Assistent</span>
+            <div class="psb-item" title="Kulturundersøgelser">
+              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
             </div>
-            <div class="psb-group-label">Feedback</div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/></svg>
-              <span>Kulturundersøgelser</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <span>Kommentarer</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M2 22h20"/><path d="M10 6h4M10 10h4M10 14h4"/></svg>
-              <span>APV</span>
-            </div>
-            <div class="psb-group-label">Generelt</div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 10h1M9 14h1M14 10h1M14 14h1"/></svg>
-              <span>Organisation</span>
-            </div>
-            <div class="psb-item">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              <span>Indstillinger</span>
+            <div class="psb-item" title="Arbejdspladsvurdering">
+              <svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
             </div>
             <div class="psb-spacer"></div>
-            <div class="psb-item psb-help">
+            <div class="psb-item psb-help" title="Hjælpecenter">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-              <span>Hjælpecenter</span>
             </div>
-            <div class="psb-user">
-              <div class="psb-avatar js-leadinitials">AV</div>
-              <div class="psb-user-meta">
-                <div class="psb-user-name js-leadname">Amalie Veggerby</div>
-                <div class="psb-user-mail js-leadmail">amalie@firma.dk</div>
-              </div>
-            </div>
-          </nav>
+          </div>
 
           <!-- Main content -->
           <main class="pmain">
+          <div class="pp-stack">
+            <section class="pp-pg pp-pg-home is-on" data-pg="home"><div class="pp-in">
             <div class="pmain-head">
               <div>
                 <div class="pmain-title">Hej, <span class="js-leadfirst">Amalie</span></div>
-                <div class="pmain-sub">Få et overblik over din organisations kultur og engagement</div>
+                <div class="pmain-sub">Godmorgen. Vi er glade for at se dig.</div>
               </div>
-              <div class="pmain-filter"><span class="live-dot"></span>Seneste måling · <b class="js-liveweek">Januar</b></div>
+              <div class="pmain-ctrls" aria-hidden="true">
+                <div class="pseg"><span>3 mdr</span><span class="is-on">6 mdr</span><span>1 år</span><span>2 år</span><span>ÅTD</span><span>Al tid</span><span>Tilpasset</span></div>
+                <div class="pscope">Alle <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+                <span hidden class="js-liveweek"></span>
+              </div>
             </div>
 
             <div class="kpis">
               <div class="kpi">
-                <div class="kpi-label">Kultur score</div>
-                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-                <div class="kpi-row">
-                  <span class="kpi-value js-cs">79</span>
-                  <span class="kpi-suffix">/100</span>
-                  <span class="kpi-delta flat js-cs-delta">—</span>
-                </div>
-                <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
+                <div class="kpi-head"><span class="kpi-title">Kultur score</span><span class="kpi-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+                <div class="kpi-body">
+                  <div class="kpi-num"><span class="kpi-value js-cs">–</span><span class="kpi-suffix">/100</span></div>
+                  <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/>
-                      <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                      <stop offset="0%" stop-color="#4429d8" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#4429d8" stop-opacity="0"/>
                     </linearGradient>
                   </defs>
                   <path class="spark-fill js-sparkfill" d=""></path>
                   <path class="js-sparkline" d=""></path>
                 </svg>
+                </div>
+                <div class="kpi-meta"><span class="tpill flat js-cs-delta"></span><span class="kpi-cmp js-cmp"></span></div>
               </div>
               <div class="kpi">
-                <div class="kpi-label">Engagement-score</div>
-                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-                <div class="kpi-row">
-                  <span class="kpi-value js-eng">74</span>
-                  <span class="kpi-suffix">/100</span>
-                  <span class="kpi-delta flat js-eng-delta">—</span>
+                <div class="kpi-head"><span class="kpi-title">Engagement</span><span class="kpi-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+                <div class="kpi-body">
+                  <div class="kpi-num"><span class="kpi-value js-eng">–</span><span class="kpi-suffix">/100</span></div>
+                  <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
+                  <path class="spark-fill js-sparkfill-eng" d=""></path>
+                  <path class="js-sparkline-eng" d=""></path>
+                </svg>
                 </div>
+                <div class="kpi-meta"><span class="tpill flat js-eng-delta"></span><span class="kpi-cmp js-cmp"></span></div>
               </div>
               <div class="kpi">
-                <div class="kpi-label">Svarprocent</div>
-                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-                <div class="kpi-row">
-                  <span class="kpi-value js-rr">91</span>
-                  <span class="kpi-suffix">%</span>
+                <div class="kpi-head"><span class="kpi-title">Deltagelse</span><span class="kpi-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span></div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+                <div class="kpi-body">
+                  <div class="kpi-num"><span class="kpi-value js-rr">–</span><span class="kpi-suffix">%</span></div>
+                  <svg class="kpi-spark" viewBox="0 0 104 30" preserveAspectRatio="none">
+                  <path class="spark-fill js-sparkfill-rr" d=""></path>
+                  <path class="js-sparkline-rr" d=""></path>
+                </svg>
                 </div>
-                <div class="kpi-rrbar"><div class="kpi-rrbar-fill js-rrbar"></div></div>
+                <div class="kpi-meta"><span class="tpill flat js-rr-delta"></span><span class="kpi-cmp js-cmp"></span></div>
               </div>
-              <div class="kpi kpi-compact">
-                <div class="kpi-label">Undersøgelser</div>
-                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-                <div class="kpi-row">
-                  <span class="kpi-value js-surveys">1</span>
+              <div class="kpi kpi--midnight">
+                <div class="kpi-head"><span class="kpi-title">Organisation</span></div>
+                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+                <div class="kpi-body">
+                  <div class="kpi-num"><span class="kpi-value js-emp2">34</span><span class="kpi-suffix">medarbejdere</span></div>
+                  <span class="kpi-org-ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                 </div>
-                <div class="kpi-note">Næste måling · <span class="js-nextmonth">Februar</span></div>
-              </div>
-              <div class="kpi kpi-compact">
-                <div class="kpi-label">Organisation</div>
-                <span class="kpi-arrow-link"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-                <div class="kpi-row">
-                  <span class="kpi-value js-emp2">34</span>
-                  <span class="kpi-suffix">medarb.</span>
-                </div>
-                <div class="kpi-note">4 afdelinger · 3 teams</div>
+                <div class="kpi-meta">4 afdelinger · 3 teams</div>
+                <span hidden class="js-surveys"></span><span hidden class="js-nextmonth"></span>
               </div>
             </div>
 
-            <div class="dims js-dims"></div>
-
-            <div class="mainrow">
-              <div class="views">
-                <div class="view-tabs js-vtabs">
-                  <button class="vtab is-active" data-view="heat">Heatmap</button>
-                  <button class="vtab" data-view="likert">Svarfordeling</button>
-                  <button class="vtab" data-view="konsens">Overensstemmelse</button>
-                  <button class="vtab" data-view="quad">Segmenter</button>
-                </div>
-                <div class="view-stack">
-                  <div class="view is-active" data-view="heat">
-                    <div class="heat js-heat"></div>
-                    <div class="heat-note">Kategoriscorer pr. afdeling. Skala 0 til 100.</div>
-                  </div>
-                  <div class="view" data-view="likert">
-                    <div class="likert">
-                      <div class="likert-head">
-                        <span class="likert-score js-likertscore">54</span>
-                        <div class="likert-q">Hvor ofte føler du dig stresset? <span class="likert-seg">· Teknik</span></div>
-                        <span class="likert-badge js-likertbadge">Overvej et initiativ</span>
-                      </div>
-                      <div class="likert-bar js-likertbar"></div>
-                      <div class="likert-labels js-likertlabels"></div>
-                      <div class="heat-note js-histnote">Fordelingen samler sig pænt om et lavt stressniveau.</div>
-                    </div>
-                  </div>
-                  <div class="view" data-view="konsens">
-                    <div class="konsens">
-                      <div class="konsens-head">
-                        <div class="konsens-title">Kulturel overensstemmelse <span class="likert-seg">· Teknik</span></div>
-                        <span class="likert-badge js-konsensbadge">Høj overensstemmelse</span>
-                      </div>
-                      <div class="konsens-stats">
-                        <div class="konsens-stat"><b class="js-kgns">75</b><span>Gennemsnit</span></div>
-                        <div class="konsens-stat"><b class="js-kmed">74</b><span>Median</span></div>
-                        <div class="konsens-stat"><b>14</b><span>Medarbejdere</span></div>
-                      </div>
-                      <div class="konsens-bars js-konsens"></div>
-                      <div class="konsens-axis js-konsensaxis"></div>
-                      <div class="konsens-warn js-konsenswarn"></div>
-                    </div>
-                  </div>
-                  <div class="view" data-view="quad">
-                    <div class="quad">
-                      <div class="quad-plot">
-                        <div class="quad-mid-v"></div>
-                        <div class="quad-mid-h"></div>
-                        <div class="quad-zone" style="top: 4px; right: 6px;">Thriving</div>
-                        <div class="quad-zone" style="top: 4px; left: 6px;">At risk</div>
-                        <div class="quad-zone" style="bottom: 4px; right: 6px;">Developing</div>
-                        <div class="quad-zone" style="bottom: 4px; left: 6px;">Critical</div>
-                        <svg class="quad-trail js-quadtrail"><polyline points=""/></svg>
-                        <div class="js-quaddots"></div>
-                      </div>
-                    </div>
-                    <div class="quad-note">Lodret: engagement. Vandret: trend. Hver prik er en afdeling.</div>
-                  </div>
-                </div>
+            <div class="pp-hrow">
+              <div class="pp-card pp-hs">
+                <div class="pp-ch"><div><div class="pp-ct">Undersøgelser</div><div class="pp-cd">Kørende, kommende og nyligt lukkede</div></div><span class="pp-cl">Alle undersøgelser</span></div>
+                <ul class="pp-list js-hs"></ul>
               </div>
-
-              <div class="alerts">
-                <div class="alerts-head">Signaler <span class="alerts-count js-alertcount">0</span></div>
-                <div class="alerts-sub">Automatisk detektion på tværs af målinger</div>
-                <div class="alerts-list js-alerts">
-                  <div class="alerts-empty js-alertsempty">Ingen aktive signaler. Algoritmerne lytter.</div>
-                </div>
+              <div class="pp-card pp-hn">
+                <div class="pp-ch"><div><div class="pp-ct">Nyheder</div><div class="pp-cd">Nyt i culturequest.</div></div><span class="pp-cl">Se alle nyheder</span></div>
+                <ul class="pp-list js-hn"></ul>
               </div>
             </div>
+            </div></section>
+            <section class="pp-pg pp-pg-ana" data-pg="ana" data-sub="kultur"><div class="pp-in">
+              <div class="pp-ph">
+                <div><div class="pp-pt">Analyse</div><div class="pp-pd">Udforsk kulturmålinger, engagementsdata og risikovurderinger.</div></div>
+                <div class="pp-act pp-act-kultur" aria-hidden="true"><span class="pp-asof"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>I dag</span><div class="pseg"><span>3 mdr</span><span class="is-on">6 mdr</span><span>1 år</span><span>2 år</span><span>ÅTD</span><span>Al tid</span></div><span class="pp-sel">Alle <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></div>
+                <div class="pp-act pp-act-ind" aria-hidden="true"><span class="pp-sel">Alle <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></div>
+              </div>
+              <div class="pp-tabs"><span class="pp-tab is-on" data-sub="kultur">Kultur</span><span class="pp-tab">Engagement</span><span class="pp-tab">eNPS</span><span class="pp-tab">Medarbejdere</span><span class="pp-tab" data-sub="ind">Indikatorer</span></div>
+
+              <div class="pp-sub pp-sub-kultur is-on" data-sub="kultur">
+                <div class="dims js-dims"></div>
+                <div class="pp-kr2">
+                  <div class="pp-card pp-kscore">
+                    <div class="pp-ch"><div><div class="pp-ct">Kultur score <svg class="pp-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="pp-cd js-k-desc">Seneste måling</div></div><span class="pp-pill pos">Høj konfidens</span></div>
+                    <div class="pp-ring"><svg viewBox="0 0 208 208" aria-hidden="true"><circle cx="104" cy="104" r="99" fill="none" stroke="#e9e7df" stroke-width="10"/><circle class="js-ring-arc" cx="104" cy="104" r="99" fill="none" stroke="#10855c" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 622"/></svg><div class="pp-ring-c"><span class="pp-ring-n js-ring-n">–</span><span class="pp-ring-hl"></span><span class="pp-ring-of">100</span></div></div>
+                    <div class="pp-ring-p js-ring-p"></div>
+                    <div class="pp-stats"><div><b class="js-k-resp">–</b><span>respondenter</span></div><div><b class="js-k-pop">–</b><span>af population</span></div><div><b>10</b><span>Kategorier</span></div></div>
+                  </div>
+                  <div class="pp-card pp-ktrend">
+                    <div class="pp-ch"><div><div class="pp-ct">Kultur over tid <svg class="pp-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="pp-cd">Kultur score · Seneste 6 måneder</div></div><div class="pp-hctl"><span class="pp-leg"><span><i></i>Målt</span><span><i class="dash"></i>Projekteret</span></span><span class="pp-sel">Kultur score <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></div></div>
+                    <svg class="pp-trend js-trend" viewBox="0 0 600 214" aria-hidden="true"></svg>
+                  </div>
+                </div>
+                <div class="pp-kr3">
+                  <div class="pp-card pp-kdbr">
+                    <div class="pp-ch"><div><div class="pp-ct">Dimensionsopdeling</div><div class="pp-cd">Alle kategorier bag dimensionsscorerne ovenfor</div></div></div>
+                    <div class="js-dbr"></div>
+                  </div>
+                  <div class="pp-card pp-kalign">
+                    <div class="pp-ch"><div><div class="pp-ct">Kulturel overensstemmelse <svg class="pp-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="pp-cd">Hvor ens medarbejderne oplever kulturen</div></div><div class="pp-pills"><span class="pp-pill pos">Høj konfidens</span><span class="pp-pill js-al-lvl">Høj overensstemmelse</span></div></div>
+                    <div class="pp-al-leg"><span><i class="l1"></i><b class="js-al-l1" style="font-weight:500">Kulturscore</b></span><span><i class="l2"></i><span class="js-al-l2">Den midterste halvdel af medarbejderne</span></span><span class="js-al-l3w"><i class="l3"></i><span class="js-al-l3">Forrige måling</span></span></div>
+                    <div class="pp-al-plot"><svg class="pp-al-svg js-al-svg" viewBox="0 0 400 176" aria-hidden="true"></svg></div>
+                    <div class="pp-al-band"><i style="background:#f6c2b8"></i><i style="background:#f8d3a7"></i><i style="background:#b4dac7"></i></div>
+                    <div class="pp-note att js-al-note"></div>
+                  </div>
+                </div>
+                <div class="pp-card pp-heatc">
+                  <div class="pp-ch"><div><div class="pp-ct">Heatmap efter segment <svg class="pp-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="pp-cd">Alle dimensioner for alle segmenter, hver fra sin seneste måling.</div></div><div class="pp-hctl"><span class="pp-seg2"><span class="is-on">Score</span><span>Ændring</span></span><span class="pp-seg2"><span class="is-on">Dimensioner</span><span>Kategorier</span></span><span class="pp-sel">Afdelinger <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></div></div>
+                  <div class="heat js-heat"></div>
+                  <div class="pp-hfoot js-hfoot" style="display:none"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg><span class="js-hfoot-t"></span></div>
+                </div>
+              </div>
+
+              <div class="pp-sub pp-sub-ind" data-sub="ind">
+                <div class="pp-ik">
+                  <div class="pp-card pp-ikc"><div><div class="pp-ik-l">Åbne signaler</div><div class="pp-ik-n js-ik-open">0</div></div>
+                    <div class="pp-ikp"><span class="pos js-ikp-pos">Positiv <b>0</b></span><span class="risk js-ikp-high">Høj risiko <b>0</b></span><span class="att js-ikp-med">Mellem risiko <b>0</b></span><span class="att js-ikp-low">Lav risiko <b>0</b></span></div></div>
+                  <div class="pp-card pp-ikc"><div><div class="pp-ik-l">Berørte grupper</div><div class="pp-ik-n js-ik-grp">0</div><div class="pp-ik-m">Afdelinger og teams med et åbent risikosignal</div></div></div>
+                  <div class="pp-card pp-ikc"><div><div class="pp-ik-l">Løste</div><div class="pp-ik-n js-ik-res">0</div><div class="pp-ik-m js-ik-resm">Ingen løst endnu</div></div></div>
+                  <div class="pp-card pp-ikc"><div><div class="pp-ik-l">Udsatte</div><div class="pp-ik-n">0</div><div class="pp-ik-m">Intet udsat lige nu</div></div></div>
+                </div>
+                <div class="pp-tabs pp-tabs--sm"><span class="pp-tab is-on">Åbne</span><span class="pp-tab">Historik</span></div>
+                <div class="pp-ib js-ib">
+                  <section class="pp-icol pp-icol-pos"><header class="pp-icol-h"><i class="pos"></i>Positiv<span class="js-icn-pos">0</span></header><div class="pp-icol-e js-ice-pos">Ingen</div></section>
+                  <section class="pp-icol pp-icol-high"><header class="pp-icol-h"><i class="risk"></i>Høj risiko<span class="js-icn-high">0</span></header><div class="pp-icol-e js-ice-high">Ingen</div></section>
+                  <section class="pp-icol pp-icol-med"><header class="pp-icol-h"><i class="att"></i>Mellem risiko<span class="js-icn-med">0</span></header><div class="pp-icol-e js-ice-med">Ingen</div></section>
+                  <section class="pp-icol pp-icol-low"><header class="pp-icol-h"><i class="att"></i>Lav risiko<span class="js-icn-low">0</span></header><div class="pp-icol-e js-ice-low">Ingen</div></section>
+                </div>
+              </div>
+            </div></section>
+          </div>
           </main>
-        </div>
-
-        <!-- Floating assistant (platform 1:1) -->
-        <button class="fa-launcher js-fa-launcher" type="button" aria-label="Åbn assistent">
-          <svg viewBox="33 48 165 165" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"><path d="M60.1,128v-25.6c0-23.4,19-42.3,42.4-42.3H128c23.4,0,42.4,19,42.4,42.3v98l-30-30h-37.9C79,170.4,60.1,151.4,60.1,128z"/></svg>
-          <span class="fa-badge js-fa-badge"></span>
-        </button>
-        <div class="fa-panel js-fa-panel" role="dialog" aria-label="Assistent">
+          <div class="fa-panel js-fa-panel" role="dialog" aria-label="Assistent">
           <div class="fa-head">
-            <div class="fa-head-ico">
-              <svg viewBox="33 48 165 165" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"><path d="M60.1,128v-25.6c0-23.4,19-42.3,42.4-42.3H128c23.4,0,42.4,19,42.4,42.3v98l-30-30h-37.9C79,170.4,60.1,151.4,60.1,128z"/></svg>
-            </div>
-            <div class="fa-head-meta">
-              <div class="fa-head-name">Assistent</div>
-              <div class="fa-head-status">Online · kender jeres data</div>
-            </div>
+            <div class="fa-head-name">Assistent</div>
+            <div class="fa-head-actions" aria-hidden="true"><span class="fa-hbtn" title="Ny chat"><svg viewBox="0 0 24 24"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></span><span class="fa-hbtn" title="Chathistorik"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg></span><span class="fa-hbtn" title="Luk"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>
           </div>
           <div class="fa-body js-fa-body">
-            <div class="fa-welcome js-fa-welcome">Hej! Jeg er culturequest-assistenten. Spørg mig om jeres kulturdata, eller vent til jeg opfanger noget, der kræver din opmærksomhed.</div>
+            <div class="fa-welcome js-fa-welcome">
+              <div class="fa-empty-title">Hvordan kan jeg hjælpe dig i dag?</div>
+              <div class="fa-topics">
+                <div class="fa-topic"><b>Support</b><span>Brug for hjælp til platformen</span></div>
+                <div class="fa-topic"><b>Kulturundersøgelser</b><span>Dyk ned i kulturundersøgelser</span></div>
+                <div class="fa-topic"><b>Coaching</b><span>Professionel coaching og vejledning</span></div>
+                <div class="fa-topic"><b>APV</b><span>APV-målinger og -processer</span></div>
+                <div class="fa-topic"><b>Tendenser &amp; analyser</b><span>Forstå mine tendenser og analyser</span></div>
+                <div class="fa-topic"><b>Andet</b><span>Noget andet</span></div>
+              </div>
+            </div>
             <div class="fa-msg bot" data-chat-week="7.65">Jeg har flagget en <strong>Silent Disengagement-signatur</strong> i Teknik: lav anerkendelse, begrænset udvikling og faldende fastholdelse hos 6 af 14 — mens den samlede trivsel ser uændret ud. Det er derfor, jeres samlede score ikke har advaret jer. Vil du se min analyse?</div>
             <div class="fa-msg user" data-chat-week="8.1">Ja. Hvor alvorligt er det?</div>
             <div class="fa-msg bot" data-chat-week="8.5">Mønstret matcher Gallup's exit-pattern med 8-12 ugers varsel. Estimat: 15-25% af segmentet i forhøjet risiko.
@@ -1395,9 +1772,14 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
           </div>
           <div class="fa-composer">
             <div class="fa-input">Spørg assistenten…</div>
-            <button class="fa-send" type="button" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            <div class="fa-crow"><span class="fa-csel">Tendenser &amp; analyser <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span><span class="fa-csel">Auto <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span><button class="fa-send" type="button" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button></div>
           </div>
+          <div class="fa-disclaimer">Culturequest AI kan lave fejl. Vi anbefaler at dobbelttjekke svarene.</div>
         </div>
+        </div>
+
+        <!-- AI-assistent åbnes fra topbarens knap -->
+        
       </div>
     </div>
   </div>
@@ -1737,8 +2119,20 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   })();
 
   /* ============ DATA ============ */
-  var DIM_NAMES = ['Trivsel', 'Tillid & Tryghed', 'Tilhørsforhold', 'Formål & Udvikling', 'Arbejdsmiljø'];
-  var DIM_SHORT = ['Trivsel', 'Tillid', 'Tilhør', 'Formål', 'Arb.miljø'];
+  var DIM_NAMES = ['Sundhed', 'Tillid og tryghed', 'Tilhørsforhold og inklusion', 'Formål og udvikling', 'Arbejdsmiljø'];
+  var DIM_SHORT = ['Sundhed', 'Tillid', 'Tilhør', 'Formål', 'Arb.miljø'];
+  /* Lucide-ikoner som i platformens KpiTile/TrendPill */
+  var DIM_ICONS = [
+    '<svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>',
+    '<svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>'
+  ];
+  var CONF_ICON = '<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>';
+  var TP_UP = '<svg viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></svg>';
+  var TP_DN = '<svg viewBox="0 0 24 24"><path d="M22 17 13.5 8.5 8.5 13.5 2 7"/><path d="M16 17h6v-6"/></svg>';
+  var TP_FL = '<svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>';
   var DEPTS = ['Teknik', 'Salg', 'Drift', 'Admin'];
   var MONTHS = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
 
@@ -1822,12 +2216,11 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   /* Signaler fra mønster-kataloget: enkelt driver (WATCH) → kombination (HIGH)
      → signatur (CRITICAL) → Recovery Pattern (POSITIVE). w = måned. */
   var ALERTS = [
-    { w: 3, sev: 'info', ico: 'variance', meta: 'Marts · WATCH', title: 'Driver-glidning · Anerkendelse', body: 'Anerkendelse glider hos 3 af 14 i Teknik. Enkeltstående driver, under mønster-tærskel. Overvåges.' },
-    { w: 5, sev: 'warning', ico: 'split', meta: 'Maj · HIGH', title: 'Karasek-komponenter i spil', body: 'Arbejdsbelastning stiger samtidig med at oplevet indflydelse falder i Teknik. To af tre betingelser i Karasek Demand-Control (1979) er opfyldt.' },
-    { w: 7, sev: 'danger', ico: 'alarm', meta: 'Juli · CRITICAL', title: 'Silent Disengagement-signatur', body: '6 af 14 i Teknik: lav anerkendelse + begrænset udvikling + faldende fastholdelse, mens samlet trivsel fremstår uændret. Edmondson + Gallup exit-pattern. Varsel: 8-12 uger.' },
-    { w: 7.4, sev: 'info', ico: 'comment', meta: 'Juli · WATCH', title: 'Hidden Engagement Drop', body: 'Samlet score stabil, men underliggende drivere er faldet markant. En klassisk måling ville melde "alt fint".' },
-    { w: 8, sev: 'reco', ico: 'spark', meta: 'August · PLAN', title: 'Interventionsplan klar', body: '3-sporet plan genereret ud fra mønstrets drivere: strukturelt, ledelsesadfærd, målepunkter. Åbn assistenten for detaljer.' },
-    { w: 11, sev: 'positive', ico: 'check', meta: 'November · POSITIVE', title: 'Recovery Pattern', body: 'Risk-band forbedring i to på hinanden følgende målinger. Anerkendelse +9, indflydelse +6 siden august. Vedvarende.' }
+    { w: 3, sev: 'warning', ico: 'variance', tone: 'att', level: 'Lav risiko', meta: 'Teknik · marts', title: 'Vedvarende fald', body: 'Anerkendelse er faldet i tre målinger i træk. Én driver, under mønster-tærsklen. Overvåges.', chips: [['down', 'risk', 'Anerkendelse −6 %']] },
+    { w: 5, sev: 'warning', ico: 'split', tone: 'att', level: 'Mellem risiko', meta: 'Teknik · maj', title: 'Belastningsrisiko', body: 'Arbejdsbelastningen stiger, mens oplevet indflydelse falder. To af tre betingelser i Karasek Demand-Control (1979) er opfyldt.', chips: [['up', 'risk', 'Belastning +8 %'], ['down', 'risk', 'Indflydelse −6 %']] },
+    { w: 7, sev: 'danger', ico: 'alarm', tone: 'risk', level: 'Høj risiko', meta: 'Teknik · juli', title: 'Risiko for opsigelser', body: 'Lav anerkendelse, begrænset udvikling og faldende fastholdelse, mens den samlede trivsel ser uændret ud. Mønstret kendes fra exit-forskningen.', chips: [['down', 'risk', 'Fastholdelse −11 %'], ['down', 'risk', 'Anerkendelse −9 %']] },
+    { w: 7.4, sev: 'warning', ico: 'comment', tone: 'att', level: 'Mellem risiko', meta: 'Teknik · juli', title: 'Skjult mønster', body: 'Den samlede score er stabil, men de underliggende drivere er faldet markant. En klassisk måling ville melde alt fint.', chips: [['down', 'risk', 'Drivere −7 %']] },
+    { w: 11, sev: 'positive', ico: 'check', tone: 'pos', level: 'Positiv', meta: 'Teknik · november', title: 'Fremgangsmønster', body: 'Forbedring i to målinger i træk siden august. Vendingen holder.', chips: [['up', 'pos', 'Anerkendelse +9 %'], ['up', 'pos', 'Indflydelse +6 %']] }
   ];
 
   var VIEW_MAP = ['heat', 'heat', 'heat', 'likert', 'heat', 'heat', 'konsens', 'likert', 'heat', 'quad', 'konsens', 'heat'];
@@ -1842,13 +2235,14 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   /* Platformens score-bands: Kritisk 0-29, Kræver opmærksomhed 30-49,
      Overvej et initiativ 50-69, Ser godt ud 70-84, Fantastisk 85-100 */
   function bandColor(score) {
-    if (score >= 85) return { bg: '#ecfdf5', fg: '#047857', bar: '#16a34a', label: 'Fantastisk' };
-    if (score >= 70) return { bg: '#f0fdf4', fg: '#15803d', bar: '#22c55e', label: 'Ser godt ud' };
-    if (score >= 50) return { bg: '#fffbeb', fg: '#b45309', bar: '#eab308', label: 'Overvej et initiativ' };
-    if (score >= 30) return { bg: '#fff7ed', fg: '#c2410c', bar: '#f97316', label: 'Kræver opmærksomhed' };
-    return { bg: '#fef2f2', fg: '#b91c1c', bar: '#ef4444', label: 'Kritisk' };
+    if (score >= 85) return { bg: '#b4dac7', fg: '#015238', bar: '#10855c', label: 'Fremragende' };
+    if (score >= 70) return { bg: '#d7f0e4', fg: '#0b6b49', bar: '#10855c', label: 'Ser godt ud' };
+    if (score >= 50) return { bg: '#fcebce', fg: '#8a5300', bar: '#e08a00', label: 'Overvej initiativ' };
+    if (score >= 30) return { bg: '#fde2dd', fg: '#97281b', bar: '#c9331f', label: 'Kræver opmærksomhed' };
+    return { bg: '#f6c2b8', fg: '#781307', bar: '#97281b', label: 'Kritisk' };
   }
-  var LIKERT_COLORS = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e'];
+  var LIKERT_COLORS = ['#c9331f', '#e08a00', '#8a8577', '#479a77', '#10855c'];
+  var LIKERT_TEXT = ['#ffffff', '#14131a', '#ffffff', '#ffffff', '#ffffff'];
   var LIKERT_LABELS = ['Meget ofte', 'Ofte', 'Nogle gange', 'Sjældent', 'Aldrig'];
   var KONSENS_BUCKETS = ['30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'];
   var KONSENS_MIDS = [35, 45, 55, 65, 75, 85, 95];
@@ -1884,11 +2278,12 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   function buildBoardDOM(scope) {
     var dimsEl = scope.querySelector('.js-dims');
     if (dimsEl && !dimsEl.children.length) {
-      DIM_NAMES.forEach(function (name) {
+      DIM_NAMES.forEach(function (name, di) {
         var d = document.createElement('div');
         d.className = 'dim';
-        d.innerHTML = '<div class="dim-name">' + name + '</div>' +
-          '<div class="dim-score-row"><span class="dim-score">–</span><span class="dim-arrow flat">→</span></div>' +
+        d.innerHTML = '<div class="dim-top"><span class="dim-ico">' + DIM_ICONS[di] + '</span><span class="dim-name">' + name + '</span></div>' +
+          '<span class="dim-conf" title="Høj konfidens">' + CONF_ICON + '</span>' +
+          '<div class="dim-score-row"><span class="dim-score">–</span><span class="tpill tpill-sm flat dim-arrow"></span></div>' +
           '<div class="dim-bar"><div class="dim-bar-fill" style="width: 70%"></div></div>';
         dimsEl.appendChild(d);
       });
@@ -1896,17 +2291,25 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     var heatEl = scope.querySelector('.js-heat');
     if (heatEl && !heatEl.children.length) {
       heatEl.appendChild(el('div', 'heat-corner', ''));
-      DIM_SHORT.forEach(function (n) { heatEl.appendChild(el('div', 'heat-h', n)); });
+      DIM_NAMES.forEach(function (n) { heatEl.appendChild(el('div', 'heat-h', n)); });
+      heatEl.appendChild(el('div', 'heat-h heat-h-total', 'I alt'));
+      heatEl.appendChild(el('div', 'heat-r heat-r-co', 'Virksomhedsgennemsnit'));
+      for (var hc = 0; hc < 5; hc++) heatEl.appendChild(el('div', 'heat-c heat-c-co js-hco', '–'));
+      heatEl.appendChild(el('div', 'heat-c heat-c-co heat-c-total js-hcot', '–'));
       DEPTS.forEach(function (dept) {
-        heatEl.appendChild(el('div', 'heat-r', dept));
-        for (var c = 0; c < 5; c++) heatEl.appendChild(el('div', 'heat-c', '–'));
+        var hrEl = el('div', 'heat-r', '');
+        hrEl.innerHTML = '<span>' + dept + '</span><span class="hr-n js-hrn"></span>';
+        heatEl.appendChild(hrEl);
+        for (var c = 0; c < 5; c++) heatEl.appendChild(el('div', 'heat-c js-hc', '–'));
+        heatEl.appendChild(el('div', 'heat-c heat-c-total js-hct', '–'));
       });
     }
     var lbar = scope.querySelector('.js-likertbar');
     if (lbar && !lbar.children.length) {
-      LIKERT_COLORS.forEach(function (col) {
+      LIKERT_COLORS.forEach(function (col, li) {
         var seg = el('span', '', '');
         seg.style.backgroundColor = col;
+        seg.style.color = LIKERT_TEXT[li];
         lbar.appendChild(seg);
       });
     }
@@ -1942,21 +2345,28 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       ALERTS.forEach(function (a) {
         var div = el('div', 'alert sev-' + a.sev, '');
         div.setAttribute('data-alert-week', a.w);
+        var chipsHtml = (a.chips || []).map(function (c) {
+          return '<span class="achip ' + c[1] + '">' + (c[0] === 'up' ? TP_UP : TP_DN) + c[2] + '</span>';
+        }).join('');
         div.innerHTML = '<div class="alert-ico">' + ICONS[a.ico] + '</div>' +
-          '<div class="alert-content"><div class="alert-meta">' + a.meta + '</div>' +
-          '<div class="alert-title">' + a.title + '</div>' +
-          '<div class="alert-body">' + a.body + '</div></div>';
+          '<div class="alert-content"><div class="alert-top"><div class="alert-title">' + a.title + '</div>' +
+          '<span class="spill spill--' + a.tone + '">' + a.level + '</span></div>' +
+          '<div class="alert-meta">' + a.meta + '</div>' +
+          '<div class="alert-body">' + a.body + '</div>' +
+          (chipsHtml ? '<div class="alert-chips">' + chipsHtml + '</div>' : '') + '</div>';
         al.insertBefore(div, al.firstChild);
       });
     }
   }
 
-  function deltaBadge(elm, delta) {
+  function deltaBadge(elm, delta, hide) {
+    var keep = (elm.className.match(/js-[\w-]+/g) || []).join(' ');
+    if (hide) { elm.style.display = 'none'; return; }
+    elm.style.display = '';
     var r = Math.round(delta);
-    var base = 'kpi-delta ';
-    if (r > 0) { elm.textContent = '↗ +' + r; elm.className = base + 'up'; }
-    else if (r < 0) { elm.textContent = '↘ ' + r; elm.className = base + 'down'; }
-    else { elm.textContent = '→ 0'; elm.className = base + 'flat'; }
+    if (r >= 1) { elm.innerHTML = TP_UP + '+' + r; elm.className = 'tpill up ' + keep; }
+    else if (r <= -1) { elm.innerHTML = TP_DN + '−' + Math.abs(r); elm.className = 'tpill down ' + keep; }
+    else { elm.innerHTML = TP_FL + 'Uændret'; elm.className = 'tpill flat ' + keep; }
   }
 
   /* ============ RENDER ============ */
@@ -1966,6 +2376,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   }
 
   function setView(scope, name) {
+    var vw = scope.querySelector('.views'); if (vw) vw.setAttribute('data-active', name);
     scope.querySelectorAll('.vtab').forEach(function (t) {
       t.classList.toggle('is-active', t.getAttribute('data-view') === name);
     });
@@ -1974,36 +2385,345 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
     });
   }
 
+  /* ============ PLATFORM-SIDER (okt 2026) ============
+     Året vandrer gennem sider der findes i platformen: Startside, Analyse › Kultur,
+     Analyse › Indikatorer, og assistenten som tredje kolonne. Struktur og tekster
+     følger web-client (HomePage, CultureScoreCard, AnalyticsIndicatorsPage). */
+  var MON_SHORT = ['jan.', 'feb.', 'mar.', 'apr.', 'maj', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
+  var CATS = [
+    [['Stress og arbejdsbelastning', -6], ['Fysisk sundhed', 5]],
+    [['Psykologisk tryghed', 3], ['Teamdynamikker og tillid', 0], ['Ledelse', -2]],
+    [['Socialt fællesskab', -2], ['Diversitet, lighed og inklusion', 3]],
+    [['Motivation og personlig udvikling', 1], ['Organisatorisk formål og klarhed', -1]],
+    [['Fysisk arbejdsmiljø', 0]]
+  ];
+  var DEPT_SHARE = [0.41, 0.27, 0.20, 0.12];
+  var IND_GRP = { pos: ['Positiv', 'pos'], high: ['Høj risiko', 'risk'], med: ['Mellem risiko', 'att'], low: ['Lav risiko', 'att'] };
+  var IND_ICON = {
+    'EWI-02': '<svg viewBox="0 0 24 24"><path d="M22 17 13.5 8.5 8.5 13.5 2 7"/><path d="M16 17h6v-6"/></svg>',
+    'EWI-07': '<svg viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>',
+    'EWI-08': '<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/></svg>',
+    'EWI-09': '<svg viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>',
+    'EWI-10': '<svg viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></svg>'
+  };
+  /* w = åbnet, r = løst (måned). Navne, forklaringer og regel: platformens EWI-katalog;
+     kun signaler og grupper, aldrig personer, sandsynligheder eller forudsagte datoer. */
+  var IND = [
+    { key: 'EWI-02', w: 2.6, r: 10.5, grp: 'low', title: 'Vedvarende fald', claim: 'Motivation og personlig udvikling er faldet 6% — fra 77 til 72', chips: [['Motivation og personlig udvikling', 'down', 6]] },
+    { key: 'EWI-07', w: 4.6, r: 10.5, grp: 'med', title: 'Belastningsrisiko', claim: 'Forhøjet belastning og stresspres — belastningsfaktorerne ligger i den laveste femtedel af jeres egen fordeling', chips: [['Stress og arbejdsbelastning', 'down', 8]] },
+    { key: 'EWI-08', w: 6.6, r: 11.2, grp: 'high', title: 'Risiko for opsigelser', claim: 'Forhøjet risiko for opsigelser — de faktorer forskningen kobler til opsigelsesovervejelser ligger i den laveste femtedel af jeres egen fordeling', chips: [['Motivation og personlig udvikling', 'down', 11], ['Ledelse', 'down', 9]] },
+    { key: 'EWI-09', w: 7.4, r: 10, grp: 'med', title: 'Skjult mønster', claim: 'Gennemsnittet ser stabilt ud, men 2 underliggende områder er faldet markant — gennemsnittet skjuler bevægelsen', chips: [['Teamdynamikker og tillid', 'down', 7], ['Socialt fællesskab', 'down', 5]] },
+    { key: 'EWI-10', w: 10.5, r: 99, grp: 'pos', title: 'Fremgangsmønster', claim: 'Motivation og personlig udvikling er forbedret vedvarende — op 9% (fra 66 til 72)', chips: [['Motivation og personlig udvikling', 'up', 9], ['Ledelse', 'up', 6]] }
+  ];
+  var PP_INFO = '<svg class="pp-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
+  var PP_USERS = '<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+
+  function dmy(day, mi) { var y = 2026 + Math.floor(mi / 12); return day + '. ' + MON_SHORT[((mi % 12) + 12) % 12] + ' ' + y; }
+  function pageFor(wf) {
+    if (wf < 2.5) return ['home', 'kultur', 'top'];
+    if (wf < 3.5) return ['ana', 'ind', 'top'];
+    if (wf < 4.5) return ['ana', 'kultur', 'align'];
+    if (wf < 5.5) return ['ana', 'ind', 'top'];
+    if (wf < 6.5) return ['home', 'kultur', 'top'];
+    if (wf < 7.1) return ['ana', 'ind', 'top'];
+    if (wf < 7.55) return ['ana', 'kultur', 'heat'];
+    if (wf < 9.55) return ['ana', 'ind', 'top'];
+    if (wf < 10.5) return ['ana', 'kultur', 'heat'];
+    if (wf < 11.5) return ['ana', 'ind', 'top'];
+    return ['home', 'kultur', 'top'];
+  }
+  function ppPill(delta, sm, flatTxt) {
+    var r = Math.round(delta), c = sm ? ' tpill-sm' : '';
+    if (r >= 1) return '<span class="tpill up' + c + '">' + TP_UP + '+' + r + '</span>';
+    if (r <= -1) return '<span class="tpill down' + c + '">' + TP_DN + '−' + Math.abs(r) + '</span>';
+    return '<span class="tpill flat' + c + '">' + TP_FL + (flatTxt || 'Uændret') + '</span>';
+  }
+  function bandFill(s) { return s >= 70 ? '#10855c' : (s >= 30 ? '#e08a00' : '#c9331f'); }
+  function smoothPath(pts) {
+    if (!pts.length) return '';
+    var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' +
+        (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' +
+        p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+    }
+    return d;
+  }
+  function gauss(x, m, s) { var z = (x - m) / s; return Math.exp(-0.5 * z * z) / s; }
+  /* Virksomhedens fordeling: segmentet i historien (konsens-histogrammet) + resten af organisationen */
+  function alignDensity(sn) {
+    var tek = sn.konsens, tn = tek.reduce(function (s, v) { return s + v; }, 0) || 1;
+    var rest = sn.heat[1].concat(sn.heat[2], sn.heat[3]).reduce(function (s, v) { return s + v; }, 0) / 15;
+    return function (x) {
+      var y = 0;
+      for (var b = 0; b < 7; b++) y += (tek[b] / tn) * 0.6 * gauss(x, KONSENS_MIDS[b], 5.2);
+      return y + 0.4 * gauss(x, rest, 4.5);
+    };
+  }
+  function alignQuartiles(f) {
+    var xs = [], cum = [], tot = 0;
+    for (var x = 30; x <= 100; x += 0.5) { tot += f(x); xs.push(x); cum.push(tot); }
+    var q = function (p) { for (var i = 0; i < cum.length; i++) if (cum[i] >= p * tot) return xs[i]; return 100; };
+    return [q(0.25), q(0.75)];
+  }
+
+  function renderPages(scope, wf, opts, snap, prev, base6, firstM) {
+    var pf = pageFor(wf);
+    var pg = opts.exploreChat ? (scope.__pg || 'home') : pf[0];
+    var sub = opts.exploreChat ? (scope.__sub || 'kultur') : pf[1];
+    var scrollTo = opts.exploreChat ? 'top' : pf[2];
+    var mR = clamp(Math.round(wf), 1, 12), mi = mR - 1;
+    var empEl = scope.querySelector('.js-emp2');
+    var emp = parseInt(empEl && empEl.textContent, 10) || 34;
+    var cs = snap.cs, rr = snap.rr;
+
+    // ---- navigation: side, fane, rail, adresselinje ----
+    scope.querySelectorAll('.pp-pg').forEach(function (p) { p.classList.toggle('is-on', p.getAttribute('data-pg') === pg); });
+    var ana = scope.querySelector('.pp-pg-ana');
+    if (ana) ana.setAttribute('data-sub', sub);
+    scope.querySelectorAll('.pp-sub').forEach(function (s) { s.classList.toggle('is-on', s.getAttribute('data-sub') === sub); });
+    scope.querySelectorAll('.pp-tab[data-sub]').forEach(function (t) { t.classList.toggle('is-on', t.getAttribute('data-sub') === sub); });
+    scope.querySelectorAll('.psb-item[data-nav]').forEach(function (it) { it.classList.toggle('is-active', it.getAttribute('data-nav') === (pg === 'home' ? 'home' : 'analyse')); });
+    var url = scope.querySelector('.js-url');
+    if (url) url.textContent = pg === 'home' ? 'app.culturequest.io/home' : (sub === 'ind' ? 'app.culturequest.io/analytics/risk-impact' : 'app.culturequest.io/analytics');
+
+    // ---- Startside: undersøgelser + nyheder ----
+    var hs = scope.querySelector('.js-hs');
+    var kHs = mR + ':' + Math.round(rr) + ':' + emp;
+    if (hs && scope.__kHs !== kHs) {
+      scope.__kHs = kHs;
+      var prr = sampleWeek(Math.max(1, mR - 1)).rr;
+      var rows = [
+        { n: 'Kulturmåling · ' + MONTHS[mi], s: 'Lukker ' + dmy(28, mi) + ' · 18 spørgsmål', a: [Math.round(emp * rr / 100), emp, rr], st: ['pos', 'Aktiv'] },
+        { n: 'Kulturmåling · ' + MONTHS[(mi + 1) % 12], s: 'Starter ' + dmy(1, mi + 1) + ' · 18 spørgsmål', a: null, st: ['att', 'Planlagt'] }
+      ];
+      if (mR > 1) rows.push({ n: 'Kulturmåling · ' + MONTHS[mi - 1], s: 'Lukkede ' + dmy(28, mi - 1) + ' · 18 spørgsmål', a: [Math.round(emp * prr / 100), emp, prr], st: ['pos', 'Afsluttet'] });
+      hs.innerHTML = rows.map(function (r) {
+        return '<li class="pp-sv"><span class="pp-sv-m"><span class="pp-sv-n">' + r.n + '</span><span class="pp-sv-s">' + r.s + '</span></span>' +
+          '<span class="pp-sv-a">' + (r.a ? '<span class="pp-sv-u">' + PP_USERS + r.a[0] + '/' + r.a[1] + '</span><span class="pp-sv-bar"><i style="width:' + Math.min(100, r.a[2]).toFixed(0) + '%"></i></span><span class="pp-sv-p">' + Math.round(r.a[2]) + '%</span>' : '<span class="pp-sv-u">—</span>') + '</span>' +
+          '<span class="pp-sv-st"><span class="pp-pill ' + r.st[0] + '">' + r.st[1] + '</span></span></li>';
+      }).join('');
+    }
+    var hn = scope.querySelector('.js-hn');
+    if (hn && scope.__kHn !== mR) {
+      scope.__kHn = mR;
+      hn.innerHTML = [['Tip: skræddersy din AI med virksomhedskontekst', 'tip', 'Tip', 18], ['Fuld kontrol over AI i jeres indstillinger', 'feat', 'Funktion', 11], ['Mød din AI-assistent', 'feat', 'Funktion', 4]].map(function (it) {
+        return '<li class="pp-nw"><span class="pp-nw-m"><span class="pp-nw-t">' + it[0] + '</span><span class="pp-nw-s"><span class="pp-tag ' + it[1] + '">' + it[2] + '</span>' + dmy(it[3], mi) + '</span></span><i class="pp-dot"></i></li>';
+      }).join('');
+    }
+
+    // ---- Analyse › Kultur: kulturscore-ring ----
+    var arc = scope.querySelector('.js-ring-arc');
+    if (arc) {
+      var C = 2 * Math.PI * 99;
+      arc.setAttribute('stroke-dasharray', (clamp(cs, 0, 100) / 100 * C).toFixed(1) + ' ' + C.toFixed(1));
+      arc.setAttribute('stroke', bandFill(cs));
+    }
+    setText(scope, '.js-ring-n', Math.round(cs));
+    var rp = scope.querySelector('.js-ring-p');
+    if (rp) { var rph = firstM ? '' : ppPill(cs - base6.cs); if (rp.__h !== rph) { rp.innerHTML = rph; rp.__h = rph; } }
+    setText(scope, '.js-k-resp', Math.round(emp * rr / 100));
+    setText(scope, '.js-k-pop', Math.round(rr) + '%');
+    setText(scope, '.js-k-desc', 'Seneste måling · ' + (mR > 1 ? '2 undersøgelser' : '1 undersøgelse') + ', afsluttet ' + dmy(28, mi));
+
+    // ---- Kultur over tid: 3 målte måneder + projektion (Målt / Projekteret) ----
+    var tr = scope.querySelector('.js-trend');
+    var kTr = mR + ':' + Math.round(cs * 4);
+    if (tr && scope.__kTr !== kTr) {
+      scope.__kTr = kTr;
+      var L = 40, R = 588, T = 12, B = 182, s0 = Math.max(1, mR - 3);
+      var X = function (k) { return L + (k - s0) / 5 * (R - L); };
+      var Y = function (v) { return B - clamp(v, 0, 100) / 100 * (B - T); };
+      var g = '<defs><linearGradient id="ppTrendGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4429d8" stop-opacity="0.4"/><stop offset="100%" stop-color="#4429d8" stop-opacity="0.05"/></linearGradient></defs>';
+      [0, 25, 50, 75, 100].forEach(function (t) {
+        g += '<line x1="' + L + '" x2="' + R + '" y1="' + Y(t) + '" y2="' + Y(t) + '" stroke="#e1dfd6" stroke-width="1"/>' +
+          '<text x="' + (L - 8) + '" y="' + (Y(t) + 3.5) + '" font-size="11" text-anchor="end">' + t + '</text>';
+      });
+      var meas = [];
+      for (var k = s0; k <= mR; k++) meas.push([X(k), Y(k === mR ? cs : sampleWeek(k).cs)]);
+      var vLast = cs, vPrev = mR > 1 ? sampleWeek(mR - 1).cs : cs, slope = (vLast - vPrev) * 0.5;
+      var proj = [], up = [], lo = [];
+      for (var k2 = mR; k2 <= s0 + 5; k2++) {
+        var pv = vLast + slope * (k2 - mR), sp = (k2 - mR) * 2.4;
+        proj.push([X(k2), Y(pv)]); up.push([X(k2), Y(pv + sp)]); lo.push([X(k2), Y(pv - sp)]);
+      }
+      if (proj.length > 1) {
+        g += '<path d="' + smoothPath(up) + ' L' + lo.slice().reverse().map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + ' Z" fill="#4429d8" fill-opacity="0.09"/>';
+        g += '<path d="' + smoothPath(proj) + ' L' + proj[proj.length - 1][0].toFixed(1) + ' ' + B + ' L' + proj[0][0].toFixed(1) + ' ' + B + ' Z" fill="#4429d8" fill-opacity="0.05"/>';
+        g += '<path d="' + smoothPath(proj) + '" fill="none" stroke="#4429d8" stroke-width="2" stroke-dasharray="6 4" stroke-opacity="0.75"/>';
+      }
+      if (meas.length > 1) g += '<path d="' + smoothPath(meas) + ' L' + meas[meas.length - 1][0].toFixed(1) + ' ' + B + ' L' + meas[0][0].toFixed(1) + ' ' + B + ' Z" fill="url(#ppTrendGrad)"/>';
+      g += '<path d="' + smoothPath(meas) + '" fill="none" stroke="#4429d8" stroke-width="2"/>';
+      meas.forEach(function (p) { g += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.5" fill="#4429d8" stroke="#fff" stroke-width="1.5"/>'; });
+      for (var k3 = s0; k3 <= s0 + 5; k3++) g += '<text x="' + X(k3).toFixed(1) + '" y="204" font-size="11" text-anchor="middle">' + MON_SHORT[(k3 - 1) % 12] + ' ' + (2026 + Math.floor((k3 - 1) / 12)) + '</text>';
+      tr.innerHTML = g;
+    }
+
+    // ---- Dimensionsopdeling ----
+    var dbr = scope.querySelector('.js-dbr');
+    var kD = snap.dims.map(Math.round).join(',') + '|' + base6.dims.map(Math.round).join(',') + (firstM ? 'f' : '');
+    if (dbr && scope.__kDbr !== kD) {
+      scope.__kDbr = kD;
+      dbr.innerHTML = DIM_NAMES.map(function (name, i) {
+        return '<div class="pp-dbr-d"><span class="pp-dbr-ic">' + DIM_ICONS[i] + '</span><span class="pp-dbr-dn">' + name + '</span>' + PP_INFO + '</div>' +
+          CATS[i].map(function (c) {
+            var s = clamp(snap.dims[i] + c[1], 0, 100), s6 = clamp(base6.dims[i] + c[1], 0, 100);
+            return '<div class="pp-dbr-c"><span class="pp-dbr-cn">' + c[0] + '</span><span class="pp-dbr-bar"><i style="width:' + s.toFixed(0) + '%"></i></span>' +
+              (firstM ? '<span></span>' : ppPill(s - s6, true, '0')) + '<span class="pp-dbr-cs">' + Math.round(s) + '</span></div>';
+          }).join('');
+      }).join('');
+    }
+
+    // ---- Kulturel overensstemmelse: tæthedskurve, midterste halvdel, forrige måling ----
+    var als = scope.querySelector('.js-al-svg');
+    var kA = Math.round(wf * 8) + ':' + Math.round(cs);
+    if (als && scope.__kAl !== kA) {
+      scope.__kAl = kA;
+      var f = alignDensity(snap), fp = alignDensity(prev), hasPrev = mR > 1;
+      var AX = function (v) { return 6 + (v - 30) / 70 * 388; }, base = 150, ys = [], yp = [], my = 0;
+      for (var x = 30; x <= 100; x += 1) { ys.push(f(x)); yp.push(fp(x)); my = Math.max(my, f(x), hasPrev ? fp(x) : 0); }
+      var AY = function (d) { return base - d / my * 124; };
+      var cur = ys.map(function (d, i) { return [AX(30 + i), AY(d)]; });
+      var q = alignQuartiles(f), pq = alignQuartiles(fp);
+      var mid = cur.filter(function (p, i) { var xv = 30 + i; return xv >= q[0] && xv <= q[1]; });
+      var a = '';
+      a += '<path d="' + smoothPath(cur) + ' L' + AX(100) + ' ' + base + ' L' + AX(30) + ' ' + base + ' Z" fill="#4429d8" fill-opacity="0.08"/>';
+      if (mid.length > 1) a += '<path d="' + smoothPath(mid) + ' L' + mid[mid.length - 1][0].toFixed(1) + ' ' + base + ' L' + mid[0][0].toFixed(1) + ' ' + base + ' Z" fill="#4429d8" fill-opacity="0.28"/>';
+      if (hasPrev) a += '<path d="' + smoothPath(yp.map(function (d, i) { return [AX(30 + i), AY(d)]; })) + '" fill="none" stroke="#8a8577" stroke-width="1.5" stroke-dasharray="4 4"/>';
+      a += '<path d="' + smoothPath(cur) + '" fill="none" stroke="#4429d8" stroke-width="2"/>';
+      var lx = AX(clamp(cs, 30, 100));
+      a += '<line x1="' + lx.toFixed(1) + '" x2="' + lx.toFixed(1) + '" y1="20" y2="' + base + '" stroke="#4429d8" stroke-width="1.5"/>';
+      a += '<text x="' + clamp(lx, 50, 350).toFixed(1) + '" y="13" font-size="11" text-anchor="middle" style="fill:#4429d8;font-weight:500">Kulturscore · ' + Math.round(cs) + '</text>';
+      a += '<line x1="6" x2="394" y1="' + base + '" y2="' + base + '" stroke="#e1dfd6"/>';
+      a += '<text x="6" y="30" font-size="9.5">Mere samlet ↑</text><text x="6" y="143" font-size="9.5">↓ Mindre samlet</text>';
+      [30, 50, 70, 85, 100].forEach(function (t) { a += '<text x="' + AX(t).toFixed(1) + '" y="168" font-size="10.5" text-anchor="middle">' + t + '</text>'; });
+      als.innerHTML = a;
+      setText(scope, '.js-al-l1', 'Kulturscore · ' + Math.round(cs));
+      setText(scope, '.js-al-l2', 'Den midterste halvdel af medarbejderne: ' + Math.round(q[0]) + '–' + Math.round(q[1]));
+      var l3w = scope.querySelector('.js-al-l3w');
+      if (l3w) l3w.style.display = hasPrev ? '' : 'none';
+      if (hasPrev) setText(scope, '.js-al-l3', 'Forrige måling · ' + MONTHS[mi - 1].toLowerCase() + ' 2026');
+      var w = q[1] - q[0], pw = pq[1] - pq[0];
+      var lvl = w <= 11.5 ? ['pos', 'Høj overensstemmelse'] : (w <= 17.5 ? ['att', 'Moderat overensstemmelse'] : ['risk', 'Lav overensstemmelse']);
+      var lvlEl = scope.querySelector('.js-al-lvl');
+      if (lvlEl) { lvlEl.textContent = lvl[1]; lvlEl.className = 'pp-pill js-al-lvl ' + lvl[0]; }
+      // Platformens fortolknings-matrix: overensstemmelse × scoreniveau (interpret* i web-client)
+      var sl = cs >= 75 ? 0 : (cs >= 60 ? 1 : 2);
+      var note = [
+        [['pos', 'Stærk kulturel sundhed med høj overensstemmelse - bevar nuværende initiativer'], ['att', 'Høj overensstemmelse med plads til forbedring - overvej målrettede initiativer'], ['risk', 'Høj overensstemmelse, men omkring lave scorer - målrettede initiativer er nødvendige for at forbedre kulturen']],
+        [['att', 'Generelt sunde scorer med nogen variation i opfattelse - gennemgå lavere scorende områder'], ['att', 'Moderate scorer med nogen teamvariation - målrettede forbedringer kan øge overensstemmelsen'], ['risk', 'Bekymrende scorer med variation - identificér og adressér udfordrende områder']],
+        [['att', 'Nogle afdelinger/teams trives, mens andre kæmper - overvej at undersøge bedste praksis fra de bedst præsterende afdelinger/teams'], ['risk', 'Blandet kulturoplevelse - undersøg forskelle mellem individer eller undergrupper'], ['risk', 'Betydelige kulturelle udfordringer med stor variation - prioritér segmentspecifikke indsatser']]
+      ][lvl[0] === 'pos' ? 0 : (lvl[0] === 'att' ? 1 : 2)][sl];
+      var cmp = !hasPrev ? '' : (Math.abs(w - pw) < 1 ? 'Omtrent lige så bred som forrige måling.' : (w < pw ? 'Smallere end forrige måling: kulturen er mere samlet.' : 'Bredere end forrige måling: oplevelserne trækker fra hinanden.'));
+      var nEl = scope.querySelector('.js-al-note');
+      if (nEl) {
+        nEl.className = 'pp-note js-al-note ' + note[0];
+        nEl.innerHTML = note[1] + (cmp ? '<span class="pp-note-sub">' + cmp + ' Forrige midterste halvdel: ' + Math.round(pq[0]) + '–' + Math.round(pq[1]) + '</span>' : '');
+      }
+    }
+
+    // ---- Heatmap: respondenter pr. afdeling + anonymitetsgrænse (5) ----
+    var hrn = scope.querySelectorAll('.js-hrn'), hcs = scope.querySelectorAll('.js-hc'), hts = scope.querySelectorAll('.js-hct'), hidden = 0;
+    for (var hr = 0; hr < 4; hr++) {
+      var nResp = Math.round(emp * DEPT_SHARE[hr] * rr / 100), hid = nResp < 5;
+      if (hrn[hr]) hrn[hr].textContent = nResp + ' respondenter';
+      if (hid) hidden++;
+      for (var hc = 0; hc < 5; hc++) { var cEl = hcs[hr * 5 + hc]; if (cEl) { cEl.classList.toggle('is-hidden', hid); if (hid) cEl.textContent = '—'; } }
+      if (hts[hr]) { hts[hr].classList.toggle('is-hidden', hid); if (hid) hts[hr].textContent = '—'; }
+    }
+    var hf = scope.querySelector('.js-hfoot');
+    if (hf) { hf.style.display = hidden ? '' : 'none'; setText(scope, '.js-hfoot-t', hidden + (hidden === 1 ? ' segment skjult af hensyn til anonymitet.' : ' segmenter skjult af hensyn til anonymitet.')); }
+
+    // ---- Analyse › Indikatorer: KPI-række + tavle i kolonner ----
+    var ib = scope.querySelector('.js-ib');
+    if (ib && !ib.querySelector('.pp-icard')) {
+      IND.forEach(function (d) {
+        var col = ib.querySelector('.pp-icol-' + d.grp); if (!col) return;
+        var g2 = IND_GRP[d.grp], card = document.createElement('div');
+        card.className = 'pp-icard' + (d.grp === 'high' ? ' is-high' : '');
+        card.setAttribute('data-w', d.w); card.setAttribute('data-r', d.r);
+        card.innerHTML = '<span class="pp-ic-ico ' + g2[1] + '">' + IND_ICON[d.key] + '</span><span class="pp-ic-b">' +
+          '<span class="pp-ic-t"><span class="pp-ic-n">' + d.title + '</span><span class="pp-pill ' + g2[1] + '">' + g2[0] + '</span></span>' +
+          '<span class="pp-ic-s">Afdeling · ' + DEPTS[0] + '</span><span class="pp-ic-c">' + d.claim + '</span>' +
+          '<span class="pp-ic-ch">' + d.chips.map(function (c) { return '<span class="pp-chip"><span>' + c[0] + '</span><b class="' + c[1] + '">' + (c[1] === 'up' ? TP_UP : TP_DN) + c[2] + '%</b></span>'; }).join('') + '</span></span>';
+        col.insertBefore(card, col.querySelector('.pp-icol-e'));
+      });
+    }
+    var kI = Math.round(wf * 20);
+    if (scope.__kInd !== kI) {
+      scope.__kInd = kI;
+      var open = IND.filter(function (d) { return wf >= d.w && wf < d.r; }), cnt = { pos: 0, high: 0, med: 0, low: 0 };
+      open.forEach(function (d) { cnt[d.grp]++; });
+      setText(scope, '.js-ik-open', open.length);
+      ['pos', 'high', 'med', 'low'].forEach(function (gk) {
+        var pe = scope.querySelector('.js-ikp-' + gk);
+        if (pe) { pe.querySelector('b').textContent = cnt[gk]; pe.classList.toggle('z', cnt[gk] === 0); }
+        setText(scope, '.js-icn-' + gk, cnt[gk]);
+        var ee = scope.querySelector('.js-ice-' + gk); if (ee) ee.style.display = cnt[gk] ? 'none' : '';
+      });
+      setText(scope, '.js-ik-grp', open.some(function (d) { return d.grp !== 'pos'; }) ? 1 : 0);
+      var res = IND.filter(function (d) { return wf >= d.r; }), lastR = res.reduce(function (m2, d) { return Math.max(m2, d.r); }, 0);
+      setText(scope, '.js-ik-res', res.length);
+      setText(scope, '.js-ik-resm', res.length ? 'Senest løst ' + dmy(28, Math.floor(lastR) - 1) : 'Ingen løst endnu');
+      scope.querySelectorAll('.pp-icard').forEach(function (cd) {
+        cd.classList.toggle('is-in', wf >= parseFloat(cd.getAttribute('data-w')) && wf < parseFloat(cd.getAttribute('data-r')));
+      });
+    }
+
+    // ---- sidescroll: historien "scroller" ned til overensstemmelse / heatmap ----
+    if (!opts.exploreChat) {
+      var anaIn = scope.querySelector('.pp-pg-ana .pp-in');
+      if (anaIn) {
+        if (scope.__lastSub !== sub) { anaIn.style.transition = 'none'; anaIn.style.transform = 'translateY(0px)'; void anaIn.offsetHeight; anaIn.style.transition = ''; scope.__lastSub = sub; }
+        var yS = 0;
+        if (pg === 'ana' && sub === 'kultur' && scrollTo !== 'top') {
+          var tg = scope.querySelector(scrollTo === 'heat' ? '.pp-heatc' : '.pp-kalign');
+          if (tg) yS = clamp(tg.offsetTop - 56, 0, Math.max(0, anaIn.scrollHeight - anaIn.parentNode.clientHeight));
+        }
+        var ty = 'translateY(' + (-Math.round(yS)) + 'px)';
+        if (anaIn.style.transform !== ty) anaIn.style.transform = ty;
+      }
+    }
+  }
+
   function renderBoard(scope, wf, opts) {
     opts = opts || {};
     var snap = sampleWeek(wf);
     var prev = sampleWeek(Math.max(1, wf - 1));
+    var base6 = sampleWeek(Math.max(1, wf - 6));
+    var firstM = wf < 1.5;
     var wRound = Math.round(wf);
 
     setText(scope, '.js-cs', Math.round(snap.cs));
     setText(scope, '.js-eng', Math.round(snap.eng));
     setText(scope, '.js-rr', Math.round(snap.rr));
     setText(scope, '.js-liveweek', MONTHS[clamp(wRound - 1, 0, 11)]);
-    var csD = scope.querySelector('.js-cs-delta'); if (csD) deltaBadge(csD, snap.cs - prev.cs);
-    var engD = scope.querySelector('.js-eng-delta'); if (engD) deltaBadge(engD, snap.eng - prev.eng);
-    var rrD = scope.querySelector('.js-rr-delta'); if (rrD) deltaBadge(rrD, snap.rr - prev.rr);
+    var csD = scope.querySelector('.js-cs-delta'); if (csD) deltaBadge(csD, snap.cs - base6.cs, firstM);
+    var engD = scope.querySelector('.js-eng-delta'); if (engD) deltaBadge(engD, snap.eng - base6.eng, firstM);
+    var rrD = scope.querySelector('.js-rr-delta'); if (rrD) deltaBadge(rrD, snap.rr - base6.rr, firstM);
+    var cmpTxt = firstM ? '' : 'mod for 6 måneder siden';
+    scope.querySelectorAll('.js-cmp').forEach(function (cEl) { cEl.textContent = cmpTxt; });
 
-    var sl = scope.querySelector('.js-sparkline');
-    var sf = scope.querySelector('.js-sparkfill');
-    if (sl) {
-      var pts = [];
-      var steps = 40;
-      for (var s = 0; s <= steps; s++) {
-        var t = 1 + (wf - 1) * (s / steps);
-        var v = sampleWeek(t).cs;
-        var x = ((t - 1) / 11) * 104;
-        var y = 30 - ((v - 62) / (82 - 62)) * 26 - 2;
-        pts.push([x.toFixed(1), clamp(y, 2, 28).toFixed(1)]);
-      }
-      var dAttr = 'M ' + pts.map(function (p) { return p[0] + ' ' + p[1]; }).join(' L ');
+    // PulseSparkline: periodens målinger (6 mdr) strakt over hele bredden, domæne = data ±5.
+    // Ved første måling er der intet at tegne, og kortet viser ingen kurve.
+    [['', 'cs'], ['-eng', 'eng'], ['-rr', 'rr']].forEach(function (cfg) {
+      var sl = scope.querySelector('.js-sparkline' + cfg[0]);
+      var sf = scope.querySelector('.js-sparkfill' + cfg[0]);
+      if (!sl) return;
+      var svgEl = sl.closest('svg');
+      if (svgEl) svgEl.style.visibility = firstM ? 'hidden' : '';
+      if (firstM) return;
+      var s0 = Math.max(1, Math.floor(wf) - 5), ts = [];
+      for (var t = s0; t < wf; t++) ts.push(t);
+      ts.push(wf);
+      var vals = ts.map(function (t) { return sampleWeek(t)[cfg[1]]; });
+      var lo = Math.min.apply(null, vals) - 5, hi = Math.max.apply(null, vals) + 5, span = Math.max(wf - s0, 0.001);
+      var pts = ts.map(function (t, k) { return [(t - s0) / span * 104, 29 - (vals[k] - lo) / (hi - lo) * 27]; });
+      var dAttr = smoothPath(pts);
       sl.setAttribute('d', dAttr);
-      if (sf) sf.setAttribute('d', dAttr + ' L ' + pts[pts.length - 1][0] + ' 30 L 0 30 Z');
-    }
+      if (sf) sf.setAttribute('d', dAttr + ' L104 30 L0 30 Z');
+    });
 
     var dimEls = scope.querySelectorAll('.dim');
     snap.dims.forEach(function (v, i) {
@@ -2014,9 +2734,14 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       if (scoreEl) scoreEl.textContent = Math.round(v);
       var dd = v - prev.dims[i];
       if (arrowEl) {
-        if (dd > 0.4) { arrowEl.textContent = '↗'; arrowEl.className = 'dim-arrow up'; }
-        else if (dd < -0.4) { arrowEl.textContent = '↘'; arrowEl.className = 'dim-arrow down'; }
-        else { arrowEl.textContent = '→'; arrowEl.className = 'dim-arrow flat'; }
+        var dr = Math.round(v - base6.dims[i]);
+        if (firstM) { arrowEl.style.display = 'none'; }
+        else {
+          arrowEl.style.display = '';
+          if (dr >= 1) { arrowEl.innerHTML = TP_UP + '+' + dr; arrowEl.className = 'tpill tpill-sm up dim-arrow'; }
+          else if (dr <= -1) { arrowEl.innerHTML = TP_DN + '−' + Math.abs(dr); arrowEl.className = 'tpill tpill-sm down dim-arrow'; }
+          else { arrowEl.innerHTML = TP_FL + '±0'; arrowEl.className = 'tpill tpill-sm flat dim-arrow'; }
+        }
       }
       if (fillEl) {
         fillEl.style.width = clamp(v, 0, 100) + '%';
@@ -2025,18 +2750,29 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       d.classList.toggle('is-hot', v < 68);
     });
 
-    var cells = scope.querySelectorAll('.heat-c');
-    var ci = 0;
+    var cells = scope.querySelectorAll('.js-hc');
+    var rowTot = scope.querySelectorAll('.js-hct');
+    var coCells = scope.querySelectorAll('.js-hco');
+    var coTot = scope.querySelector('.js-hcot');
+    var paintCell = function (cell, val) {
+      if (!cell) return;
+      var band = bandColor(val);
+      cell.textContent = Math.round(val);
+      cell.style.backgroundColor = band.bg;
+      cell.style.color = band.fg;
+    };
+    var ci = 0, colSum = [0, 0, 0, 0, 0], allSum = 0;
     for (var r = 0; r < 4; r++) {
+      var rowSum = 0;
       for (var c = 0; c < 5; c++) {
-        var cell = cells[ci++]; if (!cell) continue;
         var val = snap.heat[r][c];
-        var band = bandColor(val);
-        cell.textContent = Math.round(val);
-        cell.style.backgroundColor = band.bg;
-        cell.style.color = band.fg;
+        colSum[c] += val; rowSum += val; allSum += val;
+        paintCell(cells[ci++], val);
       }
+      paintCell(rowTot[r], rowSum / 5);
     }
+    for (var c2 = 0; c2 < 5; c2++) paintCell(coCells[c2], colSum[c2] / 4);
+    paintCell(coTot, allSum / 20);
 
     // Ekstra KPI'er: undersøgelser + næste måling + svarprocent-bar + sparkline-band
     setText(scope, '.js-surveys', wRound);
@@ -2047,7 +2783,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       rrbar.className = 'kpi-rrbar-fill js-rrbar' + (snap.rr >= 85 ? '' : (snap.rr >= 70 ? ' band-amber' : ' band-red'));
     }
     var sparkEl = scope.querySelector('.kpi-spark');
-    if (sparkEl) sparkEl.classList.toggle('band-amber', snap.cs < 70 + 3 && snap.cs < 73);
+    // Platformens sparkline er altid D2 (indigo), uanset niveau
 
     // Svarfordeling (Likert)
     var lsum = snap.likert.reduce(function (s, v) { return s + v; }, 0) || 1;
@@ -2152,6 +2888,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       setView(scope, targetView);
     }
 
+    renderPages(scope, wf, opts, snap, prev, base6, firstM);
     renderChat(scope, wf, opts);
   }
 
@@ -2171,6 +2908,7 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
       isOpen = wf >= 7.55 && wf <= 11.5;
     }
     panel.classList.toggle('is-open', isOpen);
+    var awin = panel.closest('.appwin'); if (awin) awin.classList.toggle('is-chat', isOpen);
 
     var visible = 0;
     scope.querySelectorAll('.fa-msg').forEach(function (m) {
@@ -2329,17 +3067,17 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
   /* ============ GUIDE CHIP ============ */
   /* Peger blikket derhen hvor månedens pointe sidder, i takt med scrollet. */
   var GUIDE_STEPS = [
-    { from: 1.0,  to: 2.5,  sel: '.kpis .kpi',      place: 'below', text: 'Start her: baseline etableret, alt ser roligt ud' },
-    { from: 2.5,  to: 3.5,  sel: '.alerts',         place: 'left',  text: 'Første signal: en enkelt driver glider' },
-    { from: 3.5,  to: 4.5,  sel: '.views',          place: 'above', text: 'Scoren retter sig, men spredningen i svarene vokser' },
-    { from: 4.5,  to: 5.5,  sel: '.alerts',         place: 'left',  text: 'Kombination: to af tre Karasek-betingelser opfyldt' },
-    { from: 5.5,  to: 6.5,  sel: '.kpis .kpi',      place: 'below', text: 'Totalscoren ser stadig normal ud. Mønstret består' },
-    { from: 6.5,  to: 7.1,  sel: '.alerts',         place: 'left',  text: 'Signaturen: 6 af 14 i mønster. CRITICAL' },
-    { from: 7.1,  to: 7.55, sel: '.js-konsenswarn', place: 'above', text: 'Og her: 3 medarbejdere i risikozoner' },
-    { from: 7.55, to: 8.35, sel: '.js-fa-panel',    place: 'left',  text: 'Assistenten åbner. Læs rådgivningen her' },
-    { from: 9.55, to: 10.5, sel: '.views',          place: 'above', text: 'Første vending: segmentet flytter sig' },
-    { from: 10.5, to: 11.5, sel: '.alerts',         place: 'left',  text: 'Recovery Pattern: anden måling i træk' },
-    { from: 11.5, to: 12.3, sel: '.kpis .kpi',      place: 'below', text: 'Ingen exits. Undgået omkostning: 300-600.000 kr' }
+    { from: 1.0,  to: 2.5,  sel: '.pp-pg-home .kpis .kpi',   place: 'below', text: 'Start her: baseline etableret, alt ser roligt ud' },
+    { from: 2.5,  to: 3.5,  sel: '.pp-icol-low',             place: 'above', text: 'Første signal: en enkelt kategori glider' },
+    { from: 3.5,  to: 4.5,  sel: '.pp-kalign',               place: 'above', text: 'Scoren retter sig, men kurven bliver bredere' },
+    { from: 4.5,  to: 5.5,  sel: '.pp-icol-med',             place: 'above', text: 'Kombination: to af tre Karasek-betingelser opfyldt' },
+    { from: 5.5,  to: 6.5,  sel: '.pp-pg-home .kpis .kpi',   place: 'below', text: 'Totalscoren ser stadig normal ud. Mønstret består' },
+    { from: 6.5,  to: 7.1,  sel: '.pp-icol-high',            place: 'above', text: 'Høj risiko: indikatoren for opsigelser slår ud' },
+    { from: 7.1,  to: 7.55, sel: '.pp-heatc',                place: 'above', text: 'Og her: afdelingen skiller sig ud i heatmappet' },
+    { from: 7.55, to: 8.35, sel: '.js-fa-panel',             place: 'left',  text: 'Assistenten åbner. Læs rådgivningen her' },
+    { from: 9.55, to: 10.5, sel: '.pp-heatc',                place: 'above', text: 'Første vending: segmentet flytter sig' },
+    { from: 10.5, to: 11.5, sel: '.pp-icol-pos',             place: 'above', text: 'Fremgangsmønster: anden måling i træk' },
+    { from: 11.5, to: 12.3, sel: '.pp-pg-home .kpis .kpi',   place: 'below', text: 'Ingen exits. Undgået omkostning: 300-600.000 kr' }
   ];
   var guideChip = null, guideText = null, lastGuideIdx = -1;
   function updateGuide(wf, boardOn) {
@@ -2442,6 +3180,22 @@ Drivere i prioriteret rækkefølge: <strong>1) anerkendelse</strong> (størst v�
         userView = true;
         setView(clone, t.getAttribute('data-view'));
       });
+    });
+
+    // Platform-navigation i explore-mode: rail (Startside/Analyse), faner (Kultur/Indikatorer), KPI-pile
+    clone.classList.add('is-explore');
+    var exploreNow = function () { renderExplore(scrub ? parseFloat(scrub.value) : 12); };
+    clone.querySelectorAll('.psb-item[data-nav]').forEach(function (it) {
+      it.style.cursor = 'pointer';
+      it.addEventListener('click', function () { clone.__pg = it.getAttribute('data-nav') === 'home' ? 'home' : 'ana'; exploreNow(); });
+    });
+    clone.querySelectorAll('.pp-tab[data-sub]').forEach(function (t) {
+      t.style.cursor = 'pointer';
+      t.addEventListener('click', function () { clone.__pg = 'ana'; clone.__sub = t.getAttribute('data-sub'); exploreNow(); });
+    });
+    clone.querySelectorAll('.pp-pg-home .kpi-arrow-link').forEach(function (a) {
+      a.style.cursor = 'pointer';
+      a.addEventListener('click', function () { clone.__pg = 'ana'; clone.__sub = 'kultur'; exploreNow(); });
     });
 
     // Assistenten kan åbnes/lukkes manuelt i explore-mode
